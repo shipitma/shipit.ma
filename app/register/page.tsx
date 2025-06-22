@@ -97,10 +97,10 @@ export default function RegisterPage() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1">
+            <div className="space-y-1">
                 <Label htmlFor="firstName" className="text-xs">
                   Prénom *
-                </Label>
+              </Label>
                 <Input
                   id="firstName"
                   type="text"
@@ -111,10 +111,10 @@ export default function RegisterPage() {
                   required
                 />
               </div>
-              <div className="space-y-1">
+            <div className="space-y-1">
                 <Label htmlFor="lastName" className="text-xs">
                   Nom *
-                </Label>
+              </Label>
                 <Input
                   id="lastName"
                   type="text"

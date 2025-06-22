@@ -333,54 +333,54 @@ export default function MainLayout({
             </div>
           </div>
 
-          {/* Top header for mobile */}
+        {/* Top header for mobile */}
           <div className="lg:hidden sticky top-0 z-40 bg-[#fafafa] shadow-sm border-b">
-            <div className="flex items-center justify-between h-14 px-4">
-              <div className="flex items-center">
-                <img src="https://placehold.co/32x32/f97316/ffffff?text=LOGO" alt="Logo" className="w-8 h-8" />
-              </div>
+          <div className="flex items-center justify-between h-14 px-4">
+            <div className="flex items-center">
+              <img src="https://placehold.co/32x32/f97316/ffffff?text=LOGO" alt="Logo" className="w-8 h-8" />
+            </div>
 
-              <div className="flex items-center gap-3">
-                <Button variant="ghost" size="sm" className="relative h-8 w-8">
-                  <Bell className="w-4 h-4" />
-                  <Badge className="absolute -top-1 -right-1 w-4 h-4 p-0 flex items-center justify-center text-xs">
-                    3
-                  </Badge>
-                </Button>
+            <div className="flex items-center gap-3">
+              <Button variant="ghost" size="sm" className="relative h-8 w-8">
+                <Bell className="w-4 h-4" />
+                <Badge className="absolute -top-1 -right-1 w-4 h-4 p-0 flex items-center justify-center text-xs">
+                  3
+                </Badge>
+              </Button>
 
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                      <Avatar className="h-6 w-6">
-                        <AvatarImage src="/placeholder-user.jpg" alt="User" />
-                        <AvatarFallback className="text-xs">{getUserInitials()}</AvatarFallback>
-                      </Avatar>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-48" align="end" forceMount>
-                    <DropdownMenuLabel className="font-normal">
-                      <div className="flex flex-col space-y-1">
-                        <p className="text-xs font-medium leading-none">{getFullName()}</p>
-                        <p className="text-xs leading-none text-gray-500">{getPhoneNumber()}</p>
-                      </div>
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => router.push("/profile")} className="text-xs">
-                      <User className="mr-2 h-3 w-3" />
-                      <span>Profil</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                    <Avatar className="h-6 w-6">
+                      <AvatarImage src="/placeholder-user.jpg" alt="User" />
+                      <AvatarFallback className="text-xs">{getUserInitials()}</AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-48" align="end" forceMount>
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-xs font-medium leading-none">{getFullName()}</p>
+                      <p className="text-xs leading-none text-gray-500">{getPhoneNumber()}</p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => router.push("/profile")} className="text-xs">
+                    <User className="mr-2 h-3 w-3" />
+                    <span>Profil</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogout} className="text-xs" disabled={logoutLoading}>
-                      <LogOut className="mr-2 h-3 w-3" />
+                    <LogOut className="mr-2 h-3 w-3" />
                       <span>{logoutLoading ? "Déconnexion..." : "Se Déconnecter"}</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
+        </div>
 
-          {/* Page content */}
+        {/* Page content */}
           <main className="p-6 pb-20 lg:pb-6">{children}</main>
         </div>
       </div>
