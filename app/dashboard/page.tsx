@@ -110,8 +110,8 @@ export default function DashboardPage() {
         {/* Stats Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {statsCards.map((stat) => (
-            <Card key={stat.title} className="hover:shadow-sm transition-shadow cursor-pointer border-gray-200" asChild>
-              <a href={stat.href}>
+            <Card key={stat.title} className="hover:shadow-sm transition-shadow cursor-pointer border-gray-200">
+              <a href={stat.href} className="block">
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
                     <div>

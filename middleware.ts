@@ -4,10 +4,29 @@ import type { NextRequest } from "next/server"
 // Rate limiting store (use Redis in production)
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>()
 
+// Auth pages that should redirect authenticated users to dashboard
+const authPages = ["/login", "/register", "/verify"]
+
 export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  // Check if user is accessing an auth page
+  const isAuthPage = authPages.some(page => pathname === page)
+  
+  if (isAuthPage) {
+    // Check for authentication tokens
+    const authToken = request.cookies.get("authToken")?.value
+    const accessToken = request.cookies.get("accessToken")?.value
+    
+    // If user has valid tokens, redirect to dashboard
+    if (authToken || accessToken) {
+      return NextResponse.redirect(new URL("/dashboard", request.url))
+    }
+  }
+
   // Rate limiting for OTP endpoints
   if (request.nextUrl.pathname.startsWith("/api/send-otp") || request.nextUrl.pathname.startsWith("/api/verify-otp")) {
-    const ip = request.ip || request.headers.get("x-forwarded-for") || "unknown"
+    const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown"
     const now = Date.now()
     const windowMs = 15 * 60 * 1000 // 15 minutes
     const maxRequests = 5

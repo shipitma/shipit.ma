@@ -38,6 +38,23 @@ interface AuthContextType {
   prefetchDashboardData: () => Promise<void>
 }
 
+// Utility functions for token storage
+const setToken = (key: string, value: string) => {
+  localStorage.setItem(key, value)
+  // Also set in cookies for middleware access
+  document.cookie = `${key}=${value}; path=/; max-age=${30 * 24 * 60 * 60}; SameSite=Lax`
+}
+
+const getToken = (key: string): string | null => {
+  return localStorage.getItem(key)
+}
+
+const removeToken = (key: string) => {
+  localStorage.removeItem(key)
+  // Also remove from cookies
+  document.cookie = `${key}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`
+}
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -59,7 +76,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return true
       } else if (response.status === 401) {
         // Try to refresh token if we have a refresh token
-        const refreshToken = localStorage.getItem("refreshToken")
+        const refreshToken = getToken("refreshToken")
         if (refreshToken) {
           const refreshed = await refreshAccessToken(refreshToken)
           if (refreshed) {
@@ -67,9 +84,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           }
         }
         // Clear invalid tokens
-        localStorage.removeItem("authToken")
-        localStorage.removeItem("accessToken")
-        localStorage.removeItem("refreshToken")
+        removeToken("authToken")
+        removeToken("accessToken")
+        removeToken("refreshToken")
         setUser(null)
         setSessionId(null)
         setAccessToken(null)
@@ -77,9 +94,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     } catch (error) {
       console.error("Error fetching user:", error)
-      localStorage.removeItem("authToken")
-      localStorage.removeItem("accessToken")
-      localStorage.removeItem("refreshToken")
+      removeToken("authToken")
+      removeToken("accessToken")
+      removeToken("refreshToken")
       setUser(null)
       setSessionId(null)
       setAccessToken(null)
@@ -98,8 +115,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (response.ok) {
         const data = await response.json()
-        localStorage.setItem("accessToken", data.accessToken)
-        localStorage.setItem("authToken", data.sessionId)
+        setToken("accessToken", data.accessToken)
+        setToken("authToken", data.sessionId)
         setAccessToken(data.accessToken)
         setSessionId(data.sessionId)
         return data
@@ -132,12 +149,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const initAuth = async () => {
       setLoading(true)
       // Try access token first (Neon Auth)
-      const storedAccessToken = localStorage.getItem("accessToken")
+      const storedAccessToken = getToken("accessToken")
       if (storedAccessToken) {
         const success = await fetchUser(storedAccessToken)
         if (success) {
           setAccessToken(storedAccessToken)
-          setSessionId(localStorage.getItem("authToken"))
+          setSessionId(getToken("authToken"))
           await prefetchDashboardData()
           setLoading(false)
           return
@@ -145,7 +162,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       // Fallback to session ID
-      const storedSessionId = localStorage.getItem("authToken")
+      const storedSessionId = getToken("authToken")
       if (storedSessionId) {
         const success = await fetchUser(storedSessionId)
         if (success) {
@@ -161,11 +178,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (newSessionId: string, newAccessToken?: string, refreshToken?: string) => {
     setLoading(true)
-    localStorage.setItem("authToken", newSessionId)
+    setToken("authToken", newSessionId)
     setSessionId(newSessionId)
 
     if (newAccessToken) {
-      localStorage.setItem("accessToken", newAccessToken)
+      setToken("accessToken", newAccessToken)
       setAccessToken(newAccessToken)
       await fetchUser(newAccessToken)
     } else {
@@ -173,7 +190,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     if (refreshToken) {
-      localStorage.setItem("refreshToken", refreshToken)
+      setToken("refreshToken", refreshToken)
     }
 
     // Prefetch dashboard data immediately after login
@@ -183,23 +200,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     try {
-      const token = accessToken || sessionId
-      if (token) {
+      const currentSessionId = sessionId
+      if (currentSessionId) {
         await fetch("/api/logout", {
           method: "POST",
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ sessionId: currentSessionId }),
         })
       }
     } catch (error) {
       console.error("Error during logout:", error)
     } finally {
-      localStorage.removeItem("authToken")
-      localStorage.removeItem("accessToken")
-      localStorage.removeItem("refreshToken")
+      removeToken("authToken")
+      removeToken("accessToken")
+      removeToken("refreshToken")
       setUser(null)
       setSessionId(null)
       setAccessToken(null)
       setDashboardStats(null)
+      // Redirect to login page
+      window.location.href = "/login"
     }
   }
 

@@ -1,55 +1,34 @@
 "use client"
 
 import type React from "react"
-
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Loader2, User, Mail, MapPin, Phone } from "lucide-react"
+import { Loader2, User, Phone } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { useAuthRedirect } from "@/hooks/use-auth-redirect"
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    addressLine: "",
-    city: "",
-    state: "",
-    zip: "",
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
   })
-  const [phoneNumber, setPhoneNumber] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const { toast } = useToast()
-
-  useEffect(() => {
-    const storedPhone = sessionStorage.getItem("phoneNumber")
-    if (!storedPhone) {
-      router.push("/login")
-      return
-    }
-    setPhoneNumber(storedPhone)
-  }, [router])
+  const { loading: authLoading } = useAuthRedirect()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!formData.fullName.trim()) {
+    if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.phoneNumber.trim()) {
       toast({
         title: "Erreur",
-        description: "Le nom complet est requis",
-        variant: "destructive",
-      })
-      return
-    }
-
-    if (!formData.addressLine.trim() || !formData.city.trim()) {
-      toast({
-        title: "Erreur",
-        description: "L'adresse et la ville sont requis",
+        description: "Veuillez remplir tous les champs requis.",
         variant: "destructive",
       })
       return
@@ -58,47 +37,31 @@ export default function RegisterPage() {
     setIsLoading(true)
 
     try {
-      const sessionId = sessionStorage.getItem("registrationSessionId")
-      if (!sessionId) {
-        throw new Error("Session expirée")
-      }
-
-      const response = await fetch("/api/register", {
+      const fullPhoneNumber = "+212" + formData.phoneNumber.replace(/^0+/, "")
+      const response = await fetch("/api/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          sessionId,
-          fullName: formData.fullName,
-          email: formData.email,
-          address: {
-            line: formData.addressLine,
-            city: formData.city,
-            state: formData.state,
-            zip: formData.zip,
-            country: "Morocco",
-          },
-        }),
+        body: JSON.stringify({ phoneNumber: fullPhoneNumber }),
       })
 
-      const data = await response.json()
-
-      if (response.ok && data.success) {
-        // Store auth token and redirect to dashboard
-        localStorage.setItem("authToken", data.sessionId)
-        sessionStorage.removeItem("phoneNumber")
-        sessionStorage.removeItem("registrationSessionId")
-        router.push("/dashboard")
+      if (response.ok) {
+        // Store user info for completion step
+        sessionStorage.setItem("phoneNumber", fullPhoneNumber)
+        sessionStorage.setItem("firstName", formData.firstName)
+        sessionStorage.setItem("lastName", formData.lastName)
+        
+        router.push("/verify")
         toast({
-          title: "Bienvenue !",
-          description: "Votre compte a été créé avec succès",
+          title: "Code Envoyé",
+          description: "Vérifiez votre WhatsApp pour le code de vérification.",
         })
       } else {
-        throw new Error(data.error || "Registration failed")
+        throw new Error("Échec de l'envoi du code OTP.")
       }
     } catch (error) {
       toast({
         title: "Erreur",
-        description: error instanceof Error ? error.message : "Registration failed",
+        description: error instanceof Error ? error.message : "Une erreur est survenue.",
         variant: "destructive",
       })
     } finally {
@@ -110,129 +73,99 @@ export default function RegisterPage() {
     setFormData((prev) => ({ ...prev, [field]: value }))
   }
 
+  // Show loading while checking authentication
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mx-auto mb-4"></div>
+          <p className="text-sm text-gray-600">Chargement...</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <Card className="w-full max-w-md border-gray-200">
         <CardHeader className="text-center pb-4">
-          <CardTitle className="text-lg font-semibold">Complétez Votre Profil</CardTitle>
-          <CardDescription className="text-xs text-gray-600">Parlez-nous un peu de vous pour commencer</CardDescription>
+          <CardTitle className="text-lg font-semibold">Créer un Compte</CardTitle>
+          <CardDescription className="text-xs text-gray-600">
+            Commencez par nous donner quelques informations de base.
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-3">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="firstName" className="text-xs">
+                  Prénom *
+                </Label>
+                <Input
+                  id="firstName"
+                  type="text"
+                  placeholder="Prénom"
+                  value={formData.firstName}
+                  onChange={(e) => handleInputChange("firstName", e.target.value)}
+                  className="h-9 text-sm"
+                  required
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="lastName" className="text-xs">
+                  Nom *
+                </Label>
+                <Input
+                  id="lastName"
+                  type="text"
+                  placeholder="Nom"
+                  value={formData.lastName}
+                  onChange={(e) => handleInputChange("lastName", e.target.value)}
+                  className="h-9 text-sm"
+                  required
+                />
+              </div>
+            </div>
+
             <div className="space-y-1">
               <Label htmlFor="phone" className="text-xs">
-                Numéro de Téléphone
+                Téléphone WhatsApp *
               </Label>
-              <div className="flex items-center gap-2 p-2 bg-gray-50 rounded-md">
-                <Phone className="w-3 h-3 text-gray-500" />
-                <span className="text-xs">{phoneNumber}</span>
-              </div>
-            </div>
-
-            <div className="space-y-1">
-              <Label htmlFor="fullName" className="text-xs">
-                Nom Complet *
-              </Label>
-              <div className="relative">
-                <User className="absolute left-2 top-2 w-3 h-3 text-gray-400" />
+              <div className="flex">
+                <div className="flex items-center px-3 border border-r-0 rounded-l-md bg-gray-50 text-gray-600 text-sm">
+                  +212
+                </div>
                 <Input
-                  id="fullName"
-                  type="text"
-                  placeholder="Entrez votre nom complet"
-                  value={formData.fullName}
-                  onChange={(e) => handleInputChange("fullName", e.target.value)}
-                  className="pl-7 h-8 text-xs"
+                  id="phone"
+                  type="tel"
+                  placeholder="612345678"
+                  value={formData.phoneNumber}
+                  onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
+                  className="rounded-l-none h-9 text-sm"
                   required
                 />
               </div>
             </div>
 
-            <div className="space-y-1">
-              <Label htmlFor="email" className="text-xs">
-                Adresse Email (Optionnel)
-              </Label>
-              <div className="relative">
-                <Mail className="absolute left-2 top-2 w-3 h-3 text-gray-400" />
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="Entrez votre email"
-                  value={formData.email}
-                  onChange={(e) => handleInputChange("email", e.target.value)}
-                  className="pl-7 h-8 text-xs"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-1">
-              <Label htmlFor="addressLine" className="text-xs">
-                Ligne d'Adresse *
-              </Label>
-              <div className="relative">
-                <MapPin className="absolute left-2 top-2 w-3 h-3 text-gray-400" />
-                <Input
-                  id="addressLine"
-                  placeholder="Adresse, appartement, suite, etc."
-                  value={formData.addressLine}
-                  onChange={(e) => handleInputChange("addressLine", e.target.value)}
-                  className="pl-7 h-8 text-xs"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-1">
-                <Label htmlFor="city" className="text-xs">
-                  Ville *
-                </Label>
-                <Input
-                  id="city"
-                  placeholder="Ville"
-                  value={formData.city}
-                  onChange={(e) => handleInputChange("city", e.target.value)}
-                  className="h-8 text-xs"
-                  required
-                />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="state" className="text-xs">
-                  État/Province (Optionnel)
-                </Label>
-                <Input
-                  id="state"
-                  placeholder="État/Province"
-                  value={formData.state}
-                  onChange={(e) => handleInputChange("state", e.target.value)}
-                  className="h-8 text-xs"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-1">
-              <Label htmlFor="zip" className="text-xs">
-                Code Postal (Optionnel)
-              </Label>
-              <Input
-                id="zip"
-                placeholder="Code postal"
-                value={formData.zip}
-                onChange={(e) => handleInputChange("zip", e.target.value)}
-                className="h-8 text-xs"
-              />
-            </div>
-
-            <Button type="submit" className="w-full h-8 text-xs" disabled={isLoading}>
+            <Button type="submit" className="w-full h-9 text-sm" disabled={isLoading}>
               {isLoading ? (
                 <>
-                  <Loader2 className="mr-1 h-3 w-3 animate-spin" />
-                  Création du Compte...
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Envoi du code...
                 </>
               ) : (
-                "Terminer l'Inscription"
+                "Continuer"
               )}
             </Button>
           </form>
+          <div className="mt-4 text-center text-xs">
+            <p className="text-gray-500">
+              Vous avez déjà un compte ?{" "}
+              <a href="/login" className="font-medium text-orange-600 hover:underline">
+                Se connecter
+              </a>
+            </p>
+          </div>
         </CardContent>
       </Card>
     </div>

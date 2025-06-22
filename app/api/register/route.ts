@@ -9,9 +9,9 @@ import {
 
 export async function POST(request: NextRequest) {
   try {
-    const { sessionId, fullName, email, address } = await request.json()
+    const { sessionId, firstName, lastName, email, address } = await request.json()
 
-    if (!sessionId || !fullName || !address) {
+    if (!sessionId || !firstName || !lastName || !address) {
       return NextResponse.json({ error: "Données d'inscription incomplètes" }, { status: 400 })
     }
 
@@ -20,11 +20,6 @@ export async function POST(request: NextRequest) {
     if (!session || session.session_type !== "pending_registration") {
       return NextResponse.json({ error: "Session invalide ou expirée" }, { status: 401 })
     }
-
-    // Parse full name
-    const nameParts = fullName.trim().split(" ")
-    const firstName = nameParts[0]
-    const lastName = nameParts.slice(1).join(" ") || firstName
 
     // Create user with Neon Auth
     const userId = await createNeonUser({
