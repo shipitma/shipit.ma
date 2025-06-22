@@ -1,4 +1,4 @@
-package com.v0shipiti.app;
+package com.example.app;
 
 import com.getcapacitor.BridgeActivity;
 
