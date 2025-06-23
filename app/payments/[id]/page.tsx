@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import * as React from "react"
 
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -151,7 +151,8 @@ const formatCurrency = (amount: number | undefined) => {
   }).format(amount)
 }
 
-export default function PaymentDetailsPage({ params }: { params: { id: string } }) {
+export default function PaymentDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = React.use(params)
   const [isPaymentOpen, setIsPaymentOpen] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState("")
   const [paymentNotes, setPaymentNotes] = useState("")
@@ -174,7 +175,7 @@ export default function PaymentDetailsPage({ params }: { params: { id: string } 
     const fetchPaymentData = async () => {
       try {
         const token = localStorage.getItem("authToken")
-        const response = await fetch(`/api/payments/${params.id}`, {
+        const response = await fetch(`/api/payments/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -188,7 +189,7 @@ export default function PaymentDetailsPage({ params }: { params: { id: string } 
         setPaymentData(data)
 
         // Fetch attachments for this payment
-        const attachmentsResponse = await fetch(`/api/attachments?relatedType=payment&relatedId=${params.id}`, {
+        const attachmentsResponse = await fetch(`/api/attachments?relatedType=payment&relatedId=${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -219,7 +220,7 @@ export default function PaymentDetailsPage({ params }: { params: { id: string } 
     }
 
     fetchPaymentData()
-  }, [params.id, toast])
+  }, [id, toast])
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
@@ -244,7 +245,7 @@ export default function PaymentDetailsPage({ params }: { params: { id: string } 
         formData.append("file", file)
         formData.append("type", "receipt")
         formData.append("relatedType", "payment")
-        formData.append("relatedId", params.id)
+        formData.append("relatedId", id)
 
         const response = await fetch("/api/upload", {
           method: "POST",

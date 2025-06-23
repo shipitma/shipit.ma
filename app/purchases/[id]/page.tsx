@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ArrowLeft, DollarSign, Check, Upload, ExternalLink, Package, FileText, ImageIcon, Receipt } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { type PurchaseRequest, formatCurrency, formatDate } from "@/lib/database"
+import * as React from "react"
 
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -32,7 +33,8 @@ const getStatusColor = (status: string) => {
   }
 }
 
-export default function PurchaseRequestDetailPage({ params }: { params: { id: string } }) {
+export default function PurchaseRequestDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = React.use(params)
   const router = useRouter()
   const { toast } = useToast()
   const [isPaymentOpen, setIsPaymentOpen] = useState(false)
@@ -42,7 +44,7 @@ export default function PurchaseRequestDetailPage({ params }: { params: { id: st
   useEffect(() => {
     async function fetchPurchaseRequest() {
       try {
-        const response = await fetch(`/api/purchase-requests/${params.id}`)
+        const response = await fetch(`/api/purchase-requests/${id}`)
         if (response.ok) {
           const data = await response.json()
           setPurchaseRequest(data)
@@ -66,7 +68,7 @@ export default function PurchaseRequestDetailPage({ params }: { params: { id: st
     }
 
     fetchPurchaseRequest()
-  }, [params.id, toast])
+  }, [id, toast])
 
   const handlePayment = () => {
     toast({

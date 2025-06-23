@@ -23,6 +23,7 @@ import {
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { type PackageType, formatCurrency } from "@/lib/database"
+import * as React from "react"
 
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -59,17 +60,18 @@ const formatDate = (dateString: string): string => {
   return `${day}/${month}/${year}`
 }
 
-export default function PackageDetailPage({ params }: { params: { id: string } }) {
+export default function PackageDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter()
   const { toast } = useToast()
   const [isPaymentOpen, setIsPaymentOpen] = useState(false)
   const [packageData, setPackageData] = useState<PackageType | null>(null)
   const [loading, setLoading] = useState(true)
+  const { id } = React.use(params)
 
   useEffect(() => {
     async function fetchPackage() {
       try {
-        const response = await fetch(`/api/packages/${params.id}`)
+        const response = await fetch(`/api/packages/${id}`)
         if (response.ok) {
           const data = await response.json()
           setPackageData(data)
@@ -93,7 +95,7 @@ export default function PackageDetailPage({ params }: { params: { id: string } }
     }
 
     fetchPackage()
-  }, [params.id, toast])
+  }, [id, toast])
 
   const handlePayShipping = () => {
     toast({
