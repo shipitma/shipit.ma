@@ -8,22 +8,37 @@ import { useToast } from "@/hooks/use-toast"
 import { useAuth } from "@/lib/auth-context"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useDashboardStats } from "@/hooks/use-dashboard-stats"
+import { useAnalytics } from "@/hooks/use-analytics"
 
 export default function DashboardPage() {
   const { user } = useAuth()
   const { stats, loading, error } = useDashboardStats()
   const { toast } = useToast()
+  const { trackDashboard, trackError } = useAnalytics()
+
+  // Track page view
+  useEffect(() => {
+    trackDashboard('PAGE_VIEW', {
+      user_id: user?.id,
+      has_stats: !!stats,
+      total_packages: (stats?.expected_packages || 0) + (stats?.warehouse_packages || 0) + (stats?.shipped_packages || 0)
+    })
+  }, [trackDashboard, user?.id, stats])
 
   // Show error toast if there's an error
   useEffect(() => {
     if (error) {
+      trackError('API_ERROR', { 
+        error_message: error,
+        endpoint: '/api/dashboard/stats'
+      })
       toast({
         title: "Erreur",
         description: error,
         variant: "destructive",
       })
     }
-  }, [error, toast])
+  }, [error, toast, trackError])
 
   const getFullName = () => {
     if (!user) return "Utilisateur"
@@ -32,6 +47,10 @@ export default function DashboardPage() {
 
   const getFirstName = () => {
     return user?.first_name || "Utilisateur"
+  }
+
+  const handleActionClick = (action: string) => {
+    trackDashboard('ACTION_CLICK', { action })
   }
 
   const statsCards = [
@@ -88,7 +107,7 @@ export default function DashboardPage() {
           </p>
           <div className="flex gap-2">
             <Button variant="secondary" size="sm" asChild className="h-7 text-xs">
-              <a href="/purchases/create">
+              <a href="/purchases/create" onClick={() => handleActionClick('new_purchase_request')}>
                 <Plus className="w-3 h-3 mr-1" />
                 Nouvelle Demande
               </a>
@@ -99,7 +118,7 @@ export default function DashboardPage() {
               className="border-white hover:bg-white hover:text-orange-600 h-7 text-xs text-orange-500"
               asChild
             >
-              <a href="/packages/create">
+              <a href="/packages/create" onClick={() => handleActionClick('add_package')}>
                 <Package className="w-3 h-3 mr-1" />
                 Ajouter Colis
               </a>
@@ -111,7 +130,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {statsCards.map((stat) => (
             <Card key={stat.title} className="hover:shadow-sm transition-shadow cursor-pointer border-gray-200">
-              <a href={stat.href} className="block">
+              <a href={stat.href} className="block" onClick={() => handleActionClick(`view_${stat.title.toLowerCase().replace(/\s+/g, '_')}`)}>
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
                     <div>

@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Search, Filter, DollarSign, CheckCircle, Clock, XCircle, Eye, CreditCard, AlertCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { useAnalytics } from "@/hooks/use-analytics"
 import { type PaymentRequest, formatCurrency, formatDate } from "@/lib/database"
 
 const getStatusColor = (status: string) => {
@@ -35,10 +36,13 @@ export default function PaymentsPage() {
     paid: 0,
     processing: 0,
   })
+  const [loading, setLoading] = useState(true)
   const { toast } = useToast()
+  const { trackPayment, trackError } = useAnalytics()
 
   const fetchData = async (status?: string) => {
     try {
+      setLoading(true)
       const sessionId = localStorage.getItem("authToken")
       if (!sessionId) {
         toast({
@@ -68,6 +72,10 @@ export default function PaymentsPage() {
       setPaymentRequests(Array.isArray(paymentsData) ? paymentsData : [])
       setStats(statsData)
     } catch (error) {
+      trackError('API_ERROR', { 
+        error_message: error instanceof Error ? error.message : 'Unknown error',
+        endpoint: '/api/payments'
+      })
       console.error("Error fetching data:", error)
       setPaymentRequests([])
       toast({
@@ -75,6 +83,8 @@ export default function PaymentsPage() {
         description: "Impossible de charger les données",
         variant: "destructive",
       })
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -84,7 +94,10 @@ export default function PaymentsPage() {
 
   // Fetch data when status filter changes
   useEffect(() => {
-    fetchData(statusFilter)
+    if (!loading) {
+      trackPayment('PAYMENT_FILTER', { filter_type: statusFilter })
+      fetchData(statusFilter)
+    }
   }, [statusFilter])
 
   const filteredRequests = paymentRequests.filter((payment) => {
@@ -95,29 +108,11 @@ export default function PaymentsPage() {
     return matchesSearch
   })
 
-  if (paymentRequests.length === 0) {
-    return (
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-lg font-semibold">Paiements</h1>
-            <p className="text-xs text-gray-600">Chargement...</p>
-          </div>
-        </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {[1, 2, 3, 4].map((i) => (
-            <Card key={i} className="border-gray-200">
-              <CardContent className="p-4">
-                <div className="animate-pulse">
-                  <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                  <div className="h-6 bg-gray-200 rounded"></div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-    )
+  const handleSearch = (value: string) => {
+    setSearchTerm(value)
+    if (value) {
+      trackPayment('PAYMENT_SEARCH', { search_query: value })
+    }
   }
 
   return (
@@ -192,7 +187,7 @@ export default function PaymentsPage() {
           <Input
             placeholder="Rechercher des paiements..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => handleSearch(e.target.value)}
             className="pl-7 h-8 text-xs"
           />
         </div>
@@ -222,17 +217,41 @@ export default function PaymentsPage() {
       </div>
 
       {/* Payment Cards Grid */}
-      {filteredRequests.length === 0 ? (
+      {loading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[1, 2, 3].map((i) => (
+            <Card key={i} className="border-gray-200">
+              <CardContent className="p-4">
+                <div className="animate-pulse">
+                  <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                  <div className="h-6 bg-gray-200 rounded mb-4"></div>
+                  <div className="space-y-2">
+                    <div className="h-3 bg-gray-200 rounded"></div>
+                    <div className="h-3 bg-gray-200 rounded"></div>
+                    <div className="h-3 bg-gray-200 rounded"></div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : filteredRequests.length === 0 ? (
         <Card className="border-gray-200">
-          <CardContent className="p-8 text-center">
-            <CreditCard className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-600 mb-2">Aucun paiement trouvé</h3>
-            <p className="text-sm text-gray-500">
+          <CardHeader className="text-center pb-4">
+            <div className="flex justify-center mb-4">
+              <div className="p-3 rounded-full bg-gray-100">
+                <CreditCard className="w-8 h-8 text-gray-400" />
+              </div>
+            </div>
+            <CardTitle className="text-lg font-semibold text-gray-900">
+              Aucun paiement trouvé
+            </CardTitle>
+            <CardDescription className="text-sm text-gray-600">
               {searchTerm || statusFilter !== "all"
                 ? "Aucun paiement ne correspond à vos critères de recherche."
                 : "Vous n'avez pas encore de demandes de paiement."}
-            </p>
-          </CardContent>
+            </CardDescription>
+          </CardHeader>
         </Card>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -268,14 +287,29 @@ export default function PaymentsPage() {
                 </div>
 
                 <div className="flex flex-col gap-2 pt-2">
-                  <Button variant="outline" size="sm" className="w-full h-7 text-xs" asChild>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full h-7 text-xs" 
+                    asChild
+                    onClick={() => trackPayment('VIEW_PAYMENT_DETAILS', { paymentId: payment.id })}
+                  >
                     <a href={`/payments/${payment.id}`}>
                       <Eye className="w-3 h-3 mr-1" />
                       Voir Détails
                     </a>
                   </Button>
                   {(payment.status === "pending" || payment.status === "overdue") && (
-                    <Button size="sm" className="w-full h-7 text-xs" asChild>
+                    <Button 
+                      size="sm" 
+                      className="w-full h-7 text-xs" 
+                      asChild
+                      onClick={() => trackPayment('PAYMENT_METHOD_SELECTED', { 
+                        paymentId: payment.id,
+                        payment_method: 'manual',
+                        amount: payment.amount
+                      })}
+                    >
                       <a href={`/payments/${payment.id}`}>
                         <CreditCard className="w-3 h-3 mr-1" />
                         Payer Maintenant

@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { getCurrentUser } from "@/lib/database"
+import { validateNeonToken, getNeonUserById } from "@/lib/auth"
 import { neon } from "@neondatabase/serverless"
 
 function getDatabase() {
@@ -13,13 +13,26 @@ function getDatabase() {
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params
-    const sessionId = request.headers.get("authorization")?.replace("Bearer ", "")
+    const authHeader = request.headers.get("authorization")
 
-    if (!sessionId) {
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return NextResponse.json({ error: "Authentication required" }, { status: 401 })
     }
 
-    const user = await getCurrentUser(sessionId)
+    const token = authHeader.substring(7)
+    
+    // Validate the token
+    const tokenValidation = await validateNeonToken(token)
+    if (!tokenValidation.valid || !tokenValidation.userId) {
+      return NextResponse.json({ error: "Invalid token" }, { status: 401 })
+    }
+
+    // Check if the user is requesting their own data
+    if (tokenValidation.userId !== id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 })
+    }
+
+    const user = await getNeonUserById(id)
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 })
     }
@@ -34,32 +47,46 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params
-    const sessionId = request.headers.get("authorization")?.replace("Bearer ", "")
+    const authHeader = request.headers.get("authorization")
 
-    if (!sessionId) {
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return NextResponse.json({ error: "Authentication required" }, { status: 401 })
     }
 
-    const user = await getCurrentUser(sessionId)
-    if (!user || user.id !== id) {
+    const token = authHeader.substring(7)
+    
+    // Validate the token
+    const tokenValidation = await validateNeonToken(token)
+    if (!tokenValidation.valid || !tokenValidation.userId) {
+      return NextResponse.json({ error: "Invalid token" }, { status: 401 })
+    }
+
+    // Check if the user is updating their own data
+    if (tokenValidation.userId !== id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 })
     }
 
     const body = await request.json()
     const sql = getDatabase()
 
+    // Get current user data to preserve unchanged fields
+    const currentUser = await getNeonUserById(id)
+    if (!currentUser) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 })
+    }
+
     // Update user data
     const [updatedUser] = await sql`
       UPDATE users 
       SET 
-        first_name = ${body.first_name || user.first_name},
-        last_name = ${body.last_name || user.last_name},
-        email = ${body.email || user.email || null},
-        address_line = ${body.address_line || user.address_line},
-        city = ${body.city || user.city},
-        state = ${body.state || user.state || null},
-        zip = ${body.zip || user.zip || null},
-        country = ${body.country || user.country},
+        first_name = ${body.first_name || currentUser.first_name},
+        last_name = ${body.last_name || currentUser.last_name},
+        email = ${body.email || currentUser.email || null},
+        address_line = ${body.address_line || currentUser.address_line},
+        city = ${body.city || currentUser.city},
+        state = ${body.state || currentUser.state || null},
+        zip = ${body.zip || currentUser.zip || null},
+        country = ${body.country || currentUser.country},
         updated_at = NOW()
       WHERE id = ${id}
       RETURNING *

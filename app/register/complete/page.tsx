@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Loader2, ArrowLeft, User, Mail, MapPin } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { useAuth } from "@/lib/auth-context"
+import { useAnalytics } from "@/hooks/use-analytics"
 
 interface FormData {
   firstName: string
@@ -43,6 +44,7 @@ export default function CompleteRegistrationPage() {
   const router = useRouter()
   const { toast } = useToast()
   const { login } = useAuth()
+  const { trackAuth, trackError } = useAnalytics()
 
   useEffect(() => {
     // Get stored data from session storage
@@ -70,7 +72,14 @@ export default function CompleteRegistrationPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.address.line.trim() || !formData.address.city.trim()) {
+    const missingFields = []
+    if (!formData.firstName.trim()) missingFields.push('firstName')
+    if (!formData.lastName.trim()) missingFields.push('lastName')
+    if (!formData.address.line.trim()) missingFields.push('address.line')
+    if (!formData.address.city.trim()) missingFields.push('address.city')
+
+    if (missingFields.length > 0) {
+      trackAuth('REGISTRATION_COMPLETION_VALIDATION_ERROR', { missing_fields: missingFields })
       toast({
         title: "Erreur",
         description: "Veuillez remplir tous les champs requis.",
@@ -97,6 +106,12 @@ export default function CompleteRegistrationPage() {
       const data = await response.json()
 
       if (response.ok && data.success) {
+        trackAuth('REGISTRATION_COMPLETED', { 
+          phoneNumber,
+          hasEmail: !!formData.email,
+          country: formData.address.country
+        })
+        
         // Clear session storage
         sessionStorage.removeItem("registrationSessionId")
         sessionStorage.removeItem("phoneNumber")
@@ -113,6 +128,10 @@ export default function CompleteRegistrationPage() {
 
         router.push("/dashboard")
       } else {
+        trackError('API_ERROR', { 
+          error_message: data.error || 'Unknown error',
+          endpoint: '/api/register'
+        })
         throw new Error(data.error || "Échec de l'inscription")
       }
     } catch (error) {

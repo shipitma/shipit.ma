@@ -10,17 +10,20 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Loader2, MessageCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { useAnalytics } from "@/hooks/use-analytics"
 
 export default function LoginPage() {
   const [phoneNumber, setPhoneNumber] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const { toast } = useToast()
+  const { trackAuth, trackError } = useAnalytics()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!phoneNumber.trim()) {
+      trackAuth('LOGIN_VALIDATION_ERROR', { missing_fields: ['phoneNumber'] })
       toast({
         title: "Erreur",
         description: "Veuillez entrer votre numéro de téléphone",
@@ -41,6 +44,7 @@ export default function LoginPage() {
       })
 
       if (response.ok) {
+        trackAuth('LOGIN_OTP_SENT', { phoneNumber: fullPhoneNumber })
         // Store phone number for verification page
         sessionStorage.setItem("phoneNumber", fullPhoneNumber)
         router.push("/verify")
@@ -52,6 +56,10 @@ export default function LoginPage() {
         throw new Error("Failed to send OTP")
       }
     } catch (error) {
+      trackError('API_ERROR', { 
+        error_message: error instanceof Error ? error.message : 'Unknown error',
+        endpoint: '/api/send-otp'
+      })
       toast({
         title: "Erreur",
         description: "Échec de l'envoi du code. Veuillez réessayer.",

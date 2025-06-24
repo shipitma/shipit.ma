@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Loader2, User, Phone } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { useAnalytics } from "@/hooks/use-analytics"
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -19,11 +20,18 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const { toast } = useToast()
+  const { trackAuth, trackError } = useAnalytics()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.phoneNumber.trim()) {
+      const missingFields = []
+      if (!formData.firstName.trim()) missingFields.push('firstName')
+      if (!formData.lastName.trim()) missingFields.push('lastName')
+      if (!formData.phoneNumber.trim()) missingFields.push('phoneNumber')
+      
+      trackAuth('REGISTRATION_VALIDATION_ERROR', { missing_fields: missingFields })
       toast({
         title: "Erreur",
         description: "Veuillez remplir tous les champs requis.",
@@ -47,6 +55,7 @@ export default function RegisterPage() {
       if (checkResponse.ok) {
         const { exists } = await checkResponse.json()
         if (exists) {
+          trackAuth('REGISTRATION_EXISTING_USER', { phoneNumber: fullPhoneNumber })
           toast({
             title: "Compte existant",
             description: "Un compte existe déjà avec ce numéro. Veuillez vous connecter.",
@@ -64,6 +73,7 @@ export default function RegisterPage() {
       })
 
       if (response.ok) {
+        trackAuth('REGISTRATION_OTP_SENT', { phoneNumber: fullPhoneNumber })
         // Store user info for completion step
         sessionStorage.setItem("phoneNumber", fullPhoneNumber)
         sessionStorage.setItem("firstName", formData.firstName)
@@ -78,6 +88,10 @@ export default function RegisterPage() {
         throw new Error("Échec de l'envoi du code OTP.")
       }
     } catch (error) {
+      trackError('API_ERROR', { 
+        error_message: error instanceof Error ? error.message : 'Unknown error',
+        endpoint: '/api/send-otp'
+      })
       toast({
         title: "Erreur",
         description: error instanceof Error ? error.message : "Une erreur est survenue.",

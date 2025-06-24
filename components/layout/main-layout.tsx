@@ -13,8 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Badge } from "@/components/ui/badge"
-import { Package, ShoppingCart, CreditCard, User, Bell, LogOut, Home, Plus, HelpCircle, Phone } from "lucide-react"
+import { Package, ShoppingCart, CreditCard, User, LogOut, Home, Plus, HelpCircle, Phone } from "lucide-react"
 import { useAuth } from "@/lib/auth-context"
 import { useState } from "react"
 import {
@@ -289,14 +288,6 @@ export default function MainLayout({
           <div className="hidden lg:sticky lg:top-0 lg:z-40 lg:flex h-14 items-center justify-between bg-transparent px-6">
             <div>{generateBreadcrumbs()}</div>
             <div className="flex items-center space-x-3">
-              {/* Notifications */}
-              <Button variant="ghost" size="sm" className="relative h-8 w-8">
-                <Bell className="w-4 h-4" />
-                <Badge className="absolute -top-1 -right-1 w-4 h-4 p-0 flex items-center justify-center text-xs">
-                  3
-                </Badge>
-              </Button>
-
               {/* User Profile */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -341,13 +332,6 @@ export default function MainLayout({
             </div>
 
             <div className="flex items-center gap-3">
-              <Button variant="ghost" size="sm" className="relative h-8 w-8">
-                <Bell className="w-4 h-4" />
-                <Badge className="absolute -top-1 -right-1 w-4 h-4 p-0 flex items-center justify-center text-xs">
-                  3
-                </Badge>
-              </Button>
-
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">

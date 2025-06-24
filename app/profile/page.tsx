@@ -9,12 +9,14 @@ import { Badge } from "@/components/ui/badge"
 import { User, Phone, Mail, MapPin, Edit, Save, X } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { useAuth } from "@/lib/auth-context"
+import { useAnalytics } from "@/hooks/use-analytics"
 
 export default function ProfilePage() {
   const [isEditingPersonal, setIsEditingPersonal] = useState(false)
   const [isEditingAddresses, setIsEditingAddresses] = useState(false)
   const [saving, setSaving] = useState(false)
   const { user, sessionId, accessToken, refreshUser } = useAuth()
+  const { trackProfile, trackError } = useAnalytics()
 
   const [personalData, setPersonalData] = useState({
     first_name: "",
@@ -67,6 +69,10 @@ export default function ProfilePage() {
       })
 
       if (response.ok) {
+        trackProfile('UPDATE_PROFILE_SUCCESS', { 
+          field_updated: 'personal_info',
+          hasEmail: !!personalData.email
+        })
         toast({
           title: "Succès",
           description: "Vos informations personnelles ont été sauvegardées avec succès",
@@ -77,6 +83,10 @@ export default function ProfilePage() {
         throw new Error("Failed to update profile")
       }
     } catch (error) {
+      trackError('API_ERROR', { 
+        error_message: error instanceof Error ? error.message : 'Unknown error',
+        endpoint: `/api/users/${user.id}`
+      })
       console.error("Error updating profile:", error)
       toast({
         title: "Erreur",
@@ -104,6 +114,10 @@ export default function ProfilePage() {
       })
 
       if (response.ok) {
+        trackProfile('UPDATE_PROFILE_SUCCESS', { 
+          field_updated: 'address',
+          country: address.country
+        })
         toast({
           title: "Succès",
           description: "Votre adresse d'expédition a été sauvegardée avec succès",
@@ -114,6 +128,10 @@ export default function ProfilePage() {
         throw new Error("Failed to update address")
       }
     } catch (error) {
+      trackError('API_ERROR', { 
+        error_message: error instanceof Error ? error.message : 'Unknown error',
+        endpoint: `/api/users/${user.id}`
+      })
       console.error("Error updating address:", error)
       toast({
         title: "Erreur",

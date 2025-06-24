@@ -7,9 +7,10 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Loader2, ArrowLeft, MessageCircle } from "lucide-react"
+import { Loader2, ArrowLeft, MessageCircle, CheckCircle, XCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { useAuth } from "@/lib/auth-context"
+import { useAnalytics } from "@/hooks/use-analytics"
 
 export default function VerifyPage() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""])
@@ -17,10 +18,13 @@ export default function VerifyPage() {
   const [resendTimer, setResendTimer] = useState(60)
   const [canResend, setCanResend] = useState(false)
   const [phoneNumber, setPhoneNumber] = useState("")
+  const [isNewUser, setIsNewUser] = useState(false)
+  const [sessionId, setSessionId] = useState("")
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
   const router = useRouter()
   const { toast } = useToast()
   const { login } = useAuth()
+  const { trackAuth, trackError } = useAnalytics()
 
   useEffect(() => {
     const storedPhone = sessionStorage.getItem("phoneNumber")
@@ -100,9 +104,13 @@ export default function VerifyPage() {
     const code = otpCode || otp.join("")
 
     if (code.length !== 6) {
+      trackAuth('OTP_VERIFICATION_VALIDATION_ERROR', { 
+        otp_length: code.length,
+        phoneNumber: phoneNumber 
+      })
       toast({
         title: "Erreur",
-        description: "Veuillez entrer le code complet à 6 chiffres",
+        description: "Veuillez entrer un code OTP valide (6 chiffres).",
         variant: "destructive",
       })
       return
@@ -121,37 +129,35 @@ export default function VerifyPage() {
 
       if (response.ok && data.success) {
         if (data.isNewUser) {
-          // Store session ID for registration completion
+          trackAuth('OTP_VERIFICATION_SUCCESS_NEW_USER', { phoneNumber })
+          setIsNewUser(true)
+          setSessionId(data.sessionId)
           sessionStorage.setItem("registrationSessionId", data.sessionId)
-          
-          // Check if user came from registration flow (has stored first/last name)
-          const storedFirstName = sessionStorage.getItem("firstName")
-          const storedLastName = sessionStorage.getItem("lastName")
-          
-          if (storedFirstName && storedLastName) {
-            // User came from registration flow - go to complete registration
-            router.push("/register/complete")
-          } else {
-            // User came from login flow - go to complete registration for new users
-            router.push("/register/complete")
-          }
+          router.push("/register/complete")
         } else {
-          // Use the auth context login method with prefetching
+          trackAuth('OTP_VERIFICATION_SUCCESS_EXISTING_USER', { phoneNumber })
           await login(data.sessionId, data.accessToken, data.refreshToken)
           sessionStorage.removeItem("phoneNumber")
+          sessionStorage.removeItem("registrationSessionId")
           router.push("/dashboard")
         }
         toast({
           title: "Succès",
-          description: "Numéro de téléphone vérifié avec succès",
+          description: data.isNewUser 
+            ? "Numéro de téléphone vérifié avec succès! Complétez votre inscription." 
+            : "Connexion réussie!",
         })
       } else {
-        throw new Error(data.error || "Invalid verification code")
+        trackError('API_ERROR', { 
+          error_message: data.error || 'Unknown error',
+          endpoint: '/api/verify-otp'
+        })
+        throw new Error(data.error || "Échec de la vérification")
       }
     } catch (error) {
       toast({
         title: "Erreur",
-        description: error instanceof Error ? error.message : "Verification failed",
+        description: error instanceof Error ? error.message : "Une erreur est survenue.",
         variant: "destructive",
       })
       // Clear OTP on error

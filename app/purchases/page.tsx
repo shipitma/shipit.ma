@@ -18,6 +18,7 @@ import {
   CreditCard,
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { useAnalytics } from "@/hooks/use-analytics"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -55,14 +56,17 @@ export default function PurchasesPage() {
     purchasing: 0,
     completed: 0,
   })
+  const [loading, setLoading] = useState(true)
   const [isCreateOpen, setIsCreateOpen] = useState(false)
   const [isPaymentOpen, setIsPaymentOpen] = useState(false)
   const [selectedRequest, setSelectedRequest] = useState<PurchaseRequest | null>(null)
   const { toast } = useToast()
+  const { trackPurchase, trackError } = useAnalytics()
   const { user } = useAuth()
 
   const fetchData = async (status?: string) => {
     try {
+      setLoading(true)
       const sessionId = localStorage.getItem("authToken")
       if (!sessionId) {
         toast({
@@ -92,6 +96,10 @@ export default function PurchasesPage() {
       setPurchaseRequests(Array.isArray(requestsData) ? requestsData : [])
       setStats(statsData)
     } catch (error) {
+      trackError('API_ERROR', { 
+        error_message: error instanceof Error ? error.message : 'Unknown error',
+        endpoint: '/api/purchase-requests'
+      })
       console.error("Error fetching data:", error)
       setPurchaseRequests([])
       toast({
@@ -99,6 +107,8 @@ export default function PurchasesPage() {
         description: "Impossible de charger les données",
         variant: "destructive",
       })
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -108,10 +118,19 @@ export default function PurchasesPage() {
 
   // Fetch data when status filter changes
   useEffect(() => {
-    fetchData(statusFilter)
+    if (!loading) {
+      trackPurchase('PURCHASE_FILTER', { filter_type: statusFilter })
+      fetchData(statusFilter)
+    }
   }, [statusFilter])
 
   const handlePayment = () => {
+    if (selectedRequest) {
+      trackPurchase('PURCHASE_PAYMENT_SUBMITTED', { 
+        purchaseId: selectedRequest.id,
+        amount: selectedRequest.payment_due || undefined
+      })
+    }
     toast({
       title: "Succès",
       description: "Paiement soumis pour examen",
@@ -127,6 +146,13 @@ export default function PurchasesPage() {
 
     return matchesSearch
   })
+
+  const handleSearch = (value: string) => {
+    setSearchTerm(value)
+    if (value) {
+      trackPurchase('PURCHASE_SEARCH', { search_query: value })
+    }
+  }
 
   // Calculate total items count
   const getTotalItemsCount = (request: PurchaseRequest) => {
@@ -229,7 +255,7 @@ export default function PurchasesPage() {
           <Input
             placeholder="Rechercher des demandes..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => handleSearch(e.target.value)}
             className="pl-7 h-8 text-xs"
           />
         </div>
@@ -262,63 +288,125 @@ export default function PurchasesPage() {
       </div>
 
       {/* Purchase Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filteredRequests.map((request) => (
-          <Card key={request.id} className="border-gray-200 hover:shadow-sm transition-shadow">
-            <CardHeader className="pb-3">
-              <div className="flex items-start justify-between">
-                <div>
-                  <CardTitle className="text-sm font-semibold">{request.id}</CardTitle>
-                  <CardDescription className="text-xs text-gray-500">{formatDate(request.date)}</CardDescription>
-                </div>
-                <Badge className={getStatusColor(request.status)} variant="secondary">
-                  {request.status.replace("_", " ")}
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <p className="text-xs text-gray-600">
-                {getTotalItemsCount(request)} articles ({request.items?.length || 0} types)
-              </p>
-
-              <div className="space-y-1">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs text-gray-500">Montant Total:</span>
-                  <span className="text-xs font-semibold">{formatCurrency(request.total_amount)}</span>
-                </div>
-                {request.payment_due && (
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-gray-500">Paiement Dû:</span>
-                    <span className="text-xs font-semibold text-orange-600">{formatCurrency(request.payment_due)}</span>
+      {loading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[1, 2, 3].map((i) => (
+            <Card key={i} className="border-gray-200">
+              <CardContent className="p-4">
+                <div className="animate-pulse">
+                  <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                  <div className="h-3 bg-gray-200 rounded mb-4"></div>
+                  <div className="space-y-2">
+                    <div className="h-3 bg-gray-200 rounded"></div>
+                    <div className="h-3 bg-gray-200 rounded"></div>
+                    <div className="h-3 bg-gray-200 rounded"></div>
                   </div>
-                )}
+                  <div className="mt-4 space-y-2">
+                    <div className="h-7 bg-gray-200 rounded"></div>
+                    <div className="h-7 bg-gray-200 rounded"></div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : filteredRequests.length === 0 ? (
+        <Card className="border-gray-200">
+          <CardHeader className="text-center pb-4">
+            <div className="flex justify-center mb-4">
+              <div className="p-3 rounded-full bg-gray-100">
+                <ShoppingCart className="w-8 h-8 text-gray-400" />
               </div>
+            </div>
+            <CardTitle className="text-lg font-semibold text-gray-900">
+              Aucune demande trouvée
+            </CardTitle>
+            <CardDescription className="text-sm text-gray-600">
+              {searchTerm || statusFilter !== "all"
+                ? "Aucune demande ne correspond à vos critères de recherche."
+                : "Vous n'avez pas encore de demandes d'achat. Commencez par créer votre première demande."}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-center pt-0">
+            {!searchTerm && statusFilter === "all" && (
+              <Button size="sm" asChild>
+                <a href="/purchases/create">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Créer votre première demande
+                </a>
+              </Button>
+            )}
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredRequests.map((request) => (
+            <Card key={request.id} className="border-gray-200 hover:shadow-sm transition-shadow">
+              <CardHeader className="pb-3">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <CardTitle className="text-sm font-semibold">{request.id}</CardTitle>
+                    <CardDescription className="text-xs text-gray-500">{formatDate(request.date)}</CardDescription>
+                  </div>
+                  <Badge className={getStatusColor(request.status)} variant="secondary">
+                    {request.status.replace("_", " ")}
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <p className="text-xs text-gray-600">
+                  {getTotalItemsCount(request)} articles ({request.items?.length || 0} types)
+                </p>
 
-              <div className="flex flex-col gap-2 pt-2">
-                <Button variant="outline" size="sm" className="h-7 text-xs" asChild>
-                  <a href={`/purchases/${request.id}`}>
-                    <Eye className="w-3 h-3 mr-1" />
-                    Voir Détails
-                  </a>
-                </Button>
-                {request.status === "pending_payment" && (
-                  <Button
-                    size="sm"
-                    className="h-7 text-xs"
-                    onClick={() => {
-                      setSelectedRequest(request)
-                      setIsPaymentOpen(true)
-                    }}
+                <div className="space-y-1">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500">Montant Total:</span>
+                    <span className="text-xs font-semibold">{formatCurrency(request.total_amount)}</span>
+                  </div>
+                  {request.payment_due && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-500">Paiement Dû:</span>
+                      <span className="text-xs font-semibold text-orange-600">{formatCurrency(request.payment_due)}</span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex flex-col gap-2 pt-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="h-7 text-xs" 
+                    asChild
+                    onClick={() => trackPurchase('VIEW_PURCHASE_DETAILS', { purchaseId: request.id })}
                   >
-                    <DollarSign className="w-3 h-3 mr-1" />
-                    Payer Maintenant
+                    <a href={`/purchases/${request.id}`}>
+                      <Eye className="w-3 h-3 mr-1" />
+                      Voir Détails
+                    </a>
                   </Button>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+                  {request.status === "pending_payment" && (
+                    <Button
+                      size="sm"
+                      className="h-7 text-xs"
+                      onClick={() => {
+                        trackPurchase('PURCHASE_PAYMENT_INITIATED', { 
+                          purchaseId: request.id,
+                          amount: request.payment_due || undefined
+                        })
+                        setSelectedRequest(request)
+                        setIsPaymentOpen(true)
+                      }}
+                    >
+                      <DollarSign className="w-3 h-3 mr-1" />
+                      Payer Maintenant
+                    </Button>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
 
       {/* Payment Dialog */}
       <Dialog open={isPaymentOpen} onOpenChange={setIsPaymentOpen}>
