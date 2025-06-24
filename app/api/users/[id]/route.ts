@@ -10,8 +10,9 @@ function getDatabase() {
   return neon(databaseUrl)
 }
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params
     const sessionId = request.headers.get("authorization")?.replace("Bearer ", "")
 
     if (!sessionId) {
@@ -30,8 +31,9 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params
     const sessionId = request.headers.get("authorization")?.replace("Bearer ", "")
 
     if (!sessionId) {
@@ -39,7 +41,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     }
 
     const user = await getCurrentUser(sessionId)
-    if (!user || user.id !== params.id) {
+    if (!user || user.id !== id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 })
     }
 
@@ -59,7 +61,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         zip = ${body.zip || user.zip || null},
         country = ${body.country || user.country},
         updated_at = NOW()
-      WHERE id = ${params.id}
+      WHERE id = ${id}
       RETURNING *
     `
 

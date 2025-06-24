@@ -1,9 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { getPackageById } from "@/lib/database"
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const packageData = await getPackageById(params.id)
+    const { id } = await params
+    const packageData = await getPackageById(id)
 
     if (!packageData) {
       return NextResponse.json({ error: "Package not found" }, { status: 404 })

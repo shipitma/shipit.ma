@@ -9,13 +9,14 @@ function getDatabase() {
   return neon(databaseUrl)
 }
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params
     const sql = getDatabase()
 
     // Get payment request
     const [payment] = await sql`
-      SELECT * FROM payment_requests WHERE id = ${params.id}
+      SELECT * FROM payment_requests WHERE id = ${id}
     `
 
     if (!payment) {
@@ -25,7 +26,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     // Get breakdown
     const breakdown = await sql`
       SELECT item_key, item_value FROM payment_breakdowns 
-      WHERE payment_request_id = ${params.id}
+      WHERE payment_request_id = ${id}
     `
 
     // Build breakdown object

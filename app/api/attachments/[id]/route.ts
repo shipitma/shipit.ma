@@ -5,8 +5,9 @@ import { del } from "@vercel/blob"
 
 const sql = neon(process.env.DATABASE_URL!)
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params
     const sessionId = request.headers.get("authorization")?.replace("Bearer ", "")
 
     if (!sessionId) {
@@ -18,7 +19,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       return NextResponse.json({ error: "Invalid session" }, { status: 401 })
     }
 
-    const attachmentId = params.id
+    const attachmentId = id
 
     // Get attachment record and verify ownership
     const [attachment] = await sql`
@@ -48,8 +49,9 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
   }
 }
 
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params
     const sessionId = request.headers.get("authorization")?.replace("Bearer ", "")
 
     if (!sessionId) {
@@ -61,7 +63,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
       return NextResponse.json({ error: "Invalid session" }, { status: 401 })
     }
 
-    const attachmentId = params.id
+    const attachmentId = id
     const body = await request.json()
     const { relatedType, relatedId } = body
 

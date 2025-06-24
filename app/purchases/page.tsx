@@ -81,29 +81,10 @@ export default function PurchasesPage() {
         const requests = await requestsRes.json()
         const statsData = await statsRes.json()
 
-        // Ensure requests is an array and fetch items for each request
+        // Ensure requests is an array - now includes complete data with items
         const requestsArray = Array.isArray(requests) ? requests : []
 
-        // Fetch items for each request
-        const requestsWithItems = await Promise.all(
-          requestsArray.map(async (request) => {
-            try {
-              const itemsRes = await fetch(`/api/purchase-requests/${request.id}`, {
-                headers: { Authorization: `Bearer ${sessionId}` },
-              })
-              if (itemsRes.ok) {
-                const fullRequest = await itemsRes.json()
-                return fullRequest
-              }
-              return request
-            } catch (error) {
-              console.error(`Error fetching items for request ${request.id}:`, error)
-              return request
-            }
-          }),
-        )
-
-        setPurchaseRequests(requestsWithItems)
+        setPurchaseRequests(requestsArray)
         setStats(statsData)
       } catch (error) {
         console.error("Error fetching data:", error)

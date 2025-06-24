@@ -264,12 +264,132 @@ export async function getPurchaseRequests(userId: string): Promise<PurchaseReque
   if (!userId) return []
 
   const sql = getDatabase()
-  const result = await sql`
-    SELECT * FROM purchase_requests 
-    WHERE user_id = ${userId}
-    ORDER BY created_at DESC
+  
+  // Get all purchase requests with their items and attachments in a single query
+  const requestsWithItems = await sql`
+    SELECT 
+      pr.*,
+      pri.id as item_id,
+      pri.name as item_name,
+      pri.url as item_url,
+      pri.price as item_price,
+      pri.quantity as item_quantity,
+      pri.image_url as item_image_url,
+      pri.specifications as item_specifications,
+      pri.variant as item_variant,
+      a.id as attachment_id,
+      a.file_url as attachment_url,
+      a.file_name as attachment_name,
+      a.file_size as attachment_size,
+      a.file_type as attachment_type,
+      a.attachment_type as attachment_category,
+      a.uploaded_at as attachment_uploaded_at
+    FROM purchase_requests pr
+    LEFT JOIN purchase_request_items pri ON pr.id = pri.purchase_request_id
+    LEFT JOIN attachments a ON a.related_type = 'purchase_request_item' AND a.related_id = pri.id::text
+    WHERE pr.user_id = ${userId}
+    ORDER BY pr.created_at DESC, pri.id, a.uploaded_at
   `
-  return result as PurchaseRequest[]
+
+  // Get timeline for all requests
+  const timelineData = await sql`
+    SELECT * FROM purchase_request_timeline 
+    WHERE purchase_request_id IN (
+      SELECT id FROM purchase_requests WHERE user_id = ${userId}
+    )
+    ORDER BY purchase_request_id, date, time
+  `
+
+  // Group the results by request
+  const requestsMap = new Map<string, PurchaseRequest>()
+  
+  requestsWithItems.forEach((row: any) => {
+    const requestId = row.id
+    
+    if (!requestsMap.has(requestId)) {
+      // Initialize the request
+      requestsMap.set(requestId, {
+        id: row.id,
+        user_id: row.user_id,
+        date: row.date,
+        status: row.status,
+        total_amount: row.total_amount,
+        payment_due: row.payment_due,
+        items_cost: row.items_cost,
+        shipping_fee: row.shipping_fee,
+        service_fee: row.service_fee,
+        processing_fee: row.processing_fee,
+        taxes: row.taxes,
+        admin_notes: row.admin_notes,
+        created_at: row.created_at,
+        updated_at: row.updated_at,
+        items: [],
+        timeline: [],
+      })
+    }
+    
+    const request = requestsMap.get(requestId)!
+    
+    // Add item if it exists and not already added
+    if (row.item_id) {
+      const existingItem = request.items!.find(item => item.id === row.item_id)
+      if (!existingItem) {
+        const newItem: PurchaseRequestItem = {
+          id: row.item_id,
+          purchase_request_id: row.id,
+          name: row.item_name,
+          url: row.item_url,
+          price: row.item_price,
+          quantity: row.item_quantity,
+          image_url: row.item_image_url,
+          specifications: row.item_specifications,
+          variant: row.item_variant,
+          attachments: [],
+        }
+        request.items!.push(newItem)
+      }
+      
+      // Add attachment if it exists
+      if (row.attachment_id) {
+        const currentItem = request.items!.find(item => item.id === row.item_id)!
+        const existingAttachment = currentItem.attachments!.find(att => att.id === row.attachment_id)
+        if (!existingAttachment) {
+          currentItem.attachments!.push({
+            id: row.attachment_id,
+            user_id: row.user_id,
+            file_url: row.attachment_url,
+            file_name: row.attachment_name,
+            file_size: row.attachment_size,
+            file_type: row.attachment_type,
+            attachment_type: row.attachment_category,
+            related_type: 'purchase_request_item',
+            related_id: row.item_id.toString(),
+            uploaded_at: row.attachment_uploaded_at,
+            created_at: row.attachment_uploaded_at,
+            updated_at: row.attachment_uploaded_at,
+          })
+        }
+      }
+    }
+  })
+
+  // Add timeline data
+  timelineData.forEach((timeline: any) => {
+    const request = requestsMap.get(timeline.purchase_request_id)
+    if (request) {
+      request.timeline!.push({
+        id: timeline.id,
+        purchase_request_id: timeline.purchase_request_id,
+        status: timeline.status,
+        date: timeline.date,
+        time: timeline.time,
+        completed: timeline.completed,
+        description: timeline.description,
+      })
+    }
+  })
+
+  return Array.from(requestsMap.values())
 }
 
 export async function getPurchaseRequestById(id: string): Promise<PurchaseRequest | null> {

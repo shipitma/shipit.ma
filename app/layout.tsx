@@ -5,6 +5,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 import { AuthProvider } from "@/lib/auth-context"
+import AuthenticatedLayout from "@/components/layout/authenticated-layout"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -13,6 +14,9 @@ export const metadata: Metadata = {
   description: "Morocco to Turkey package forwarding service",
     generator: 'v0.dev'
 }
+
+// Define public routes that don't require authentication
+const publicRoutes = ['/login', '/register', '/verify', '/']
 
 export default function RootLayout({
   children,
@@ -24,7 +28,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <AuthProvider>
+            <AuthenticatedLayout>
             {children}
+            </AuthenticatedLayout>
             <Toaster />
           </AuthProvider>
         </ThemeProvider>

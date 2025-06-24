@@ -8,7 +8,6 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ArrowLeft, DollarSign, Check, Upload, ExternalLink, Package, FileText, ImageIcon, Receipt } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { type PurchaseRequest, formatCurrency, formatDate } from "@/lib/database"
@@ -93,214 +92,213 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
         <Button variant="ghost" size="sm" onClick={() => router.back()} className="h-7 w-7 p-0">
           <ArrowLeft className="w-3 h-3" />
         </Button>
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-1">
-            <h1 className="text-lg font-semibold">{purchaseRequest.id}</h1>
-            <Badge className={getStatusColor(purchaseRequest.status)} variant="secondary">
-              {purchaseRequest.status.replace("_", " ")}
-            </Badge>
-          </div>
-          <p className="text-xs text-gray-600">Demande d'achat soumise le {formatDate(purchaseRequest.date)}</p>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg font-semibold">{purchaseRequest.id}</h1>
+          <Badge className={getStatusColor(purchaseRequest.status)} variant="secondary">
+            {purchaseRequest.status.replace("_", " ")}
+          </Badge>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Main Content */}
-        <div className="space-y-4">
-          <Tabs defaultValue="details" className="space-y-4">
-            <TabsList className="grid w-full grid-cols-1">
-              <TabsTrigger value="details" className="text-xs">
-                Détails
-              </TabsTrigger>
-            </TabsList>
+        <div className="lg:col-span-3 space-y-6">
+          {/* Purchase Request Summary */}
+          <Card className="border-gray-200">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base font-semibold">Résumé de la Demande</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <div className="flex justify-between">
+                <span className="text-xs text-gray-500">Coût des Articles :</span>
+                <span className="text-xs font-medium">
+                  {purchaseRequest.items_cost ? formatCurrency(purchaseRequest.items_cost) : "N/A"}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-xs text-gray-500">Frais d'Expédition :</span>
+                <span className="text-xs font-medium">
+                  {purchaseRequest.shipping_fee ? formatCurrency(purchaseRequest.shipping_fee) : "N/A"}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-xs text-gray-500">Frais de Service :</span>
+                <span className="text-xs font-medium">
+                  {purchaseRequest.service_fee ? formatCurrency(purchaseRequest.service_fee) : "N/A"}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-xs text-gray-500">Frais de Traitement :</span>
+                <span className="text-xs font-medium">
+                  {purchaseRequest.processing_fee ? formatCurrency(purchaseRequest.processing_fee) : "N/A"}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-xs text-gray-500">Taxes :</span>
+                <span className="text-xs font-medium">
+                  {purchaseRequest.taxes ? formatCurrency(purchaseRequest.taxes) : "N/A"}
+                </span>
+              </div>
+              <div className="border-t border-gray-200 pt-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium">Montant Total :</span>
+                  <span className="text-lg font-bold text-orange-600">
+                    {formatCurrency(purchaseRequest.payment_due || purchaseRequest.total_amount)}
+                  </span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-            <TabsContent value="details" className="space-y-4">
-              {/* Items */}
-              <Card className="border-gray-200">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-base font-semibold">
-                    <Package className="w-4 h-4" />
-                    Articles Demandés ({purchaseRequest.items?.length || 0})
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {purchaseRequest.items?.map((item, index) => (
-                    <div key={index} className="space-y-3">
-                      <div className="flex gap-3 p-3 border border-gray-200 rounded-md">
-                        <img
-                          src={item.image_url || "/placeholder.svg"}
-                          alt={item.name}
-                          className="w-12 h-12 object-cover rounded-md bg-gray-50"
-                        />
-                        <div className="flex-1 space-y-1">
-                          <div className="flex items-start justify-between">
-                            <div>
-                              <h3 className="text-sm font-medium">{item.name}</h3>
-                              {item.specifications && <p className="text-xs text-gray-500">{item.specifications}</p>}
-                              <p className="text-xs text-gray-500">Quantité : {item.quantity}</p>
-                            </div>
-                            <div className="text-right">
-                              <p className="text-sm font-semibold">{formatCurrency(item.price)}</p>
-                              {item.url && (
-                                <Button variant="outline" size="sm" asChild className="h-6 text-xs mt-1">
-                                  <a href={item.url} target="_blank" rel="noopener noreferrer">
-                                    <ExternalLink className="w-3 h-3 mr-1" />
-                                    Voir le Produit
-                                  </a>
-                                </Button>
-                              )}
-                            </div>
-                          </div>
+          {/* Purchase Request Contents */}
+          <Card className="border-gray-200">
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2 text-base font-semibold">
+                <Package className="w-4 h-4" />
+                Articles Demandés ({purchaseRequest.items?.length || 0})
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {purchaseRequest.items?.map((item, index) => (
+                <div key={index} className="space-y-3">
+                  <div className="flex gap-3 p-3 border border-gray-200 rounded-md">
+                    <img
+                      src={item.image_url || "/placeholder.svg"}
+                      alt={item.name}
+                      className="w-12 h-12 object-cover rounded-md bg-gray-50"
+                    />
+                    <div className="flex-1 space-y-1">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <h3 className="text-sm font-medium">{item.name}</h3>
+                          {item.specifications && <p className="text-xs text-gray-500">{item.specifications}</p>}
+                          <p className="text-xs text-gray-500">Quantité : {item.quantity}</p>
                         </div>
-                      </div>
-
-                      {/* Item Attachments - Following our design pattern */}
-                      {item.attachments && item.attachments.length > 0 && (
-                        <div className="ml-3 pl-3 border-l-2 border-gray-100">
-                          <div className="space-y-2">
-                            <Label className="text-xs font-medium text-gray-700">
-                              Fichiers Joints ({item.attachments.length})
-                            </Label>
-                            <div className="space-y-1">
-                              {item.attachments.map((attachment) => {
-                                const getAttachmentIcon = (type: string) => {
-                                  switch (type) {
-                                    case "photo":
-                                      return <ImageIcon className="w-4 h-4 text-blue-600" />
-                                    case "receipt":
-                                      return <Receipt className="w-4 h-4 text-green-600" />
-                                    case "document":
-                                      return <FileText className="w-4 h-4 text-orange-600" />
-                                    default:
-                                      return <FileText className="w-4 h-4 text-gray-600" />
-                                  }
-                                }
-
-                                const getAttachmentBg = (type: string) => {
-                                  switch (type) {
-                                    case "photo":
-                                      return "bg-blue-100"
-                                    case "receipt":
-                                      return "bg-green-100"
-                                    case "document":
-                                      return "bg-orange-100"
-                                    default:
-                                      return "bg-gray-100"
-                                  }
-                                }
-
-                                return (
-                                  <div
-                                    key={attachment.id}
-                                    className="flex items-center justify-between p-2 bg-gray-50 rounded-md border border-gray-200"
-                                  >
-                                    <div className="flex items-center gap-2 flex-1 min-w-0">
-                                      <div
-                                        className={`w-6 h-6 ${getAttachmentBg(attachment.attachment_type)} rounded-md flex items-center justify-center flex-shrink-0`}
-                                      >
-                                        {getAttachmentIcon(attachment.attachment_type)}
-                                      </div>
-                                      <div className="flex-1 min-w-0">
-                                        <p className="text-xs font-medium truncate">{attachment.file_name}</p>
-                                        <p className="text-xs text-gray-500">
-                                          {attachment.attachment_type} •{" "}
-                                          {attachment.file_size
-                                            ? `${Math.round(attachment.file_size / 1024)}KB`
-                                            : "N/A"}
-                                        </p>
-                                      </div>
-                                    </div>
-                                    <Button variant="outline" size="sm" asChild className="h-6 text-xs flex-shrink-0">
-                                      <a href={attachment.file_url} target="_blank" rel="noopener noreferrer">
-                                        <ExternalLink className="w-3 h-3 mr-1" />
-                                        Voir
-                                      </a>
-                                    </Button>
-                                  </div>
-                                )
-                              })}
-                            </div>
-                          </div>
+                        <div className="text-right">
+                          <p className="text-sm font-semibold">{formatCurrency(item.price)}</p>
+                          {item.url && (
+                            <Button variant="outline" size="sm" asChild className="h-6 text-xs mt-1">
+                              <a href={item.url} target="_blank" rel="noopener noreferrer">
+                                <ExternalLink className="w-3 h-3 mr-1" />
+                                Voir le Produit
+                              </a>
+                            </Button>
+                          )}
                         </div>
-                      )}
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-
-              {/* Payment Breakdown */}
-              <Card className="border-gray-200">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-base font-semibold">Payment Breakdown</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    {purchaseRequest.items_cost && (
-                      <div className="flex justify-between py-1">
-                        <span className="text-xs text-gray-500">Items cost:</span>
-                        <span className="text-xs font-medium">{formatCurrency(purchaseRequest.items_cost)}</span>
-                      </div>
-                    )}
-                    {purchaseRequest.shipping_fee && (
-                      <div className="flex justify-between py-1">
-                        <span className="text-xs text-gray-500">Shipping fee:</span>
-                        <span className="text-xs font-medium">{formatCurrency(purchaseRequest.shipping_fee)}</span>
-                      </div>
-                    )}
-                    {purchaseRequest.service_fee && (
-                      <div className="flex justify-between py-1">
-                        <span className="text-xs text-gray-500">Service fee:</span>
-                        <span className="text-xs font-medium">{formatCurrency(purchaseRequest.service_fee)}</span>
-                      </div>
-                    )}
-                    {purchaseRequest.processing_fee && (
-                      <div className="flex justify-between py-1">
-                        <span className="text-xs text-gray-500">Processing fee:</span>
-                        <span className="text-xs font-medium">{formatCurrency(purchaseRequest.processing_fee)}</span>
-                      </div>
-                    )}
-                    {purchaseRequest.taxes && (
-                      <div className="flex justify-between py-1">
-                        <span className="text-xs text-gray-500">Taxes:</span>
-                        <span className="text-xs font-medium">{formatCurrency(purchaseRequest.taxes)}</span>
-                      </div>
-                    )}
-                    <div className="border-t border-gray-200 pt-2">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium">Total Amount Due:</span>
-                        <span className="text-lg font-bold text-orange-600">
-                          {formatCurrency(purchaseRequest.payment_due || purchaseRequest.total_amount)}
-                        </span>
                       </div>
                     </div>
                   </div>
 
-                  {purchaseRequest.status === "pending_payment" && (
-                    <div className="pt-3">
-                      <Button onClick={() => setIsPaymentOpen(true)} className="w-full h-8 text-xs">
-                        <DollarSign className="w-3 h-3 mr-1" />
-                        Pay Now
-                      </Button>
+                  {/* Item Attachments */}
+                  {item.attachments && item.attachments.length > 0 && (
+                    <div className="ml-3 pl-3 border-l-2 border-gray-100">
+                      <div className="space-y-2">
+                        <Label className="text-xs font-medium text-gray-700">
+                          Fichiers Joints ({item.attachments.length})
+                        </Label>
+                        <div className="space-y-1">
+                          {item.attachments.map((attachment) => {
+                            const getAttachmentIcon = (type: string) => {
+                              switch (type) {
+                                case "photo":
+                                  return <ImageIcon className="w-4 h-4 text-blue-600" />
+                                case "receipt":
+                                  return <Receipt className="w-4 h-4 text-green-600" />
+                                case "document":
+                                  return <FileText className="w-4 h-4 text-orange-600" />
+                                default:
+                                  return <FileText className="w-4 h-4 text-gray-600" />
+                              }
+                            }
+
+                            const getAttachmentBg = (type: string) => {
+                              switch (type) {
+                                case "photo":
+                                  return "bg-blue-100"
+                                case "receipt":
+                                  return "bg-green-100"
+                                case "document":
+                                  return "bg-orange-100"
+                                default:
+                                  return "bg-gray-100"
+                              }
+                            }
+
+                            return (
+                              <div
+                                key={attachment.id}
+                                className="flex items-center justify-between p-2 bg-gray-50 rounded-md border border-gray-200"
+                              >
+                                <div className="flex items-center gap-2 flex-1 min-w-0">
+                                  <div
+                                    className={`w-6 h-6 ${getAttachmentBg(attachment.attachment_type)} rounded-md flex items-center justify-center flex-shrink-0`}
+                                  >
+                                    {getAttachmentIcon(attachment.attachment_type)}
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <p className="text-xs font-medium truncate">{attachment.file_name}</p>
+                                    <p className="text-xs text-gray-500">
+                                      {attachment.attachment_type} •{" "}
+                                      {attachment.file_size
+                                        ? `${Math.round(attachment.file_size / 1024)}KB`
+                                        : "N/A"}
+                                    </p>
+                                  </div>
+                                </div>
+                                <Button variant="outline" size="sm" asChild className="h-6 text-xs flex-shrink-0">
+                                  <a href={attachment.file_url} target="_blank" rel="noopener noreferrer">
+                                    <ExternalLink className="w-3 h-3 mr-1" />
+                                    Voir
+                                  </a>
+                                </Button>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      </div>
                     </div>
                   )}
-                </CardContent>
-              </Card>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
 
-              {/* Admin Notes */}
-              {purchaseRequest.admin_notes && (
-                <Card className="border-gray-200">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-base font-semibold">Notes de l'Administrateur</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="p-3 bg-orange-50 rounded-md border border-orange-200">
-                      <p className="text-xs text-orange-800">{purchaseRequest.admin_notes}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-            </TabsContent>
-          </Tabs>
+          {/* Admin Notes */}
+          {purchaseRequest.admin_notes && (
+            <Card className="border-gray-200">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base font-semibold">Notes de l'Administrateur</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="p-3 bg-orange-50 rounded-md border border-orange-200">
+                  <p className="text-xs text-orange-800">{purchaseRequest.admin_notes}</p>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+
+        {/* Sidebar */}
+        <div className="space-y-4">
+          {/* Payment Action */}
+          {purchaseRequest.status === "pending_payment" && (
+            <Card className="border-orange-200 bg-orange-50">
+              <CardContent className="p-3">
+                <div className="space-y-3">
+                  <div>
+                    <h4 className="text-xs font-medium text-orange-900">Paiement Requis</h4>
+                    <p className="text-xs text-orange-800 mt-1">
+                      Veuillez effectuer le paiement pour procéder à l'achat.
+                    </p>
+                  </div>
+                  <Button onClick={() => setIsPaymentOpen(true)} className="w-full h-8 text-xs">
+                    <DollarSign className="w-3 h-3 mr-1" />
+                    Payer Maintenant
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
 
