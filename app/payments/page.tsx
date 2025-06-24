@@ -28,83 +28,74 @@ const getStatusColor = (status: string) => {
 export default function PaymentsPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
-  const [payments, setPayments] = useState<PaymentRequest[]>([])
+  const [paymentRequests, setPaymentRequests] = useState<PaymentRequest[]>([])
   const [stats, setStats] = useState({
     pending: 0,
     overdue: 0,
     paid: 0,
     processing: 0,
   })
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
   const { toast } = useToast()
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        setLoading(true)
-        setError(null)
-
-        const sessionId = localStorage.getItem("authToken")
-        if (!sessionId) {
-          setError("Session expirée, veuillez vous reconnecter")
-          toast({
-            title: "Erreur",
-            description: "Session expirée, veuillez vous reconnecter",
-            variant: "destructive",
-          })
-          return
-        }
-
-        const [paymentsRes, statsRes] = await Promise.all([
-          fetch("/api/payments", {
-            headers: { Authorization: `Bearer ${sessionId}` },
-          }),
-          fetch("/api/payments/stats", {
-            headers: { Authorization: `Bearer ${sessionId}` },
-          }),
-        ])
-
-        if (!paymentsRes.ok) {
-          const errorText = await paymentsRes.text()
-          throw new Error(`Failed to fetch payments: ${paymentsRes.status}`)
-        }
-
-        if (!statsRes.ok) {
-          const errorText = await statsRes.text()
-          throw new Error(`Failed to fetch stats: ${statsRes.status}`)
-        }
-
-        const paymentsData = await paymentsRes.json()
-        const statsData = await statsRes.json()
-
-        // Ensure payments is an array
-        setPayments(Array.isArray(paymentsData) ? paymentsData : [])
-        setStats(statsData || { pending: 0, overdue: 0, paid: 0, processing: 0 })
-      } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : "Impossible de charger les données"
-        setError(errorMessage)
-        setPayments([])
+  const fetchData = async (status?: string) => {
+    try {
+      const sessionId = localStorage.getItem("authToken")
+      if (!sessionId) {
         toast({
           title: "Erreur",
-          description: errorMessage,
+          description: "Session expirée, veuillez vous reconnecter",
           variant: "destructive",
         })
-      } finally {
-        setLoading(false)
+        return
       }
-    }
 
+      const [paymentsRes, statsRes] = await Promise.all([
+        fetch(`/api/payments${status && status !== "all" ? `?status=${status}` : ""}`, {
+          headers: { Authorization: `Bearer ${sessionId}` },
+        }),
+        fetch("/api/payments/stats", {
+          headers: { Authorization: `Bearer ${sessionId}` },
+        }),
+      ])
+
+      if (!paymentsRes.ok || !statsRes.ok) {
+        throw new Error("Failed to fetch data")
+      }
+
+      const paymentsData = await paymentsRes.json()
+      const statsData = await statsRes.json()
+
+      setPaymentRequests(Array.isArray(paymentsData) ? paymentsData : [])
+      setStats(statsData)
+    } catch (error) {
+      console.error("Error fetching data:", error)
+      setPaymentRequests([])
+      toast({
+        title: "Erreur",
+        description: "Impossible de charger les données",
+        variant: "destructive",
+      })
+    }
+  }
+
+  useEffect(() => {
     fetchData()
   }, [toast])
 
-  const filteredRequests = payments.filter((payment) => {
-    const matchesSearch = payment.id.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesStatus = statusFilter === "all" || payment.status === statusFilter
-    return matchesSearch && matchesStatus
+  // Fetch data when status filter changes
+  useEffect(() => {
+    fetchData(statusFilter)
+  }, [statusFilter])
+
+  const filteredRequests = paymentRequests.filter((payment) => {
+    const matchesSearch =
+      payment.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      payment.related_id.toLowerCase().includes(searchTerm.toLowerCase())
+
+    return matchesSearch
   })
 
-  if (loading) {
+  if (paymentRequests.length === 0) {
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between">
@@ -125,29 +116,6 @@ export default function PaymentsPage() {
             </Card>
           ))}
         </div>
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-lg font-semibold">Paiements</h1>
-            <p className="text-xs text-gray-600">Erreur de chargement</p>
-          </div>
-        </div>
-        <Card className="border-red-200">
-          <CardContent className="p-6 text-center">
-            <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-red-800 mb-2">Erreur de chargement</h3>
-            <p className="text-sm text-red-600 mb-4">{error}</p>
-            <Button onClick={() => window.location.reload()} variant="outline" className="text-red-600 border-red-300">
-              Réessayer
-            </Button>
-          </CardContent>
-        </Card>
       </div>
     )
   }

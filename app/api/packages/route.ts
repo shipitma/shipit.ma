@@ -17,7 +17,11 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Invalid session" }, { status: 401 })
     }
 
-    const packages = await getPackages(userId)
+    // Get status filter from query parameters
+    const { searchParams } = new URL(request.url)
+    const statusFilter = searchParams.get("status") || "all"
+
+    const packages = await getPackages(userId, statusFilter)
     return NextResponse.json(packages)
   } catch (error) {
     console.error("Error fetching packages:", error)

@@ -23,6 +23,10 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Invalid session" }, { status: 401 })
     }
 
+    // Get status filter from query parameters
+    const { searchParams } = new URL(request.url)
+    const statusFilter = searchParams.get("status") || "all"
+
     const sql = getDatabase()
 
     // First, let's check if the table exists
@@ -31,6 +35,9 @@ export async function GET(request: NextRequest) {
     } catch (error) {
       return NextResponse.json({ error: "Payment system not initialized" }, { status: 500 })
     }
+
+    // Build the WHERE clause for status filtering
+    const statusCondition = statusFilter && statusFilter !== "all" ? sql`AND status = ${statusFilter}` : sql``
 
     // Get payment requests - simplified query first
     let payments
@@ -50,7 +57,7 @@ export async function GET(request: NextRequest) {
           created_at,
           updated_at
         FROM payment_requests 
-        WHERE user_id = ${userId}
+        WHERE user_id = ${userId} ${statusCondition}
         ORDER BY created_at DESC
       `
     } catch (error) {

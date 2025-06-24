@@ -46,8 +46,6 @@ const getStatusColor = (status: string) => {
 }
 
 export default function PurchasesPage() {
-  const [isPaymentOpen, setIsPaymentOpen] = useState(false)
-  const [selectedRequest, setSelectedRequest] = useState<PurchaseRequest | null>(null)
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
   const [purchaseRequests, setPurchaseRequests] = useState<PurchaseRequest[]>([])
@@ -57,48 +55,61 @@ export default function PurchasesPage() {
     purchasing: 0,
     completed: 0,
   })
+  const [isCreateOpen, setIsCreateOpen] = useState(false)
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false)
+  const [selectedRequest, setSelectedRequest] = useState<PurchaseRequest | null>(null)
   const { toast } = useToast()
-  const { sessionId } = useAuth()
+  const { user } = useAuth()
 
-  useEffect(() => {
-    async function fetchData() {
-      if (!sessionId) return
-
-      try {
-        const [requestsRes, statsRes] = await Promise.all([
-          fetch("/api/purchase-requests", {
-            headers: { Authorization: `Bearer ${sessionId}` },
-          }),
-          fetch("/api/purchase-requests/stats", {
-            headers: { Authorization: `Bearer ${sessionId}` },
-          }),
-        ])
-
-        if (!requestsRes.ok || !statsRes.ok) {
-          throw new Error("Failed to fetch data")
-        }
-
-        const requests = await requestsRes.json()
-        const statsData = await statsRes.json()
-
-        // Ensure requests is an array - now includes complete data with items
-        const requestsArray = Array.isArray(requests) ? requests : []
-
-        setPurchaseRequests(requestsArray)
-        setStats(statsData)
-      } catch (error) {
-        console.error("Error fetching data:", error)
-        setPurchaseRequests([])
+  const fetchData = async (status?: string) => {
+    try {
+      const sessionId = localStorage.getItem("authToken")
+      if (!sessionId) {
         toast({
           title: "Erreur",
-          description: "Impossible de charger les données",
+          description: "Session expirée, veuillez vous reconnecter",
           variant: "destructive",
         })
+        return
       }
-    }
 
+      const [requestsRes, statsRes] = await Promise.all([
+        fetch(`/api/purchase-requests${status && status !== "all" ? `?status=${status}` : ""}`, {
+          headers: { Authorization: `Bearer ${sessionId}` },
+        }),
+        fetch("/api/purchase-requests/stats", {
+          headers: { Authorization: `Bearer ${sessionId}` },
+        }),
+      ])
+
+      if (!requestsRes.ok || !statsRes.ok) {
+        throw new Error("Failed to fetch data")
+      }
+
+      const requestsData = await requestsRes.json()
+      const statsData = await statsRes.json()
+
+      setPurchaseRequests(Array.isArray(requestsData) ? requestsData : [])
+      setStats(statsData)
+    } catch (error) {
+      console.error("Error fetching data:", error)
+      setPurchaseRequests([])
+      toast({
+        title: "Erreur",
+        description: "Impossible de charger les données",
+        variant: "destructive",
+      })
+    }
+  }
+
+  useEffect(() => {
     fetchData()
-  }, [sessionId, toast])
+  }, [toast])
+
+  // Fetch data when status filter changes
+  useEffect(() => {
+    fetchData(statusFilter)
+  }, [statusFilter])
 
   const handlePayment = () => {
     toast({
@@ -114,9 +125,7 @@ export default function PurchasesPage() {
       request.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (request.items && request.items.some((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase())))
 
-    const matchesStatus = statusFilter === "all" || request.status === statusFilter
-
-    return matchesSearch && matchesStatus
+    return matchesSearch
   })
 
   // Calculate total items count

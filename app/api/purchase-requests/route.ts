@@ -17,7 +17,11 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Invalid session" }, { status: 401 })
     }
 
-    const purchaseRequests = await getPurchaseRequests(userId)
+    // Get status filter from query parameters
+    const { searchParams } = new URL(request.url)
+    const statusFilter = searchParams.get("status") || "all"
+
+    const purchaseRequests = await getPurchaseRequests(userId, statusFilter)
     return NextResponse.json(purchaseRequests)
   } catch (error) {
     console.error("Error fetching purchase requests:", error)

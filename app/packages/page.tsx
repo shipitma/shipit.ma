@@ -40,60 +40,63 @@ export default function PackagesPage() {
   })
   const { toast } = useToast()
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const sessionId = localStorage.getItem("authToken")
-        if (!sessionId) {
-          toast({
-            title: "Erreur",
-            description: "Session expirée, veuillez vous reconnecter",
-            variant: "destructive",
-          })
-          return
-        }
-
-        const [packagesRes, statsRes] = await Promise.all([
-          fetch("/api/packages", {
-            headers: { Authorization: `Bearer ${sessionId}` },
-          }),
-          fetch("/api/packages/stats", {
-            headers: { Authorization: `Bearer ${sessionId}` },
-          }),
-        ])
-
-        if (!packagesRes.ok || !statsRes.ok) {
-          throw new Error("Failed to fetch data")
-        }
-
-        const packagesData = await packagesRes.json()
-        const statsData = await statsRes.json()
-
-        // Ensure packages is an array
-        setPackages(Array.isArray(packagesData) ? packagesData : [])
-        setStats(statsData)
-      } catch (error) {
-        console.error("Error fetching data:", error)
-        setPackages([])
+  const fetchData = async (status?: string) => {
+    try {
+      const sessionId = localStorage.getItem("authToken")
+      if (!sessionId) {
         toast({
           title: "Erreur",
-          description: "Impossible de charger les données",
+          description: "Session expirée, veuillez vous reconnecter",
           variant: "destructive",
         })
+        return
       }
-    }
 
+      const [packagesRes, statsRes] = await Promise.all([
+        fetch(`/api/packages${status && status !== "all" ? `?status=${status}` : ""}`, {
+          headers: { Authorization: `Bearer ${sessionId}` },
+        }),
+        fetch("/api/packages/stats", {
+          headers: { Authorization: `Bearer ${sessionId}` },
+        }),
+      ])
+
+      if (!packagesRes.ok || !statsRes.ok) {
+        throw new Error("Failed to fetch data")
+      }
+
+      const packagesData = await packagesRes.json()
+      const statsData = await statsRes.json()
+
+      // Ensure packages is an array
+      setPackages(Array.isArray(packagesData) ? packagesData : [])
+      setStats(statsData)
+    } catch (error) {
+      console.error("Error fetching data:", error)
+      setPackages([])
+      toast({
+        title: "Erreur",
+        description: "Impossible de charger les données",
+        variant: "destructive",
+      })
+    }
+  }
+
+  useEffect(() => {
     fetchData()
   }, [toast])
+
+  // Fetch data when status filter changes
+  useEffect(() => {
+    fetchData(statusFilter)
+  }, [statusFilter])
 
   const filteredPackages = packages.filter((pkg) => {
     const matchesSearch =
       pkg.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
       pkg.tracking_number?.toLowerCase().includes(searchTerm.toLowerCase())
 
-    const matchesStatus = statusFilter === "all" || pkg.status === statusFilter
-
-    return matchesSearch && matchesStatus
+    return matchesSearch
   })
 
   return (

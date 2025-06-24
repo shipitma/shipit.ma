@@ -260,10 +260,13 @@ export async function getAttachmentsByUser(userId: string, attachmentType?: stri
 }
 
 // Purchase Request functions
-export async function getPurchaseRequests(userId: string): Promise<PurchaseRequest[]> {
+export async function getPurchaseRequests(userId: string, statusFilter?: string): Promise<PurchaseRequest[]> {
   if (!userId) return []
 
   const sql = getDatabase()
+  
+  // Build the WHERE clause for status filtering
+  const statusCondition = statusFilter && statusFilter !== "all" ? sql`AND pr.status = ${statusFilter}` : sql``
   
   // Get all purchase requests with their items and attachments in a single query
   const requestsWithItems = await sql`
@@ -287,15 +290,17 @@ export async function getPurchaseRequests(userId: string): Promise<PurchaseReque
     FROM purchase_requests pr
     LEFT JOIN purchase_request_items pri ON pr.id = pri.purchase_request_id
     LEFT JOIN attachments a ON a.related_type = 'purchase_request_item' AND a.related_id = pri.id::text
-    WHERE pr.user_id = ${userId}
+    WHERE pr.user_id = ${userId} ${statusCondition}
     ORDER BY pr.created_at DESC, pri.id, a.uploaded_at
   `
 
-  // Get timeline for all requests
+  // Get timeline for filtered requests
   const timelineData = await sql`
     SELECT * FROM purchase_request_timeline 
     WHERE purchase_request_id IN (
-      SELECT id FROM purchase_requests WHERE user_id = ${userId}
+      SELECT id FROM purchase_requests 
+      WHERE user_id = ${userId} 
+      ${statusFilter && statusFilter !== "all" ? sql`AND status = ${statusFilter}` : sql``}
     )
     ORDER BY purchase_request_id, date, time
   `
@@ -460,13 +465,17 @@ export async function getPurchaseRequestStats(userId: string) {
 }
 
 // Package functions
-export async function getPackages(userId: string): Promise<PackageType[]> {
+export async function getPackages(userId: string, statusFilter?: string): Promise<PackageType[]> {
   if (!userId) return []
 
   const sql = getDatabase()
+  
+  // Build the WHERE clause for status filtering
+  const statusCondition = statusFilter && statusFilter !== "all" ? sql`AND status = ${statusFilter}` : sql``
+  
   const result = await sql`
     SELECT * FROM packages 
-    WHERE user_id = ${userId}
+    WHERE user_id = ${userId} ${statusCondition}
     ORDER BY created_at DESC
   `
   return result as PackageType[]
@@ -538,13 +547,17 @@ export async function getPackageStats(userId: string) {
 }
 
 // Payment Request functions
-export async function getPaymentRequests(userId: string): Promise<PaymentRequest[]> {
+export async function getPaymentRequests(userId: string, statusFilter?: string): Promise<PaymentRequest[]> {
   if (!userId) return []
 
   const sql = getDatabase()
+  
+  // Build the WHERE clause for status filtering
+  const statusCondition = statusFilter && statusFilter !== "all" ? sql`AND status = ${statusFilter}` : sql``
+  
   const payments = await sql`
     SELECT * FROM payment_requests 
-    WHERE user_id = ${userId}
+    WHERE user_id = ${userId} ${statusCondition}
     ORDER BY created_at DESC
   `
 
