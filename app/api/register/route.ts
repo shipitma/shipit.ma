@@ -5,6 +5,7 @@ import {
   createNeonSession,
   invalidateNeonSession,
   updateUserLastLogin,
+  cleanupPendingRegistrationSessions,
 } from "@/lib/auth"
 
 export async function POST(request: NextRequest) {
@@ -36,6 +37,9 @@ export async function POST(request: NextRequest) {
 
     // Invalidate the pending registration session
     await invalidateNeonSession(sessionId)
+
+    // Clean up any other pending_registration sessions for this phone number
+    await cleanupPendingRegistrationSessions(session.phone_number, sessionId)
 
     // Create authenticated session with Neon Auth
     const userAgent = request.headers.get("user-agent") || undefined

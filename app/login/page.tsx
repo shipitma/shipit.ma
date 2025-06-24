@@ -10,26 +10,12 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Loader2, MessageCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import { useAuthRedirect } from "@/hooks/use-auth-redirect"
 
 export default function LoginPage() {
   const [phoneNumber, setPhoneNumber] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const { toast } = useToast()
-  const { loading: authLoading } = useAuthRedirect()
-
-  // Show loading while checking authentication
-  if (authLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mx-auto mb-4"></div>
-          <p className="text-sm text-gray-600">Chargement...</p>
-        </div>
-      </div>
-    )
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -46,10 +32,8 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
-      // Simulate API call to send OTP via WhatsApp
       const fullPhoneNumber = "+212" + phoneNumber.replace(/^0+/, "")
 
-      // Here you would call your WhatsApp API
       const response = await fetch("/api/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -83,11 +67,11 @@ export default function LoginPage() {
       <Card className="w-full max-w-md border-gray-200">
         <CardHeader className="text-center pb-4">
           <div className="mx-auto mb-3">
-            <img src="https://placehold.co/48x48/f97316/ffffff?text=LOGO" alt="Logo" className="w-12 h-12" />
+            <img src="https://placehold.co/48x48/f97316/ffffff?text=shipit.ma" alt="Logo" className="w-12 h-12" />
           </div>
           <CardTitle className="text-lg font-semibold">Bienvenue sur shipit.ma</CardTitle>
           <CardDescription className="text-xs text-gray-600">
-            Entrez votre numéro de téléphone pour recevoir un code de vérification WhatsApp
+            Entrez votre numéro de téléphone pour vous connecter ou créer un compte
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
@@ -121,13 +105,22 @@ export default function LoginPage() {
               ) : (
                 <>
                   <MessageCircle className="mr-1 h-3 w-3" />
-                  Envoyer le Code WhatsApp
+                  Continuer
                 </>
               )}
             </Button>
           </form>
 
-          <div className="mt-4 text-center text-xs text-gray-500">
+          <div className="mt-4 text-center text-xs">
+            <p className="text-gray-500">
+              Nouveau sur shipit.ma ?{" "}
+              <a href="/register" className="font-medium text-orange-600 hover:underline">
+                Créer un compte
+              </a>
+            </p>
+          </div>
+
+          <div className="mt-2 text-center text-xs text-gray-500">
             <p>En continuant, vous acceptez nos Conditions d'Utilisation et notre Politique de Confidentialité</p>
           </div>
         </CardContent>

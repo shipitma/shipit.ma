@@ -290,6 +290,27 @@ export async function invalidateUserNeonSessions(userId: string): Promise<void> 
   `
 }
 
+export async function cleanupPendingRegistrationSessions(phoneNumber: string, excludeSessionId?: string): Promise<void> {
+  const sql = getDatabase()
+
+  if (excludeSessionId) {
+    await sql`
+      UPDATE sessions 
+      SET expires_at = NOW() 
+      WHERE phone_number = ${phoneNumber} 
+      AND session_type = 'pending_registration' 
+      AND id != ${excludeSessionId}
+    `
+  } else {
+    await sql`
+      UPDATE sessions 
+      SET expires_at = NOW() 
+      WHERE phone_number = ${phoneNumber} 
+      AND session_type = 'pending_registration'
+    `
+  }
+}
+
 // Enhanced User Functions with Neon Auth
 export async function createNeonUser(userData: {
   phoneNumber: string

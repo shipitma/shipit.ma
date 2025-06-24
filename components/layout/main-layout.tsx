@@ -160,7 +160,7 @@ export default function MainLayout({
           {/* Logo */}
           <div className="flex h-14 shrink-0 items-center">
             <div className="flex items-center">
-              <img src="https://placehold.co/32x32/f97316/ffffff?text=LOGO" alt="Logo" className="w-8 h-8" />
+              <img src="https://placehold.co/32x32/f97316/ffffff?text=shipit.ma" alt="Logo" className="w-8 h-8" />
             </div>
           </div>
 
@@ -337,7 +337,7 @@ export default function MainLayout({
           <div className="lg:hidden sticky top-0 z-40 bg-[#fafafa] shadow-sm border-b">
           <div className="flex items-center justify-between h-14 px-4">
             <div className="flex items-center">
-              <img src="https://placehold.co/32x32/f97316/ffffff?text=LOGO" alt="Logo" className="w-8 h-8" />
+              <img src="https://placehold.co/32x32/f97316/ffffff?text=shipit.ma" alt="Logo" className="w-8 h-8" />
             </div>
 
             <div className="flex items-center gap-3">

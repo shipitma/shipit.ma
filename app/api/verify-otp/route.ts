@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { verifyOTPCode, createNeonSession, userExists, getNeonUserByPhone, updateUserLastLogin } from "@/lib/auth"
+import { verifyOTPCode, createNeonSession, userExists, getNeonUserByPhone, updateUserLastLogin, cleanupPendingRegistrationSessions } from "@/lib/auth"
 
 export async function POST(request: NextRequest) {
   try {
@@ -34,6 +34,9 @@ export async function POST(request: NextRequest) {
       if (!user) {
         return NextResponse.json({ error: "Utilisateur non trouvé" }, { status: 404 })
       }
+
+      // Clean up any pending registration sessions for this user
+      await cleanupPendingRegistrationSessions(phoneNumber)
 
       const { sessionId, accessToken, refreshToken } = await createNeonSession(
         phoneNumber,

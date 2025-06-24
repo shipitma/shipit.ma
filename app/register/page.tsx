@@ -9,7 +9,6 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Loader2, User, Phone } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import { useAuthRedirect } from "@/hooks/use-auth-redirect"
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -20,7 +19,6 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const { toast } = useToast()
-  const { loading: authLoading } = useAuthRedirect()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -38,6 +36,27 @@ export default function RegisterPage() {
 
     try {
       const fullPhoneNumber = "+212" + formData.phoneNumber.replace(/^0+/, "")
+      
+      // First check if user already exists
+      const checkResponse = await fetch("/api/check-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phoneNumber: fullPhoneNumber }),
+      })
+
+      if (checkResponse.ok) {
+        const { exists } = await checkResponse.json()
+        if (exists) {
+          toast({
+            title: "Compte existant",
+            description: "Un compte existe déjà avec ce numéro. Veuillez vous connecter.",
+            variant: "destructive",
+          })
+          router.push("/login")
+          return
+        }
+      }
+
       const response = await fetch("/api/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -73,25 +92,13 @@ export default function RegisterPage() {
     setFormData((prev) => ({ ...prev, [field]: value }))
   }
 
-  // Show loading while checking authentication
-  if (authLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mx-auto mb-4"></div>
-          <p className="text-sm text-gray-600">Chargement...</p>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <Card className="w-full max-w-md border-gray-200">
         <CardHeader className="text-center pb-4">
           <CardTitle className="text-lg font-semibold">Créer un Compte</CardTitle>
           <CardDescription className="text-xs text-gray-600">
-            Commencez par nous donner quelques informations de base.
+            Étape 1/2 : Commencez par nous donner quelques informations de base.
           </CardDescription>
         </CardHeader>
         <CardContent>

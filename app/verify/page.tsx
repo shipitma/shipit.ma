@@ -10,7 +10,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Loader2, ArrowLeft, MessageCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { useAuth } from "@/lib/auth-context"
-import { useAuthRedirect } from "@/hooks/use-auth-redirect"
 
 export default function VerifyPage() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""])
@@ -22,7 +21,6 @@ export default function VerifyPage() {
   const router = useRouter()
   const { toast } = useToast()
   const { login } = useAuth()
-  const { loading: authLoading } = useAuthRedirect()
 
   useEffect(() => {
     const storedPhone = sessionStorage.getItem("phoneNumber")
@@ -46,18 +44,6 @@ export default function VerifyPage() {
 
     return () => clearInterval(timer)
   }, [router])
-
-  // Show loading while checking authentication
-  if (authLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mx-auto mb-4"></div>
-          <p className="text-sm text-gray-600">Chargement...</p>
-        </div>
-      </div>
-    )
-  }
 
   const handleOtpChange = (index: number, value: string) => {
     if (value.length > 1) return
@@ -137,7 +123,18 @@ export default function VerifyPage() {
         if (data.isNewUser) {
           // Store session ID for registration completion
           sessionStorage.setItem("registrationSessionId", data.sessionId)
-          router.push("/register/complete")
+          
+          // Check if user came from registration flow (has stored first/last name)
+          const storedFirstName = sessionStorage.getItem("firstName")
+          const storedLastName = sessionStorage.getItem("lastName")
+          
+          if (storedFirstName && storedLastName) {
+            // User came from registration flow - go to complete registration
+            router.push("/register/complete")
+          } else {
+            // User came from login flow - go to complete registration for new users
+            router.push("/register/complete")
+          }
         } else {
           // Use the auth context login method with prefetching
           await login(data.sessionId, data.accessToken, data.refreshToken)
@@ -229,7 +226,9 @@ export default function VerifyPage() {
               {otp.map((digit, index) => (
                 <Input
                   key={index}
-                  ref={(el) => (inputRefs.current[index] = el)}
+                  ref={(el) => {
+                    inputRefs.current[index] = el
+                  }}
                   type="text"
                   inputMode="numeric"
                   maxLength={1}

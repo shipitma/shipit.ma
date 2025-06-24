@@ -6,7 +6,7 @@ import { useRouter, usePathname } from "next/navigation"
 import MainLayout from "@/components/layout/main-layout"
 
 // Define public routes that don't require authentication
-const publicRoutes = ['/login', '/register', '/verify', '/']
+const publicRoutes = ['/login', '/register', '/verify', '/register/complete', '/']
 
 export default function AuthenticatedLayout({
   children,

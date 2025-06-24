@@ -5,7 +5,7 @@ import type { NextRequest } from "next/server"
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>()
 
 // Auth pages that should redirect authenticated users to dashboard
-const authPages = ["/login", "/register", "/verify"]
+const authPages = ["/login", "/register", "/verify", "/register/complete"]
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
