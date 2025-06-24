@@ -299,7 +299,7 @@ export async function getPurchaseRequests(userId: string, statusFilter?: string)
     SELECT * FROM purchase_request_timeline 
     WHERE purchase_request_id IN (
       SELECT id FROM purchase_requests 
-      WHERE user_id = ${userId} 
+    WHERE user_id = ${userId}
       ${statusFilter && statusFilter !== "all" ? sql`AND status = ${statusFilter}` : sql``}
     )
     ORDER BY purchase_request_id, date, time
