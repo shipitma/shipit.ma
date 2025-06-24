@@ -31,7 +31,7 @@ export default function RootLayout({
           <AuthProvider>
             <PostHogProvider>
               <AuthenticatedLayout>
-              {children}
+            {children}
               </AuthenticatedLayout>
             </PostHogProvider>
             <Toaster />

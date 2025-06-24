@@ -67,3 +67,33 @@
     @apply bg-background text-foreground;
   }
 }
+
+input,
+textarea,
+select {
+  @apply text-xs font-medium text-gray-600;
+}
+
+input::placeholder,
+textarea::placeholder {
+  @apply text-xs font-medium text-gray-600 opacity-100;
+}
+
+@media (max-width: 640px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+    font-weight: 400 !important; /* font-normal - thinner than font-medium */
+  }
+  
+  input::placeholder,
+  textarea::placeholder {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+  }
+}
+
+input[type="number"] {
+  @apply text-xs font-medium text-gray-600;
+}

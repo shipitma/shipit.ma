@@ -24,6 +24,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { Input } from "@/components/ui/input"
 
 const navigation = [
   { name: "Accueil", href: "/dashboard", icon: Home },
