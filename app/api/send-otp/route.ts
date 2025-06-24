@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     const whatsappResponse = await fetch("https://wasenderapi.com/api/send-message", {
       method: "POST",
       headers: {
-        Authorization: "Bearer cec71d5b0277fb8c849628d00470f3935c03b59feb21773c03a85fea2b1970b9",
+        Authorization: "Bearer 0b0488877dddb17a92226f5914bd30b92ba964344f5dda24e36da992a2048693",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({

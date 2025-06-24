@@ -229,34 +229,34 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
     setUploading(true)
     try {
       const token = localStorage.getItem("authToken")
-      const formData = new FormData()
+        const formData = new FormData()
       formData.append("file", files[0])
-      formData.append("relatedType", "payment")
-      formData.append("relatedId", id)
+        formData.append("relatedType", "payment")
+        formData.append("relatedId", id)
 
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      })
+        const response = await fetch("/api/upload", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        })
 
-      if (!response.ok) {
-        throw new Error("Upload failed")
-      }
+        if (!response.ok) {
+          throw new Error("Upload failed")
+        }
 
-      const result = await response.json()
-      setUploadedFiles((prev) => [
-        ...prev,
-        {
-          id: result.id,
+        const result = await response.json()
+        setUploadedFiles((prev) => [
+          ...prev,
+          {
+            id: result.id,
           name: result.file_name,
           url: result.file_url,
           type: result.attachment_type,
           size: result.file_size || 0,
-        },
-      ])
+          },
+        ])
 
       toast({
         title: "Succès",
@@ -350,26 +350,26 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
   const selectedMethodDetails = paymentMethod ? getPaymentMethodDetails(paymentMethod) : null
 
   return (
-    <div className="space-y-4">
-      {/* Header */}
+      <div className="space-y-4">
+        {/* Header */}
       <div className="flex items-center gap-3 mb-4">
         <Button variant="ghost" size="sm" onClick={() => window.history.back()} className="h-7 w-7 p-0">
-          <ArrowLeft className="w-3 h-3" />
-        </Button>
+              <ArrowLeft className="w-3 h-3" />
+          </Button>
         <div className="flex items-center gap-2">
           <h1 className="text-lg font-semibold">{paymentData.id}</h1>
           <Badge className={getStatusColor(paymentData.status)} variant="secondary">
             {paymentData.status}
           </Badge>
+          </div>
         </div>
-      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Main Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Main Content */}
         <div className="lg:col-span-3 space-y-6">
           {/* Payment Actions - Moved to top */}
-          <Card className="border-gray-200">
-            <CardHeader className="pb-3">
+            <Card className="border-gray-200">
+              <CardHeader className="pb-3">
               <CardTitle className="text-base font-semibold">Actions de Paiement</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
@@ -402,277 +402,277 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
           <Card className="border-gray-200">
             <CardHeader className="pb-3">
               <CardTitle className="text-base font-semibold">Résumé du Paiement</CardTitle>
-            </CardHeader>
+              </CardHeader>
             <CardContent className="space-y-2">
               <div className="flex justify-between">
                 <span className="text-xs text-gray-500">Montant :</span>
                 <span className="text-xs font-medium">{formatCurrency(paymentData.amount)}</span>
-              </div>
+                  </div>
               <div className="flex justify-between">
                 <span className="text-xs text-gray-500">Type :</span>
                 <span className="text-xs font-medium capitalize">{paymentData.type}</span>
-              </div>
+                  </div>
               <div className="flex justify-between">
                 <span className="text-xs text-gray-500">Lié à :</span>
                 <span className="text-xs font-medium">{paymentData.related_id}</span>
-              </div>
+                  </div>
               <div className="flex justify-between">
                 <span className="text-xs text-gray-500">Date d'Échéance :</span>
                 <span className="text-xs font-medium">{paymentData.due_date}</span>
-              </div>
+                  </div>
               {paymentData.paid_date && (
                 <div className="flex justify-between">
                   <span className="text-xs text-gray-500">Date de Paiement :</span>
                   <span className="text-xs font-medium">{paymentData.paid_date}</span>
-                </div>
-              )}
+                    </div>
+                  )}
               <div className="border-t border-gray-200 pt-2">
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium">Montant Total :</span>
                   <span className="text-lg font-bold text-orange-600">{formatCurrency(paymentData.amount)}</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Payment Breakdown */}
-          {paymentData.breakdown && (
-            <Card className="border-gray-200">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base font-semibold">Répartition du Paiement</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                {Object.entries(paymentData.breakdown).map(([key, value]) => (
-                  <div key={key} className="flex justify-between py-1">
-                    <span className="text-xs text-gray-500 capitalize">
-                      {key.replace(/([A-Z])/g, " $1").toLowerCase()}:
-                    </span>
-                    <span className="text-xs font-medium">{formatCurrency(value)}</span>
                   </div>
-                ))}
+                </div>
               </CardContent>
             </Card>
-          )}
 
-          {/* Payment Receipts */}
-          {uploadedFiles.length > 0 && (
-            <Card className="border-gray-200">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base font-semibold">Reçus de Paiement ({uploadedFiles.length})</CardTitle>
-              </CardHeader>
+            {/* Payment Breakdown */}
+          {paymentData.breakdown && (
+              <Card className="border-gray-200">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-base font-semibold">Répartition du Paiement</CardTitle>
+                </CardHeader>
               <CardContent className="space-y-2">
-                {uploadedFiles.map((file) => {
-                  const AttachmentIcon = getAttachmentIcon(file.type)
-                  const isDeleting = deletingFiles.has(file.id)
-
-                  return (
-                    <div
-                      key={file.id}
-                      className="flex items-center justify-between p-2 bg-gray-50 rounded-md border border-gray-200"
-                    >
-                      <div className="flex items-center gap-2 flex-1 min-w-0">
-                        <AttachmentIcon className={`w-4 h-4 flex-shrink-0 ${getAttachmentColor(file.type)}`} />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-xs font-medium truncate">{file.name}</p>
-                          <p className="text-xs text-gray-500">
-                            {file.type} • {(file.size / 1024).toFixed(1)} KB
-                          </p>
-                        </div>
+                    {Object.entries(paymentData.breakdown).map(([key, value]) => (
+                      <div key={key} className="flex justify-between py-1">
+                        <span className="text-xs text-gray-500 capitalize">
+                          {key.replace(/([A-Z])/g, " $1").toLowerCase()}:
+                        </span>
+                        <span className="text-xs font-medium">{formatCurrency(value)}</span>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0" asChild>
-                          <a href={file.url} target="_blank" rel="noopener noreferrer">
-                            <Download className="w-3 h-3" />
-                          </a>
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-6 w-6 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
-                          onClick={() => deleteFile(file.id)}
-                          disabled={isDeleting}
-                        >
-                          {isDeleting ? (
-                            <div className="w-3 h-3 border border-red-600 border-t-transparent rounded-full animate-spin" />
-                          ) : (
-                            <Trash2 className="w-3 h-3" />
-                          )}
-                        </Button>
-                      </div>
-                    </div>
-                  )
-                })}
-              </CardContent>
-            </Card>
-          )}
-        </div>
-
-        {/* Sidebar - Now empty since Actions moved to main content */}
-        <div className="space-y-4">
-          {/* Sidebar content can be added here if needed in the future */}
-        </div>
-      </div>
-
-      {/* Payment Dialog */}
-      <Dialog open={isPaymentOpen} onOpenChange={setIsPaymentOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Submit Payment - {paymentData.id}</DialogTitle>
-            <DialogDescription>Complétez votre paiement</DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4">
-            {/* Payment Summary */}
-            <div className="p-3 bg-gray-50 rounded-md">
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-xs font-medium">Montant Total Dû :</span>
-                <span className="text-lg font-bold">{formatCurrency(paymentData.amount)}</span>
-              </div>
-              {paymentData.breakdown && (
-                <div className="space-y-1 text-xs">
-                  {Object.entries(paymentData.breakdown).map(([key, value]) => (
-                    <div key={key} className="flex justify-between">
-                      <span className="text-gray-500 capitalize">
-                        {key.replace(/([A-Z])/g, " $1").toLowerCase()}:
-                      </span>
-                      <span>{formatCurrency(value)}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Payment Method Selection */}
-            <div>
-              <Label className="text-xs">Méthode de Paiement *</Label>
-              <Select value={paymentMethod} onValueChange={setPaymentMethod}>
-                <SelectTrigger className="mt-1 h-8 text-xs">
-                  <SelectValue placeholder="Sélectionnez une méthode de paiement" />
-                </SelectTrigger>
-                <SelectContent>
-                  {paymentMethods.map((method) => (
-                    <SelectItem key={method.value} value={method.value} className="text-xs">
-                      {method.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Payment Method Details */}
-            {selectedMethodDetails && (
-              <div className={`p-3 bg-${selectedMethodDetails.color}-50 rounded-md`}>
-                <h4 className={`font-medium text-${selectedMethodDetails.color}-900 mb-2 text-xs`}>
-                  Détails - {selectedMethodDetails.name}
-                </h4>
-                <div className={`text-xs text-${selectedMethodDetails.color}-800 space-y-1`}>
-                  {Object.entries(selectedMethodDetails.details).map(([key, value]) => (
-                    <p key={key}>
-                      <strong>{key}:</strong> {value}
-                    </p>
-                  ))}
-                  <p>
-                    <strong>Référence:</strong> {paymentData.id}
-                  </p>
-                  {selectedMethodDetails.note && (
-                    <p className={`text-${selectedMethodDetails.color}-700 font-medium mt-2`}>
-                      {selectedMethodDetails.note}
-                    </p>
-                  )}
-                </div>
-              </div>
+                    ))}
+                </CardContent>
+              </Card>
             )}
 
-            {/* Receipt Upload */}
-            <div>
-              <Label className="text-xs">Reçu de Paiement *</Label>
-              <div className="mt-1 border-2 border-dashed border-gray-200 rounded-md p-4 text-center">
-                <Upload className="w-6 h-6 mx-auto text-gray-400 mb-1" />
-                <p className="text-xs text-gray-500 mb-2">
-                  {paymentMethod
-                    ? "Téléchargez votre reçu de paiement ou capture d'écran"
-                    : "Sélectionnez d'abord une méthode de paiement"}
-                </p>
-                <Input
-                  type="file"
-                  accept="image/*,.pdf"
-                  className="text-xs"
-                  onChange={handleFileUpload}
-                  disabled={uploading || !paymentMethod}
-                />
-                {uploading && (
-                  <div className="flex items-center justify-center gap-2 mt-2">
-                    <div className="w-4 h-4 border-2 border-orange-600 border-t-transparent rounded-full animate-spin" />
-                    <span className="text-xs text-gray-600">Téléchargement...</span>
+            {/* Payment Receipts */}
+            {uploadedFiles.length > 0 && (
+              <Card className="border-gray-200">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-base font-semibold">Reçus de Paiement ({uploadedFiles.length})</CardTitle>
+                </CardHeader>
+              <CardContent className="space-y-2">
+                    {uploadedFiles.map((file) => {
+                      const AttachmentIcon = getAttachmentIcon(file.type)
+                      const isDeleting = deletingFiles.has(file.id)
+
+                      return (
+                        <div
+                          key={file.id}
+                          className="flex items-center justify-between p-2 bg-gray-50 rounded-md border border-gray-200"
+                        >
+                          <div className="flex items-center gap-2 flex-1 min-w-0">
+                            <AttachmentIcon className={`w-4 h-4 flex-shrink-0 ${getAttachmentColor(file.type)}`} />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-xs font-medium truncate">{file.name}</p>
+                              <p className="text-xs text-gray-500">
+                                {file.type} • {(file.size / 1024).toFixed(1)} KB
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Button variant="ghost" size="sm" className="h-6 w-6 p-0" asChild>
+                              <a href={file.url} target="_blank" rel="noopener noreferrer">
+                                <Download className="w-3 h-3" />
+                              </a>
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-6 w-6 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
+                              onClick={() => deleteFile(file.id)}
+                              disabled={isDeleting}
+                            >
+                              {isDeleting ? (
+                                <div className="w-3 h-3 border border-red-600 border-t-transparent rounded-full animate-spin" />
+                              ) : (
+                                <Trash2 className="w-3 h-3" />
+                              )}
+                            </Button>
+                          </div>
+                        </div>
+                      )
+                    })}
+                </CardContent>
+              </Card>
+            )}
+          </div>
+
+        {/* Sidebar - Now empty since Actions moved to main content */}
+          <div className="space-y-4">
+          {/* Sidebar content can be added here if needed in the future */}
+        </div>
+        </div>
+
+        {/* Payment Dialog */}
+        <Dialog open={isPaymentOpen} onOpenChange={setIsPaymentOpen}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+            <DialogTitle>Submit Payment - {paymentData.id}</DialogTitle>
+              <DialogDescription>Complétez votre paiement</DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4">
+              {/* Payment Summary */}
+              <div className="p-3 bg-gray-50 rounded-md">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-xs font-medium">Montant Total Dû :</span>
+                <span className="text-lg font-bold">{formatCurrency(paymentData.amount)}</span>
+                </div>
+              {paymentData.breakdown && (
+                  <div className="space-y-1 text-xs">
+                    {Object.entries(paymentData.breakdown).map(([key, value]) => (
+                      <div key={key} className="flex justify-between">
+                        <span className="text-gray-500 capitalize">
+                          {key.replace(/([A-Z])/g, " $1").toLowerCase()}:
+                        </span>
+                        <span>{formatCurrency(value)}</span>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
 
-              {/* Uploaded Files */}
-              {uploadedFiles.length > 0 && (
-                <div className="mt-3 space-y-2">
-                  <Label className="text-xs text-gray-600">Fichiers téléchargés:</Label>
-                  {uploadedFiles.map((file) => {
-                    const AttachmentIcon = getAttachmentIcon(file.type)
-                    const isDeleting = deletingFiles.has(file.id)
+              {/* Payment Method Selection */}
+              <div>
+                <Label className="text-xs">Méthode de Paiement *</Label>
+                <Select value={paymentMethod} onValueChange={setPaymentMethod}>
+                  <SelectTrigger className="mt-1 h-8 text-xs">
+                    <SelectValue placeholder="Sélectionnez une méthode de paiement" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {paymentMethods.map((method) => (
+                      <SelectItem key={method.value} value={method.value} className="text-xs">
+                        {method.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-                    return (
-                      <div
-                        key={file.id}
-                        className="flex items-center justify-between p-2 bg-gray-50 rounded-md border border-gray-200"
-                      >
-                        <div className="flex items-center gap-2 flex-1 min-w-0">
-                          <AttachmentIcon className={`w-4 h-4 flex-shrink-0 ${getAttachmentColor(file.type)}`} />
-                          <div className="flex-1 min-w-0">
-                            <p className="text-xs font-medium truncate">{file.name}</p>
-                            <p className="text-xs text-gray-500">
-                              {file.type} • {(file.size / 1024).toFixed(1)} KB
-                            </p>
-                          </div>
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-6 w-6 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
-                          onClick={() => deleteFile(file.id)}
-                          disabled={isDeleting}
-                        >
-                          {isDeleting ? (
-                            <div className="w-3 h-3 border border-red-600 border-t-transparent rounded-full animate-spin" />
-                          ) : (
-                            <Trash2 className="w-3 h-3" />
-                          )}
-                        </Button>
-                      </div>
-                    )
-                  })}
+              {/* Payment Method Details */}
+              {selectedMethodDetails && (
+                <div className={`p-3 bg-${selectedMethodDetails.color}-50 rounded-md`}>
+                  <h4 className={`font-medium text-${selectedMethodDetails.color}-900 mb-2 text-xs`}>
+                    Détails - {selectedMethodDetails.name}
+                  </h4>
+                  <div className={`text-xs text-${selectedMethodDetails.color}-800 space-y-1`}>
+                    {Object.entries(selectedMethodDetails.details).map(([key, value]) => (
+                      <p key={key}>
+                        <strong>{key}:</strong> {value}
+                      </p>
+                    ))}
+                    <p>
+                    <strong>Référence:</strong> {paymentData.id}
+                    </p>
+                    {selectedMethodDetails.note && (
+                      <p className={`text-${selectedMethodDetails.color}-700 font-medium mt-2`}>
+                        {selectedMethodDetails.note}
+                      </p>
+                    )}
+                  </div>
                 </div>
               )}
-            </div>
 
-            {/* Payment Notes */}
-            <div>
-              <Label className="text-xs">Notes de Paiement (Optionnel)</Label>
-              <Textarea
-                placeholder="Toute information supplémentaire sur votre paiement..."
-                value={paymentNotes}
-                onChange={(e) => setPaymentNotes(e.target.value)}
-                className="mt-1 text-xs"
-              />
-            </div>
+              {/* Receipt Upload */}
+              <div>
+                <Label className="text-xs">Reçu de Paiement *</Label>
+                <div className="mt-1 border-2 border-dashed border-gray-200 rounded-md p-4 text-center">
+                  <Upload className="w-6 h-6 mx-auto text-gray-400 mb-1" />
+                  <p className="text-xs text-gray-500 mb-2">
+                    {paymentMethod
+                      ? "Téléchargez votre reçu de paiement ou capture d'écran"
+                      : "Sélectionnez d'abord une méthode de paiement"}
+                  </p>
+                  <Input
+                    type="file"
+                    accept="image/*,.pdf"
+                    className="text-xs"
+                    onChange={handleFileUpload}
+                    disabled={uploading || !paymentMethod}
+                  />
+                  {uploading && (
+                    <div className="flex items-center justify-center gap-2 mt-2">
+                      <div className="w-4 h-4 border-2 border-orange-600 border-t-transparent rounded-full animate-spin" />
+                      <span className="text-xs text-gray-600">Téléchargement...</span>
+                    </div>
+                  )}
+                </div>
 
-            {/* Actions */}
-            <div className="flex gap-2">
-              <Button onClick={handlePayment} className="flex-1 h-8 text-xs">
-                <CreditCard className="w-3 h-3 mr-1" />
-                Soumettre le Paiement
-              </Button>
-              <Button variant="outline" onClick={() => setIsPaymentOpen(false)} className="h-8 text-xs">
-                Annuler
-              </Button>
+                {/* Uploaded Files */}
+                {uploadedFiles.length > 0 && (
+                  <div className="mt-3 space-y-2">
+                    <Label className="text-xs text-gray-600">Fichiers téléchargés:</Label>
+                    {uploadedFiles.map((file) => {
+                      const AttachmentIcon = getAttachmentIcon(file.type)
+                      const isDeleting = deletingFiles.has(file.id)
+
+                      return (
+                        <div
+                          key={file.id}
+                          className="flex items-center justify-between p-2 bg-gray-50 rounded-md border border-gray-200"
+                        >
+                          <div className="flex items-center gap-2 flex-1 min-w-0">
+                            <AttachmentIcon className={`w-4 h-4 flex-shrink-0 ${getAttachmentColor(file.type)}`} />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-xs font-medium truncate">{file.name}</p>
+                              <p className="text-xs text-gray-500">
+                                {file.type} • {(file.size / 1024).toFixed(1)} KB
+                              </p>
+                            </div>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 w-6 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
+                            onClick={() => deleteFile(file.id)}
+                            disabled={isDeleting}
+                          >
+                            {isDeleting ? (
+                              <div className="w-3 h-3 border border-red-600 border-t-transparent rounded-full animate-spin" />
+                            ) : (
+                              <Trash2 className="w-3 h-3" />
+                            )}
+                          </Button>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Payment Notes */}
+              <div>
+                <Label className="text-xs">Notes de Paiement (Optionnel)</Label>
+                <Textarea
+                  placeholder="Toute information supplémentaire sur votre paiement..."
+                  value={paymentNotes}
+                  onChange={(e) => setPaymentNotes(e.target.value)}
+                  className="mt-1 text-xs"
+                />
+              </div>
+
+              {/* Actions */}
+              <div className="flex gap-2">
+                <Button onClick={handlePayment} className="flex-1 h-8 text-xs">
+                  <CreditCard className="w-3 h-3 mr-1" />
+                  Soumettre le Paiement
+                </Button>
+                <Button variant="outline" onClick={() => setIsPaymentOpen(false)} className="h-8 text-xs">
+                  Annuler
+                </Button>
+              </div>
             </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+          </DialogContent>
+        </Dialog>
     </div>
   )
 }

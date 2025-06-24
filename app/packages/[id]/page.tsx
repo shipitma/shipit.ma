@@ -105,10 +105,10 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
           <ArrowLeft className="w-3 h-3" />
         </Button>
         <div className="flex items-center gap-2">
-          <h1 className="text-lg font-semibold">{packageData.id}</h1>
-          <Badge className={getStatusColor(packageData.status)} variant="secondary">
-            {packageData.status.replace("_", " ")}
-          </Badge>
+            <h1 className="text-lg font-semibold">{packageData.id}</h1>
+            <Badge className={getStatusColor(packageData.status)} variant="secondary">
+              {packageData.status.replace("_", " ")}
+            </Badge>
         </div>
         {packageData.status === "arrived" && (
           <Button onClick={() => setIsPaymentOpen(true)} size="sm" className="h-7 text-xs ml-auto">
