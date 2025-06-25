@@ -15,6 +15,11 @@ import {
   FileText,
   AlertCircle,
   Receipt,
+  MapPin,
+  Truck,
+  CheckCircle,
+  Clock,
+  Shield,
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { type PackageType, formatCurrency } from "@/lib/database"
@@ -35,6 +40,23 @@ const getStatusColor = (status: string) => {
   }
 }
 
+const getStatusLabel = (status: string) => {
+  switch (status) {
+    case "expected":
+      return "Attendu"
+    case "processing":
+      return "En Traitement"
+    case "arrived":
+      return "Arrivé"
+    case "in_transit":
+      return "En Transit"
+    case "delivered":
+      return "Livré"
+    default:
+      return status.replace("_", " ")
+  }
+}
+
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString)
   const day = String(date.getDate()).padStart(2, "0")
@@ -42,6 +64,23 @@ const formatDate = (dateString: string): string => {
   const year = date.getFullYear()
 
   return `${day}/${month}/${year}`
+}
+
+const getTimelineIcon = (icon: string) => {
+  switch (icon) {
+    case "Package":
+      return <Package className="w-4 h-4" />
+    case "CheckCircle":
+      return <CheckCircle className="w-4 h-4" />
+    case "Truck":
+      return <Truck className="w-4 h-4" />
+    case "MapPin":
+      return <MapPin className="w-4 h-4" />
+    case "Shield":
+      return <Shield className="w-4 h-4" />
+    default:
+      return <Clock className="w-4 h-4" />
+  }
 }
 
 export default function PackageDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -107,7 +146,7 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
         <div className="flex items-center gap-2">
             <h1 className="text-lg font-semibold">{packageData.id}</h1>
             <Badge className={getStatusColor(packageData.status)} variant="secondary">
-              {packageData.status.replace("_", " ")}
+              {getStatusLabel(packageData.status)}
             </Badge>
         </div>
         {packageData.status === "arrived" && (
@@ -153,8 +192,70 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
                   {packageData.insurance ? formatCurrency(packageData.insurance) : "N/A"}
                 </span>
               </div>
+              {packageData.carrier && (
+                <div className="flex justify-between">
+                  <span className="text-xs text-gray-500">Transporteur :</span>
+                  <span className="text-xs font-medium">{packageData.carrier}</span>
+                </div>
+              )}
+              {packageData.tracking_number && (
+                <div className="flex justify-between">
+                  <span className="text-xs text-gray-500">Numéro de Suivi :</span>
+                  <span className="text-xs font-medium">{packageData.tracking_number}</span>
+                </div>
+              )}
+              {packageData.eta && (
+                <div className="flex justify-between">
+                  <span className="text-xs text-gray-500">Date d'Arrivée Estimée :</span>
+                  <span className="text-xs font-medium">{packageData.eta}</span>
+                </div>
+              )}
             </CardContent>
           </Card>
+
+          {/* Package Timeline */}
+          {packageData.timeline && packageData.timeline.length > 0 && (
+            <Card className="border-gray-200">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base font-semibold">Suivi du Colis</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {packageData.timeline.map((event, index) => (
+                    <div key={event.id} className="flex gap-3">
+                      {/* Timeline Icon */}
+                      <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                        event.completed 
+                          ? "bg-green-100 text-green-600" 
+                          : "bg-gray-100 text-gray-400"
+                      }`}>
+                        {getTimelineIcon(event.icon || "Clock")}
+                      </div>
+                      
+                      {/* Timeline Content */}
+                      <div className="flex-1 pb-4">
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <h4 className="text-sm font-medium">{event.status}</h4>
+                            {event.location && (
+                              <p className="text-xs text-gray-500">{event.location}</p>
+                            )}
+                            {event.description && (
+                              <p className="text-xs text-gray-600 mt-1">{event.description}</p>
+                            )}
+                          </div>
+                          <div className="text-right">
+                            <p className="text-xs text-gray-500">{formatDate(event.date)}</p>
+                            <p className="text-xs text-gray-400">{event.time}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Package Contents */}
           <Card className="border-gray-200">
@@ -199,10 +300,68 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
               </div>
             </CardContent>
           </Card>
+
+          {/* Package Attachments */}
+          {packageData.attachments && packageData.attachments.length > 0 && (
+            <Card className="border-gray-200">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-base font-semibold">
+                  <FileText className="w-4 h-4" />
+                  Documents ({packageData.attachments.length})
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  {packageData.attachments.map((attachment) => (
+                    <div key={attachment.id} className="flex items-center justify-between p-2 border border-gray-200 rounded-md">
+                      <div className="flex items-center gap-2">
+                        {attachment.attachment_type === "receipt" ? (
+                          <Receipt className="w-4 h-4 text-green-600" />
+                        ) : attachment.attachment_type === "photo" ? (
+                          <ImageIcon className="w-4 h-4 text-blue-600" />
+                        ) : (
+                          <FileText className="w-4 h-4 text-gray-600" />
+                        )}
+                        <div>
+                          <p className="text-sm font-medium">{attachment.file_name}</p>
+                          <p className="text-xs text-gray-500">
+                            {attachment.file_size ? `${(attachment.file_size / 1024).toFixed(1)} KB` : "N/A"}
+                          </p>
+                        </div>
+                      </div>
+                      <Button variant="outline" size="sm" asChild className="h-7 text-xs">
+                        <a href={attachment.file_url} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="w-3 h-3 mr-1" />
+                          Voir
+                        </a>
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
 
         {/* Sidebar */}
         <div className="space-y-4">
+          {/* Tracking Info */}
+          {packageData.tracking_url && (
+            <Card className="border-blue-200 bg-blue-50">
+              <CardContent className="p-3">
+                <div className="space-y-2">
+                  <h4 className="text-xs font-medium text-blue-900">Suivi en Ligne</h4>
+                  <Button variant="outline" size="sm" asChild className="w-full h-8 text-xs">
+                    <a href={packageData.tracking_url} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="w-3 h-3 mr-1" />
+                      Suivre sur {packageData.carrier || "le site du transporteur"}
+                    </a>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Alerts */}
           {packageData.status === "arrived" && (
             <Card className="border-orange-200 bg-orange-50">
@@ -220,6 +379,21 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
               </CardContent>
             </Card>
           )}
+
+          {/* Insurance Info */}
+          {packageData.insurance_details && (
+            <Card className="border-green-200 bg-green-50">
+              <CardContent className="p-3">
+                <div className="flex gap-2">
+                  <Shield className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="text-xs font-medium text-green-900">Assurance</h4>
+                    <p className="text-xs text-green-800 mt-1">{packageData.insurance_details}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
 
@@ -228,7 +402,7 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Payer les Frais d'Expédition - {packageData.id}</DialogTitle>
-            <DialogDescription>Effectuez le paiement pour expédier votre colis vers la Turquie</DialogDescription>
+            <DialogDescription>Effectuez le paiement pour expédier votre colis vers le Maroc</DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             <div className="p-3 bg-gray-50 rounded-md">

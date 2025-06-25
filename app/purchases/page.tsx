@@ -46,6 +46,25 @@ const getStatusColor = (status: string) => {
   }
 }
 
+const getStatusLabel = (status: string) => {
+  switch (status) {
+    case "pending_review":
+      return "En Attente de Révision"
+    case "pending_payment":
+      return "En Attente de Paiement"
+    case "confirmed":
+      return "Confirmé"
+    case "purchasing":
+      return "Achat en Cours"
+    case "completed":
+      return "Terminé"
+    case "cancelled":
+      return "Annulé"
+    default:
+      return status.replace("_", " ")
+  }
+}
+
 export default function PurchasesPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
@@ -349,7 +368,7 @@ export default function PurchasesPage() {
                     <CardDescription className="text-xs text-gray-500">{formatDate(request.date)}</CardDescription>
                   </div>
                   <Badge className={getStatusColor(request.status)} variant="secondary">
-                    {request.status.replace("_", " ")}
+                    {getStatusLabel(request.status)}
                   </Badge>
                 </div>
               </CardHeader>
@@ -369,7 +388,51 @@ export default function PurchasesPage() {
                       <span className="text-xs font-semibold text-orange-600">{formatCurrency(request.payment_due)}</span>
                     </div>
                   )}
+                  {request.service_fee && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-500">Frais de Service:</span>
+                      <span className="text-xs font-medium">{formatCurrency(request.service_fee)}</span>
+                    </div>
+                  )}
+                  {request.shipping_fee && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-500">Frais d'Expédition:</span>
+                      <span className="text-xs font-medium">{formatCurrency(request.shipping_fee)}</span>
+                    </div>
+                  )}
                 </div>
+
+                {/* Admin Notes Preview */}
+                {request.admin_notes && (
+                  <div className="p-2 bg-orange-50 rounded-md border border-orange-200">
+                    <p className="text-xs text-orange-800 line-clamp-2">
+                      <span className="font-medium">Note:</span> {request.admin_notes}
+                    </p>
+                  </div>
+                )}
+
+                {/* Timeline Status */}
+                {request.timeline && request.timeline.length > 0 && (
+                  <div className="space-y-1">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-500">Dernière activité:</span>
+                      <span className="text-xs font-medium">
+                        {request.timeline[request.timeline.length - 1]?.status}
+                      </span>
+                    </div>
+                    <div className="flex gap-1">
+                      {request.timeline.slice(-3).map((event, index) => (
+                        <div 
+                          key={index}
+                          className={`w-2 h-2 rounded-full ${
+                            event.completed ? 'bg-green-500' : 'bg-gray-300'
+                          }`}
+                          title={`${event.status} - ${event.date}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 <div className="flex flex-col gap-2 pt-2">
                   <Button 

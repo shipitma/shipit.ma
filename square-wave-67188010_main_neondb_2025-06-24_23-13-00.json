@@ -1,0 +1,796 @@
+[{
+  "table_name": "active_sessions",
+  "column_name": "id",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "active_sessions",
+  "column_name": "user_id",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "active_sessions",
+  "column_name": "phone_number",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "active_sessions",
+  "column_name": "session_type",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "active_sessions",
+  "column_name": "expires_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "active_sessions",
+  "column_name": "created_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "active_sessions",
+  "column_name": "last_accessed",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "active_sessions",
+  "column_name": "user_agent",
+  "data_type": "text",
+  "is_nullable": "YES"
+}, {
+  "table_name": "active_sessions",
+  "column_name": "ip_address",
+  "data_type": "inet",
+  "is_nullable": "YES"
+}, {
+  "table_name": "active_sessions",
+  "column_name": "first_name",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "active_sessions",
+  "column_name": "last_name",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "active_sessions",
+  "column_name": "email",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "active_sessions",
+  "column_name": "phone_verified",
+  "data_type": "boolean",
+  "is_nullable": "YES"
+}, {
+  "table_name": "active_sessions",
+  "column_name": "email_verified",
+  "data_type": "boolean",
+  "is_nullable": "YES"
+}, {
+  "table_name": "active_sessions",
+  "column_name": "last_login",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "attachments",
+  "column_name": "id",
+  "data_type": "integer",
+  "is_nullable": "NO"
+}, {
+  "table_name": "attachments",
+  "column_name": "user_id",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "attachments",
+  "column_name": "file_url",
+  "data_type": "text",
+  "is_nullable": "NO"
+}, {
+  "table_name": "attachments",
+  "column_name": "file_name",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "attachments",
+  "column_name": "file_size",
+  "data_type": "integer",
+  "is_nullable": "YES"
+}, {
+  "table_name": "attachments",
+  "column_name": "file_type",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "attachments",
+  "column_name": "attachment_type",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "attachments",
+  "column_name": "related_type",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "attachments",
+  "column_name": "related_id",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "attachments",
+  "column_name": "uploaded_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "attachments",
+  "column_name": "created_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "attachments",
+  "column_name": "updated_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "otp_codes",
+  "column_name": "id",
+  "data_type": "integer",
+  "is_nullable": "NO"
+}, {
+  "table_name": "otp_codes",
+  "column_name": "phone_number",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "otp_codes",
+  "column_name": "code",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "otp_codes",
+  "column_name": "purpose",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "otp_codes",
+  "column_name": "expires_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "NO"
+}, {
+  "table_name": "otp_codes",
+  "column_name": "verified",
+  "data_type": "boolean",
+  "is_nullable": "YES"
+}, {
+  "table_name": "otp_codes",
+  "column_name": "attempts",
+  "data_type": "integer",
+  "is_nullable": "YES"
+}, {
+  "table_name": "otp_codes",
+  "column_name": "max_attempts",
+  "data_type": "integer",
+  "is_nullable": "YES"
+}, {
+  "table_name": "otp_codes",
+  "column_name": "created_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "otp_codes",
+  "column_name": "verified_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "package_items",
+  "column_name": "id",
+  "data_type": "integer",
+  "is_nullable": "NO"
+}, {
+  "table_name": "package_items",
+  "column_name": "package_id",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "package_items",
+  "column_name": "name",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "package_items",
+  "column_name": "quantity",
+  "data_type": "integer",
+  "is_nullable": "NO"
+}, {
+  "table_name": "package_items",
+  "column_name": "value",
+  "data_type": "numeric",
+  "is_nullable": "YES"
+}, {
+  "table_name": "package_items",
+  "column_name": "image_url",
+  "data_type": "text",
+  "is_nullable": "YES"
+}, {
+  "table_name": "package_items",
+  "column_name": "created_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "package_timeline",
+  "column_name": "id",
+  "data_type": "integer",
+  "is_nullable": "NO"
+}, {
+  "table_name": "package_timeline",
+  "column_name": "package_id",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "package_timeline",
+  "column_name": "status",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "package_timeline",
+  "column_name": "location",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "package_timeline",
+  "column_name": "date",
+  "data_type": "date",
+  "is_nullable": "NO"
+}, {
+  "table_name": "package_timeline",
+  "column_name": "time",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "package_timeline",
+  "column_name": "completed",
+  "data_type": "boolean",
+  "is_nullable": "NO"
+}, {
+  "table_name": "package_timeline",
+  "column_name": "description",
+  "data_type": "text",
+  "is_nullable": "YES"
+}, {
+  "table_name": "package_timeline",
+  "column_name": "icon",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "package_timeline",
+  "column_name": "created_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "id",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "packages",
+  "column_name": "user_id",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "packages",
+  "column_name": "description",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "packages",
+  "column_name": "status",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "packages",
+  "column_name": "tracking_number",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "weight",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "dimensions",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "estimated_value",
+  "data_type": "numeric",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "shipping_cost",
+  "data_type": "numeric",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "insurance",
+  "data_type": "numeric",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "progress",
+  "data_type": "integer",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "eta",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "carrier",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "origin",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "destination",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "retailer",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "shipping_method",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "service",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "transit_time",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "tracking_url",
+  "data_type": "text",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "insurance_details",
+  "data_type": "text",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "created_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "updated_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "receipt_files",
+  "data_type": "ARRAY",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "document_file_ids",
+  "data_type": "ARRAY",
+  "is_nullable": "YES"
+}, {
+  "table_name": "packages",
+  "column_name": "receipt_url",
+  "data_type": "text",
+  "is_nullable": "YES"
+}, {
+  "table_name": "payment_breakdowns",
+  "column_name": "id",
+  "data_type": "integer",
+  "is_nullable": "NO"
+}, {
+  "table_name": "payment_breakdowns",
+  "column_name": "payment_request_id",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "payment_breakdowns",
+  "column_name": "item_key",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "payment_breakdowns",
+  "column_name": "item_value",
+  "data_type": "numeric",
+  "is_nullable": "NO"
+}, {
+  "table_name": "payment_breakdowns",
+  "column_name": "created_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "payment_requests",
+  "column_name": "id",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "payment_requests",
+  "column_name": "user_id",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "payment_requests",
+  "column_name": "type",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "payment_requests",
+  "column_name": "related_id",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "payment_requests",
+  "column_name": "amount",
+  "data_type": "numeric",
+  "is_nullable": "NO"
+}, {
+  "table_name": "payment_requests",
+  "column_name": "due_date",
+  "data_type": "date",
+  "is_nullable": "NO"
+}, {
+  "table_name": "payment_requests",
+  "column_name": "status",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "payment_requests",
+  "column_name": "paid_date",
+  "data_type": "date",
+  "is_nullable": "YES"
+}, {
+  "table_name": "payment_requests",
+  "column_name": "receipt_url",
+  "data_type": "text",
+  "is_nullable": "YES"
+}, {
+  "table_name": "payment_requests",
+  "column_name": "created_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "payment_requests",
+  "column_name": "updated_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "payment_requests",
+  "column_name": "payment_methods",
+  "data_type": "ARRAY",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_request_items",
+  "column_name": "id",
+  "data_type": "integer",
+  "is_nullable": "NO"
+}, {
+  "table_name": "purchase_request_items",
+  "column_name": "purchase_request_id",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "purchase_request_items",
+  "column_name": "name",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "purchase_request_items",
+  "column_name": "url",
+  "data_type": "text",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_request_items",
+  "column_name": "price",
+  "data_type": "numeric",
+  "is_nullable": "NO"
+}, {
+  "table_name": "purchase_request_items",
+  "column_name": "quantity",
+  "data_type": "integer",
+  "is_nullable": "NO"
+}, {
+  "table_name": "purchase_request_items",
+  "column_name": "image_url",
+  "data_type": "text",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_request_items",
+  "column_name": "specifications",
+  "data_type": "text",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_request_items",
+  "column_name": "variant",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_request_items",
+  "column_name": "created_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_request_items",
+  "column_name": "attachment_file_ids",
+  "data_type": "ARRAY",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_request_items",
+  "column_name": "photo_url",
+  "data_type": "text",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_request_timeline",
+  "column_name": "id",
+  "data_type": "integer",
+  "is_nullable": "NO"
+}, {
+  "table_name": "purchase_request_timeline",
+  "column_name": "purchase_request_id",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "purchase_request_timeline",
+  "column_name": "status",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "purchase_request_timeline",
+  "column_name": "date",
+  "data_type": "date",
+  "is_nullable": "NO"
+}, {
+  "table_name": "purchase_request_timeline",
+  "column_name": "time",
+  "data_type": "time without time zone",
+  "is_nullable": "NO"
+}, {
+  "table_name": "purchase_request_timeline",
+  "column_name": "completed",
+  "data_type": "boolean",
+  "is_nullable": "NO"
+}, {
+  "table_name": "purchase_request_timeline",
+  "column_name": "description",
+  "data_type": "text",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_request_timeline",
+  "column_name": "created_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_requests",
+  "column_name": "id",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "purchase_requests",
+  "column_name": "user_id",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "purchase_requests",
+  "column_name": "date",
+  "data_type": "date",
+  "is_nullable": "NO"
+}, {
+  "table_name": "purchase_requests",
+  "column_name": "status",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "purchase_requests",
+  "column_name": "total_amount",
+  "data_type": "numeric",
+  "is_nullable": "NO"
+}, {
+  "table_name": "purchase_requests",
+  "column_name": "payment_due",
+  "data_type": "numeric",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_requests",
+  "column_name": "items_cost",
+  "data_type": "numeric",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_requests",
+  "column_name": "shipping_fee",
+  "data_type": "numeric",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_requests",
+  "column_name": "service_fee",
+  "data_type": "numeric",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_requests",
+  "column_name": "processing_fee",
+  "data_type": "numeric",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_requests",
+  "column_name": "taxes",
+  "data_type": "numeric",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_requests",
+  "column_name": "admin_notes",
+  "data_type": "text",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_requests",
+  "column_name": "created_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_requests",
+  "column_name": "updated_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_requests",
+  "column_name": "item_files",
+  "data_type": "jsonb",
+  "is_nullable": "YES"
+}, {
+  "table_name": "purchase_requests",
+  "column_name": "receipt_file_id",
+  "data_type": "integer",
+  "is_nullable": "YES"
+}, {
+  "table_name": "sessions",
+  "column_name": "id",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "sessions",
+  "column_name": "user_id",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "sessions",
+  "column_name": "phone_number",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "sessions",
+  "column_name": "session_type",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "sessions",
+  "column_name": "expires_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "NO"
+}, {
+  "table_name": "sessions",
+  "column_name": "created_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "sessions",
+  "column_name": "last_accessed",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "sessions",
+  "column_name": "user_agent",
+  "data_type": "text",
+  "is_nullable": "YES"
+}, {
+  "table_name": "sessions",
+  "column_name": "ip_address",
+  "data_type": "inet",
+  "is_nullable": "YES"
+}, {
+  "table_name": "sessions",
+  "column_name": "access_token",
+  "data_type": "text",
+  "is_nullable": "YES"
+}, {
+  "table_name": "sessions",
+  "column_name": "refresh_token",
+  "data_type": "text",
+  "is_nullable": "YES"
+}, {
+  "table_name": "users",
+  "column_name": "id",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "users",
+  "column_name": "phone_number",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "users",
+  "column_name": "first_name",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "users",
+  "column_name": "last_name",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "users",
+  "column_name": "email",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "users",
+  "column_name": "address_line",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "users",
+  "column_name": "city",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "users",
+  "column_name": "state",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "users",
+  "column_name": "zip",
+  "data_type": "character varying",
+  "is_nullable": "YES"
+}, {
+  "table_name": "users",
+  "column_name": "country",
+  "data_type": "character varying",
+  "is_nullable": "NO"
+}, {
+  "table_name": "users",
+  "column_name": "created_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "users",
+  "column_name": "updated_at",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}, {
+  "table_name": "users",
+  "column_name": "email_verified",
+  "data_type": "boolean",
+  "is_nullable": "YES"
+}, {
+  "table_name": "users",
+  "column_name": "phone_verified",
+  "data_type": "boolean",
+  "is_nullable": "YES"
+}, {
+  "table_name": "users",
+  "column_name": "last_login",
+  "data_type": "timestamp without time zone",
+  "is_nullable": "YES"
+}]

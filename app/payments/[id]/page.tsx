@@ -25,6 +25,8 @@ import {
   FileText,
   ImageIcon,
   File,
+  Calendar,
+  AlertTriangle,
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import type { PaymentRequest } from "@/lib/database"
@@ -41,6 +43,21 @@ const getStatusColor = (status: string) => {
       return "bg-orange-100 text-orange-800"
     default:
       return "bg-gray-100 text-gray-800"
+  }
+}
+
+const getStatusLabel = (status: string) => {
+  switch (status) {
+    case "pending":
+      return "En Attente"
+    case "paid":
+      return "Payé"
+    case "overdue":
+      return "En Retard"
+    case "processing":
+      return "En Traitement"
+    default:
+      return status
   }
 }
 
@@ -149,6 +166,15 @@ const formatCurrency = (amount: number | undefined) => {
     style: "currency",
     currency: "MAD",
   }).format(amount)
+}
+
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString)
+  return date.toLocaleDateString("fr-FR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  })
 }
 
 export default function PaymentDetailsPage({ params }: { params: Promise<{ id: string }> }) {
@@ -348,6 +374,7 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
 
   const StatusIcon = getStatusIcon(paymentData.status)
   const selectedMethodDetails = paymentMethod ? getPaymentMethodDetails(paymentMethod) : null
+  const isOverdue = paymentData.status === "overdue" || (paymentData.status === "pending" && new Date(paymentData.due_date) < new Date())
 
   return (
       <div className="space-y-4">
@@ -358,8 +385,8 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
           </Button>
         <div className="flex items-center gap-2">
           <h1 className="text-lg font-semibold">{paymentData.id}</h1>
-          <Badge className={getStatusColor(paymentData.status)} variant="secondary">
-            {paymentData.status}
+          <Badge className={`${getStatusColor(paymentData.status)} text-xs`} variant="secondary">
+            {getStatusLabel(paymentData.status)}
           </Badge>
           </div>
         </div>
@@ -418,12 +445,12 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
                   </div>
               <div className="flex justify-between">
                 <span className="text-xs text-gray-500">Date d'Échéance :</span>
-                <span className="text-xs font-medium">{paymentData.due_date}</span>
+                <span className="text-xs font-medium">{formatDate(paymentData.due_date)}</span>
                   </div>
               {paymentData.paid_date && (
                 <div className="flex justify-between">
                   <span className="text-xs text-gray-500">Date de Paiement :</span>
-                  <span className="text-xs font-medium">{paymentData.paid_date}</span>
+                  <span className="text-xs font-medium">{formatDate(paymentData.paid_date)}</span>
                     </div>
                   )}
               <div className="border-t border-gray-200 pt-2">
@@ -507,10 +534,91 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
             )}
           </div>
 
-        {/* Sidebar - Now empty since Actions moved to main content */}
+        {/* Sidebar */}
           <div className="space-y-4">
-          {/* Sidebar content can be added here if needed in the future */}
-        </div>
+            {/* Status Info */}
+            <Card className="border-gray-200">
+              <CardContent className="p-3">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <StatusIcon className="w-4 h-4 text-gray-600" />
+                    <h4 className="text-xs font-medium text-gray-900">Statut du Paiement</h4>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span className="text-xs text-gray-500">Statut :</span>
+                      <Badge className={`${getStatusColor(paymentData.status)} text-xs`} variant="secondary">
+                        {getStatusLabel(paymentData.status)}
+                      </Badge>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-xs text-gray-500">Créé le :</span>
+                      <span className="text-xs font-medium">{formatDate(paymentData.created_at)}</span>
+                    </div>
+                    {paymentData.updated_at && (
+                      <div className="flex justify-between">
+                        <span className="text-xs text-gray-500">Mis à jour :</span>
+                        <span className="text-xs font-medium">{formatDate(paymentData.updated_at)}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Payment Methods */}
+            {paymentData.payment_methods && paymentData.payment_methods.length > 0 && (
+              <Card className="border-blue-200 bg-blue-50">
+                <CardContent className="p-3">
+                  <div className="space-y-2">
+                    <h4 className="text-xs font-medium text-blue-900">Méthodes de Paiement Acceptées</h4>
+                    <div className="space-y-1">
+                      {paymentData.payment_methods.map((method) => {
+                        const methodDetails = getPaymentMethodDetails(method)
+                        return (
+                          <div key={method} className="text-xs text-blue-800">
+                            • {methodDetails?.name || method}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Overdue Warning */}
+            {isOverdue && (
+              <Card className="border-red-200 bg-red-50">
+                <CardContent className="p-3">
+                  <div className="flex gap-2">
+                    <AlertTriangle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="text-xs font-medium text-red-900">Paiement en Retard</h4>
+                      <p className="text-xs text-red-800 mt-1">
+                        La date d'échéance est dépassée. Veuillez effectuer le paiement dès que possible.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Due Date Info */}
+            <Card className="border-orange-200 bg-orange-50">
+              <CardContent className="p-3">
+                <div className="flex gap-2">
+                  <Calendar className="w-4 h-4 text-orange-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="text-xs font-medium text-orange-900">Date d'Échéance</h4>
+                    <p className="text-xs text-orange-800 mt-1">
+                      {formatDate(paymentData.due_date)}
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
 
         {/* Payment Dialog */}

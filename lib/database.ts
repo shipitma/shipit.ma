@@ -152,6 +152,33 @@ export interface PaymentRequest {
   payment_methods?: string[]
 }
 
+export interface Payment {
+  id: string
+  user_id: string
+  payment_request_id: string
+  amount: number
+  payment_method: string
+  transaction_id?: string
+  payment_proof_url?: string
+  payment_date: string
+  status: "submitted" | "verified" | "rejected" | "completed"
+  admin_notes?: string
+  verified_at?: string
+  verified_by?: string
+  created_at: string
+  updated_at: string
+}
+
+export interface PaymentTimeline {
+  id: number
+  payment_id: string
+  status: string
+  date: string
+  time: string
+  completed: boolean
+  description?: string
+}
+
 // ID Generation functions
 export async function getNextPurchaseRequestId(): Promise<string> {
   const sql = getDatabase()
@@ -635,30 +662,134 @@ export async function getPaymentRequestById(id: string): Promise<PaymentRequest 
 
 export async function getPaymentStats(userId: string) {
   const sql = getDatabase()
+  
+  try {
+    // Check if table exists
+    await sql`SELECT 1 FROM payment_requests LIMIT 1`
+  } catch {
+    return {
+      pending: 0,
+      overdue: 0,
+      paid: 0,
+      processing: 0,
+    }
+  }
+
   const result = await sql`
     SELECT 
-      status,
-      COUNT(*) as count
+      COUNT(*) FILTER (WHERE status = 'pending') as pending,
+      COUNT(*) FILTER (WHERE status = 'overdue') as overdue,
+      COUNT(*) FILTER (WHERE status = 'paid') as paid,
+      COUNT(*) FILTER (WHERE status = 'processing') as processing
     FROM payment_requests 
     WHERE user_id = ${userId}
-    GROUP BY status
   `
 
-  const stats = {
+  return result[0] || {
     pending: 0,
     overdue: 0,
     paid: 0,
     processing: 0,
   }
+}
 
-  result.forEach((row: any) => {
-    if (row.status === "pending") stats.pending = Number.parseInt(row.count)
-    if (row.status === "overdue") stats.overdue = Number.parseInt(row.count)
-    if (row.status === "paid") stats.paid = Number.parseInt(row.count)
-    if (row.status === "processing") stats.processing = Number.parseInt(row.count)
-  })
+export async function getPayments(userId: string, statusFilter?: string): Promise<Payment[]> {
+  const sql = getDatabase()
+  
+  try {
+    // Check if table exists
+    await sql`SELECT 1 FROM payments LIMIT 1`
+  } catch {
+    return []
+  }
 
-  return stats
+  let query = sql`
+    SELECT * FROM payments 
+    WHERE user_id = ${userId}
+  `
+  
+  if (statusFilter && statusFilter !== 'all') {
+    query = sql`
+      SELECT * FROM payments 
+      WHERE user_id = ${userId} AND status = ${statusFilter}
+    `
+  }
+  
+  query = sql`${query} ORDER BY created_at DESC`
+  
+  const result = await query
+  return result.map((row: any) => ({
+    id: row.id,
+    user_id: row.user_id,
+    payment_request_id: row.payment_request_id,
+    amount: Number(row.amount),
+    payment_method: row.payment_method,
+    transaction_id: row.transaction_id,
+    payment_proof_url: row.payment_proof_url,
+    payment_date: row.payment_date,
+    status: row.status,
+    admin_notes: row.admin_notes,
+    verified_at: row.verified_at,
+    verified_by: row.verified_by,
+    created_at: row.created_at,
+    updated_at: row.updated_at,
+  }))
+}
+
+export async function getPaymentById(id: string): Promise<Payment | null> {
+  const sql = getDatabase()
+  
+  try {
+    const result = await sql`
+      SELECT * FROM payments WHERE id = ${id}
+    `
+    
+    if (result.length === 0) return null
+    
+    const row = result[0]
+    return {
+      id: row.id,
+      user_id: row.user_id,
+      payment_request_id: row.payment_request_id,
+      amount: Number(row.amount),
+      payment_method: row.payment_method,
+      transaction_id: row.transaction_id,
+      payment_proof_url: row.payment_proof_url,
+      payment_date: row.payment_date,
+      status: row.status,
+      admin_notes: row.admin_notes,
+      verified_at: row.verified_at,
+      verified_by: row.verified_by,
+      created_at: row.created_at,
+      updated_at: row.updated_at,
+    }
+  } catch {
+    return null
+  }
+}
+
+export async function getPaymentTimeline(paymentId: string): Promise<PaymentTimeline[]> {
+  const sql = getDatabase()
+  
+  try {
+    const result = await sql`
+      SELECT * FROM payment_timeline 
+      WHERE payment_id = ${paymentId}
+      ORDER BY date ASC, time ASC
+    `
+    
+    return result.map((row: any) => ({
+      id: row.id,
+      payment_id: row.payment_id,
+      status: row.status,
+      date: row.date,
+      time: row.time,
+      completed: row.completed,
+      description: row.description,
+    }))
+  } catch {
+    return []
+  }
 }
 
 // Dashboard stats

@@ -29,6 +29,23 @@ const getStatusColor = (status: string) => {
   }
 }
 
+const getStatusLabel = (status: string) => {
+  switch (status) {
+    case "expected":
+      return "Attendu"
+    case "processing":
+      return "En Traitement"
+    case "arrived":
+      return "Arrivé"
+    case "in_transit":
+      return "En Transit"
+    case "delivered":
+      return "Livré"
+    default:
+      return status.replace("_", " ")
+  }
+}
+
 export default function PackagesPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
@@ -305,7 +322,7 @@ export default function PackagesPage() {
                     <CardTitle className="text-sm font-semibold">{pkg.id}</CardTitle>
                   </div>
                   <Badge className={getStatusColor(pkg.status)} variant="secondary">
-                    {pkg.status.replace("_", " ")}
+                    {getStatusLabel(pkg.status)}
                   </Badge>
                 </div>
               </CardHeader>
@@ -315,6 +332,18 @@ export default function PackagesPage() {
                     <span className="text-gray-500">Suivi:</span>
                     <span className="font-mono text-xs">{pkg.tracking_number || "N/A"}</span>
                   </div>
+                  {pkg.carrier && (
+                    <div className="flex justify-between py-0.5">
+                      <span className="text-gray-500">Transporteur:</span>
+                      <span className="font-medium">{pkg.carrier}</span>
+                    </div>
+                  )}
+                  {pkg.eta && (
+                    <div className="flex justify-between py-0.5">
+                      <span className="text-gray-500">ETA:</span>
+                      <span className="font-medium">{pkg.eta}</span>
+                    </div>
+                  )}
                   {pkg.weight && (
                     <div className="flex justify-between py-0.5">
                       <span className="text-gray-500">Poids:</span>
@@ -333,7 +362,29 @@ export default function PackagesPage() {
                       {pkg.shipping_cost ? formatCurrency(pkg.shipping_cost) : "Pending"}
                     </span>
                   </div>
+                  {pkg.insurance && (
+                    <div className="flex justify-between py-0.5">
+                      <span className="text-gray-500">Assurance:</span>
+                      <span className="font-medium">{formatCurrency(pkg.insurance)}</span>
+                    </div>
+                  )}
                 </div>
+
+                {/* Progress Bar */}
+                {pkg.progress !== undefined && (
+                  <div className="space-y-1">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-500">Progression:</span>
+                      <span className="text-xs font-medium">{pkg.progress}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-1.5">
+                      <div 
+                        className="bg-orange-600 h-1.5 rounded-full transition-all duration-300" 
+                        style={{ width: `${pkg.progress}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                )}
 
                 <div>
                   <h4 className="font-medium text-xs mb-2">Items ({pkg.items?.length || 0})</h4>
@@ -352,6 +403,18 @@ export default function PackagesPage() {
                     )}
                   </div>
                 </div>
+
+                {/* Last Update */}
+                {pkg.updated_at && (
+                  <div className="text-xs text-gray-400 pt-1 border-t border-gray-100">
+                    Mis à jour: {new Date(pkg.updated_at).toLocaleDateString('fr-FR', { 
+                      day: '2-digit', 
+                      month: '2-digit',
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
+                  </div>
+                )}
 
                 <div className="flex gap-2 pt-2">
                   <Button 

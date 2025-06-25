@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { ArrowLeft, DollarSign, Check, Upload, ExternalLink, Package, FileText, ImageIcon, Receipt } from "lucide-react"
+import { ArrowLeft, DollarSign, Check, Upload, ExternalLink, Package, FileText, ImageIcon, Receipt, Clock, CheckCircle, AlertCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { type PurchaseRequest, formatCurrency, formatDate } from "@/lib/database"
 import * as React from "react"
@@ -29,6 +29,42 @@ const getStatusColor = (status: string) => {
       return "bg-red-100 text-red-800"
     default:
       return "bg-gray-100 text-gray-800"
+  }
+}
+
+const getStatusLabel = (status: string) => {
+  switch (status) {
+    case "pending_review":
+      return "En Attente de Révision"
+    case "pending_payment":
+      return "En Attente de Paiement"
+    case "confirmed":
+      return "Confirmé"
+    case "purchasing":
+      return "Achat en Cours"
+    case "completed":
+      return "Terminé"
+    case "cancelled":
+      return "Annulé"
+    default:
+      return status.replace("_", " ")
+  }
+}
+
+const getTimelineIcon = (status: string) => {
+  switch (status.toLowerCase()) {
+    case "request submitted":
+      return <Package className="w-4 h-4" />
+    case "payment confirmed":
+      return <CheckCircle className="w-4 h-4" />
+    case "purchasing":
+      return <Clock className="w-4 h-4" />
+    case "completed":
+      return <CheckCircle className="w-4 h-4" />
+    case "cancelled":
+      return <AlertCircle className="w-4 h-4" />
+    default:
+      return <Clock className="w-4 h-4" />
   }
 }
 
@@ -95,7 +131,7 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
         <div className="flex items-center gap-2">
             <h1 className="text-lg font-semibold">{purchaseRequest.id}</h1>
             <Badge className={getStatusColor(purchaseRequest.status)} variant="secondary">
-              {purchaseRequest.status.replace("_", " ")}
+              {getStatusLabel(purchaseRequest.status)}
             </Badge>
         </div>
       </div>
@@ -149,6 +185,47 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
               </div>
             </CardContent>
           </Card>
+
+          {/* Purchase Request Timeline */}
+          {purchaseRequest.timeline && purchaseRequest.timeline.length > 0 && (
+            <Card className="border-gray-200">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base font-semibold">Progression de la Demande</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {purchaseRequest.timeline.map((event, index) => (
+                    <div key={event.id} className="flex gap-3">
+                      {/* Timeline Icon */}
+                      <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                        event.completed 
+                          ? "bg-green-100 text-green-600" 
+                          : "bg-gray-100 text-gray-400"
+                      }`}>
+                        {getTimelineIcon(event.status)}
+                      </div>
+                      
+                      {/* Timeline Content */}
+                      <div className="flex-1 pb-4">
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <h4 className="text-sm font-medium">{event.status}</h4>
+                            {event.description && (
+                              <p className="text-xs text-gray-600 mt-1">{event.description}</p>
+                            )}
+                          </div>
+                          <div className="text-right">
+                            <p className="text-xs text-gray-500">{formatDate(event.date)}</p>
+                            <p className="text-xs text-gray-400">{event.time}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Purchase Request Contents */}
               <Card className="border-gray-200">
@@ -299,6 +376,25 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
               </CardContent>
             </Card>
           )}
+
+          {/* Status Info */}
+          <Card className="border-gray-200">
+            <CardContent className="p-3">
+              <div className="space-y-2">
+                <h4 className="text-xs font-medium text-gray-900">Informations</h4>
+                <div className="space-y-1">
+                  <div className="flex justify-between">
+                    <span className="text-xs text-gray-500">Date de création :</span>
+                    <span className="text-xs font-medium">{formatDate(purchaseRequest.date)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-xs text-gray-500">Dernière mise à jour :</span>
+                    <span className="text-xs font-medium">{formatDate(purchaseRequest.updated_at)}</span>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
 
