@@ -27,6 +27,8 @@ import {
   File,
   Calendar,
   AlertTriangle,
+  Loader2,
+  ExternalLink,
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import type { PaymentRequest } from "@/lib/database"
@@ -248,41 +250,55 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
     fetchPaymentData()
   }, [id, toast])
 
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files
-    if (!files || files.length === 0) return
+  const handleFileUpload = async (file: File) => {
+    if (!file) return
 
     setUploading(true)
     try {
       const token = localStorage.getItem("authToken")
-        const formData = new FormData()
-      formData.append("file", files[0])
-        formData.append("relatedType", "payment")
-        formData.append("relatedId", id)
+      const formData = new FormData()
+      formData.append("file", file)
+      formData.append("type", "receipt")
+      formData.append("relatedType", "payment")
+      formData.append("relatedId", id)
 
-        const response = await fetch("/api/upload", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
-        })
+      console.log("Uploading file:", {
+        fileName: file.name,
+        fileSize: file.size,
+        fileType: file.type,
+        relatedId: id
+      })
 
-        if (!response.ok) {
-          throw new Error("Upload failed")
-        }
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      })
 
-        const result = await response.json()
-        setUploadedFiles((prev) => [
-          ...prev,
-          {
-            id: result.id,
-          name: result.file_name,
-          url: result.file_url,
-          type: result.attachment_type,
-          size: result.file_size || 0,
-          },
-        ])
+      console.log("Upload response status:", response.status)
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        console.error("Upload error response:", errorData)
+        throw new Error(errorData.error || errorData.details || "Upload failed")
+      }
+
+      const result = await response.json()
+      console.log("Upload success result:", result)
+      
+      // Store file details immediately with original file name, just like packages create page
+      setUploadedFiles((prev) => [
+        ...prev,
+        {
+          id: result.id,
+          name: file.name, // Use original file name instead of API response
+          url: result.url, // Use result.url instead of result.file_url
+          type: result.attachmentType || "receipt",
+          size: file.size, // Use original file size
+        },
+      ])
 
       toast({
         title: "Succès",
@@ -292,7 +308,7 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
       console.error("Upload error:", error)
       toast({
         title: "Erreur",
-        description: "Échec du téléchargement du fichier",
+        description: error instanceof Error ? error.message : "Échec du téléchargement du fichier",
         variant: "destructive",
       })
     } finally {
@@ -693,66 +709,95 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
               {/* Receipt Upload */}
               <div>
                 <Label className="text-xs">Reçu de Paiement *</Label>
-                <div className="mt-1 border-2 border-dashed border-gray-200 rounded-md p-4 text-center">
-                  <Upload className="w-6 h-6 mx-auto text-gray-400 mb-1" />
-                  <p className="text-xs text-gray-500 mb-2">
-                    {paymentMethod
-                      ? "Téléchargez votre reçu de paiement ou capture d'écran"
-                      : "Sélectionnez d'abord une méthode de paiement"}
-                  </p>
-                  <Input
+                <div
+                  className={`mt-1 border-2 border-dashed rounded-md p-4 text-center transition-colors cursor-pointer ${
+                    uploading ? "border-blue-300 bg-blue-50" : "border-gray-200 hover:border-gray-300"
+                  }`}
+                  onClick={() => !uploading && document.getElementById("payment-receipt-input")?.click()}
+                >
+                  {uploading ? (
+                    <>
+                      <Loader2 className="w-6 h-6 mx-auto text-blue-500 mb-2 animate-spin" />
+                      <p className="text-xs font-medium text-blue-700">Téléchargement en cours...</p>
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="w-6 h-6 mx-auto text-gray-400 mb-2" />
+                      <div className="space-y-1">
+                        <p className="text-xs font-medium text-gray-700">
+                          {paymentMethod
+                            ? "Cliquez pour télécharger votre reçu de paiement"
+                            : "Sélectionnez d'abord une méthode de paiement"}
+                        </p>
+                        <p className="text-xs text-gray-500">PNG, JPG, PDF jusqu'à 10MB</p>
+                      </div>
+                    </>
+                  )}
+                  <input
+                    id="payment-receipt-input"
                     type="file"
                     accept="image/*,.pdf"
-                    className="text-xs"
-                    onChange={handleFileUpload}
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0]
+                      if (file) {
+                        handleFileUpload(file)
+                      }
+                      // Reset the input so the same files can be selected again if needed
+                      e.target.value = ""
+                    }}
                     disabled={uploading || !paymentMethod}
                   />
-                  {uploading && (
-                    <div className="flex items-center justify-center gap-2 mt-2">
-                      <div className="w-4 h-4 border-2 border-orange-600 border-t-transparent rounded-full animate-spin" />
-                      <span className="text-xs text-gray-600">Téléchargement...</span>
-                    </div>
-                  )}
                 </div>
 
                 {/* Uploaded Files */}
                 {uploadedFiles.length > 0 && (
                   <div className="mt-3 space-y-2">
-                    <Label className="text-xs text-gray-600">Fichiers téléchargés:</Label>
-                    {uploadedFiles.map((file) => {
-                      const AttachmentIcon = getAttachmentIcon(file.type)
-                      const isDeleting = deletingFiles.has(file.id)
+                    <Label className="text-xs font-medium text-green-700">
+                      Fichiers téléchargés ({uploadedFiles.length})
+                    </Label>
+                    <div className="space-y-1">
+                      {uploadedFiles.map((file) => {
+                        const AttachmentIcon = getAttachmentIcon(file.type)
+                        const isDeleting = deletingFiles.has(file.id)
 
-                      return (
-                        <div
-                          key={file.id}
-                          className="flex items-center justify-between p-2 bg-gray-50 rounded-md border border-gray-200"
-                        >
-                          <div className="flex items-center gap-2 flex-1 min-w-0">
-                            <AttachmentIcon className={`w-4 h-4 flex-shrink-0 ${getAttachmentColor(file.type)}`} />
-                            <div className="flex-1 min-w-0">
-                              <p className="text-xs font-medium truncate">{file.name}</p>
-                              <p className="text-xs text-gray-500">
-                                {file.type} • {(file.size / 1024).toFixed(1)} KB
-                              </p>
-                            </div>
-                          </div>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-6 w-6 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
-                            onClick={() => deleteFile(file.id)}
-                            disabled={isDeleting}
+                        return (
+                          <div
+                            key={file.id}
+                            className="flex items-center justify-between p-3 bg-green-50 rounded-md border border-green-200"
                           >
-                            {isDeleting ? (
-                              <div className="w-3 h-3 border border-red-600 border-t-transparent rounded-full animate-spin" />
-                            ) : (
-                              <Trash2 className="w-3 h-3" />
-                            )}
-                          </Button>
-                        </div>
-                      )
-                    })}
+                            <div className="flex items-center gap-2 flex-1 min-w-0">
+                              <AttachmentIcon className="w-4 h-4 text-green-600 flex-shrink-0" />
+                              <span className="text-xs text-green-700 truncate">{file.name}</span>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  window.open(file.url, "_blank")
+                                }}
+                                className="h-6 px-2 text-xs text-green-600 hover:text-green-800 flex-shrink-0"
+                              >
+                                <ExternalLink className="w-3 h-3 mr-1" />
+                                Voir
+                              </Button>
+                            </div>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                deleteFile(file.id)
+                              }}
+                              disabled={isDeleting}
+                              className="h-6 w-6 p-0 text-green-600 hover:text-red-500 flex-shrink-0 ml-2"
+                            >
+                              {isDeleting ? <Loader2 className="w-3 h-3 animate-spin" /> : <Trash2 className="w-3 h-3" />}
+                            </Button>
+                          </div>
+                        )
+                      })}
+                    </div>
                   </div>
                 )}
               </div>

@@ -32,8 +32,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Attachment type is required" }, { status: 400 })
     }
 
-    // Check file size (5MB for images, 10MB for PDFs)
-    const maxSize = file.type.includes("pdf") ? 10 * 1024 * 1024 : 5 * 1024 * 1024
+    // Check file size (20MB for all file types)
+    const maxSize = 20 * 1024 * 1024 // 20MB
     if (file.size > maxSize) {
       return NextResponse.json(
         {
