@@ -246,9 +246,6 @@ export function Footer() {
               <a href="/contact" className="block text-gray-600 hover:text-gray-800">
                 Contactez-nous
               </a>
-              <a href="/partners" className="block text-gray-600 hover:text-gray-800">
-                Programme d'Affiliation
-              </a>
               <a href="/pricing" className="block text-gray-600 hover:text-gray-800">
                 Tarifs
               </a>
