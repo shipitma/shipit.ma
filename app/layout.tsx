@@ -1,20 +1,9 @@
 import type React from "react"
-import type { Metadata } from "next"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 import { AuthProvider } from "@/lib/auth-context"
 import { PostHogProvider } from "@/components/posthog-provider"
-import AuthenticatedLayout from "@/components/layout/authenticated-layout"
-
-export const metadata: Metadata = {
-  title: "Package Forwarding Dashboard",
-  description: "Morocco to Turkey package forwarding service",
-    generator: 'v0.dev'
-}
-
-// Define public routes that don't require authentication
-const publicRoutes = ['/login', '/register', '/verify', '/']
 
 export default function RootLayout({
   children,
@@ -27,9 +16,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <AuthProvider>
             <PostHogProvider>
-              <AuthenticatedLayout>
-            {children}
-              </AuthenticatedLayout>
+              {children}
             </PostHogProvider>
             <Toaster />
           </AuthProvider>
