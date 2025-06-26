@@ -44,6 +44,10 @@ export default function NotFound() {
           </div>
 
           <div className="space-y-3">
+            <Button variant="outline" className="w-full h-10" onClick={() => window.history.back()}>
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Retour
+            </Button>
             {user ? (
               // Logged-in user options
               <>
@@ -109,9 +113,9 @@ export default function NotFound() {
                     Inscription
                   </Link>
                   <span className="text-gray-400">|</span>
-                  <span className="text-gray-500">
+                  <Link href="/" className="text-gray-500 hover:text-orange-600">
                     shipit.ma
-                  </span>
+                  </Link>
                 </>
               )}
             </div>

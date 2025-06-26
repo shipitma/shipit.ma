@@ -1,0 +1,33 @@
+import Image from "next/image"
+
+export function PartnerBrandsSection() {
+  return (
+    <section className="bg-white py-20">
+      <div className="container mx-auto px-4 max-w-6xl">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+          {/* Text Content */}
+          <div className="lg:w-1/2 text-center lg:text-left">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-6 leading-tight">
+              Commandez sur vos sites préférés
+            </h2>
+            <p className="text-lg lg:text-xl text-gray-600 leading-relaxed">
+              Vous pouvez commander sur n'importe quel site turc, européen ou américain : Trendyol, Amazon,
+              Vente-privée, eBay…
+            </p>
+          </div>
+
+          {/* Integration Logos */}
+          <div className="lg:w-1/2 flex justify-center">
+            <Image
+              src="/logo_comp.svg"
+              alt="Integration logos including Zapier, Stripe, MailChimp, Meta, Google Analytics, TikTok, Telegram and more"
+              width={600}
+              height={400}
+              className="max-w-full h-auto"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+} 
