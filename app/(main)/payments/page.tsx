@@ -181,7 +181,7 @@ export default function PaymentsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-lg font-semibold">Paiements</h1>
-          <p className="text-xs text-gray-600">Gérez vos demandes de paiement et vos paiements</p>
+          <p className="text-sm text-gray-600">Gérez vos demandes de paiement et vos paiements</p>
         </div>
       </div>
 
@@ -191,7 +191,7 @@ export default function PaymentsPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-gray-600 mb-1">En Attente</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">En Attente</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.pending}</p>
               </div>
               <div className="p-2 rounded-md bg-orange-100">
@@ -204,7 +204,7 @@ export default function PaymentsPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-gray-600 mb-1">En Retard</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">En Retard</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.overdue}</p>
               </div>
               <div className="p-2 rounded-md bg-red-100">
@@ -217,7 +217,7 @@ export default function PaymentsPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-gray-600 mb-1">Payé</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">Payé</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.paid}</p>
               </div>
               <div className="p-2 rounded-md bg-green-100">
@@ -230,7 +230,7 @@ export default function PaymentsPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-gray-600 mb-1">En Traitement</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">En Traitement</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.processing}</p>
               </div>
               <div className="p-2 rounded-md bg-orange-100">
@@ -247,7 +247,7 @@ export default function PaymentsPage() {
           variant={viewType === "requests" ? "default" : "outline"}
           size="sm"
           onClick={() => setViewType("requests")}
-          className="text-xs"
+          className="text-sm"
         >
           <FileText className="w-3 h-3 mr-1" />
           Demandes de Paiement
@@ -256,7 +256,7 @@ export default function PaymentsPage() {
           variant={viewType === "payments" ? "default" : "outline"}
           size="sm"
           onClick={() => setViewType("payments")}
-          className="text-xs"
+          className="text-sm"
         >
           <Upload className="w-3 h-3 mr-1" />
           Mes Paiements
@@ -271,45 +271,45 @@ export default function PaymentsPage() {
             placeholder={viewType === "requests" ? "Rechercher des demandes..." : "Rechercher des paiements..."}
             value={searchTerm}
             onChange={(e) => handleSearch(e.target.value)}
-            className="pl-7 h-8 text-xs"
+            className="pl-7 h-8 text-sm"
           />
         </div>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-40 h-8 text-xs">
+          <SelectTrigger className="w-40 h-8 text-sm">
             <Filter className="w-3 h-3 mr-1" />
             <SelectValue placeholder="Statut" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all" className="text-xs">
+            <SelectItem value="all" className="text-sm">
               Tous les Statuts
             </SelectItem>
             {viewType === "requests" ? (
               <>
-                <SelectItem value="pending" className="text-xs">
+                <SelectItem value="pending" className="text-sm">
                   En Attente
                 </SelectItem>
-                <SelectItem value="paid" className="text-xs">
+                <SelectItem value="paid" className="text-sm">
                   Payé
                 </SelectItem>
-                <SelectItem value="overdue" className="text-xs">
+                <SelectItem value="overdue" className="text-sm">
                   En Retard
                 </SelectItem>
-                <SelectItem value="processing" className="text-xs">
+                <SelectItem value="processing" className="text-sm">
                   En Traitement
                 </SelectItem>
               </>
             ) : (
               <>
-                <SelectItem value="submitted" className="text-xs">
+                <SelectItem value="submitted" className="text-sm">
                   Soumis
                 </SelectItem>
-                <SelectItem value="verified" className="text-xs">
+                <SelectItem value="verified" className="text-sm">
                   Vérifié
                 </SelectItem>
-                <SelectItem value="rejected" className="text-xs">
+                <SelectItem value="rejected" className="text-sm">
                   Rejeté
                 </SelectItem>
-                <SelectItem value="completed" className="text-xs">
+                <SelectItem value="completed" className="text-sm">
                   Terminé
                 </SelectItem>
               </>
@@ -365,7 +365,7 @@ export default function PaymentsPage() {
                   <div className="flex items-start justify-between">
                     <div>
                       <CardTitle className="text-sm font-semibold">{payment.id}</CardTitle>
-                      <CardDescription className="text-xs text-gray-500">Lié à : {payment.related_id}</CardDescription>
+                      <CardDescription className="text-sm text-gray-500">Lié à : {payment.related_id}</CardDescription>
                     </div>
                     <Badge className={getPaymentRequestStatusColor(payment.status)} variant="secondary">
                       {getPaymentRequestStatusLabel(payment.status)}
@@ -375,32 +375,32 @@ export default function PaymentsPage() {
                 <CardContent className="space-y-3">
                   <div className="space-y-1">
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-500">Montant:</span>
+                      <span className="text-sm text-gray-500">Montant:</span>
                       <span className="text-sm font-semibold">{formatCurrency(payment.amount)}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-500">Date d'Échéance:</span>
-                      <span className="text-xs">{formatDate(payment.due_date)}</span>
+                      <span className="text-sm text-gray-500">Date d'Échéance:</span>
+                      <span className="text-sm">{formatDate(payment.due_date)}</span>
                     </div>
                     {payment.paid_date && (
                       <div className="flex justify-between items-center">
-                        <span className="text-xs text-gray-500">Date de Paiement:</span>
-                        <span className="text-xs">{formatDate(payment.paid_date)}</span>
+                        <span className="text-sm text-gray-500">Date de Paiement:</span>
+                        <span className="text-sm">{formatDate(payment.paid_date)}</span>
                       </div>
                     )}
                     {payment.breakdown && Object.keys(payment.breakdown).length > 0 && (
                       <div className="pt-1 border-t border-gray-100">
-                        <div className="text-xs text-gray-500 mb-1">Répartition:</div>
+                        <div className="text-sm text-gray-500 mb-1">Répartition:</div>
                         {Object.entries(payment.breakdown).slice(0, 2).map(([key, value]) => (
                           <div key={key} className="flex justify-between items-center">
-                            <span className="text-xs text-gray-400 capitalize">
+                            <span className="text-sm text-gray-400 capitalize">
                               {key.replace(/([A-Z])/g, " $1").toLowerCase()}:
                             </span>
-                            <span className="text-xs">{formatCurrency(value)}</span>
+                            <span className="text-sm">{formatCurrency(value)}</span>
                           </div>
                         ))}
                         {Object.keys(payment.breakdown).length > 2 && (
-                          <div className="text-xs text-gray-400">
+                          <div className="text-sm text-gray-400">
                             +{Object.keys(payment.breakdown).length - 2} autres
                           </div>
                         )}
@@ -411,15 +411,15 @@ export default function PaymentsPage() {
                   {/* Payment Methods */}
                   {payment.payment_methods && payment.payment_methods.length > 0 && (
                     <div className="space-y-1">
-                      <div className="text-xs text-gray-500">Méthodes acceptées:</div>
+                      <div className="text-sm text-gray-500">Méthodes acceptées:</div>
                       <div className="flex flex-wrap gap-1">
                         {payment.payment_methods.slice(0, 2).map((method) => (
-                          <span key={method} className="text-xs bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded">
+                          <span key={method} className="text-sm bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded">
                             {method}
                           </span>
                         ))}
                         {payment.payment_methods.length > 2 && (
-                          <span className="text-xs text-gray-500">
+                          <span className="text-sm text-gray-500">
                             +{payment.payment_methods.length - 2}
                           </span>
                         )}
@@ -432,7 +432,7 @@ export default function PaymentsPage() {
                     <div className="p-2 bg-red-50 rounded-md border border-red-200">
                       <div className="flex items-center gap-1">
                         <AlertCircle className="w-3 h-3 text-red-600" />
-                        <span className="text-xs text-red-800 font-medium">Paiement en retard</span>
+                        <span className="text-sm text-red-800 font-medium">Paiement en retard</span>
                       </div>
                     </div>
                   )}
@@ -441,7 +441,7 @@ export default function PaymentsPage() {
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="w-full h-7 text-xs" 
+                      className="w-full h-7 text-sm" 
                       asChild
                       onClick={() => trackPayment('VIEW_PAYMENT_REQUEST_DETAILS', { paymentId: payment.id })}
                     >
@@ -453,7 +453,7 @@ export default function PaymentsPage() {
                     {(payment.status === "pending" || payment.status === "overdue") && (
                       <Button 
                         size="sm" 
-                        className="w-full h-7 text-xs" 
+                        className="w-full h-7 text-sm" 
                         asChild
                         onClick={() => trackPayment('PAYMENT_METHOD_SELECTED', { 
                           paymentId: payment.id,
@@ -501,7 +501,7 @@ export default function PaymentsPage() {
                   <div className="flex items-start justify-between">
                     <div>
                       <CardTitle className="text-sm font-semibold">{payment.id}</CardTitle>
-                      <CardDescription className="text-xs text-gray-500">Pour : {payment.payment_request_id}</CardDescription>
+                      <CardDescription className="text-sm text-gray-500">Pour : {payment.payment_request_id}</CardDescription>
                     </div>
                     <Badge className={getPaymentStatusColor(payment.status)} variant="secondary">
                       {getPaymentStatusLabel(payment.status)}
@@ -511,27 +511,27 @@ export default function PaymentsPage() {
                 <CardContent className="space-y-3">
                   <div className="space-y-1">
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-500">Montant:</span>
+                      <span className="text-sm text-gray-500">Montant:</span>
                       <span className="text-sm font-semibold">{formatCurrency(payment.amount)}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-500">Méthode:</span>
-                      <span className="text-xs capitalize">{payment.payment_method}</span>
+                      <span className="text-sm text-gray-500">Méthode:</span>
+                      <span className="text-sm capitalize">{payment.payment_method}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-500">Date de Paiement:</span>
-                      <span className="text-xs">{formatDate(payment.payment_date)}</span>
+                      <span className="text-sm text-gray-500">Date de Paiement:</span>
+                      <span className="text-sm">{formatDate(payment.payment_date)}</span>
                     </div>
                     {payment.verified_at && (
                       <div className="flex justify-between items-center">
-                        <span className="text-xs text-gray-500">Vérifié le:</span>
-                        <span className="text-xs">{formatDate(payment.verified_at)}</span>
+                        <span className="text-sm text-gray-500">Vérifié le:</span>
+                        <span className="text-sm">{formatDate(payment.verified_at)}</span>
                       </div>
                     )}
                     {payment.transaction_id && (
                       <div className="flex justify-between items-center">
-                        <span className="text-xs text-gray-500">Transaction:</span>
-                        <span className="text-xs font-mono">{payment.transaction_id}</span>
+                        <span className="text-sm text-gray-500">Transaction:</span>
+                        <span className="text-sm font-mono">{payment.transaction_id}</span>
                       </div>
                     )}
                   </div>
@@ -539,8 +539,8 @@ export default function PaymentsPage() {
                   {/* Admin Notes */}
                   {payment.admin_notes && (
                     <div className="p-2 bg-gray-50 rounded-md">
-                      <div className="text-xs text-gray-500 mb-1">Note Admin:</div>
-                      <div className="text-xs text-gray-700">{payment.admin_notes}</div>
+                      <div className="text-sm text-gray-500 mb-1">Note Admin:</div>
+                      <div className="text-sm text-gray-700">{payment.admin_notes}</div>
                     </div>
                   )}
 
@@ -548,7 +548,7 @@ export default function PaymentsPage() {
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="w-full h-7 text-xs" 
+                      className="w-full h-7 text-sm" 
                       asChild
                       onClick={() => trackPayment('VIEW_PAYMENT_DETAILS', { paymentId: payment.id })}
                     >
@@ -561,7 +561,7 @@ export default function PaymentsPage() {
                       <Button 
                         variant="outline" 
                         size="sm" 
-                        className="w-full h-7 text-xs" 
+                        className="w-full h-7 text-sm" 
                         asChild
                       >
                         <a href={payment.payment_proof_url} target="_blank" rel="noopener noreferrer">

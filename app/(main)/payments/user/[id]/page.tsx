@@ -193,7 +193,7 @@ export default function UserPaymentDetailPage({ params }: { params: Promise<{ id
               <div className="text-2xl font-bold text-gray-900">
                 {formatCurrency(paymentData.amount)}
               </div>
-              <div className="text-xs text-gray-500">
+              <div className="text-sm text-gray-500">
                 Soumis le {formatDate(paymentData.payment_date)}
               </div>
             </div>
@@ -213,21 +213,21 @@ export default function UserPaymentDetailPage({ params }: { params: Promise<{ id
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <DollarSign className="w-4 h-4 text-gray-400" />
-                    <span className="text-xs text-gray-500">Montant:</span>
+                    <span className="text-sm text-gray-500">Montant:</span>
                   </div>
                   <div className="text-sm font-semibold">{formatCurrency(paymentData.amount)}</div>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <CreditCard className="w-4 h-4 text-gray-400" />
-                    <span className="text-xs text-gray-500">Méthode:</span>
+                    <span className="text-sm text-gray-500">Méthode:</span>
                   </div>
                   <div className="text-sm font-semibold capitalize">{paymentData.payment_method}</div>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4 text-gray-400" />
-                    <span className="text-xs text-gray-500">Date de Paiement:</span>
+                    <span className="text-sm text-gray-500">Date de Paiement:</span>
                   </div>
                   <div className="text-sm">{formatDate(paymentData.payment_date)}</div>
                 </div>
@@ -235,7 +235,7 @@ export default function UserPaymentDetailPage({ params }: { params: Promise<{ id
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <FileText className="w-4 h-4 text-gray-400" />
-                      <span className="text-xs text-gray-500">Transaction:</span>
+                      <span className="text-sm text-gray-500">Transaction:</span>
                     </div>
                     <div className="text-sm font-mono">{paymentData.transaction_id}</div>
                   </div>
@@ -249,7 +249,7 @@ export default function UserPaymentDetailPage({ params }: { params: Promise<{ id
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <CheckCircle className="w-4 h-4 text-green-500" />
-                        <span className="text-xs text-gray-500">Vérifié le:</span>
+                        <span className="text-sm text-gray-500">Vérifié le:</span>
                       </div>
                       <div className="text-sm">{formatDate(paymentData.verified_at)}</div>
                     </div>
@@ -257,7 +257,7 @@ export default function UserPaymentDetailPage({ params }: { params: Promise<{ id
                       <div className="space-y-2">
                         <div className="flex items-center gap-2">
                           <User className="w-4 h-4 text-gray-400" />
-                          <span className="text-xs text-gray-500">Vérifié par:</span>
+                          <span className="text-sm text-gray-500">Vérifié par:</span>
                         </div>
                         <div className="text-sm">{paymentData.verified_by}</div>
                       </div>
@@ -272,7 +272,7 @@ export default function UserPaymentDetailPage({ params }: { params: Promise<{ id
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <MessageSquare className="w-4 h-4 text-gray-400" />
-                      <span className="text-xs text-gray-500">Note Admin:</span>
+                      <span className="text-sm text-gray-500">Note Admin:</span>
                     </div>
                     <div className="p-3 bg-gray-50 rounded-md text-sm">
                       {paymentData.admin_notes}
@@ -287,7 +287,7 @@ export default function UserPaymentDetailPage({ params }: { params: Promise<{ id
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <FileText className="w-4 h-4 text-gray-400" />
-                      <span className="text-xs text-gray-500">Preuve de Paiement:</span>
+                      <span className="text-sm text-gray-500">Preuve de Paiement:</span>
                     </div>
                     <Button 
                       variant="outline" 
@@ -329,12 +329,12 @@ export default function UserPaymentDetailPage({ params }: { params: Promise<{ id
                             {event.status === 'rejected' && 'Paiement Rejeté'}
                             {event.status === 'completed' && 'Paiement Terminé'}
                           </div>
-                          <div className="text-xs text-gray-500">
+                          <div className="text-sm text-gray-500">
                             {formatDate(event.date)} à {event.time}
                           </div>
                         </div>
                         {event.description && (
-                          <div className="text-xs text-gray-600 mt-1">
+                          <div className="text-sm text-gray-600 mt-1">
                             {event.description}
                           </div>
                         )}
@@ -381,11 +381,11 @@ export default function UserPaymentDetailPage({ params }: { params: Promise<{ id
             <CardContent>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <Badge className={getStatusColor(paymentData.status)} variant="secondary">
+                  <Badge className={`${getStatusColor(paymentData.status)} text-xs`} variant="secondary">
                     {getStatusLabel(paymentData.status)}
                   </Badge>
                 </div>
-                <div className="text-xs text-gray-500">
+                <div className="text-sm text-gray-500">
                   {paymentData.status === 'submitted' && 'Votre paiement a été soumis et est en attente de vérification.'}
                   {paymentData.status === 'verified' && 'Votre paiement a été vérifié par l\'administrateur.'}
                   {paymentData.status === 'rejected' && 'Votre paiement a été rejeté. Veuillez contacter le support.'}

@@ -38,7 +38,7 @@ export default function NotFound() {
         <CardContent className="space-y-4">
           <div className="text-center">
             <p className="text-4xl font-bold text-orange-600 mb-2">404</p>
-            <p className="text-xs text-gray-500">
+            <p className="text-sm text-gray-500">
               La page que vous recherchez n'a pas pu être trouvée sur nos serveurs.
             </p>
           </div>
@@ -86,10 +86,10 @@ export default function NotFound() {
           </div>
 
           <div className="text-center pt-4 border-t border-gray-200">
-            <p className="text-xs text-gray-500 mb-2">
+            <p className="text-sm text-gray-500 mb-2">
               {user ? "Navigation Rapide" : "En savoir plus"}
             </p>
-            <div className="flex justify-center space-x-4 text-xs">
+            <div className="flex justify-center space-x-4 text-sm">
               {user ? (
                 // Logged-in user quick links
                 <>

@@ -78,18 +78,18 @@ export default function LoginPage() {
             <img src="https://placehold.co/48x48/f97316/ffffff?text=shipit.ma" alt="Logo" className="w-12 h-12" />
           </div>
           <CardTitle className="text-lg font-semibold">Bienvenue sur shipit.ma</CardTitle>
-          <CardDescription className="text-xs text-gray-600">
+          <CardDescription className="text-sm text-gray-600">
             Entrez votre numéro de téléphone pour vous connecter ou créer un compte
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
           <form onSubmit={handleSubmit} className="space-y-3">
             <div className="space-y-1">
-              <Label htmlFor="phone" className="text-xs">
+              <Label htmlFor="phone" className="text-sm">
                 Numéro de Téléphone
               </Label>
               <div className="flex">
-                <div className="flex items-center px-2 border border-r-0 rounded-l-md bg-gray-50 text-gray-600 text-xs">
+                <div className="flex items-center px-2 border border-r-0 rounded-l-md bg-gray-50 text-gray-600 text-sm">
                   +212
                 </div>
                 <Input
@@ -98,13 +98,13 @@ export default function LoginPage() {
                   placeholder="Numéro de téléphone*"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="rounded-l-none h-8 text-xs"
+                  className="rounded-l-none h-8 text-sm"
                   required
                 />
               </div>
             </div>
 
-            <Button type="submit" className="w-full h-8 text-xs" disabled={isLoading}>
+            <Button type="submit" className="w-full h-8 text-sm" disabled={isLoading}>
               {isLoading ? (
                 <>
                   <Loader2 className="mr-1 h-3 w-3 animate-spin" />
@@ -119,7 +119,7 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <div className="mt-4 text-center text-xs">
+          <div className="mt-4 text-center text-sm">
             <p className="text-gray-500">
               Nouveau sur shipit.ma ?{" "}
               <a href="/register" className="font-medium text-orange-600 hover:underline">
@@ -128,7 +128,7 @@ export default function LoginPage() {
             </p>
           </div>
 
-          <div className="mt-2 text-center text-xs text-gray-500">
+          <div className="mt-2 text-center text-sm text-gray-500">
             <p>En continuant, vous acceptez nos Conditions d'Utilisation et notre Politique de Confidentialité</p>
           </div>
         </CardContent>

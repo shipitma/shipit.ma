@@ -184,7 +184,7 @@ export default function PurchasesPage() {
       {/* Mobile Header */}
       <div className="lg:hidden">
         <div className="flex justify-end mb-2">
-          <Button size="sm" asChild className="h-7 text-xs">
+          <Button size="sm" asChild className="h-7 text-sm">
             <a href="/purchases/create">
               <Plus className="w-3 h-3 mr-1" />
               Nouvelle Demande
@@ -193,7 +193,7 @@ export default function PurchasesPage() {
         </div>
         <div>
           <h1 className="text-lg font-semibold">Demandes d'Achat</h1>
-          <p className="text-xs text-gray-600">Gérez vos demandes d'achat et suivez leur progression</p>
+          <p className="text-sm text-gray-600">Gérez vos demandes d'achat et suivez leur progression</p>
         </div>
       </div>
 
@@ -201,9 +201,9 @@ export default function PurchasesPage() {
       <div className="hidden lg:flex items-center justify-between">
         <div>
           <h1 className="text-lg font-semibold">Demandes d'Achat</h1>
-          <p className="text-xs text-gray-600">Gérez vos demandes d'achat et suivez leur progression</p>
+          <p className="text-sm text-gray-600">Gérez vos demandes d'achat et suivez leur progression</p>
         </div>
-        <Button size="sm" asChild className="h-7 text-xs">
+        <Button size="sm" asChild className="h-7 text-sm">
           <a href="/purchases/create">
             <Plus className="w-3 h-3 mr-1" />
             Nouvelle Demande
@@ -217,7 +217,7 @@ export default function PurchasesPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-gray-600 mb-1">En Attente de Révision</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">En Attente de Révision</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.pending_review}</p>
               </div>
               <div className="p-2 rounded-md bg-yellow-100">
@@ -230,7 +230,7 @@ export default function PurchasesPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-gray-600 mb-1">En Attente de Paiement</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">En Attente de Paiement</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.pending_payment}</p>
               </div>
               <div className="p-2 rounded-md bg-orange-100">
@@ -243,7 +243,7 @@ export default function PurchasesPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-gray-600 mb-1">En Cours</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">En Cours</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.purchasing}</p>
               </div>
               <div className="p-2 rounded-md bg-purple-100">
@@ -256,7 +256,7 @@ export default function PurchasesPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-gray-600 mb-1">Terminé</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">Terminé</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.completed}</p>
               </div>
               <div className="p-2 rounded-md bg-green-100">
@@ -275,31 +275,31 @@ export default function PurchasesPage() {
             placeholder="Rechercher des demandes..."
             value={searchTerm}
             onChange={(e) => handleSearch(e.target.value)}
-            className="pl-7 h-8 text-xs"
+            className="pl-7 h-8 text-sm"
           />
         </div>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-40 h-8 text-xs">
+          <SelectTrigger className="w-40 h-8 text-sm">
             <Filter className="w-3 h-3 mr-1" />
             <SelectValue placeholder="Statut" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all" className="text-xs">
+            <SelectItem value="all" className="text-sm">
               Tous les Statuts
             </SelectItem>
-            <SelectItem value="pending_review" className="text-xs">
+            <SelectItem value="pending_review" className="text-sm">
               En Attente de Révision
             </SelectItem>
-            <SelectItem value="pending_payment" className="text-xs">
+            <SelectItem value="pending_payment" className="text-sm">
               En Attente de Paiement
             </SelectItem>
-            <SelectItem value="confirmed" className="text-xs">
+            <SelectItem value="confirmed" className="text-sm">
               Confirmé
             </SelectItem>
-            <SelectItem value="purchasing" className="text-xs">
+            <SelectItem value="purchasing" className="text-sm">
               Achat en Cours
             </SelectItem>
-            <SelectItem value="completed" className="text-xs">
+            <SelectItem value="completed" className="text-sm">
               Terminé
             </SelectItem>
           </SelectContent>
@@ -365,39 +365,39 @@ export default function PurchasesPage() {
                 <div className="flex items-start justify-between">
                   <div>
                     <CardTitle className="text-sm font-semibold">{request.id}</CardTitle>
-                    <CardDescription className="text-xs text-gray-500">{formatDate(request.date)}</CardDescription>
+                    <CardDescription className="text-sm text-gray-500">{formatDate(request.date)}</CardDescription>
                   </div>
-                  <Badge className={getStatusColor(request.status)} variant="secondary">
+                  <Badge className={getStatusColor(request.status) + ' text-xs'} variant="secondary">
                     {getStatusLabel(request.status)}
                   </Badge>
                 </div>
               </CardHeader>
               <CardContent className="space-y-3">
-                <p className="text-xs text-gray-600">
+                <p className="text-sm text-gray-600">
                   {getTotalItemsCount(request)} articles ({request.items?.length || 0} types)
                 </p>
 
                 <div className="space-y-1">
                   <div className="flex justify-between items-center">
-                    <span className="text-xs text-gray-500">Montant Total:</span>
-                    <span className="text-xs font-semibold">{formatCurrency(request.total_amount)}</span>
+                    <span className="text-sm text-gray-500">Montant Total:</span>
+                    <span className="text-sm font-semibold">{formatCurrency(request.total_amount)}</span>
                   </div>
                   {request.payment_due && (
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-500">Paiement Dû:</span>
-                      <span className="text-xs font-semibold text-orange-600">{formatCurrency(request.payment_due)}</span>
+                      <span className="text-sm text-gray-500">Paiement Dû:</span>
+                      <span className="text-sm font-semibold text-orange-600">{formatCurrency(request.payment_due)}</span>
                     </div>
                   )}
                   {request.service_fee && (
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-500">Frais de Service:</span>
-                      <span className="text-xs font-medium">{formatCurrency(request.service_fee)}</span>
+                      <span className="text-sm text-gray-500">Frais de Service:</span>
+                      <span className="text-sm font-medium">{formatCurrency(request.service_fee)}</span>
                     </div>
                   )}
                   {request.shipping_fee && (
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-500">Frais d'Expédition:</span>
-                      <span className="text-xs font-medium">{formatCurrency(request.shipping_fee)}</span>
+                      <span className="text-sm text-gray-500">Frais d'Expédition:</span>
+                      <span className="text-sm font-medium">{formatCurrency(request.shipping_fee)}</span>
                     </div>
                   )}
                 </div>
@@ -405,7 +405,7 @@ export default function PurchasesPage() {
                 {/* Admin Notes Preview */}
                 {request.admin_notes && (
                   <div className="p-2 bg-orange-50 rounded-md border border-orange-200">
-                    <p className="text-xs text-orange-800 line-clamp-2">
+                    <p className="text-sm text-orange-800 line-clamp-2">
                       <span className="font-medium">Note:</span> {request.admin_notes}
                     </p>
                   </div>
@@ -415,8 +415,8 @@ export default function PurchasesPage() {
                 {request.timeline && request.timeline.length > 0 && (
                   <div className="space-y-1">
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-500">Dernière activité:</span>
-                      <span className="text-xs font-medium">
+                      <span className="text-sm text-gray-500">Dernière activité:</span>
+                      <span className="text-sm font-medium">
                         {request.timeline[request.timeline.length - 1]?.status}
                       </span>
                     </div>
@@ -438,7 +438,7 @@ export default function PurchasesPage() {
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="h-7 text-xs" 
+                    className="h-7 text-sm" 
                     asChild
                     onClick={() => trackPurchase('VIEW_PURCHASE_DETAILS', { purchaseId: request.id })}
                   >
@@ -450,7 +450,7 @@ export default function PurchasesPage() {
                   {request.status === "pending_payment" && (
                     <Button
                       size="sm"
-                      className="h-7 text-xs"
+                      className="h-7 text-sm"
                       onClick={() => {
                         trackPurchase('PURCHASE_PAYMENT_INITIATED', { 
                           purchaseId: request.id,
@@ -481,7 +481,7 @@ export default function PurchasesPage() {
           <div className="space-y-4">
             <div className="p-3 bg-gray-50 rounded-md">
               <div className="flex justify-between items-center">
-                <span className="text-xs">Montant Dû:</span>
+                <span className="text-sm">Montant Dû:</span>
                 <span className="font-bold text-sm">
                   {selectedRequest?.payment_due ? formatCurrency(selectedRequest.payment_due) : ""}
                 </span>
@@ -489,27 +489,27 @@ export default function PurchasesPage() {
             </div>
 
             <div>
-              <Label className="text-xs">Reçu de Paiement *</Label>
+              <Label className="text-sm">Reçu de Paiement *</Label>
               <div className="mt-2 border-2 border-dashed border-gray-200 rounded-md p-4 text-center">
                 <Upload className="w-6 h-6 mx-auto text-gray-400 mb-2" />
-                <p className="text-xs text-gray-500">
+                <p className="text-sm text-gray-500">
                   Cliquez pour télécharger ou glissez-déposez votre reçu de paiement
                 </p>
-                <Input type="file" accept="image/*" className="mt-2 text-xs" />
+                <Input type="file" accept="image/*" className="mt-2 text-sm" />
               </div>
             </div>
 
             <div>
-              <Label className="text-xs">Notes de Paiement (Optionnel)</Label>
-              <Textarea placeholder="Toute information supplémentaire sur votre paiement..." className="text-xs" />
+              <Label className="text-sm">Notes de Paiement (Optionnel)</Label>
+              <Textarea placeholder="Toute information supplémentaire sur votre paiement..." className="text-sm" />
             </div>
 
             <div className="flex gap-2">
-              <Button onClick={handlePayment} className="flex-1 h-8 text-xs">
+              <Button onClick={handlePayment} className="flex-1 h-8 text-sm">
                 <Check className="w-3 h-3 mr-1" />
                 Soumettre le Paiement
               </Button>
-              <Button variant="outline" onClick={() => setIsPaymentOpen(false)} className="h-8 text-xs">
+              <Button variant="outline" onClick={() => setIsPaymentOpen(false)} className="h-8 text-sm">
                 Annuler
               </Button>
             </div>

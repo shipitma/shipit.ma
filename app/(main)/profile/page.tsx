@@ -148,7 +148,7 @@ export default function ProfilePage() {
       <div className="space-y-4">
         <div>
           <h1 className="text-lg font-semibold">Paramètres du Profil</h1>
-          <p className="text-xs text-gray-600">Gérez les informations de votre compte et les adresses de livraison</p>
+          <p className="text-sm text-gray-600">Gérez les informations de votre compte et les adresses de livraison</p>
         </div>
       </div>
     )
@@ -160,7 +160,7 @@ export default function ProfilePage() {
       <div className="lg:hidden">
         <div>
           <h1 className="text-lg font-semibold">Paramètres du Profil</h1>
-          <p className="text-xs text-gray-600">Gérez les informations de votre compte et les adresses de livraison</p>
+          <p className="text-sm text-gray-600">Gérez les informations de votre compte et les adresses de livraison</p>
         </div>
       </div>
 
@@ -168,7 +168,7 @@ export default function ProfilePage() {
       <div className="hidden lg:flex items-center justify-between">
         <div>
           <h1 className="text-lg font-semibold">Paramètres du Profil</h1>
-          <p className="text-xs text-gray-600">Gérez les informations de votre compte et les adresses de livraison</p>
+          <p className="text-sm text-gray-600">Gérez les informations de votre compte et les adresses de livraison</p>
         </div>
       </div>
 
@@ -181,7 +181,7 @@ export default function ProfilePage() {
               <Button
                 variant={isEditingPersonal ? "outline" : "default"}
                 size="sm"
-                className="h-7 text-xs"
+                className="h-7 text-sm"
                 onClick={() => (isEditingPersonal ? setIsEditingPersonal(false) : setIsEditingPersonal(true))}
                 disabled={saving}
               >
@@ -200,7 +200,7 @@ export default function ProfilePage() {
             </div>
             <div>
               <CardTitle className="text-base font-semibold">Informations Personnelles</CardTitle>
-              <CardDescription className="text-xs text-gray-500">
+              <CardDescription className="text-sm text-gray-500">
                 Mettez à jour vos détails personnels et informations de contact
               </CardDescription>
             </div>
@@ -210,14 +210,14 @@ export default function ProfilePage() {
           <div className="hidden lg:flex items-center justify-between">
             <div>
               <CardTitle className="text-base font-semibold">Informations Personnelles</CardTitle>
-              <CardDescription className="text-xs text-gray-500">
+              <CardDescription className="text-sm text-gray-500">
                 Mettez à jour vos détails personnels et informations de contact
               </CardDescription>
             </div>
             <Button
               variant={isEditingPersonal ? "outline" : "default"}
               size="sm"
-              className="h-7 text-xs"
+              className="h-7 text-sm"
               onClick={() => (isEditingPersonal ? setIsEditingPersonal(false) : setIsEditingPersonal(true))}
               disabled={saving}
             >
@@ -238,7 +238,7 @@ export default function ProfilePage() {
         <CardContent className="space-y-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
-              <Label htmlFor="firstName" className="text-xs">
+              <Label htmlFor="firstName" className="text-sm">
                 Prénom
               </Label>
               <div className="relative">
@@ -248,12 +248,12 @@ export default function ProfilePage() {
                   value={personalData.first_name}
                   onChange={(e) => setPersonalData((prev) => ({ ...prev, first_name: e.target.value }))}
                   disabled={!isEditingPersonal || saving}
-                  className="pl-7 h-8 text-xs"
+                  className="pl-7 h-8 text-sm"
                 />
               </div>
             </div>
             <div>
-              <Label htmlFor="lastName" className="text-xs">
+              <Label htmlFor="lastName" className="text-sm">
                 Nom
               </Label>
               <div className="relative">
@@ -263,7 +263,7 @@ export default function ProfilePage() {
                   value={personalData.last_name}
                   onChange={(e) => setPersonalData((prev) => ({ ...prev, last_name: e.target.value }))}
                   disabled={!isEditingPersonal || saving}
-                  className="pl-7 h-8 text-xs"
+                  className="pl-7 h-8 text-sm"
                 />
               </div>
             </div>
@@ -271,7 +271,7 @@ export default function ProfilePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
-              <Label htmlFor="email" className="text-xs">
+              <Label htmlFor="email" className="text-sm">
                 Adresse Email
               </Label>
               <div className="relative">
@@ -282,12 +282,12 @@ export default function ProfilePage() {
                   value={personalData.email}
                   onChange={(e) => setPersonalData((prev) => ({ ...prev, email: e.target.value }))}
                   disabled={!isEditingPersonal || saving}
-                  className="pl-7 h-8 text-xs"
+                  className="pl-7 h-8 text-sm"
                 />
               </div>
             </div>
             <div>
-              <Label htmlFor="phone" className="text-xs">
+              <Label htmlFor="phone" className="text-sm">
                 Numéro de Téléphone
               </Label>
               <div className="relative">
@@ -297,16 +297,16 @@ export default function ProfilePage() {
                   value={personalData.phone_number}
                   onChange={(e) => setPersonalData((prev) => ({ ...prev, phone_number: e.target.value }))}
                   disabled={true}
-                  className="pl-7 h-8 text-xs bg-gray-50"
+                  className="pl-7 h-8 text-sm bg-gray-50"
                 />
               </div>
-              <p className="text-xs text-gray-500 mt-1">Le numéro de téléphone ne peut pas être modifié</p>
+              <p className="text-sm text-gray-500 mt-1">Le numéro de téléphone ne peut pas être modifié</p>
             </div>
           </div>
 
           {isEditingPersonal && (
             <div className="flex gap-2 pt-2">
-              <Button onClick={handleSavePersonal} className="flex-1 h-7 text-xs" disabled={saving}>
+              <Button onClick={handleSavePersonal} className="flex-1 h-7 text-sm" disabled={saving}>
                 <Save className="w-3 h-3 mr-1" />
                 {saving ? "Sauvegarde..." : "Sauvegarder les Modifications"}
               </Button>
@@ -324,7 +324,7 @@ export default function ProfilePage() {
               <Button
                 variant={isEditingAddresses ? "outline" : "default"}
                 size="sm"
-                className="h-7 text-xs"
+                className="h-7 text-sm"
                 onClick={() => (isEditingAddresses ? setIsEditingAddresses(false) : setIsEditingAddresses(true))}
                 disabled={saving}
               >
@@ -343,7 +343,7 @@ export default function ProfilePage() {
             </div>
             <div>
               <CardTitle className="text-base font-semibold">Adresse de Livraison</CardTitle>
-              <CardDescription className="text-xs text-gray-500">
+              <CardDescription className="text-sm text-gray-500">
                 Gérez votre adresse d'expédition au Maroc
               </CardDescription>
             </div>
@@ -353,14 +353,14 @@ export default function ProfilePage() {
           <div className="hidden lg:flex items-center justify-between">
             <div>
               <CardTitle className="text-base font-semibold">Adresse de Livraison</CardTitle>
-              <CardDescription className="text-xs text-gray-500">
+              <CardDescription className="text-sm text-gray-500">
                 Gérez votre adresse d'expédition au Maroc
               </CardDescription>
             </div>
             <Button
               variant={isEditingAddresses ? "outline" : "default"}
               size="sm"
-              className="h-7 text-xs"
+              className="h-7 text-sm"
               onClick={() => (isEditingAddresses ? setIsEditingAddresses(false) : setIsEditingAddresses(true))}
               disabled={saving}
             >
@@ -389,7 +389,7 @@ export default function ProfilePage() {
 
             <div className="grid grid-cols-1 gap-3">
               <div>
-                <Label htmlFor="line" className="text-xs">
+                <Label htmlFor="line" className="text-sm">
                   Ligne d'Adresse
                 </Label>
                 <Input
@@ -398,13 +398,13 @@ export default function ProfilePage() {
                   onChange={(e) => setAddress((prev) => ({ ...prev, address_line: e.target.value }))}
                   disabled={!isEditingAddresses || saving}
                   placeholder="Adresse, appartement, suite, etc."
-                  className="h-8 text-xs"
+                  className="h-8 text-sm"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div>
-                  <Label htmlFor="city" className="text-xs">
+                  <Label htmlFor="city" className="text-sm">
                     Ville
                   </Label>
                   <Input
@@ -412,11 +412,11 @@ export default function ProfilePage() {
                     value={address.city}
                     onChange={(e) => setAddress((prev) => ({ ...prev, city: e.target.value }))}
                     disabled={!isEditingAddresses || saving}
-                    className="h-8 text-xs"
+                    className="h-8 text-sm"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="state" className="text-xs">
+                  <Label htmlFor="state" className="text-sm">
                     État/Province
                   </Label>
                   <Input
@@ -424,11 +424,11 @@ export default function ProfilePage() {
                     value={address.state || ""}
                     onChange={(e) => setAddress((prev) => ({ ...prev, state: e.target.value }))}
                     disabled={!isEditingAddresses || saving}
-                    className="h-8 text-xs"
+                    className="h-8 text-sm"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="zip" className="text-xs">
+                  <Label htmlFor="zip" className="text-sm">
                     Code Postal
                   </Label>
                   <Input
@@ -436,23 +436,23 @@ export default function ProfilePage() {
                     value={address.zip || ""}
                     onChange={(e) => setAddress((prev) => ({ ...prev, zip: e.target.value }))}
                     disabled={!isEditingAddresses || saving}
-                    className="h-8 text-xs"
+                    className="h-8 text-sm"
                   />
                 </div>
               </div>
 
               <div>
-                <Label htmlFor="country" className="text-xs">
+                <Label htmlFor="country" className="text-sm">
                   Pays
                 </Label>
-                <Input id="country" value={address.country} disabled className="bg-gray-50 h-8 text-xs" />
+                <Input id="country" value={address.country} disabled className="bg-gray-50 h-8 text-sm" />
               </div>
             </div>
           </div>
 
           {isEditingAddresses && (
             <div className="flex gap-2 pt-2">
-              <Button onClick={handleSaveAddresses} className="flex-1 h-7 text-xs" disabled={saving}>
+              <Button onClick={handleSaveAddresses} className="flex-1 h-7 text-sm" disabled={saving}>
                 <Save className="w-3 h-3 mr-1" />
                 {saving ? "Sauvegarde..." : "Sauvegarder l'Adresse"}
               </Button>

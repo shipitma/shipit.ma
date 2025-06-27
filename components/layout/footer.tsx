@@ -34,28 +34,28 @@ export function Footer() {
 
             {/* Legal Links */}
             <div className="space-y-2 mb-6">
-              <a href="/terms-of-use" className="block text-xs text-gray-500 hover:text-gray-700">
+              <a href="/terms-of-use" className="block text-sm text-gray-500 hover:text-gray-700">
                 Conditions d'Utilisation
               </a>
-              <a href="/policy" className="block text-xs text-gray-500 hover:text-gray-700">
+              <a href="/policy" className="block text-sm text-gray-500 hover:text-gray-700">
                 Politique de Confidentialité
               </a>
-              <a href="#" className="block text-xs text-gray-500 hover:text-gray-700">
+              <a href="#" className="block text-sm text-gray-500 hover:text-gray-700">
                 Accord de Traitement des Données GDPR
               </a>
-              <a href="/gdpr-faq" className="block text-xs text-gray-500 hover:text-gray-700">
+              <a href="/gdpr-faq" className="block text-sm text-gray-500 hover:text-gray-700">
                 FAQ sur le GDPR
               </a>
-              <a href="/marquiz-privacy-notice" className="block text-xs text-gray-500 hover:text-gray-700">
+              <a href="/marquiz-privacy-notice" className="block text-sm text-gray-500 hover:text-gray-700">
                 Avis de Confidentialité shipit
               </a>
-              <a href="/red-politika" className="block text-xs text-gray-500 hover:text-gray-700">
+              <a href="/red-politika" className="block text-sm text-gray-500 hover:text-gray-700">
                 Politique Éditoriale shipit
               </a>
-              <a href="/return-and-refund-policy" className="block text-xs text-gray-500 hover:text-gray-700">
+              <a href="/return-and-refund-policy" className="block text-sm text-gray-500 hover:text-gray-700">
                 Politique de Retour et Remboursement
               </a>
-              <a href="/payment-security/" className="block text-xs text-gray-500 hover:text-gray-700">
+              <a href="/payment-security/" className="block text-sm text-gray-500 hover:text-gray-700">
                 Paiement & Sécurité
               </a>
             </div>

@@ -105,7 +105,7 @@ export default function CreatePurchaseRequestPage() {
           </Button>
           <div className="space-y-1">
             <h1 className="text-lg font-semibold">Créer une Demande d'Achat</h1>
-            <p className="text-xs text-gray-600">
+            <p className="text-sm text-gray-600">
               Ajoutez des articles que vous souhaitez que nous achetions pour vous
             </p>
           </div>
@@ -122,7 +122,7 @@ export default function CreatePurchaseRequestPage() {
           <CardContent className="space-y-6">
             {/* Items */}
             <div className="space-y-3">
-              <Label className="text-xs font-medium">Articles à Acheter</Label>
+              <Label className="text-sm font-medium">Articles à Acheter</Label>
               {newRequest.items.map((item, index) => (
                 <Card key={index} className="border-dashed border-2 border-gray-200">
                   <CardHeader className="pb-3">
@@ -138,50 +138,50 @@ export default function CreatePurchaseRequestPage() {
                   <CardContent className="space-y-3">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <div className="space-y-1">
-                        <Label className="text-xs">Nom de l'Article *</Label>
+                        <Label className="text-sm">Nom de l'Article *</Label>
                         <Input
                           placeholder="ex: iPhone 15 Pro"
                           value={item.name}
                           onChange={(e) => updateItem(index, "name", e.target.value)}
-                          className="h-8 text-xs"
+                          className="h-8 text-sm"
                         />
                       </div>
                       <div className="space-y-1">
-                        <Label className="text-xs">Quantité</Label>
+                        <Label className="text-sm">Quantité</Label>
                         <Input
                           type="number"
                           min="1"
                           value={item.quantity}
                           onChange={(e) => updateItem(index, "quantity", Number.parseInt(e.target.value))}
-                          className="h-8 text-xs"
+                          className="h-8 text-sm"
                         />
                       </div>
                     </div>
 
                     <div className="space-y-1">
-                      <Label className="text-xs">URL du Produit *</Label>
+                      <Label className="text-sm">URL du Produit *</Label>
                       <Input
                         placeholder="https://exemple.com/produit"
                         value={item.url}
                         onChange={(e) => updateItem(index, "url", e.target.value)}
-                        className="h-8 text-xs"
+                        className="h-8 text-sm"
                       />
                     </div>
 
                     <div className="space-y-1">
-                      <Label className="text-xs">Variante (Taille, Couleur, Type, etc.)</Label>
+                      <Label className="text-sm">Variante (Taille, Couleur, Type, etc.)</Label>
                       <Input
                         placeholder="ex: Large, Bleu, 256GB"
                         value={item.variant}
                         onChange={(e) => updateItem(index, "variant", e.target.value)}
-                        className="h-8 text-xs"
+                        className="h-8 text-sm"
                       />
                     </div>
                   </CardContent>
                 </Card>
               ))}
 
-              <Button variant="outline" onClick={addItem} className="w-full h-8 text-xs">
+              <Button variant="outline" onClick={addItem} className="w-full h-8 text-sm">
                 <Plus className="w-3 h-3 mr-1" />
                 Ajouter un Autre Article
               </Button>
@@ -189,22 +189,22 @@ export default function CreatePurchaseRequestPage() {
 
             {/* Notes */}
             <div>
-              <Label className="text-xs">Notes Supplémentaires</Label>
+              <Label className="text-sm">Notes Supplémentaires</Label>
               <Textarea
                 placeholder="Toute instruction spéciale ou préférence..."
                 value={newRequest.notes}
                 onChange={(e) => setNewRequest((prev) => ({ ...prev, notes: e.target.value }))}
-                className="mt-1 text-xs"
+                className="mt-1 text-sm"
                 rows={3}
               />
             </div>
 
             {/* Actions */}
             <div className="flex gap-2 pt-4 border-t border-gray-200">
-              <Button onClick={handleSubmitRequest} className="flex-1 h-8 text-xs" disabled={isSubmitting}>
+              <Button onClick={handleSubmitRequest} className="flex-1 h-8 text-sm" disabled={isSubmitting}>
                 {isSubmitting ? "Soumission..." : "Soumettre la Demande d'Achat"}
               </Button>
-              <Button variant="outline" onClick={() => router.back()} className="h-8 text-xs">
+              <Button variant="outline" onClick={() => router.back()} className="h-8 text-sm">
                 Annuler
               </Button>
             </div>

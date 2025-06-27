@@ -145,12 +145,12 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
         </Button>
         <div className="flex items-center gap-2">
             <h1 className="text-lg font-semibold">{packageData.id}</h1>
-            <Badge className={getStatusColor(packageData.status)} variant="secondary">
+            <Badge className={getStatusColor(packageData.status) + ' text-xs'} variant="secondary">
               {getStatusLabel(packageData.status)}
             </Badge>
         </div>
         {packageData.status === "arrived" && (
-          <Button onClick={() => setIsPaymentOpen(true)} size="sm" className="h-7 text-xs ml-auto">
+          <Button onClick={() => setIsPaymentOpen(true)} size="sm" className="h-7 text-sm ml-auto">
             <DollarSign className="w-3 h-3 mr-1" />
             Payer les Frais d'Expédition
           </Button>
@@ -167,47 +167,47 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-xs text-gray-500">Poids :</span>
-                <span className="text-xs font-medium">{packageData.weight || "N/A"}</span>
+                <span className="text-sm text-gray-500">Poids :</span>
+                <span className="text-sm font-medium">{packageData.weight || "N/A"}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-xs text-gray-500">Dimensions :</span>
-                <span className="text-xs font-medium">{packageData.dimensions || "N/A"}</span>
+                <span className="text-sm text-gray-500">Dimensions :</span>
+                <span className="text-sm font-medium">{packageData.dimensions || "N/A"}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-xs text-gray-500">Valeur :</span>
-                <span className="text-xs font-medium">
+                <span className="text-sm text-gray-500">Valeur :</span>
+                <span className="text-sm font-medium">
                   {packageData.estimated_value ? formatCurrency(packageData.estimated_value) : "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-xs text-gray-500">Expédition :</span>
-                <span className="text-xs font-medium">
+                <span className="text-sm text-gray-500">Expédition :</span>
+                <span className="text-sm font-medium">
                   {packageData.shipping_cost ? formatCurrency(packageData.shipping_cost) : "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-xs text-gray-500">Assurance :</span>
-                <span className="text-xs font-medium">
+                <span className="text-sm text-gray-500">Assurance :</span>
+                <span className="text-sm font-medium">
                   {packageData.insurance ? formatCurrency(packageData.insurance) : "N/A"}
                 </span>
               </div>
               {packageData.carrier && (
                 <div className="flex justify-between">
-                  <span className="text-xs text-gray-500">Transporteur :</span>
-                  <span className="text-xs font-medium">{packageData.carrier}</span>
+                  <span className="text-sm text-gray-500">Transporteur :</span>
+                  <span className="text-sm font-medium">{packageData.carrier}</span>
                 </div>
               )}
               {packageData.tracking_number && (
                 <div className="flex justify-between">
-                  <span className="text-xs text-gray-500">Numéro de Suivi :</span>
-                  <span className="text-xs font-medium">{packageData.tracking_number}</span>
+                  <span className="text-sm text-gray-500">Numéro de Suivi :</span>
+                  <span className="text-sm font-medium">{packageData.tracking_number}</span>
                 </div>
               )}
               {packageData.eta && (
                 <div className="flex justify-between">
-                  <span className="text-xs text-gray-500">Date d'Arrivée Estimée :</span>
-                  <span className="text-xs font-medium">{packageData.eta}</span>
+                  <span className="text-sm text-gray-500">Date d'Arrivée Estimée :</span>
+                  <span className="text-sm font-medium">{packageData.eta}</span>
                 </div>
               )}
             </CardContent>
@@ -238,15 +238,15 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
                           <div>
                             <h4 className="text-sm font-medium">{event.status}</h4>
                             {event.location && (
-                              <p className="text-xs text-gray-500">{event.location}</p>
+                              <p className="text-sm text-gray-500">{event.location}</p>
                             )}
                             {event.description && (
-                              <p className="text-xs text-gray-600 mt-1">{event.description}</p>
+                              <p className="text-sm text-gray-600 mt-1">{event.description}</p>
                             )}
                           </div>
                           <div className="text-right">
-                            <p className="text-xs text-gray-500">{formatDate(event.date)}</p>
-                            <p className="text-xs text-gray-400">{event.time}</p>
+                            <p className="text-sm text-gray-500">{formatDate(event.date)}</p>
+                            <p className="text-sm text-gray-400">{event.time}</p>
                           </div>
                         </div>
                       </div>
@@ -279,7 +279,7 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
                       <div className="flex items-start justify-between">
                         <div>
                           <h3 className="text-sm font-medium">{item.name}</h3>
-                          <p className="text-xs text-gray-500">Quantity: {item.quantity}</p>
+                          <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
                         </div>
                         <div className="text-right">
                           <p className="text-sm font-semibold">{item.value ? formatCurrency(item.value) : "N/A"}</p>
@@ -324,12 +324,12 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
                         )}
                         <div>
                           <p className="text-sm font-medium">{attachment.file_name}</p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-sm text-gray-500">
                             {attachment.file_size ? `${(attachment.file_size / 1024).toFixed(1)} KB` : "N/A"}
                           </p>
                         </div>
                       </div>
-                      <Button variant="outline" size="sm" asChild className="h-7 text-xs">
+                      <Button variant="outline" size="sm" asChild className="h-7 text-sm">
                         <a href={attachment.file_url} target="_blank" rel="noopener noreferrer">
                           <ExternalLink className="w-3 h-3 mr-1" />
                           Voir
@@ -350,8 +350,8 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
             <Card className="border-blue-200 bg-blue-50">
               <CardContent className="p-3">
                 <div className="space-y-2">
-                  <h4 className="text-xs font-medium text-blue-900">Suivi en Ligne</h4>
-                  <Button variant="outline" size="sm" asChild className="w-full h-8 text-xs">
+                  <h4 className="text-sm font-medium text-blue-900">Suivi en Ligne</h4>
+                  <Button variant="outline" size="sm" asChild className="w-full h-8 text-sm">
                     <a href={packageData.tracking_url} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="w-3 h-3 mr-1" />
                       Suivre sur {packageData.carrier || "le site du transporteur"}
@@ -369,8 +369,8 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
                 <div className="flex gap-2">
                   <AlertCircle className="w-4 h-4 text-orange-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-xs font-medium text-orange-900">Paiement Requis</h4>
-                    <p className="text-xs text-orange-800 mt-1">
+                    <h4 className="text-sm font-medium text-orange-900">Paiement Requis</h4>
+                    <p className="text-sm text-orange-800 mt-1">
                       Votre colis est arrivé dans notre entrepôt. Veuillez payer les frais d'expédition pour procéder à
                       la livraison.
                     </p>
@@ -387,8 +387,8 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
                 <div className="flex gap-2">
                   <Shield className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-xs font-medium text-green-900">Assurance</h4>
-                    <p className="text-xs text-green-800 mt-1">{packageData.insurance_details}</p>
+                    <h4 className="text-sm font-medium text-green-900">Assurance</h4>
+                    <p className="text-sm text-green-800 mt-1">{packageData.insurance_details}</p>
                   </div>
                 </div>
               </CardContent>
@@ -408,19 +408,19 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
             <div className="p-3 bg-gray-50 rounded-md">
               <div className="space-y-1">
                 <div className="flex justify-between">
-                  <span className="text-xs">Coût d'Expédition :</span>
-                  <span className="text-xs font-medium">
+                  <span className="text-sm">Coût d'Expédition :</span>
+                  <span className="text-sm font-medium">
                     {packageData.shipping_cost ? formatCurrency(packageData.shipping_cost) : "N/A"}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-xs">Assurance :</span>
-                  <span className="text-xs font-medium">
+                  <span className="text-sm">Assurance :</span>
+                  <span className="text-sm font-medium">
                     {packageData.insurance ? formatCurrency(packageData.insurance) : "N/A"}
                   </span>
                 </div>
                 <div className="border-t border-gray-200 pt-1 flex justify-between">
-                  <span className="text-xs font-medium">Total :</span>
+                  <span className="text-sm font-medium">Total :</span>
                   <span className="text-sm font-bold">
                     {packageData.shipping_cost && packageData.insurance
                       ? formatCurrency(packageData.shipping_cost + packageData.insurance)
@@ -431,11 +431,11 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
             </div>
 
             <div className="flex gap-2">
-              <Button onClick={handlePayShipping} className="flex-1 h-8 text-xs">
+              <Button onClick={handlePayShipping} className="flex-1 h-8 text-sm">
                 <DollarSign className="w-3 h-3 mr-1" />
                 Payer Maintenant
               </Button>
-              <Button variant="outline" onClick={() => setIsPaymentOpen(false)} className="h-8 text-xs">
+              <Button variant="outline" onClick={() => setIsPaymentOpen(false)} className="h-8 text-sm">
                 Annuler
               </Button>
             </div>

@@ -141,7 +141,7 @@ export default function PackagesPage() {
       {/* Mobile Header */}
       <div className="lg:hidden">
         <div className="flex justify-end mb-2">
-          <Button size="sm" asChild className="h-7 text-xs">
+          <Button size="sm" asChild className="h-7 text-sm">
             <a href="/packages/create">
               <Plus className="w-3 h-3 mr-1" />
               Ajouter Colis
@@ -150,7 +150,7 @@ export default function PackagesPage() {
         </div>
         <div>
           <h1 className="text-lg font-semibold">Colis</h1>
-          <p className="text-xs text-gray-600">Suivez vos colis du Maroc vers la Turquie</p>
+          <p className="text-sm text-gray-600">Suivez vos colis du Maroc vers la Turquie</p>
         </div>
       </div>
 
@@ -158,9 +158,9 @@ export default function PackagesPage() {
       <div className="hidden lg:flex items-center justify-between">
         <div>
           <h1 className="text-lg font-semibold">Colis</h1>
-          <p className="text-xs text-gray-600">Suivez vos colis du Maroc vers la Turquie</p>
+          <p className="text-sm text-gray-600">Suivez vos colis du Maroc vers la Turquie</p>
         </div>
-        <Button size="sm" asChild className="h-7 text-xs">
+        <Button size="sm" asChild className="h-7 text-sm">
           <a href="/packages/create">
             <Plus className="w-3 h-3 mr-1" />
             Ajouter Colis
@@ -174,7 +174,7 @@ export default function PackagesPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-gray-600 mb-1">Attendu</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">Attendu</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.expected}</p>
               </div>
               <div className="p-2 rounded-md bg-gray-100">
@@ -187,7 +187,7 @@ export default function PackagesPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-gray-600 mb-1">Arrivé</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">Arrivé</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.arrived}</p>
               </div>
               <div className="p-2 rounded-md bg-orange-100">
@@ -200,7 +200,7 @@ export default function PackagesPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-gray-600 mb-1">En Transit</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">En Transit</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.in_transit}</p>
               </div>
               <div className="p-2 rounded-md bg-green-100">
@@ -213,7 +213,7 @@ export default function PackagesPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-gray-600 mb-1">Livré</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">Livré</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.delivered}</p>
               </div>
               <div className="p-2 rounded-md bg-purple-100">
@@ -232,28 +232,28 @@ export default function PackagesPage() {
             placeholder="Rechercher des colis..."
             value={searchTerm}
             onChange={(e) => handleSearch(e.target.value)}
-            className="pl-7 h-8 text-xs"
+            className="pl-7 h-8 text-sm"
           />
         </div>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-40 h-8 text-xs">
+          <SelectTrigger className="w-40 h-8 text-sm">
             <Filter className="w-3 h-3 mr-1" />
             <SelectValue placeholder="Statut" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all" className="text-xs">
+            <SelectItem value="all" className="text-sm">
               Tous les Statuts
             </SelectItem>
-            <SelectItem value="expected" className="text-xs">
+            <SelectItem value="expected" className="text-sm">
               Attendu
             </SelectItem>
-            <SelectItem value="arrived" className="text-xs">
+            <SelectItem value="arrived" className="text-sm">
               Arrivé
             </SelectItem>
-            <SelectItem value="in_transit" className="text-xs">
+            <SelectItem value="in_transit" className="text-sm">
               En Transit
             </SelectItem>
-            <SelectItem value="delivered" className="text-xs">
+            <SelectItem value="delivered" className="text-sm">
               Livré
             </SelectItem>
           </SelectContent>
@@ -321,16 +321,16 @@ export default function PackagesPage() {
                   <div className="space-y-1 min-w-0 flex-1">
                     <CardTitle className="text-sm font-semibold">{pkg.id}</CardTitle>
                   </div>
-                  <Badge className={getStatusColor(pkg.status)} variant="secondary">
+                  <Badge className={getStatusColor(pkg.status) + ' text-xs'} variant="secondary">
                     {getStatusLabel(pkg.status)}
                   </Badge>
                 </div>
               </CardHeader>
               <CardContent className="pt-0 space-y-3">
-                <div className="space-y-1 text-xs">
+                <div className="space-y-1 text-sm">
                   <div className="flex justify-between py-0.5">
                     <span className="text-gray-500">Suivi:</span>
-                    <span className="font-mono text-xs">{pkg.tracking_number || "N/A"}</span>
+                    <span className="font-mono text-sm">{pkg.tracking_number || "N/A"}</span>
                   </div>
                   {pkg.carrier && (
                     <div className="flex justify-between py-0.5">
@@ -374,8 +374,8 @@ export default function PackagesPage() {
                 {pkg.progress !== undefined && (
                   <div className="space-y-1">
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-500">Progression:</span>
-                      <span className="text-xs font-medium">{pkg.progress}%</span>
+                      <span className="text-sm text-gray-500">Progression:</span>
+                      <span className="text-sm font-medium">{pkg.progress}%</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-1.5">
                       <div 
@@ -387,16 +387,16 @@ export default function PackagesPage() {
                 )}
 
                 <div>
-                  <h4 className="font-medium text-xs mb-2">Items ({pkg.items?.length || 0})</h4>
+                  <h4 className="font-medium text-sm mb-2">Items ({pkg.items?.length || 0})</h4>
                   <div className="space-y-1">
                     {pkg.items?.slice(0, 2).map((item, index) => (
-                      <p key={index} className="text-xs text-gray-600 flex items-center gap-1">
+                      <p key={index} className="text-sm text-gray-600 flex items-center gap-1">
                         <span className="w-1 h-1 bg-gray-400 rounded-full flex-shrink-0"></span>
                         {item.name}
                       </p>
                     ))}
                     {pkg.items && pkg.items.length > 2 && (
-                      <p className="text-xs text-gray-600 flex items-center gap-1">
+                      <p className="text-sm text-gray-600 flex items-center gap-1">
                         <span className="w-1 h-1 bg-gray-400 rounded-full flex-shrink-0"></span>+{pkg.items.length - 2}{" "}
                         articles supplémentaires
                       </p>
@@ -406,7 +406,7 @@ export default function PackagesPage() {
 
                 {/* Last Update */}
                 {pkg.updated_at && (
-                  <div className="text-xs text-gray-400 pt-1 border-t border-gray-100">
+                  <div className="text-sm text-gray-400 pt-1 border-t border-gray-100">
                     Mis à jour: {new Date(pkg.updated_at).toLocaleDateString('fr-FR', { 
                       day: '2-digit', 
                       month: '2-digit',
@@ -420,7 +420,7 @@ export default function PackagesPage() {
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="flex-1 h-7 text-xs" 
+                    className="flex-1 h-7 text-sm" 
                     asChild
                     onClick={() => trackPackage('VIEW_PACKAGE_DETAILS', { packageId: pkg.id })}
                   >
@@ -432,7 +432,7 @@ export default function PackagesPage() {
                   {pkg.status === "arrived" && (
                     <Button 
                       size="sm" 
-                      className="flex-1 h-7 text-xs"
+                      className="flex-1 h-7 text-sm"
                       onClick={() => trackPackage('PACKAGE_STATUS_CHANGE', { 
                         packageId: pkg.id,
                         status: 'payment_requested'

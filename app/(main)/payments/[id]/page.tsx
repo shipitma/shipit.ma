@@ -417,20 +417,20 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
             </CardHeader>
             <CardContent className="space-y-2">
               {(paymentData.status === "pending" || paymentData.status === "overdue") && (
-                <Button className="w-full h-8 text-xs" onClick={() => setIsPaymentOpen(true)}>
+                <Button className="w-full h-8 text-sm" onClick={() => setIsPaymentOpen(true)}>
                   <CreditCard className="w-3 h-3 mr-1" />
                   Soumettre le Paiement
                 </Button>
               )}
               {paymentData.status === "paid" && paymentData.receipt_url && (
-                <Button variant="outline" className="w-full h-8 text-xs" asChild>
+                <Button variant="outline" className="w-full h-8 text-sm" asChild>
                   <a href={paymentData.receipt_url} target="_blank" rel="noopener noreferrer">
                     <Download className="w-3 h-3 mr-1" />
                     Télécharger le Reçu
                   </a>
                 </Button>
               )}
-              <Button variant="outline" className="w-full h-8 text-xs" asChild>
+              <Button variant="outline" className="w-full h-8 text-sm" asChild>
                 <a
                   href={`/${paymentData.type === "purchase" ? "purchases" : "packages"}/${paymentData.related_id}`}
                 >
@@ -448,25 +448,25 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
               </CardHeader>
             <CardContent className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-xs text-gray-500">Montant :</span>
-                <span className="text-xs font-medium">{formatCurrency(paymentData.amount)}</span>
+                <span className="text-sm text-gray-500">Montant :</span>
+                <span className="text-sm font-medium">{formatCurrency(paymentData.amount)}</span>
                   </div>
               <div className="flex justify-between">
-                <span className="text-xs text-gray-500">Type :</span>
-                <span className="text-xs font-medium capitalize">{paymentData.type}</span>
+                <span className="text-sm text-gray-500">Type :</span>
+                <span className="text-sm font-medium capitalize">{paymentData.type}</span>
                   </div>
               <div className="flex justify-between">
-                <span className="text-xs text-gray-500">Lié à :</span>
-                <span className="text-xs font-medium">{paymentData.related_id}</span>
+                <span className="text-sm text-gray-500">Lié à :</span>
+                <span className="text-sm font-medium">{paymentData.related_id}</span>
                   </div>
               <div className="flex justify-between">
-                <span className="text-xs text-gray-500">Date d'Échéance :</span>
-                <span className="text-xs font-medium">{formatDate(paymentData.due_date)}</span>
+                <span className="text-sm text-gray-500">Date d'Échéance :</span>
+                <span className="text-sm font-medium">{formatDate(paymentData.due_date)}</span>
                   </div>
               {paymentData.paid_date && (
                 <div className="flex justify-between">
-                  <span className="text-xs text-gray-500">Date de Paiement :</span>
-                  <span className="text-xs font-medium">{formatDate(paymentData.paid_date)}</span>
+                  <span className="text-sm text-gray-500">Date de Paiement :</span>
+                  <span className="text-sm font-medium">{formatDate(paymentData.paid_date)}</span>
                     </div>
                   )}
               <div className="border-t border-gray-200 pt-2">
@@ -487,10 +487,10 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
               <CardContent className="space-y-2">
                     {Object.entries(paymentData.breakdown).map(([key, value]) => (
                       <div key={key} className="flex justify-between py-1">
-                        <span className="text-xs text-gray-500 capitalize">
+                        <span className="text-sm text-gray-500 capitalize">
                           {key.replace(/([A-Z])/g, " $1").toLowerCase()}:
                         </span>
-                        <span className="text-xs font-medium">{formatCurrency(value)}</span>
+                        <span className="text-sm font-medium">{formatCurrency(value)}</span>
                       </div>
                     ))}
                 </CardContent>
@@ -516,8 +516,8 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
                           <div className="flex items-center gap-2 flex-1 min-w-0">
                             <AttachmentIcon className={`w-4 h-4 flex-shrink-0 ${getAttachmentColor(file.type)}`} />
                             <div className="flex-1 min-w-0">
-                              <p className="text-xs font-medium truncate">{file.name}</p>
-                              <p className="text-xs text-gray-500">
+                              <p className="text-sm font-medium truncate">{file.name}</p>
+                              <p className="text-sm text-gray-500">
                                 {file.type} • {(file.size / 1024).toFixed(1)} KB
                               </p>
                             </div>
@@ -558,23 +558,23 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
                     <StatusIcon className="w-4 h-4 text-gray-600" />
-                    <h4 className="text-xs font-medium text-gray-900">Statut du Paiement</h4>
+                    <h4 className="text-sm font-medium text-gray-900">Statut du Paiement</h4>
                   </div>
                   <div className="space-y-2">
                     <div className="flex justify-between">
-                      <span className="text-xs text-gray-500">Statut :</span>
+                      <span className="text-sm text-gray-500">Statut :</span>
                       <Badge className={`${getStatusColor(paymentData.status)} text-xs`} variant="secondary">
                         {getStatusLabel(paymentData.status)}
                       </Badge>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-xs text-gray-500">Créé le :</span>
-                      <span className="text-xs font-medium">{formatDate(paymentData.created_at)}</span>
+                      <span className="text-sm text-gray-500">Créé le :</span>
+                      <span className="text-sm font-medium">{formatDate(paymentData.created_at)}</span>
                     </div>
                     {paymentData.updated_at && (
                       <div className="flex justify-between">
-                        <span className="text-xs text-gray-500">Mis à jour :</span>
-                        <span className="text-xs font-medium">{formatDate(paymentData.updated_at)}</span>
+                        <span className="text-sm text-gray-500">Mis à jour :</span>
+                        <span className="text-sm font-medium">{formatDate(paymentData.updated_at)}</span>
                       </div>
                     )}
                   </div>
@@ -587,12 +587,12 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
               <Card className="border-blue-200 bg-blue-50">
                 <CardContent className="p-3">
                   <div className="space-y-2">
-                    <h4 className="text-xs font-medium text-blue-900">Méthodes de Paiement Acceptées</h4>
+                    <h4 className="text-sm font-medium text-blue-900">Méthodes de Paiement Acceptées</h4>
                     <div className="space-y-1">
                       {paymentData.payment_methods.map((method) => {
                         const methodDetails = getPaymentMethodDetails(method)
                         return (
-                          <div key={method} className="text-xs text-blue-800">
+                          <div key={method} className="text-sm text-blue-800">
                             • {methodDetails?.name || method}
                           </div>
                         )
@@ -610,8 +610,8 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
                   <div className="flex gap-2">
                     <AlertTriangle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
                     <div>
-                      <h4 className="text-xs font-medium text-red-900">Paiement en Retard</h4>
-                      <p className="text-xs text-red-800 mt-1">
+                      <h4 className="text-sm font-medium text-red-900">Paiement en Retard</h4>
+                      <p className="text-sm text-red-800 mt-1">
                         La date d'échéance est dépassée. Veuillez effectuer le paiement dès que possible.
                       </p>
                     </div>
@@ -626,8 +626,8 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
                 <div className="flex gap-2">
                   <Calendar className="w-4 h-4 text-orange-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-xs font-medium text-orange-900">Date d'Échéance</h4>
-                    <p className="text-xs text-orange-800 mt-1">
+                    <h4 className="text-sm font-medium text-orange-900">Date d'Échéance</h4>
+                    <p className="text-sm text-orange-800 mt-1">
                       {formatDate(paymentData.due_date)}
                     </p>
                   </div>
@@ -648,14 +648,14 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
               {/* Payment Summary */}
               <div className="p-3 bg-gray-50 rounded-md">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-medium">Montant Total Dû :</span>
+                  <span className="text-sm font-medium">Montant Total Dû :</span>
                 <span className="text-lg font-bold">{formatCurrency(paymentData.amount)}</span>
                 </div>
               {paymentData.breakdown && (
-                  <div className="space-y-1 text-xs">
+                  <div className="space-y-1 text-sm">
                     {Object.entries(paymentData.breakdown).map(([key, value]) => (
                       <div key={key} className="flex justify-between">
-                        <span className="text-gray-500 capitalize">
+                        <span className="text-sm text-gray-500 capitalize">
                           {key.replace(/([A-Z])/g, " $1").toLowerCase()}:
                         </span>
                         <span>{formatCurrency(value)}</span>
@@ -667,14 +667,14 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
 
               {/* Payment Method Selection */}
               <div>
-                <Label className="text-xs">Méthode de Paiement *</Label>
+                <Label className="text-sm">Méthode de Paiement *</Label>
                 <Select value={paymentMethod} onValueChange={setPaymentMethod}>
-                  <SelectTrigger className="mt-1 h-8 text-xs">
+                  <SelectTrigger className="mt-1 h-8 text-sm">
                     <SelectValue placeholder="Sélectionnez une méthode de paiement" />
                   </SelectTrigger>
                   <SelectContent>
                     {paymentMethods.map((method) => (
-                      <SelectItem key={method.value} value={method.value} className="text-xs">
+                      <SelectItem key={method.value} value={method.value} className="text-sm">
                         {method.label}
                       </SelectItem>
                     ))}
@@ -685,10 +685,10 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
               {/* Payment Method Details */}
               {selectedMethodDetails && (
                 <div className={`p-3 bg-${selectedMethodDetails.color}-50 rounded-md`}>
-                  <h4 className={`font-medium text-${selectedMethodDetails.color}-900 mb-2 text-xs`}>
+                  <h4 className={`font-medium text-${selectedMethodDetails.color}-900 mb-2 text-sm`}>
                     Détails - {selectedMethodDetails.name}
                   </h4>
-                  <div className={`text-xs text-${selectedMethodDetails.color}-800 space-y-1`}>
+                  <div className={`text-sm text-${selectedMethodDetails.color}-800 space-y-1`}>
                     {Object.entries(selectedMethodDetails.details).map(([key, value]) => (
                       <p key={key}>
                         <strong>{key}:</strong> {value}
@@ -708,7 +708,7 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
 
               {/* Receipt Upload */}
               <div>
-                <Label className="text-xs">Reçu de Paiement *</Label>
+                <Label className="text-sm">Reçu de Paiement *</Label>
                 <div
                   className={`mt-1 border-2 border-dashed rounded-md p-4 text-center transition-colors cursor-pointer ${
                     uploading ? "border-blue-300 bg-blue-50" : "border-gray-200 hover:border-gray-300"
@@ -718,18 +718,18 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
                   {uploading ? (
                     <>
                       <Loader2 className="w-6 h-6 mx-auto text-blue-500 mb-2 animate-spin" />
-                      <p className="text-xs font-medium text-blue-700">Téléchargement en cours...</p>
+                      <p className="text-sm font-medium text-blue-700">Téléchargement en cours...</p>
                     </>
                   ) : (
                     <>
                       <Upload className="w-6 h-6 mx-auto text-gray-400 mb-2" />
                       <div className="space-y-1">
-                        <p className="text-xs font-medium text-gray-700">
+                        <p className="text-sm font-medium text-gray-700">
                           {paymentMethod
                             ? "Cliquez pour télécharger votre reçu de paiement"
                             : "Sélectionnez d'abord une méthode de paiement"}
                         </p>
-                        <p className="text-xs text-gray-500">PNG, JPG, PDF jusqu'à 10MB</p>
+                        <p className="text-sm text-gray-500">PNG, JPG, PDF jusqu'à 10MB</p>
                       </div>
                     </>
                   )}
@@ -753,7 +753,7 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
                 {/* Uploaded Files */}
                 {uploadedFiles.length > 0 && (
                   <div className="mt-3 space-y-2">
-                    <Label className="text-xs font-medium text-green-700">
+                    <Label className="text-sm font-medium text-green-700">
                       Fichiers téléchargés ({uploadedFiles.length})
                     </Label>
                     <div className="space-y-1">
@@ -768,7 +768,7 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
                           >
                             <div className="flex items-center gap-2 flex-1 min-w-0">
                               <AttachmentIcon className="w-4 h-4 text-green-600 flex-shrink-0" />
-                              <span className="text-xs text-green-700 truncate">{file.name}</span>
+                              <span className="text-sm text-green-700 truncate">{file.name}</span>
                               <Button
                                 variant="ghost"
                                 size="sm"
@@ -804,22 +804,22 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
 
               {/* Payment Notes */}
               <div>
-                <Label className="text-xs">Notes de Paiement (Optionnel)</Label>
+                <Label className="text-sm">Notes de Paiement (Optionnel)</Label>
                 <Textarea
                   placeholder="Toute information supplémentaire sur votre paiement..."
                   value={paymentNotes}
                   onChange={(e) => setPaymentNotes(e.target.value)}
-                  className="mt-1 text-xs"
+                  className="mt-1 text-sm"
                 />
               </div>
 
               {/* Actions */}
               <div className="flex gap-2">
-                <Button onClick={handlePayment} className="flex-1 h-8 text-xs">
+                <Button onClick={handlePayment} className="flex-1 h-8 text-sm">
                   <CreditCard className="w-3 h-3 mr-1" />
                   Soumettre le Paiement
                 </Button>
-                <Button variant="outline" onClick={() => setIsPaymentOpen(false)} className="h-8 text-xs">
+                <Button variant="outline" onClick={() => setIsPaymentOpen(false)} className="h-8 text-sm">
                   Annuler
                 </Button>
               </div>

@@ -173,7 +173,7 @@ export default function MainLayout({
                     <li key={item.name}>
                       <a
                         href={item.href}
-                        className={`group flex gap-x-2 rounded-md p-2 text-xs font-medium ${
+                        className={`group flex gap-x-2 rounded-md p-2 text-sm font-medium ${
                           isActive(item.href)
                             ? "bg-orange-50 text-orange-600"
                             : "text-gray-700 hover:text-orange-600 hover:bg-gray-50"
@@ -189,13 +189,13 @@ export default function MainLayout({
 
               {/* Create Actions */}
               <li>
-                <div className="text-xs font-medium leading-5 text-gray-400">Actions Rapides</div>
+                <div className="text-sm font-medium leading-5 text-gray-400">Actions Rapides</div>
                 <ul role="list" className="-mx-2 mt-2 space-y-1">
                   {createActions.map((item) => (
                     <li key={item.name}>
                       <a
                         href={item.href}
-                        className="text-gray-700 hover:text-orange-600 hover:bg-gray-50 group flex gap-x-2 rounded-md p-2 text-xs font-medium"
+                        className="text-gray-700 hover:text-orange-600 hover:bg-gray-50 group flex gap-x-2 rounded-md p-2 text-sm font-medium"
                       >
                         <Plus className="h-4 w-4 shrink-0" />
                         {item.name}
@@ -212,7 +212,7 @@ export default function MainLayout({
                     <li key={item.name}>
                       <a
                         href={item.href}
-                        className="group flex gap-x-2 rounded-md p-2 text-xs font-medium text-gray-700 hover:bg-gray-50 hover:text-orange-600"
+                        className="group flex gap-x-2 rounded-md p-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-orange-600"
                       >
                         <item.icon className="h-4 w-4 shrink-0" />
                         {item.name}
@@ -230,11 +230,11 @@ export default function MainLayout({
                       <div className="flex items-center gap-2">
                         <Avatar className="h-6 w-6">
                           <AvatarImage src="/placeholder-user.jpg" alt="User" />
-                          <AvatarFallback className="text-xs">{getUserInitials()}</AvatarFallback>
+                          <AvatarFallback className="text-sm">{getUserInitials()}</AvatarFallback>
                         </Avatar>
                         <div className="text-left">
-                          <p className="text-xs font-medium">{getFullName()}</p>
-                          <p className="text-xs text-gray-500">{getPhoneNumber()}</p>
+                          <p className="text-sm font-medium">{getFullName()}</p>
+                          <p className="text-sm text-gray-500">{getPhoneNumber()}</p>
                         </div>
                       </div>
                     </Button>
@@ -242,17 +242,17 @@ export default function MainLayout({
                   <DropdownMenuContent className="w-48" align="end" forceMount>
                     <DropdownMenuLabel className="font-normal">
                       <div className="flex flex-col space-y-1">
-                        <p className="text-xs font-medium leading-none">{getFullName()}</p>
-                        <p className="text-xs leading-none text-gray-500">{getPhoneNumber()}</p>
+                        <p className="text-sm font-medium leading-none">{getFullName()}</p>
+                        <p className="text-sm leading-none text-gray-500">{getPhoneNumber()}</p>
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => router.push("/profile")} className="text-xs">
+                    <DropdownMenuItem onClick={() => router.push("/profile")} className="text-sm">
                       <User className="mr-2 h-3 w-3" />
                       <span>Profil</span>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleLogout} className="text-xs" disabled={logoutLoading}>
+                    <DropdownMenuItem onClick={handleLogout} className="text-sm" disabled={logoutLoading}>
                       <LogOut className="mr-2 h-3 w-3" />
                       <span>{logoutLoading ? "Déconnexion..." : "Se Déconnecter"}</span>
                     </DropdownMenuItem>
@@ -271,7 +271,7 @@ export default function MainLayout({
             <a
               key={item.name}
               href={item.href}
-              className={`flex flex-col items-center justify-center p-2 text-xs ${
+              className={`flex flex-col items-center justify-center p-2 text-sm ${
                 isActive(item.href) ? "text-orange-600" : "text-gray-500"
               }`}
             >
@@ -295,28 +295,28 @@ export default function MainLayout({
                   <Button variant="ghost" className="flex items-center space-x-2 h-8 px-2">
                     <Avatar className="h-6 w-6">
                       <AvatarImage src="/placeholder-user.jpg" alt="User" />
-                      <AvatarFallback className="text-xs">{getUserInitials()}</AvatarFallback>
+                      <AvatarFallback className="text-sm">{getUserInitials()}</AvatarFallback>
                     </Avatar>
                     <div className="text-left">
-                      <p className="text-xs font-medium">{getFullName()}</p>
-                      <p className="text-xs text-gray-500">{getPhoneNumber()}</p>
+                      <p className="text-sm font-medium">{getFullName()}</p>
+                      <p className="text-sm text-gray-500">{getPhoneNumber()}</p>
                     </div>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-48" align="end" forceMount>
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                      <p className="text-xs font-medium leading-none">{getFullName()}</p>
-                      <p className="text-xs leading-none text-gray-500">{getPhoneNumber()}</p>
+                      <p className="text-sm font-medium leading-none">{getFullName()}</p>
+                      <p className="text-sm leading-none text-gray-500">{getPhoneNumber()}</p>
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => router.push("/profile")} className="text-xs">
+                  <DropdownMenuItem onClick={() => router.push("/profile")} className="text-sm">
                     <User className="mr-2 h-3 w-3" />
                     <span>Profil</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout} className="text-xs" disabled={logoutLoading}>
+                  <DropdownMenuItem onClick={handleLogout} className="text-sm" disabled={logoutLoading}>
                     <LogOut className="mr-2 h-3 w-3" />
                     <span>{logoutLoading ? "Déconnexion..." : "Se Déconnecter"}</span>
                   </DropdownMenuItem>
@@ -338,24 +338,24 @@ export default function MainLayout({
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-6 w-6">
                       <AvatarImage src="/placeholder-user.jpg" alt="User" />
-                      <AvatarFallback className="text-xs">{getUserInitials()}</AvatarFallback>
+                      <AvatarFallback className="text-sm">{getUserInitials()}</AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-48" align="end" forceMount>
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                      <p className="text-xs font-medium leading-none">{getFullName()}</p>
-                      <p className="text-xs leading-none text-gray-500">{getPhoneNumber()}</p>
+                      <p className="text-sm font-medium leading-none">{getFullName()}</p>
+                      <p className="text-sm leading-none text-gray-500">{getPhoneNumber()}</p>
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => router.push("/profile")} className="text-xs">
+                  <DropdownMenuItem onClick={() => router.push("/profile")} className="text-sm">
                     <User className="mr-2 h-3 w-3" />
                     <span>Profil</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleLogout} className="text-xs" disabled={logoutLoading}>
+                    <DropdownMenuItem onClick={handleLogout} className="text-sm" disabled={logoutLoading}>
                     <LogOut className="mr-2 h-3 w-3" />
                       <span>{logoutLoading ? "Déconnexion..." : "Se Déconnecter"}</span>
                   </DropdownMenuItem>

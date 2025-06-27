@@ -111,7 +111,7 @@ export default function RegisterPage() {
       <Card className="w-full max-w-md border-gray-200">
         <CardHeader className="text-center pb-4">
           <CardTitle className="text-lg font-semibold">Créer un Compte</CardTitle>
-          <CardDescription className="text-xs text-gray-600">
+          <CardDescription className="text-sm text-gray-600">
             Étape 1/2 : Commencez par nous donner quelques informations de base.
           </CardDescription>
         </CardHeader>
@@ -119,7 +119,7 @@ export default function RegisterPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
-                <Label htmlFor="firstName" className="text-xs">
+                <Label htmlFor="firstName" className="text-sm">
                   Prénom *
               </Label>
                 <Input
@@ -133,7 +133,7 @@ export default function RegisterPage() {
                 />
               </div>
             <div className="space-y-1">
-                <Label htmlFor="lastName" className="text-xs">
+                <Label htmlFor="lastName" className="text-sm">
                   Nom *
               </Label>
                 <Input
@@ -149,7 +149,7 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-1">
-              <Label htmlFor="phone" className="text-xs">
+              <Label htmlFor="phone" className="text-sm">
                 Téléphone WhatsApp *
               </Label>
               <div className="flex">
@@ -179,7 +179,7 @@ export default function RegisterPage() {
               )}
             </Button>
           </form>
-          <div className="mt-4 text-center text-xs">
+          <div className="mt-4 text-center text-sm">
             <p className="text-gray-500">
               Vous avez déjà un compte ?{" "}
               <a href="/login" className="font-medium text-orange-600 hover:underline">

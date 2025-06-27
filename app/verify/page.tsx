@@ -214,13 +214,13 @@ export default function VerifyPage() {
           <Button
             variant="ghost"
             size="sm"
-            className="absolute left-4 top-4 h-7 text-xs"
+            className="absolute left-4 top-4 h-7 text-sm"
             onClick={() => router.push("/login")}
           >
             <ArrowLeft className="w-3 h-3" />
           </Button>
           <CardTitle className="text-lg font-semibold">Vérifiez Votre Téléphone</CardTitle>
-          <CardDescription className="text-xs text-gray-600">
+          <CardDescription className="text-sm text-gray-600">
             Entrez le code à 6 chiffres envoyé sur votre WhatsApp
             <br />
             <span className="font-medium">{phoneNumber}</span>
@@ -250,7 +250,7 @@ export default function VerifyPage() {
 
             <Button
               onClick={() => handleVerify()}
-              className="w-full h-8 text-xs"
+              className="w-full h-8 text-sm"
               disabled={isLoading || otp.some((digit) => digit === "")}
             >
               {isLoading ? (
@@ -265,12 +265,12 @@ export default function VerifyPage() {
 
             <div className="text-center">
               {canResend ? (
-                <Button variant="link" onClick={handleResend} className="p-0 h-auto text-xs">
+                <Button variant="link" onClick={handleResend} className="p-0 h-auto text-sm">
                   <MessageCircle className="mr-1 h-3 w-3" />
                   Renvoyer le Code
                 </Button>
               ) : (
-                <p className="text-xs text-gray-500">Renvoyer le code dans {resendTimer}s</p>
+                <p className="text-sm text-gray-500">Renvoyer le code dans {resendTimer}s</p>
               )}
             </div>
           </div>

@@ -207,7 +207,7 @@ export default function CreatePackagePage() {
           </Button>
           <div className="space-y-1">
             <h1 className="text-lg font-semibold">Ajouter un Nouveau Colis</h1>
-            <p className="text-xs text-gray-600">Ajoutez un colis que vous attendez de recevoir</p>
+            <p className="text-sm text-gray-600">Ajoutez un colis que vous attendez de recevoir</p>
           </div>
         </div>
 
@@ -223,59 +223,59 @@ export default function CreatePackagePage() {
             {/* Basic Info */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <Label className="text-xs">Description du Colis *</Label>
+                <Label className="text-sm">Description du Colis *</Label>
                 <Input
                   placeholder="ex: Colis Électronique"
                   value={newPackage.description}
                   onChange={(e) => setNewPackage((prev) => ({ ...prev, description: e.target.value }))}
-                  className="h-8 text-xs"
+                  className="h-8 text-sm"
                 />
               </div>
               <div className="space-y-1">
-                <Label className="text-xs">Nom du Détaillant/Magasin ou URL *</Label>
+                <Label className="text-sm">Nom du Détaillant/Magasin ou URL *</Label>
                 <Input
                   placeholder="ex: Amazon, Best Buy, ou site web du magasin"
                   value={newPackage.retailer}
                   onChange={(e) => setNewPackage((prev) => ({ ...prev, retailer: e.target.value }))}
-                  className="h-8 text-xs"
+                  className="h-8 text-sm"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <Label className="text-xs">Numéro de Suivi (Optionnel)</Label>
+                <Label className="text-sm">Numéro de Suivi (Optionnel)</Label>
                 <Input
                   placeholder="ex: TK123456789"
                   value={newPackage.trackingNumber}
                   onChange={(e) => setNewPackage((prev) => ({ ...prev, trackingNumber: e.target.value }))}
-                  className="h-8 text-xs"
+                  className="h-8 text-sm"
                 />
               </div>
               <div className="space-y-1">
-                <Label className="text-xs">Poids (Optionnel)</Label>
+                <Label className="text-sm">Poids (Optionnel)</Label>
                 <Input
                   placeholder="ex: 2,5 kg"
                   value={newPackage.weight}
                   onChange={(e) => setNewPackage((prev) => ({ ...prev, weight: e.target.value }))}
-                  className="h-8 text-xs"
+                  className="h-8 text-sm"
                 />
               </div>
             </div>
 
             <div className="space-y-1">
-              <Label className="text-xs">Dimensions (Optionnel)</Label>
+              <Label className="text-sm">Dimensions (Optionnel)</Label>
               <Input
                 placeholder="ex: 30x20x15 cm"
                 value={newPackage.dimensions}
                 onChange={(e) => setNewPackage((prev) => ({ ...prev, dimensions: e.target.value }))}
-                className="h-8 text-xs"
+                className="h-8 text-sm"
               />
             </div>
 
             {/* Package Items */}
             <div>
-              <Label className="text-xs font-medium">Articles du Colis</Label>
+              <Label className="text-sm font-medium">Articles du Colis</Label>
               <div className="space-y-2 mt-1">
                 {newPackage.items.map((item, index) => (
                   <div key={index} className="flex gap-2">
@@ -283,7 +283,7 @@ export default function CreatePackagePage() {
                       placeholder="Description de l'article"
                       value={item}
                       onChange={(e) => updateItem(index, e.target.value)}
-                      className="flex-1 h-8 text-xs"
+                      className="flex-1 h-8 text-sm"
                     />
                     {newPackage.items.length > 1 && (
                       <Button variant="outline" size="sm" onClick={() => removeItem(index)} className="h-8 w-8 p-0">
@@ -292,7 +292,7 @@ export default function CreatePackagePage() {
                     )}
                   </div>
                 ))}
-                <Button variant="outline" size="sm" onClick={addItem} className="w-full h-7 text-xs">
+                <Button variant="outline" size="sm" onClick={addItem} className="w-full h-7 text-sm">
                   <Plus className="w-3 h-3 mr-1" />
                   Ajouter Article
                 </Button>
@@ -302,22 +302,22 @@ export default function CreatePackagePage() {
             {/* File Upload with Type Selection */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <Label className="text-xs">Fichiers (Optionnel)</Label>
+                <Label className="text-sm">Fichiers (Optionnel)</Label>
                 <Select
                   value={newPackage.attachmentType}
                   onValueChange={(value) => setNewPackage((prev) => ({ ...prev, attachmentType: value }))}
                 >
-                  <SelectTrigger className="w-32 h-8 text-xs">
+                  <SelectTrigger className="w-32 h-8 text-sm">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="receipt" className="text-xs">
+                    <SelectItem value="receipt" className="text-sm">
                       Reçu
                     </SelectItem>
-                    <SelectItem value="photo" className="text-xs">
+                    <SelectItem value="photo" className="text-sm">
                       Photo
                     </SelectItem>
-                    <SelectItem value="document" className="text-xs">
+                    <SelectItem value="document" className="text-sm">
                       Document
                     </SelectItem>
                   </SelectContent>
@@ -333,14 +333,14 @@ export default function CreatePackagePage() {
                 {isUploadingReceipt ? (
                   <>
                     <Loader2 className="w-8 h-8 mx-auto text-blue-500 mb-2 animate-spin" />
-                    <p className="text-xs font-medium text-blue-700">Téléchargement en cours...</p>
+                    <p className="text-sm font-medium text-blue-700">Téléchargement en cours...</p>
                   </>
                 ) : (
                   <>
                     <Upload className="w-8 h-8 mx-auto text-gray-400 mb-2" />
                     <div className="space-y-1">
-                      <p className="text-xs font-medium text-gray-700">Cliquez pour télécharger vos fichiers</p>
-                      <p className="text-xs text-gray-500">PNG, JPG, PDF jusqu'à 10MB chacun</p>
+                      <p className="text-sm font-medium text-gray-700">Cliquez pour télécharger vos fichiers</p>
+                      <p className="text-sm text-gray-500">PNG, JPG, PDF jusqu'à 10MB chacun</p>
                     </div>
                   </>
                 )}
@@ -363,7 +363,7 @@ export default function CreatePackagePage() {
               {/* Display all uploaded files */}
               {newPackage.receipts.length > 0 && (
                 <div className="space-y-2">
-                  <Label className="text-xs font-medium text-green-700">
+                  <Label className="text-sm font-medium text-green-700">
                     Fichiers téléchargés ({newPackage.receipts.length})
                   </Label>
                   <div className="space-y-1">
@@ -378,7 +378,7 @@ export default function CreatePackagePage() {
                         >
                           <div className="flex items-center gap-2 flex-1 min-w-0">
                             <Upload className="w-4 h-4 text-green-600 flex-shrink-0" />
-                            <span className="text-xs text-green-700 truncate">{receipt.name}</span>
+                            <span className="text-sm text-green-700 truncate">{receipt.name}</span>
                             <Button
                               variant="ghost"
                               size="sm"
@@ -386,7 +386,7 @@ export default function CreatePackagePage() {
                                 e.stopPropagation()
                                 window.open(receipt.url, "_blank")
                               }}
-                              className="h-6 px-2 text-xs text-green-600 hover:text-green-800 flex-shrink-0"
+                              className="h-6 px-2 text-green-600 hover:text-green-800 flex-shrink-0"
                             >
                               <ExternalLink className="w-3 h-3 mr-1" />
                               Voir
@@ -414,22 +414,22 @@ export default function CreatePackagePage() {
 
             {/* Additional Notes */}
             <div>
-              <Label className="text-xs">Notes Supplémentaires</Label>
+              <Label className="text-sm">Notes Supplémentaires</Label>
               <Textarea
                 placeholder="Toute instruction spéciale ou note sur ce colis..."
                 value={newPackage.notes}
                 onChange={(e) => setNewPackage((prev) => ({ ...prev, notes: e.target.value }))}
-                className="mt-1 text-xs"
+                className="mt-1 text-sm"
                 rows={3}
               />
             </div>
 
             {/* Actions */}
             <div className="flex gap-2 pt-4 border-t border-gray-200">
-              <Button onClick={handleSubmitPackage} className="flex-1 h-8 text-xs" disabled={isSubmitting}>
+              <Button onClick={handleSubmitPackage} className="flex-1 h-8 text-sm" disabled={isSubmitting}>
                 {isSubmitting ? "Ajout..." : "Ajouter Colis"}
               </Button>
-              <Button variant="outline" onClick={() => router.back()} className="h-8 text-xs">
+              <Button variant="outline" onClick={() => router.back()} className="h-8 text-sm">
                 Annuler
               </Button>
             </div>

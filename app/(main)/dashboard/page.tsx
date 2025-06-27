@@ -94,19 +94,19 @@ export default function DashboardPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-lg font-semibold">Accueil</h1>
-            <p className="text-xs text-gray-600">Aperçu de vos colis et activité récente</p>
+            <p className="text-sm text-gray-600">Aperçu de vos colis et activité récente</p>
           </div>
         </div>
 
         {/* Welcome Section */}
         <div className="bg-gradient-to-r from-orange-600 to-orange-700 rounded-lg p-4 text-white">
           <h2 className="text-base font-semibold mb-1">Bon retour, {getFirstName()} !</h2>
-          <p className="text-orange-100 text-xs mb-3">
+          <p className="text-orange-100 text-sm mb-3">
             Vous avez {stats?.shipped_packages || 0} colis en transit et {stats?.expected_packages || 0} colis attendus
             à examiner.
           </p>
           <div className="flex gap-2">
-            <Button variant="secondary" size="sm" asChild className="h-7 text-xs">
+            <Button variant="secondary" size="sm" asChild className="h-7 text-sm">
               <a href="/purchases/create" onClick={() => handleActionClick('new_purchase_request')}>
                 <Plus className="w-3 h-3 mr-1" />
                 Nouvelle Demande
@@ -115,7 +115,7 @@ export default function DashboardPage() {
             <Button
               variant="outline"
               size="sm"
-              className="border-white hover:bg-white hover:text-orange-600 h-7 text-xs text-orange-500"
+              className="border-white hover:bg-white hover:text-orange-600 h-7 text-sm text-orange-500"
               asChild
             >
               <a href="/packages/create" onClick={() => handleActionClick('add_package')}>
@@ -134,7 +134,7 @@ export default function DashboardPage() {
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-xs font-medium text-gray-600 mb-1">{stat.title}</p>
+                      <p className="text-sm font-medium text-gray-600 mb-1">{stat.title}</p>
                       <div className="text-xl font-semibold text-gray-900">
                         {typeof stat.value === "string" ? stat.value : stat.value}
                       </div>
@@ -158,7 +158,7 @@ export default function DashboardPage() {
                   <MapPin className="w-4 h-4 text-orange-600" />
                   Adresse Turquie
                 </CardTitle>
-                <CardDescription className="text-xs text-gray-500">
+                <CardDescription className="text-sm text-gray-500">
                   Votre adresse d'entrepôt d'expédition
                 </CardDescription>
               </CardHeader>
@@ -169,26 +169,26 @@ export default function DashboardPage() {
                       <User className="w-3 h-3 text-gray-600" />
                       <div>
                         <p className="text-sm font-medium text-gray-900">{getFullName()}</p>
-                        <p className="text-xs text-gray-500">Titulaire du Compte</p>
+                        <p className="text-sm text-gray-500">Titulaire du Compte</p>
                       </div>
                     </div>
 
                     <div className="border-t border-gray-200 pt-2 space-y-1">
-                      <p className="text-xs font-medium text-gray-900">shipit.ma Turkey Warehouse</p>
-                      <p className="text-xs text-gray-600">Atatürk Mahallesi, İstanbul Caddesi No: 123</p>
-                      <p className="text-xs text-gray-600">Kadıköy, İstanbul 34710</p>
-                      <p className="text-xs text-gray-600">Turkey</p>
+                      <p className="text-sm font-medium text-gray-900">shipit.ma Turkey Warehouse</p>
+                      <p className="text-sm text-gray-600">Atatürk Mahallesi, İstanbul Caddesi No: 123</p>
+                      <p className="text-sm text-gray-600">Kadıköy, İstanbul 34710</p>
+                      <p className="text-sm text-gray-600">Turkey</p>
                     </div>
 
                     <div className="border-t border-gray-200 pt-2 flex items-center gap-2">
                       <Phone className="w-3 h-3 text-gray-600" />
-                      <p className="text-xs font-medium text-gray-900">+90 212 555 0123</p>
+                      <p className="text-sm font-medium text-gray-900">+90 212 555 0123</p>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-yellow-50 border border-yellow-200 rounded-md p-3">
-                  <p className="text-xs text-yellow-800">
+                  <p className="text-sm text-yellow-800">
                     <strong>Important:</strong> Incluez toujours votre nom complet ({getFullName()}) comme destinataire.
                   </p>
                 </div>

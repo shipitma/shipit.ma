@@ -130,7 +130,7 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
         </Button>
         <div className="flex items-center gap-2">
             <h1 className="text-lg font-semibold">{purchaseRequest.id}</h1>
-            <Badge className={getStatusColor(purchaseRequest.status)} variant="secondary">
+            <Badge className={getStatusColor(purchaseRequest.status) + ' text-xs'} variant="secondary">
               {getStatusLabel(purchaseRequest.status)}
             </Badge>
         </div>
@@ -146,32 +146,32 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-xs text-gray-500">Coût des Articles :</span>
-                <span className="text-xs font-medium">
+                <span className="text-sm text-gray-500">Coût des Articles :</span>
+                <span className="text-sm font-medium">
                   {purchaseRequest.items_cost ? formatCurrency(purchaseRequest.items_cost) : "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-xs text-gray-500">Frais d'Expédition :</span>
-                <span className="text-xs font-medium">
+                <span className="text-sm text-gray-500">Frais d'Expédition :</span>
+                <span className="text-sm font-medium">
                   {purchaseRequest.shipping_fee ? formatCurrency(purchaseRequest.shipping_fee) : "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-xs text-gray-500">Frais de Service :</span>
-                <span className="text-xs font-medium">
+                <span className="text-sm text-gray-500">Frais de Service :</span>
+                <span className="text-sm font-medium">
                   {purchaseRequest.service_fee ? formatCurrency(purchaseRequest.service_fee) : "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-xs text-gray-500">Frais de Traitement :</span>
-                <span className="text-xs font-medium">
+                <span className="text-sm text-gray-500">Frais de Traitement :</span>
+                <span className="text-sm font-medium">
                   {purchaseRequest.processing_fee ? formatCurrency(purchaseRequest.processing_fee) : "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-xs text-gray-500">Taxes :</span>
-                <span className="text-xs font-medium">
+                <span className="text-sm text-gray-500">Taxes :</span>
+                <span className="text-sm font-medium">
                   {purchaseRequest.taxes ? formatCurrency(purchaseRequest.taxes) : "N/A"}
                 </span>
               </div>
@@ -211,12 +211,12 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
                           <div>
                             <h4 className="text-sm font-medium">{event.status}</h4>
                             {event.description && (
-                              <p className="text-xs text-gray-600 mt-1">{event.description}</p>
+                              <p className="text-sm text-gray-600 mt-1">{event.description}</p>
                             )}
                           </div>
                           <div className="text-right">
-                            <p className="text-xs text-gray-500">{formatDate(event.date)}</p>
-                            <p className="text-xs text-gray-400">{event.time}</p>
+                            <p className="text-sm text-gray-500">{formatDate(event.date)}</p>
+                            <p className="text-sm text-gray-400">{event.time}</p>
                           </div>
                         </div>
                       </div>
@@ -248,13 +248,13 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
                           <div className="flex items-start justify-between">
                             <div>
                               <h3 className="text-sm font-medium">{item.name}</h3>
-                              {item.specifications && <p className="text-xs text-gray-500">{item.specifications}</p>}
-                              <p className="text-xs text-gray-500">Quantité : {item.quantity}</p>
+                              {item.specifications && <p className="text-sm text-gray-500">{item.specifications}</p>}
+                              <p className="text-sm text-gray-500">Quantité : {item.quantity}</p>
                             </div>
                             <div className="text-right">
                               <p className="text-sm font-semibold">{formatCurrency(item.price)}</p>
                               {item.url && (
-                                <Button variant="outline" size="sm" asChild className="h-6 text-xs mt-1">
+                                <Button variant="outline" size="sm" asChild className="h-6 text-sm mt-1">
                                   <a href={item.url} target="_blank" rel="noopener noreferrer">
                                     <ExternalLink className="w-3 h-3 mr-1" />
                                     Voir le Produit
@@ -270,7 +270,7 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
                       {item.attachments && item.attachments.length > 0 && (
                         <div className="ml-3 pl-3 border-l-2 border-gray-100">
                           <div className="space-y-2">
-                            <Label className="text-xs font-medium text-gray-700">
+                            <Label className="text-sm font-medium text-gray-700">
                               Fichiers Joints ({item.attachments.length})
                             </Label>
                             <div className="space-y-1">
@@ -313,8 +313,8 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
                                         {getAttachmentIcon(attachment.attachment_type)}
                                       </div>
                                       <div className="flex-1 min-w-0">
-                                        <p className="text-xs font-medium truncate">{attachment.file_name}</p>
-                                        <p className="text-xs text-gray-500">
+                                        <p className="text-sm font-medium truncate">{attachment.file_name}</p>
+                                        <p className="text-sm text-gray-500">
                                           {attachment.attachment_type} •{" "}
                                           {attachment.file_size
                                             ? `${Math.round(attachment.file_size / 1024)}KB`
@@ -322,7 +322,7 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
                                         </p>
                                       </div>
                                     </div>
-                                    <Button variant="outline" size="sm" asChild className="h-6 text-xs flex-shrink-0">
+                                    <Button variant="outline" size="sm" asChild className="h-6 text-sm flex-shrink-0">
                                       <a href={attachment.file_url} target="_blank" rel="noopener noreferrer">
                                         <ExternalLink className="w-3 h-3 mr-1" />
                                         Voir
@@ -348,7 +348,7 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
                   </CardHeader>
                   <CardContent>
                     <div className="p-3 bg-orange-50 rounded-md border border-orange-200">
-                      <p className="text-xs text-orange-800">{purchaseRequest.admin_notes}</p>
+                      <p className="text-sm text-orange-800">{purchaseRequest.admin_notes}</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -363,12 +363,12 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
               <CardContent className="p-3">
                 <div className="space-y-3">
                   <div>
-                    <h4 className="text-xs font-medium text-orange-900">Paiement Requis</h4>
-                    <p className="text-xs text-orange-800 mt-1">
+                    <h4 className="text-sm font-medium text-orange-900">Paiement Requis</h4>
+                    <p className="text-sm text-orange-800 mt-1">
                       Veuillez effectuer le paiement pour procéder à l'achat.
                     </p>
                   </div>
-                  <Button onClick={() => setIsPaymentOpen(true)} className="w-full h-8 text-xs">
+                  <Button onClick={() => setIsPaymentOpen(true)} className="w-full h-8 text-sm">
                     <DollarSign className="w-3 h-3 mr-1" />
                     Payer Maintenant
                   </Button>
@@ -381,15 +381,15 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
           <Card className="border-gray-200">
             <CardContent className="p-3">
               <div className="space-y-2">
-                <h4 className="text-xs font-medium text-gray-900">Informations</h4>
+                <h4 className="text-sm font-medium text-gray-900">Informations</h4>
                 <div className="space-y-1">
                   <div className="flex justify-between">
-                    <span className="text-xs text-gray-500">Date de création :</span>
-                    <span className="text-xs font-medium">{formatDate(purchaseRequest.date)}</span>
+                    <span className="text-sm text-gray-500">Date de création :</span>
+                    <span className="text-sm font-medium">{formatDate(purchaseRequest.date)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-xs text-gray-500">Dernière mise à jour :</span>
-                    <span className="text-xs font-medium">{formatDate(purchaseRequest.updated_at)}</span>
+                    <span className="text-sm text-gray-500">Dernière mise à jour :</span>
+                    <span className="text-sm font-medium">{formatDate(purchaseRequest.updated_at)}</span>
                   </div>
                 </div>
               </div>
@@ -409,7 +409,7 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
             {/* Payment Summary */}
             <div className="p-3 bg-gray-50 rounded-md">
               <div className="flex justify-between items-center mb-2">
-                <span className="text-xs font-medium">Total Amount Due:</span>
+                <span className="text-sm font-medium">Total Amount Due:</span>
                 <span className="text-lg font-bold">
                   {formatCurrency(purchaseRequest.payment_due || purchaseRequest.total_amount)}
                 </span>
@@ -418,8 +418,8 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
 
             {/* Payment Instructions */}
             <div className="p-3 bg-orange-50 rounded-md">
-              <h4 className="font-medium text-orange-900 mb-1 text-xs">Instructions de Virement Bancaire</h4>
-              <div className="text-xs text-orange-800 space-y-0.5">
+              <h4 className="font-medium text-orange-900 mb-1 text-sm">Instructions de Virement Bancaire</h4>
+              <div className="text-sm text-orange-800 space-y-0.5">
                 <p>
                   <strong>Bank:</strong> Attijariwafa Bank
                 </p>
@@ -440,21 +440,21 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
 
             {/* Receipt Upload */}
             <div>
-              <Label className="text-xs">Payment Receipt *</Label>
+              <Label className="text-sm">Payment Receipt *</Label>
               <div className="mt-1 border-2 border-dashed border-gray-200 rounded-md p-4 text-center">
                 <Upload className="w-6 h-6 mx-auto text-gray-400 mb-1" />
-                <p className="text-xs text-gray-500">Téléchargez votre reçu de paiement</p>
-                <Input type="file" accept="image/*,.pdf" className="mt-2 text-xs" />
+                <p className="text-sm text-gray-500">Téléchargez votre reçu de paiement</p>
+                <Input type="file" accept="image/*,.pdf" className="mt-2 text-sm" />
               </div>
             </div>
 
             {/* Actions */}
             <div className="flex gap-2">
-              <Button onClick={handlePayment} className="flex-1 h-8 text-xs">
+              <Button onClick={handlePayment} className="flex-1 h-8 text-sm">
                 <Check className="w-3 h-3 mr-1" />
                 Submit Payment
               </Button>
-              <Button variant="outline" onClick={() => setIsPaymentOpen(false)} className="h-8 text-xs">
+              <Button variant="outline" onClick={() => setIsPaymentOpen(false)} className="h-8 text-sm">
                 Cancel
               </Button>
             </div>

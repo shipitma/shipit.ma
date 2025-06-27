@@ -171,12 +171,12 @@
 input,
 textarea,
 select {
-  @apply text-xs font-medium text-gray-600;
+  @apply text-sm font-medium text-gray-600;
 }
 
 input::placeholder,
 textarea::placeholder {
-  @apply text-xs font-medium text-gray-600 opacity-100;
+  @apply text-sm font-medium text-gray-600 opacity-100;
 }
 
 @media (max-width: 640px) {
@@ -195,5 +195,5 @@ textarea::placeholder {
 }
 
 input[type="number"] {
-  @apply text-xs font-medium text-gray-600;
+  @apply text-sm font-medium text-gray-600;
 }

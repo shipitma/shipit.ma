@@ -169,13 +169,13 @@ export default function CompleteRegistrationPage() {
           <Button
             variant="ghost"
             size="sm"
-            className="absolute left-4 top-4 h-7 text-xs"
+            className="absolute left-4 top-4 h-7 text-sm"
             onClick={() => router.push("/verify")}
           >
             <ArrowLeft className="w-3 h-3" />
           </Button>
           <CardTitle className="text-lg font-semibold">Compléter l'Inscription</CardTitle>
-          <CardDescription className="text-xs text-gray-600">
+          <CardDescription className="text-sm text-gray-600">
             Ajoutez vos informations personnelles pour finaliser votre compte
             <br />
             <span className="font-medium">{phoneNumber}</span>
@@ -185,7 +185,7 @@ export default function CompleteRegistrationPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <Label htmlFor="firstName" className="text-xs flex items-center gap-1">
+                <Label htmlFor="firstName" className="text-sm flex items-center gap-1">
                   <User className="w-3 h-3" />
                   Prénom *
                 </Label>
@@ -200,7 +200,7 @@ export default function CompleteRegistrationPage() {
                 />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="lastName" className="text-xs flex items-center gap-1">
+                <Label htmlFor="lastName" className="text-sm flex items-center gap-1">
                   <User className="w-3 h-3" />
                   Nom *
                 </Label>
@@ -217,7 +217,7 @@ export default function CompleteRegistrationPage() {
             </div>
 
             <div className="space-y-1">
-              <Label htmlFor="email" className="text-xs flex items-center gap-1">
+              <Label htmlFor="email" className="text-sm flex items-center gap-1">
                 <Mail className="w-3 h-3" />
                 Email (optionnel)
               </Label>
@@ -232,7 +232,7 @@ export default function CompleteRegistrationPage() {
             </div>
 
             <div className="space-y-3">
-              <Label className="text-xs flex items-center gap-1">
+              <Label className="text-sm flex items-center gap-1">
                 <MapPin className="w-3 h-3" />
                 Adresse de Livraison *
               </Label>
