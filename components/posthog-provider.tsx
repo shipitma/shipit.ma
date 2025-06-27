@@ -1,5 +1,6 @@
 "use client"
 
+import React from 'react'
 import { useEffect } from 'react'
 import { useAuth } from '@/lib/auth-context'
 import { posthog } from '@/lib/posthog'
