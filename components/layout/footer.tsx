@@ -29,7 +29,7 @@ export function Footer() {
               className="mb-4"
             />
             <p className="text-sm text-gray-600 mb-4">
-              Votre partenaire de confiance pour les envois Turquie-Maroc © 2025
+            Les avantages d’une boîte postale en Turquie, en France, en Espagne ou aux US pour faire livrer tout ce que vous voulez au Maroc.
             </p>
 
             {/* Legal Links */}

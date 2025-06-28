@@ -11,8 +11,7 @@ export function HeroSection() {
           </h1>
           <p className="text-lg md:text-xl mb-12 max-w3xl mx-auto leading-relaxed">
             Accédez aux meilleures marques des USA, Turquie, Espagne et France. Nous gérons tout, de l'achat à la
-            livraison directe à votre porte au Maroc. Oubliez les tracas, vivez l'expérience shopping sans
-            frontières !
+            livraison directe à votre porte au Maroc. Vivez l'expérience shopping sans frontières !
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">

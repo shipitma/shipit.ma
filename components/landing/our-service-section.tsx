@@ -18,62 +18,20 @@ export function OurServiceSection() {
           <div className="flex flex-col lg:flex-row items-start gap-12 border border-gray-200 rounded-2xl p-8">
             <div className="lg:w-1/2">
               <div className="text-2xl font-medium text-gray-500 mb-4">01</div>
-              <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">Ajoutez un Colis Attendu</h3>
+              <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">Créez Votre Compte et Obtenez Votre Adresse GRATUITE</h3>
               <p className="text-gray-600 mb-8 text-base leading-relaxed">
-                Vous avez déjà effectué vos achats en Turquie ? Informez-nous de l'arrivée de votre colis à notre
-                entrepôt. Nous nous chargeons de la réception et de la préparation pour l'expédition.
+              Rejoignez Shipit en quelques clics ! Recevez instantanément votre adresse de réexpédition personnalisée en Turquie, en Europe ou aux États-Unis.
               </p>
-              <div className="mb-6">
-                <div className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-4">
-                  Pour vous faciliter la vie, vous pouvez :
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="flex items-center space-x-3">
-                    <Image
-                      src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/673459832c11f0880877749f_icon1.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                    />
-                    <span className="text-gray-700">Déclarer un colis en quelques clics</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Image
-                      src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/67345983b129ec433bf5fe05_icon2.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                    />
-                    <span className="text-gray-700">Suivre son statut en temps réel</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Image
-                      src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/67345983e0825a566f878162_icon3.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                    />
-                    <span className="text-gray-700">Ajouter plusieurs colis à regrouper</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Image
-                      src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/67345983614e9ede23fce4e9_icon4.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                    />
-                    <span className="text-gray-700">Obtenir une estimation des frais</span>
-                  </div>
-                </div>
-              </div>
+
+
             </div>
             <div className="lg:w-1/2">
               <Image
-                src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/673459963374d61e8a3148d7_work1.jpg"
+                src="/673459963374d61e8a3148d7_work1.svg"
                 alt="Create start page"
                 width={479}
                 height={400}
-                className="rounded-lg shadow-lg w-full"
+                className="rounded-lg w-full"
               />
             </div>
           </div>
@@ -82,62 +40,19 @@ export function OurServiceSection() {
           <div className="flex flex-col lg:flex-row-reverse items-start gap-12 border border-gray-200 rounded-2xl p-8">
             <div className="lg:w-1/2">
               <div className="text-2xl font-medium text-gray-500 mb-4">02</div>
-              <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">Demandez-nous d'Acheter pour Vous</h3>
+              <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">Magasinez en Ligne, Nous Nous Chargeons de la Réception</h3>
               <p className="text-gray-600 mb-8 text-base leading-relaxed">
-                Pas de carte bancaire turque ou des difficultés à acheter en ligne ? Donnez-nous votre liste
-                d'articles souhaités. Nous les achetons pour vous et les ajoutons à votre envoi.
+              Faites vos achats sur vos sites préférés en Turquie, en Europe ou aux États-Unis et faites-les livrer à votre nouvelle adresse Shipit. Nous prenons le relais dès l'arrivée de votre colis.
               </p>
-              <div className="mb-6">
-                <div className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-4">
-                  Ce que nous gérons pour vous :
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="flex items-center space-x-3">
-                    <Image
-                      src="https://cdn.prod.website-files.com/5adb18f797c69778e81b7f73/668e2df4e20e9675e41972f6_form.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                    />
-                    <span className="text-gray-700">Déclarations douanières</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Image
-                      src="https://cdn.prod.website-files.com/5adb18f797c69778e81b7f73/668e2df32934ba4d6a68455f_bot.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                    />
-                    <span className="text-gray-700">Suivi de l'envoi de bout en bout</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Image
-                      src="https://cdn.prod.website-files.com/5adb18f797c69778e81b7f73/668e2df39aaf471406800c9f_set.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                    />
-                    <span className="text-gray-700">Livraison à domicile</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Image
-                      src="https://cdn.prod.website-files.com/5adb18f797c69778e81b7f73/668e2df36e2922c6c6ecee62_pay.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                    />
-                    <span className="text-gray-700">Support client dédié</span>
-                  </div>
-                </div>
-              </div>
+
             </div>
             <div className="lg:w-1/2">
               <Image
-                src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/67345996df2043bc0740828b_work2.jpg"
+                src="/67345996df2043bc0740828b_work2.svg"
                 alt="Set up quiz questions"
                 width={432}
                 height={400}
-                className="rounded-lg shadow-lg w-full"
+                className="rounded-lg w-full"
               />
             </div>
           </div>
@@ -146,15 +61,12 @@ export function OurServiceSection() {
           <div className="flex flex-col lg:flex-row items-start gap-12 border border-gray-200 rounded-2xl p-8">
             <div className="lg:w-1/2">
               <div className="text-2xl font-medium text-gray-500 mb-4">03</div>
-              <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">Personnalisez Votre Expédition</h3>
+              <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">Personnalisez Votre Expédition : Vos Choix, Vos Économies</h3>
               <p className="text-gray-600 mb-8 text-base leading-relaxed">
-                Optimisez votre envoi selon vos besoins. Choisissez le mode de livraison, regroupez vos colis, et
-                assurez-vous que tout est parfait avant le départ.
+              Dès que votre colis arrive chez nous, vous êtes notifié ! C'est le moment de personnaliser votre envoi pour qu'il arrive exactement comme vous le souhaitez.
               </p>
               <div className="mb-6">
-                <div className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-4">
-                  Options de personnalisation
-                </div>
+
                 <div className="grid grid-cols-1 gap-4">
                   <div className="flex items-center space-x-3">
                     <Image
@@ -163,7 +75,7 @@ export function OurServiceSection() {
                       width={24}
                       height={24}
                     />
-                    <span className="text-gray-700">Choix du transporteur</span>
+                    <span className="text-gray-700">Photos détaillées du contenu : assurez-vous de l'état de vos articles.</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Image
@@ -172,7 +84,7 @@ export function OurServiceSection() {
                       width={24}
                       height={24}
                     />
-                    <span className="text-gray-700">Consolidation de plusieurs colis</span>
+                    <span className="text-gray-700">Regroupement intelligent : combinez plusieurs colis et économisez jusqu'à 80% sur les frais d'expédition.</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Image
@@ -181,18 +93,18 @@ export function OurServiceSection() {
                       width={24}
                       height={24}
                     />
-                    <span className="text-gray-700">Assurance optionnelle</span>
+                    <span className="text-gray-700">Protection renforcée : ajoutez de l'adhésif ou du papier-bulles supplémentaire pour une sécurité optimale.</span>
                   </div>
                 </div>
               </div>
             </div>
             <div className="lg:w-1/2">
               <Image
-                src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/67345996502d24b5aa19ec55_work3.jpg"
+                src="/67345996502d24b5aa19ec55_work3.svg"
                 alt="Customize results"
                 width={431}
                 height={400}
-                className="rounded-lg shadow-lg w-full"
+                className="rounded-lg w-full"
               />
             </div>
           </div>
@@ -201,15 +113,12 @@ export function OurServiceSection() {
           <div className="flex flex-col lg:flex-row-reverse items-start gap-12 border border-gray-200 rounded-2xl p-8">
             <div className="lg:w-1/2">
               <div className="text-2xl font-medium text-gray-500 mb-4">04</div>
-              <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">Recevez Votre Colis au Maroc</h3>
+              <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">Recevez Votre Colis Directement au Maroc</h3>
               <p className="text-gray-600 mb-8 text-base leading-relaxed">
-                Une fois votre colis préparé et les formalités douanières gérées, votre envoi est expédié directement
-                à l'adresse de votre choix au Maroc.
+              Une fois votre expédition configurée, détendez-vous ! Nous nous occupons de tout pour que votre colis arrive à votre porte au Maroc.
               </p>
               <div className="mb-6">
-                <div className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-4">
-                  Ce que nous gérons pour vous :
-                </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="flex items-center space-x-3">
                     <Image
@@ -218,7 +127,7 @@ export function OurServiceSection() {
                       width={24}
                       height={24}
                     />
-                    <span className="text-gray-700">Déclarations douanières</span>
+                    <span className="text-gray-700">Déclarations douanières prises en charge</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Image
@@ -227,7 +136,7 @@ export function OurServiceSection() {
                       width={24}
                       height={24}
                     />
-                    <span className="text-gray-700">Suivi de l'envoi de bout en bout</span>
+                    <span className="text-gray-700">Livraison rapide à domicile</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Image
@@ -252,11 +161,11 @@ export function OurServiceSection() {
             </div>
             <div className="lg:w-1/2">
               <Image
-                src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/673459967caaed53c5346db1_work4.jpg"
+                src="/673459967caaed53c5346db1_work4.svg"
                 alt="Capture and convert"
                 width={480}
                 height={400}
-                className="rounded-lg shadow-lg w-full"
+                className="rounded-lg w-full"
               />
             </div>
           </div>
@@ -267,13 +176,12 @@ export function OurServiceSection() {
               <div className="text-2xl font-medium text-gray-500 mb-4">05</div>
               <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">Profitez de Vos Achats !</h3>
               <p className="text-gray-600 mb-8 text-base leading-relaxed">
-                Le plus beau moment ! Déballez vos articles de Turquie et profitez de vos achats en toute sérénité,
-                sans les tracas de la logistique internationale.
+              Votre colis est arrivé ? Félicitations ! Il ne vous reste plus qu'à profiter de vos nouveaux articles. N'attendez plus pour vos prochains craquages shopping, nous sommes là pour vous !
               </p>
             </div>
             <div className="lg:w-1/2">
               <Image
-                src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/6734599a90470322c4cd1d92_work5.svg"
+                src="/6734599a90470322c4cd1d92_work5.svg"
                 alt="Share your quiz"
                 width={421}
                 height={400}

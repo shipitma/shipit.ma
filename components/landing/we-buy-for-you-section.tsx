@@ -7,7 +7,9 @@ export function WeBuyForYouSection() {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-800 mb-6">Nous achetons pour vous !</h2>
           <p className="text-xl text-gray-600">
-            Veuillez visiter la Achat Assisté page pour en savoir plus ...
+          Pas de carte bancaire internationale ou des difficultés à acheter en ligne ?
+          <br />
+          Donnez-nous votre liste d'articles souhaités. Nous les achetons pour vous et les ajoutons à votre envoi.
           </p>
         </div>
 
@@ -17,7 +19,7 @@ export function WeBuyForYouSection() {
             {/* Column 1 */}
             <div className="text-center lg:text-left">
               <h3 className="text-xl font-semibold text-gray-800 mb-4">Comment ça Marche?</h3>
-              <p className="text-gray-600 mb-8">Profitez d'un service fluide en seulement trois étapes :</p>
+              <p className="text-gray-600 mb-8">Veuillez visiter la Achat Assisté page pour en savoir plus ...</p>
 
               {/* Desktop Button */}
               <div className="hidden lg:block mb-8">

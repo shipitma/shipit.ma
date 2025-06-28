@@ -9,10 +9,9 @@ export function PricingSection() {
           <div className="flex flex-col lg:flex-row justify-between relative z-10 items-stretch">
             {/* Left Content */}
             <div className="lg:w-2/3 mb-8 lg:mb-0 text-white">
-              <h2 className="text-2xl lg:text-3xl font-bold mb-4">Tarification Simple et Transparente</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold mb-4">Commencez à Économiser Aujourd'hui !</h2>
               <p className="text-base lg:text-lg leading-relaxed opacity-90">
-                Pas de frais cachés, pas de surprises. Vous payez uniquement pour le service dont vous avez besoin,
-                avec une clarté totale sur les coûts.
+              Obtenez une adresse gratuite aux États-Unis,Turquie, Espagne ou France. Nous gérons tout, de l'achat à la livraison directe à votre porte au Maroc. 
               </p>
             </div>
 
