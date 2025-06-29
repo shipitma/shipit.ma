@@ -18,13 +18,13 @@ export function WeBuyForYouSection() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
             {/* Column 1 */}
             <div className="text-center lg:text-left">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">Comment ça Marche?</h3>
-              <p className="text-gray-600 mb-8">Veuillez visiter la Achat Assisté page pour en savoir plus ...</p>
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">Sans Carte, Sans Stress</h3>
+              <p className="text-gray-600 mb-8">Nous achetons pour vous, sans frais cachés.</p>
 
               {/* Desktop Button */}
               <div className="hidden lg:block mb-8">
                 <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-medium transition-colors">
-                  Démarrer Mon Expédition
+                  Envoyer ma liste d’achats
                 </button>
               </div>
 
@@ -129,7 +129,7 @@ export function WeBuyForYouSection() {
           {/* Mobile Button */}
           <div className="lg:hidden text-center mt-8">
             <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-medium transition-colors">
-              Démarrer Mon Expédition
+              Envoyer ma liste d’achats
             </button>
           </div>
         </div>

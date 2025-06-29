@@ -12,7 +12,7 @@ export function TrustSection() {
         </p>
         <div className="flex justify-center">
           <Image
-            src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/67d9e74de1942bbbb73c83c1_Group%202087328783-p-500.png"
+            src="/67d9e74de1942bbbb73c83c1-p-500.svg"
             alt="Trust badges and ratings"
             width={403}
             height={200}

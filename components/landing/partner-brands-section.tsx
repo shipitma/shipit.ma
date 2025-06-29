@@ -11,8 +11,7 @@ export function PartnerBrandsSection() {
               Commandez sur vos sites préférés
             </h2>
             <p className="text-lg lg:text-xl text-gray-600 leading-relaxed">
-              Vous pouvez commander sur n'importe quel site turc, européen ou américain : Trendyol, Amazon,
-              Vente-privée, eBay…
+            Ne vous limitez plus ! Faites votre shopping sur Trendyol, Amazon, Vente-Privée, eBay ou tout autre site en Turquie, en Europe ou aux États-Unis — nous nous occupons du reste.
             </p>
           </div>
 
