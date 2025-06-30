@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { PaymentCard } from "@/components/ui/payment-card"
 import {
   ArrowLeft,
   Package,
@@ -87,7 +88,7 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
   const router = useRouter()
   const { toast } = useToast()
   const [isPaymentOpen, setIsPaymentOpen] = useState(false)
-  const [packageData, setPackageData] = useState<PackageType | null>(null)
+  const [packageData, setPackageData] = useState<(PackageType & { paymentRequest?: any; payments: any[] }) | null>(null)
   const [loading, setLoading] = useState(true)
   const { id } = React.use(params)
 
@@ -345,6 +346,23 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
 
         {/* Sidebar */}
         <div className="space-y-4">
+          {/* Payment Information */}
+          {packageData.paymentRequest && (
+            <PaymentCard
+              paymentRequest={packageData.paymentRequest}
+              payments={packageData.payments}
+              onViewDetails={() => {
+                // Navigate to payment details page
+                window.open(`/payments/${packageData.paymentRequest!.id}`, '_blank')
+              }}
+              onPayNow={() => {
+                // Navigate to payment page
+                window.open(`/payments/${packageData.paymentRequest!.id}`, '_blank')
+              }}
+              compact={true}
+            />
+          )}
+
           {/* Tracking Info */}
           {packageData.tracking_url && (
             <Card className="border-blue-200 bg-blue-50">
@@ -363,7 +381,7 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
           )}
 
           {/* Alerts */}
-          {packageData.status === "arrived" && (
+          {packageData.status === "arrived" && !packageData.paymentRequest && (
             <Card className="border-orange-200 bg-orange-50">
               <CardContent className="p-3">
                 <div className="flex gap-2">

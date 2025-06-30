@@ -224,6 +224,14 @@ UPDATE packages SET updated_at = created_at;
 UPDATE payment_requests SET updated_at = created_at;
 UPDATE attachments SET updated_at = created_at;
 
+-- Seed data for warehouses
+INSERT INTO warehouses (name, country, address_line, city, state, zip, phone, notes)
+VALUES
+  ('Turkey Warehouse', 'Turkey', 'Atatürk Mahallesi, İstanbul Caddesi No: 123', 'Kadıköy', NULL, '34710', '+90 212 555 0123', 'Incluez toujours votre nom complet comme destinataire.'),
+  ('France Warehouse', 'France', '12 Rue de la Logistique', 'Paris', NULL, '75010', '+33 1 23 45 67 89', 'Incluez toujours votre nom complet comme destinataire.'),
+  ('Spain Warehouse', 'Spain', 'Calle de la Logística, 45', 'Madrid', NULL, '28001', '+34 91 234 5678', 'Incluez toujours votre nom complet comme destinataire.'),
+  ('USA Warehouse', 'USA', '1234 Shipping Lane, Suite 100', 'Miami', 'FL', '33101', '+1 305 123 4567', 'Always include your full name as the recipient.');
+
 END $$;
 
 -- Display summary of seeded data

@@ -5,7 +5,7 @@ import { neon } from "@neondatabase/serverless"
 import { validateNeonToken } from "@/lib/auth"
 
 // Initialize database connection
-function getDatabase() {
+export function getDatabase() {
   const databaseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL
   if (!databaseUrl) {
     throw new Error("No database URL found. Please set DATABASE_URL or POSTGRES_URL environment variable")
@@ -461,11 +461,59 @@ export async function getPurchaseRequestById(id: string): Promise<PurchaseReques
     ORDER BY date, time
   `
 
+  // Get payment request for this purchase request
+  const paymentRequest = await sql`
+    SELECT * FROM payment_requests 
+    WHERE related_id = ${id} AND type = 'purchase'
+    ORDER BY created_at DESC
+    LIMIT 1
+  `
+
+  let paymentRequestData: PaymentRequest | null = null
+  let payments: Payment[] = []
+
+  if (paymentRequest.length > 0) {
+    const pr = paymentRequest[0]
+    
+    // Get breakdown
+    const breakdown = await sql`
+      SELECT item_key, item_value FROM payment_breakdowns 
+      WHERE payment_request_id = ${pr.id}
+    `
+
+    pr.breakdown = {}
+    breakdown.forEach((item: any) => {
+      pr.breakdown![item.item_key] = Number(item.item_value)
+    })
+
+    // Handle payment_methods column
+    if (typeof pr.payment_methods === "string") {
+      try {
+        pr.payment_methods = JSON.parse(pr.payment_methods)
+      } catch {
+        pr.payment_methods = []
+      }
+    } else if (!Array.isArray(pr.payment_methods)) {
+      pr.payment_methods = []
+    }
+
+    paymentRequestData = pr as PaymentRequest
+
+    // Get payments for this payment request
+    payments = await sql`
+      SELECT * FROM payments 
+      WHERE payment_request_id = ${pr.id}
+      ORDER BY created_at DESC
+    ` as Payment[]
+  }
+
   return {
     ...request,
     items,
     timeline,
-  } as PurchaseRequest
+    paymentRequest: paymentRequestData,
+    payments,
+  } as PurchaseRequest & { paymentRequest?: PaymentRequest; payments: Payment[] }
 }
 
 export async function getPurchaseRequestStats(userId: string) {
@@ -542,12 +590,60 @@ export async function getPackageById(id: string): Promise<PackageType | null> {
     ORDER BY date, time
   `
 
+  // Get payment request for this package
+  const paymentRequest = await sql`
+    SELECT * FROM payment_requests 
+    WHERE related_id = ${id} AND type = 'shipping'
+    ORDER BY created_at DESC
+    LIMIT 1
+  `
+
+  let paymentRequestData: PaymentRequest | null = null
+  let payments: Payment[] = []
+
+  if (paymentRequest.length > 0) {
+    const pr = paymentRequest[0]
+    
+    // Get breakdown
+    const breakdown = await sql`
+      SELECT item_key, item_value FROM payment_breakdowns 
+      WHERE payment_request_id = ${pr.id}
+    `
+
+    pr.breakdown = {}
+    breakdown.forEach((item: any) => {
+      pr.breakdown![item.item_key] = Number(item.item_value)
+    })
+
+    // Handle payment_methods column
+    if (typeof pr.payment_methods === "string") {
+      try {
+        pr.payment_methods = JSON.parse(pr.payment_methods)
+      } catch {
+        pr.payment_methods = []
+      }
+    } else if (!Array.isArray(pr.payment_methods)) {
+      pr.payment_methods = []
+    }
+
+    paymentRequestData = pr as PaymentRequest
+
+    // Get payments for this payment request
+    payments = await sql`
+      SELECT * FROM payments 
+      WHERE payment_request_id = ${pr.id}
+      ORDER BY created_at DESC
+    ` as Payment[]
+  }
+
   return {
     ...pkg,
     items,
     attachments,
     timeline,
-  } as PackageType
+    paymentRequest: paymentRequestData,
+    payments,
+  } as PackageType & { paymentRequest?: PaymentRequest; payments: Payment[] }
 }
 
 export async function getPackageStats(userId: string) {

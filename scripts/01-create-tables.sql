@@ -16,6 +16,21 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Warehouses table
+CREATE TABLE warehouses (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    country VARCHAR(100) NOT NULL,
+    address_line VARCHAR(500) NOT NULL,
+    city VARCHAR(100) NOT NULL,
+    state VARCHAR(100),
+    zip VARCHAR(20),
+    phone VARCHAR(30),
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Purchase requests table
 CREATE TABLE purchase_requests (
     id VARCHAR(50) PRIMARY KEY,

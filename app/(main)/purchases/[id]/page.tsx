@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { PaymentCard } from "@/components/ui/payment-card"
 import { ArrowLeft, DollarSign, Check, Upload, ExternalLink, Package, FileText, ImageIcon, Receipt, Clock, CheckCircle, AlertCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { type PurchaseRequest, formatCurrency, formatDate } from "@/lib/database"
@@ -73,7 +74,7 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
   const router = useRouter()
   const { toast } = useToast()
   const [isPaymentOpen, setIsPaymentOpen] = useState(false)
-  const [purchaseRequest, setPurchaseRequest] = useState<PurchaseRequest | null>(null)
+  const [purchaseRequest, setPurchaseRequest] = useState<(PurchaseRequest & { paymentRequest?: any; payments: any[] }) | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -357,8 +358,25 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
 
         {/* Sidebar */}
         <div className="space-y-4">
+          {/* Payment Information */}
+          {purchaseRequest.paymentRequest && (
+            <PaymentCard
+              paymentRequest={purchaseRequest.paymentRequest}
+              payments={purchaseRequest.payments}
+              onViewDetails={() => {
+                // Navigate to payment details page
+                window.open(`/payments/${purchaseRequest.paymentRequest!.id}`, '_blank')
+              }}
+              onPayNow={() => {
+                // Navigate to payment page
+                window.open(`/payments/${purchaseRequest.paymentRequest!.id}`, '_blank')
+              }}
+              compact={true}
+            />
+          )}
+
           {/* Payment Action */}
-          {purchaseRequest.status === "pending_payment" && (
+          {purchaseRequest.status === "pending_payment" && !purchaseRequest.paymentRequest && (
             <Card className="border-orange-200 bg-orange-50">
               <CardContent className="p-3">
                 <div className="space-y-3">

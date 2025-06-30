@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ShoppingCart, Package, Plus, MapPin, Phone, User, Clock, Truck } from "lucide-react"
@@ -9,12 +9,15 @@ import { useAuth } from "@/lib/auth-context"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useDashboardStats } from "@/hooks/use-dashboard-stats"
 import { useAnalytics } from "@/hooks/use-analytics"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 
 export default function DashboardPage() {
   const { user } = useAuth()
   const { stats, loading, error } = useDashboardStats()
   const { toast } = useToast()
   const { trackDashboard, trackError } = useAnalytics()
+  const [warehouses, setWarehouses] = useState<any[]>([])
+  const [loadingWarehouses, setLoadingWarehouses] = useState(true)
 
   // Track page view
   useEffect(() => {
@@ -39,6 +42,22 @@ export default function DashboardPage() {
       })
     }
   }, [error, toast, trackError])
+
+  useEffect(() => {
+    setLoadingWarehouses(true)
+    fetch("/api/warehouses")
+      .then((res) => res.json())
+      .then((data) => {
+        setWarehouses(data.warehouses || [])
+        setLoadingWarehouses(false)
+      })
+      .catch(() => setLoadingWarehouses(false))
+  }, [])
+
+  // Group warehouses by region for tabs
+  const turkeyWarehouse = warehouses.find(w => w.country === "Turkey")
+  const usaWarehouse = warehouses.find(w => w.country === "USA")
+  const europeWarehouses = warehouses.filter(w => w.country === "France" || w.country === "Spain")
 
   const getFullName = () => {
     if (!user) return "Utilisateur"
@@ -149,54 +168,92 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Turkey Warehouse Address */}
+        {/* Warehouse Addresses with Tabs - Full Width */}
+        <Card className="border-gray-200 w-full mt-4">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base font-semibold flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-orange-600" />
+              Adresses d'entrepôt
+            </CardTitle>
+            <CardDescription className="text-sm text-gray-500">
+              Vos adresses d'expédition internationales
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="pt-0 space-y-4">
+            {loadingWarehouses ? (
+              <Skeleton className="h-32 w-full" />
+            ) : (
+              <Tabs defaultValue={turkeyWarehouse ? "turkey" : europeWarehouses.length ? "europe" : "usa"} className="w-full">
+                <TabsList className="mb-2 w-full flex">
+                  {turkeyWarehouse && <TabsTrigger value="turkey" className="flex-1">Turkey</TabsTrigger>}
+                  {europeWarehouses.length > 0 && <TabsTrigger value="europe" className="flex-1">Europe</TabsTrigger>}
+                  {usaWarehouse && <TabsTrigger value="usa" className="flex-1">USA</TabsTrigger>}
+                </TabsList>
+                {turkeyWarehouse && (
+                  <TabsContent value="turkey">
+                    <WarehouseCard warehouse={turkeyWarehouse} getFullName={getFullName} />
+                  </TabsContent>
+                )}
+                {europeWarehouses.length > 0 && (
+                  <TabsContent value="europe">
+                    <Tabs defaultValue={europeWarehouses[0].country.toLowerCase()} className="w-full">
+                      <TabsList className="mb-2 w-full flex">
+                        {europeWarehouses.map(w => (
+                          <TabsTrigger key={w.country} value={w.country.toLowerCase()} className="flex-1">{w.country}</TabsTrigger>
+                        ))}
+                      </TabsList>
+                      {europeWarehouses.map(w => (
+                        <TabsContent key={w.country} value={w.country.toLowerCase()}>
+                          <WarehouseCard warehouse={w} getFullName={getFullName} />
+                        </TabsContent>
+                      ))}
+                    </Tabs>
+                  </TabsContent>
+                )}
+                {usaWarehouse && (
+                  <TabsContent value="usa">
+                    <WarehouseCard warehouse={usaWarehouse} getFullName={getFullName} />
+                  </TabsContent>
+                )}
+              </Tabs>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+}
+
+// WarehouseCard component
+function WarehouseCard({ warehouse, getFullName }: { warehouse: any, getFullName: () => string }) {
+  return (
+    <div className="bg-gray-50 p-3 rounded-md">
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <User className="w-3 h-3 text-gray-600" />
           <div>
-            <Card className="border-gray-200">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base font-semibold flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-orange-600" />
-                  Adresse Turquie
-                </CardTitle>
-                <CardDescription className="text-sm text-gray-500">
-                  Votre adresse d'entrepôt d'expédition
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-0 space-y-4">
-                <div className="bg-gray-50 p-3 rounded-md">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <User className="w-3 h-3 text-gray-600" />
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">{getFullName()}</p>
-                        <p className="text-sm text-gray-500">Titulaire du Compte</p>
-                      </div>
-                    </div>
-
-                    <div className="border-t border-gray-200 pt-2 space-y-1">
-                      <p className="text-sm font-medium text-gray-900">shipit.ma Turkey Warehouse</p>
-                      <p className="text-sm text-gray-600">Atatürk Mahallesi, İstanbul Caddesi No: 123</p>
-                      <p className="text-sm text-gray-600">Kadıköy, İstanbul 34710</p>
-                      <p className="text-sm text-gray-600">Turkey</p>
-                    </div>
-
-                    <div className="border-t border-gray-200 pt-2 flex items-center gap-2">
-                      <Phone className="w-3 h-3 text-gray-600" />
-                      <p className="text-sm font-medium text-gray-900">+90 212 555 0123</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-yellow-50 border border-yellow-200 rounded-md p-3">
-                  <p className="text-sm text-yellow-800">
-                    <strong>Important:</strong> Incluez toujours votre nom complet ({getFullName()}) comme destinataire.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+            <p className="text-sm font-medium text-gray-900">{getFullName()}</p>
+            <p className="text-sm text-gray-500">Titulaire du Compte</p>
           </div>
         </div>
+        <div className="border-t border-gray-200 pt-2 space-y-1">
+          <p className="text-sm font-medium text-gray-900">shipit.ma {warehouse.name}</p>
+          <p className="text-sm text-gray-600">{warehouse.address_line}</p>
+          <p className="text-sm text-gray-600">{warehouse.city}{warehouse.state ? `, ${warehouse.state}` : ""} {warehouse.zip}</p>
+          <p className="text-sm text-gray-600">{warehouse.country}</p>
+        </div>
+        <div className="border-t border-gray-200 pt-2 flex items-center gap-2">
+          <Phone className="w-3 h-3 text-gray-600" />
+          <p className="text-sm font-medium text-gray-900">{warehouse.phone}</p>
+        </div>
       </div>
+      {warehouse.notes && (
+        <div className="bg-yellow-50 border border-yellow-200 rounded-md p-3 mt-2">
+          <p className="text-sm text-yellow-800">
+            <strong>Important:</strong> {warehouse.notes.replace('{getFullName()}', getFullName())}
+          </p>
+        </div>
+      )}
     </div>
   )
 }
