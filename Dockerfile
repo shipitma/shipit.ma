@@ -14,6 +14,10 @@ RUN pnpm install --frozen-lockfile
 # 2. Builder Stage
 FROM node:18-alpine AS builder
 WORKDIR /app
+
+# Install pnpm
+RUN npm install -g pnpm
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
@@ -32,6 +36,9 @@ WORKDIR /app
 
 # Set environment variables for production
 ENV NODE_ENV=production
+
+# Install pnpm for the runner
+RUN npm install -g pnpm
 
 # Copy built app from builder stage
 COPY --from=builder /app/public ./public
