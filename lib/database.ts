@@ -27,6 +27,9 @@ export interface User {
   country: string
   created_at: string
   updated_at: string
+  email_verified: boolean
+  phone_verified: boolean
+  last_login: string
 }
 
 export interface Attachment {
@@ -248,7 +251,25 @@ export async function getUserById(id: string): Promise<User | null> {
   const result = await sql`
     SELECT * FROM users WHERE id = ${id}
   `
-  return result[0] || null
+  if (!result[0]) return null
+  const user = result[0]
+  return {
+    id: user.id ?? '',
+    phone_number: user.phone_number ?? '',
+    first_name: user.first_name ?? '',
+    last_name: user.last_name ?? '',
+    email: user.email ?? undefined,
+    address_line: user.address_line ?? '',
+    city: user.city ?? '',
+    state: user.state ?? undefined,
+    zip: user.zip ?? undefined,
+    country: user.country ?? '',
+    created_at: user.created_at ?? '',
+    updated_at: user.updated_at ?? '',
+    email_verified: user.email_verified ?? false,
+    phone_verified: user.phone_verified ?? false,
+    last_login: user.last_login ?? '',
+  }
 }
 
 export async function getUserByPhone(phoneNumber: string): Promise<User | null> {
@@ -256,7 +277,25 @@ export async function getUserByPhone(phoneNumber: string): Promise<User | null> 
   const result = await sql`
     SELECT * FROM users WHERE phone_number = ${phoneNumber}
   `
-  return result[0] || null
+  if (!result[0]) return null
+  const user = result[0]
+  return {
+    id: user.id ?? '',
+    phone_number: user.phone_number ?? '',
+    first_name: user.first_name ?? '',
+    last_name: user.last_name ?? '',
+    email: user.email ?? undefined,
+    address_line: user.address_line ?? '',
+    city: user.city ?? '',
+    state: user.state ?? undefined,
+    zip: user.zip ?? undefined,
+    country: user.country ?? '',
+    created_at: user.created_at ?? '',
+    updated_at: user.updated_at ?? '',
+    email_verified: user.email_verified ?? false,
+    phone_verified: user.phone_verified ?? false,
+    last_login: user.last_login ?? '',
+  }
 }
 
 // Attachment functions
@@ -999,8 +1038,24 @@ export async function getCurrentUser(sessionId?: string): Promise<User | null> {
       AND s.session_type = 'authenticated'
       AND s.expires_at > NOW()
     `
-
-    return result || null
+    if (!result) return null
+    return {
+      id: result.id ?? '',
+      phone_number: result.phone_number ?? '',
+      first_name: result.first_name ?? '',
+      last_name: result.last_name ?? '',
+      email: result.email ?? undefined,
+      address_line: result.address_line ?? '',
+      city: result.city ?? '',
+      state: result.state ?? undefined,
+      zip: result.zip ?? undefined,
+      country: result.country ?? '',
+      created_at: result.created_at ?? '',
+      updated_at: result.updated_at ?? '',
+      email_verified: result.email_verified ?? false,
+      phone_verified: result.phone_verified ?? false,
+      last_login: result.last_login ?? '',
+    }
   } catch (error) {
     console.error("Error getting current user:", error)
     return null
