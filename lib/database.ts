@@ -185,18 +185,20 @@ export async function getNextPurchaseRequestId(): Promise<string> {
   const result = await sql`
     SELECT id FROM purchase_requests 
     WHERE id LIKE 'PR-%' 
-    ORDER BY CAST(SUBSTRING(id FROM 4) AS INTEGER) DESC 
+    ORDER BY CAST(SUBSTRING(id FROM LENGTH(id) - 2) AS INTEGER) DESC 
     LIMIT 1
   `
 
   if (result.length === 0) {
-    return "PR-001"
+    return "PR-2024-001"
   }
 
   const lastId = result[0].id
-  const lastNumber = Number.parseInt(lastId.split("-")[1])
+  // Extract the sequence number (last 3 digits after the last hyphen)
+  const lastNumber = Number.parseInt(lastId.split("-").pop() || "0")
   const nextNumber = lastNumber + 1
-  return `PR-${nextNumber.toString().padStart(3, "0")}`
+  const currentYear = new Date().getFullYear()
+  return `PR-${currentYear}-${nextNumber.toString().padStart(3, "0")}`
 }
 
 export async function getNextPackageId(): Promise<string> {
@@ -204,37 +206,40 @@ export async function getNextPackageId(): Promise<string> {
   const result = await sql`
     SELECT id FROM packages 
     WHERE id LIKE 'PKG-%' 
-    ORDER BY CAST(SUBSTRING(id FROM 5) AS INTEGER) DESC 
+    ORDER BY CAST(SUBSTRING(id FROM LENGTH(id) - 2) AS INTEGER) DESC 
     LIMIT 1
   `
 
   if (result.length === 0) {
-    return "PKG-001"
+    return "PKG-2024-001"
   }
 
   const lastId = result[0].id
-  const lastNumber = Number.parseInt(lastId.split("-")[1])
+  // Extract the sequence number (last 3 digits after the last hyphen)
+  const lastNumber = Number.parseInt(lastId.split("-").pop() || "0")
   const nextNumber = lastNumber + 1
-  return `PKG-${nextNumber.toString().padStart(3, "0")}`
+  const currentYear = new Date().getFullYear()
+  return `PKG-${currentYear}-${nextNumber.toString().padStart(3, "0")}`
 }
 
 export async function getNextPaymentId(): Promise<string> {
   const sql = getDatabase()
   const result = await sql`
     SELECT id FROM payment_requests 
-    WHERE id LIKE 'PAY-%' 
-    ORDER BY CAST(SUBSTRING(id FROM 5) AS INTEGER) DESC 
+    WHERE id LIKE 'PAY-REQ-%' 
+    ORDER BY CAST(SUBSTRING(id FROM 9) AS INTEGER) DESC 
     LIMIT 1
   `
 
   if (result.length === 0) {
-    return "PAY-001"
+    return "PAY-REQ-001"
   }
 
   const lastId = result[0].id
-  const lastNumber = Number.parseInt(lastId.split("-")[1])
+  // Extract the sequence number (after "PAY-REQ-")
+  const lastNumber = Number.parseInt(lastId.split("-").pop() || "0")
   const nextNumber = lastNumber + 1
-  return `PAY-${nextNumber.toString().padStart(3, "0")}`
+  return `PAY-REQ-${nextNumber.toString().padStart(3, "0")}`
 }
 
 // User functions
