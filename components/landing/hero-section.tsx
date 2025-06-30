@@ -16,7 +16,7 @@ export function HeroSection() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <Button size="lg" className="bg-white text-orange-600 hover:bg-gray-100 px-8 py-4 text-base font-medium">
-              Commencez Votre Aventure Shopping !
+              Commencez !
             </Button>
             <Button
               size="lg"
