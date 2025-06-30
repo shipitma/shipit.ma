@@ -16,22 +16,27 @@ export async function POST(request: NextRequest) {
     // Create OTP code
     const otp = await createOTPCode(phoneNumber, purpose)
 
-    // Send OTP via WhatsApp API
-    const whatsappResponse = await fetch("https://wasenderapi.com/api/send-message", {
+    // Format chatId for the new API
+    const chatId = `${phoneNumber}@c.us`
+    const text = `Votre code de vérification shipit.ma est : ${otp}\n\nCe code expirera dans 10 minutes. Ne partagez pas ce code avec qui que ce soit.`
+
+    // Send OTP via the new API
+    const otpResponse = await fetch("https://otpsender.ship-it.me/api/sendText", {
       method: "POST",
       headers: {
-        Authorization: "Bearer 0b0488877dddb17a92226f5914bd30b92ba964344f5dda24e36da992a2048693",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        to: phoneNumber,
-        text: `Votre code de vérification shipit.ma est : ${otp}\n\nCe code expirera dans 10 minutes. Ne partagez pas ce code avec qui que ce soit.`,
+        chatId: chatId,
+        text: text,
+        session: "default",
       }),
     })
 
-    if (!whatsappResponse.ok) {
-      // Don't fail the request if WhatsApp fails, for development purposes
+    if (!otpResponse.ok) {
+      // Don't fail the request if the OTP sender fails, for development purposes
       // In production, you might want to handle this differently
+      console.error("Failed to send OTP:", await otpResponse.text())
     }
 
     return NextResponse.json({
