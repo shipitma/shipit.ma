@@ -5,7 +5,7 @@ export function OurServiceSection() {
     <section className="py-20">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Comment Fonctionne Notre Service ?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Vous Achetez, Nous Livrons.</h2>
           <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto">
             Notre processus est conçu pour être simple et transparent, vous garantissant une expérience sans tracas du
             début à la fin.
