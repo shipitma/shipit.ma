@@ -16,8 +16,9 @@ export async function POST(request: NextRequest) {
     // Create OTP code
     const otp = await createOTPCode(phoneNumber, purpose)
 
-    // Format chatId for the new API
-    const chatId = `${phoneNumber}@c.us`
+    // Sanitize phone number: remove leading '+' and spaces
+    const sanitizedPhone = phoneNumber.replace(/^\+/, '').replace(/\s+/g, '')
+    const chatId = `${sanitizedPhone}@c.us`
     const text = `Votre code de vérification shipit.ma est : ${otp}\n\nCe code expirera dans 10 minutes. Ne partagez pas ce code avec qui que ce soit.`
 
     // Send OTP via the new API
