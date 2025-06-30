@@ -1,0 +1,26 @@
+# Dev Stage: For running the development server
+FROM node:18-alpine
+
+# We need this for some Next.js dependencies
+RUN apk add --no-cache libc6-compat
+
+WORKDIR /app
+
+# Install pnpm globally
+RUN npm install -g pnpm
+
+# Copy package management files
+COPY package.json pnpm-lock.yaml ./
+
+# Install dependencies. This layer is cached and will only re-run if
+# package.json or pnpm-lock.yaml change.
+RUN pnpm install --frozen-lockfile
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose the port Next.js runs on in dev mode
+EXPOSE 3000
+
+# Run the app in development mode with hot-reloading
+CMD ["pnpm", "run", "dev"] 
