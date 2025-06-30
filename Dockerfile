@@ -16,6 +16,10 @@ RUN pnpm install --frozen-lockfile
 # 2. Builder Stage: Build the application
 FROM node:18-alpine AS builder
 WORKDIR /app
+
+# Install pnpm
+RUN npm install -g pnpm
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
@@ -35,6 +39,6 @@ COPY --from=builder /app/.next/static ./.next/static
 
 EXPOSE 3000
 
-ENV PORT 3000
+ENV PORT=3000
 
 CMD ["node", "server.js"] 
