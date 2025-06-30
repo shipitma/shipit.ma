@@ -953,8 +953,20 @@ export async function getCurrentUserId(sessionId?: string): Promise<string | nul
     if (sessionId.startsWith("neon_")) {
       const tokenValidation = await validateNeonToken(sessionId)
       if (tokenValidation.valid && tokenValidation.userId) {
+        // Verify the user actually exists in the database
+        const sql = getDatabase()
+        const [user] = await sql`
+          SELECT id FROM users WHERE id = ${tokenValidation.userId}
+        `
+        
+        if (!user) {
+          console.error(`User not found in database for token userId: ${tokenValidation.userId}`)
+          return null
+        }
+        
         return tokenValidation.userId
       }
+      console.error("Token validation failed for Neon Auth token")
       return null
     }
 

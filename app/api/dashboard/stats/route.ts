@@ -30,6 +30,12 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(stats)
   } catch (error) {
     console.error("Error fetching dashboard stats:", error)
+    
+    // If it's an authentication error, return 401
+    if (error instanceof Error && error.message.includes("authentication")) {
+      return NextResponse.json({ error: "Authentication failed" }, { status: 401 })
+    }
+    
     return NextResponse.json(
       {
         error: "Failed to fetch stats",

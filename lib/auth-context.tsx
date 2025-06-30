@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { createContext, useContext, useState, useEffect } from "react"
+import { isTokenExpired } from "@/lib/auth"
 
 interface User {
   id: string
@@ -75,15 +76,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(userData)
         return true
       } else if (response.status === 401) {
+        console.log("Session expired, attempting token refresh...")
         // Try to refresh token if we have a refresh token
         const refreshToken = getToken("refreshToken")
         if (refreshToken) {
           const refreshed = await refreshAccessToken(refreshToken)
           if (refreshed) {
+            console.log("Token refreshed successfully, retrying user fetch...")
             return await fetchUser(refreshed.accessToken)
           }
         }
         // Clear invalid tokens
+        console.log("Token refresh failed, clearing authentication...")
         removeToken("authToken")
         removeToken("accessToken")
         removeToken("refreshToken")
@@ -107,6 +111,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const refreshAccessToken = async (refreshToken: string) => {
     try {
+      console.log("Attempting to refresh access token...")
       const response = await fetch("/api/auth/refresh", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -115,11 +120,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (response.ok) {
         const data = await response.json()
+        console.log("Token refresh successful")
         setToken("accessToken", data.accessToken)
         setToken("authToken", data.sessionId)
         setAccessToken(data.accessToken)
         setSessionId(data.sessionId)
         return data
+      } else {
+        console.error("Token refresh failed with status:", response.status)
+        const errorData = await response.json().catch(() => ({}))
+        console.error("Token refresh error details:", errorData)
       }
     } catch (error) {
       console.error("Error refreshing token:", error)
@@ -131,6 +141,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const token = accessToken || sessionId
       if (!token) return
+
+      // Check if token is about to expire and refresh if needed
+      if (accessToken && await isTokenExpired(accessToken)) {
+        console.log("Token is about to expire, refreshing...")
+        const refreshToken = getToken("refreshToken")
+        if (refreshToken) {
+          const refreshed = await refreshAccessToken(refreshToken)
+          if (refreshed) {
+            // Use the new token for the API call
+            const response = await fetch("/api/dashboard/stats", {
+              headers: { Authorization: `Bearer ${refreshed.accessToken}` },
+            })
+
+            if (response.ok) {
+              const data = await response.json()
+              setDashboardStats(data)
+            }
+            return
+          }
+        }
+      }
 
       const response = await fetch("/api/dashboard/stats", {
         headers: { Authorization: `Bearer ${token}` },

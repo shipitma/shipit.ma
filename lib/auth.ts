@@ -249,6 +249,24 @@ export async function refreshNeonSession(
   return { accessToken: newAccessToken, sessionId: session.id }
 }
 
+export async function isTokenExpired(token: string): Promise<boolean> {
+  if (!token.startsWith("neon_")) {
+    return true // Non-Neon tokens are considered expired
+  }
+
+  try {
+    const payload = JSON.parse(Buffer.from(token.substring(5), "base64").toString())
+    
+    // Check if token expires within the next 5 minutes
+    const currentTime = Math.floor(Date.now() / 1000)
+    const expiresIn = payload.exp - currentTime
+    
+    return expiresIn <= 300 // 5 minutes
+  } catch (error) {
+    return true // Invalid token is considered expired
+  }
+}
+
 export async function validateNeonToken(
   token: string,
 ): Promise<{ valid: boolean; userId?: string; phoneNumber?: string }> {

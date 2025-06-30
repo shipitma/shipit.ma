@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useAuth } from "@/lib/auth-context"
+import { isTokenExpired } from "@/lib/auth"
 
 interface DashboardStats {
   expected_packages: number
@@ -46,11 +47,23 @@ export function useDashboardStats() {
         throw new Error("No authentication token available")
       }
 
+      // Check if token is about to expire and refresh if needed
+      if (accessToken && await isTokenExpired(accessToken)) {
+        console.log("Token is about to expire, refreshing...")
+        // This will trigger a refresh in the auth context
+        // For now, we'll continue with the current token and let the API handle the 401
+      }
+
       const response = await fetch("/api/dashboard/stats", {
         headers: { Authorization: `Bearer ${token}` },
       })
 
       if (!response.ok) {
+        if (response.status === 401) {
+          // Authentication error - this will be handled by the auth context
+          console.log("Dashboard stats API returned 401, authentication may need refresh")
+          throw new Error("Authentication required")
+        }
         const errorText = await response.text()
         throw new Error(`Failed to fetch stats: ${response.status}`)
       }
@@ -58,6 +71,7 @@ export function useDashboardStats() {
       const data = await response.json()
       setStats(data)
     } catch (err) {
+      console.error("Error fetching dashboard stats:", err)
       setError(err instanceof Error ? err.message : "An error occurred")
     } finally {
       setLoading(false)
