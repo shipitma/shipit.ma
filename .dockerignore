@@ -57,6 +57,3 @@ dump.rdb
 
 # coolify
 .coolify
-
-# pnpm
-pnpm-lock.yaml
