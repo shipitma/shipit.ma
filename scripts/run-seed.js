@@ -151,7 +151,6 @@ async function main() {
         url: 'https://www.apple.com/iphone-15-pro/',
         price: 1299.00,
         quantity: 1,
-        image_url: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400',
         specifications: '256GB, Titanium Naturel, A17 Pro',
         variant: 'Titanium Naturel'
       },
@@ -161,7 +160,6 @@ async function main() {
         url: 'https://www.apple.com/airpods-pro/',
         price: 249.00,
         quantity: 1,
-        image_url: 'https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400',
         specifications: 'Annulation de bruit active, Audio spatial',
         variant: 'Blanc'
       },
@@ -171,7 +169,6 @@ async function main() {
         url: 'https://www.apple.com/shop/product/MM2Y3ZM/A/',
         price: 49.00,
         quantity: 1,
-        image_url: 'https://images.unsplash.com/photo-1603314585442-ee3b5c815e49?w=400',
         specifications: 'Coque FineWoven avec MagSafe',
         variant: 'Noir'
       },
@@ -183,7 +180,6 @@ async function main() {
         url: 'https://www.apple.com/macbook-air-m2/',
         price: 1799.00,
         quantity: 1,
-        image_url: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400',
         specifications: '13 pouces, 8GB RAM, 256GB SSD, Minuit',
         variant: 'Minuit'
       },
@@ -195,7 +191,6 @@ async function main() {
         url: 'https://www.samsung.com/us/smartphones/galaxy-s24-ultra/',
         price: 1499.00,
         quantity: 1,
-        image_url: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400',
         specifications: '256GB, Titanium Gray, S Pen inclus',
         variant: 'Titanium Gray'
       },
@@ -207,7 +202,6 @@ async function main() {
         url: 'https://www.nike.com/t/air-jordan-1-retro-high-og-shoes-86f1ZW',
         price: 899.00,
         quantity: 1,
-        image_url: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400',
         specifications: 'Taille 42, Chicago Red',
         variant: 'Chicago Red'
       },
@@ -219,7 +213,6 @@ async function main() {
         url: 'https://www.playstation.com/en-us/ps5/',
         price: 499.00,
         quantity: 1,
-        image_url: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400',
         specifications: 'Édition Disque, Blanc',
         variant: 'Édition Disque'
       },
@@ -229,7 +222,6 @@ async function main() {
         url: 'https://www.playstation.com/en-us/accessories/dualsense-wireless-controller/',
         price: 69.00,
         quantity: 2,
-        image_url: 'https://images.unsplash.com/photo-1592840496694-26d035b52b0c?w=400',
         specifications: 'Manette sans fil DualSense',
         variant: 'Blanc'
       },
@@ -241,7 +233,6 @@ async function main() {
         url: 'https://www.apple.com/apple-watch-series-9/',
         price: 599.00,
         quantity: 1,
-        image_url: 'https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400',
         specifications: '45mm, GPS + Cellular, Bleu',
         variant: 'Bleu'
       }
@@ -400,22 +391,19 @@ async function main() {
         package_id: 'PKG-2025-001',
         name: 'iPhone 15 Pro Max',
         quantity: 1,
-        value: 1299.00,
-        image_url: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400'
+        value: 1299.00
       },
       {
         package_id: 'PKG-2025-001',
         name: 'AirPods Pro (2ème Génération)',
         quantity: 1,
-        value: 249.00,
-        image_url: 'https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400'
+        value: 249.00
       },
       {
         package_id: 'PKG-2025-001',
         name: 'Coque iPhone 15 Pro Max',
         quantity: 1,
-        value: 49.00,
-        image_url: 'https://images.unsplash.com/photo-1603314585442-ee3b5c815e49?w=400'
+        value: 49.00
       },
 
       // PKG-2025-002 items (MacBook - In Transit)
@@ -423,8 +411,7 @@ async function main() {
         package_id: 'PKG-2025-002',
         name: 'MacBook Air M2',
         quantity: 1,
-        value: 1799.00,
-        image_url: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400'
+        value: 1799.00
       },
 
       // PKG-2025-003 items (Samsung - Arrived)
@@ -432,8 +419,7 @@ async function main() {
         package_id: 'PKG-2025-003',
         name: 'Samsung Galaxy S24 Ultra',
         quantity: 1,
-        value: 1499.00,
-        image_url: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400'
+        value: 1499.00
       },
 
       // PKG-2025-004 items (Nike - Expected)
@@ -441,8 +427,7 @@ async function main() {
         package_id: 'PKG-2025-004',
         name: 'Nike Air Jordan 1 Retro High OG',
         quantity: 1,
-        value: 899.00,
-        image_url: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400'
+        value: 899.00
       },
 
       // PKG-2025-005 items (PlayStation - Processing)
@@ -450,15 +435,13 @@ async function main() {
         package_id: 'PKG-2025-005',
         name: 'PlayStation 5 Console',
         quantity: 1,
-        value: 499.00,
-        image_url: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400'
+        value: 499.00
       },
       {
         package_id: 'PKG-2025-005',
         name: 'Manette DualSense PS5',
         quantity: 2,
-        value: 69.00,
-        image_url: 'https://images.unsplash.com/photo-1592840496694-26d035b52b0c?w=400'
+        value: 69.00
       },
 
       // PKG-2025-006 items (Apple Watch - Expected)
@@ -466,8 +449,7 @@ async function main() {
         package_id: 'PKG-2025-006',
         name: 'Apple Watch Series 9',
         quantity: 1,
-        value: 599.00,
-        image_url: 'https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400'
+        value: 599.00
       }
     ]
   });
@@ -517,11 +499,65 @@ async function main() {
         related_id: 'PKG-2025-003'
       },
 
+      // Package item photos
+      {
+        user_id: user.id,
+        file_url: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400',
+        file_name: 'iphone-15-pro-max-item.jpg',
+        file_size: 890000,
+        file_type: 'image/jpeg',
+        attachment_type: 'photo',
+        related_type: 'package_item',
+        related_id: '1'
+      },
+      {
+        user_id: user.id,
+        file_url: 'https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400',
+        file_name: 'airpods-pro-item.jpg',
+        file_size: 650000,
+        file_type: 'image/jpeg',
+        attachment_type: 'photo',
+        related_type: 'package_item',
+        related_id: '2'
+      },
+      {
+        user_id: user.id,
+        file_url: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400',
+        file_name: 'macbook-air-item.jpg',
+        file_size: 1200000,
+        file_type: 'image/jpeg',
+        attachment_type: 'photo',
+        related_type: 'package_item',
+        related_id: '4'
+      },
+
       // Purchase request photos
       {
         user_id: user.id,
         file_url: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400',
-        file_name: 'iphone-15-pro-max-001.jpg',
+        file_name: 'iphone-15-pro-max-request.jpg',
+        file_size: 890000,
+        file_type: 'image/jpeg',
+        attachment_type: 'photo',
+        related_type: 'purchase_request',
+        related_id: 'PR-2025-001'
+      },
+      {
+        user_id: user.id,
+        file_url: 'https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400',
+        file_name: 'airpods-pro-request.jpg',
+        file_size: 650000,
+        file_type: 'image/jpeg',
+        attachment_type: 'photo',
+        related_type: 'purchase_request',
+        related_id: 'PR-2025-001'
+      },
+
+      // Purchase request item photos
+      {
+        user_id: user.id,
+        file_url: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400',
+        file_name: 'iphone-15-pro-max-item.jpg',
         file_size: 890000,
         file_type: 'image/jpeg',
         attachment_type: 'photo',
@@ -531,7 +567,7 @@ async function main() {
       {
         user_id: user.id,
         file_url: 'https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400',
-        file_name: 'airpods-pro-001.jpg',
+        file_name: 'airpods-pro-item.jpg',
         file_size: 650000,
         file_type: 'image/jpeg',
         attachment_type: 'photo',
@@ -541,22 +577,22 @@ async function main() {
       {
         user_id: user.id,
         file_url: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400',
-        file_name: 'nike-jordan-001.jpg',
+        file_name: 'nike-jordan-item.jpg',
         file_size: 750000,
         file_type: 'image/jpeg',
         attachment_type: 'photo',
         related_type: 'purchase_request_item',
-        related_id: '4'
+        related_id: '6'
       },
       {
         user_id: user.id,
         file_url: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400',
-        file_name: 'playstation-5-001.jpg',
+        file_name: 'playstation-5-item.jpg',
         file_size: 1200000,
         file_type: 'image/jpeg',
         attachment_type: 'photo',
         related_type: 'purchase_request_item',
-        related_id: '5'
+        related_id: '7'
       },
 
       // Documents
@@ -579,6 +615,18 @@ async function main() {
         attachment_type: 'document',
         related_type: 'package',
         related_id: 'PKG-2025-003'
+      },
+
+      // Receipts
+      {
+        user_id: user.id,
+        file_url: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400',
+        file_name: 'recu-paiement-001.jpg',
+        file_size: 245000,
+        file_type: 'image/jpeg',
+        attachment_type: 'receipt',
+        related_type: 'package',
+        related_id: 'PKG-2025-001'
       }
     ]
   });

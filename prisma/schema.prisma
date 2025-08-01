@@ -66,8 +66,6 @@ model PurchaseRequest {
   admin_notes     String?
   created_at      DateTime?                 @default(now()) @db.Timestamp(6)
   updated_at      DateTime?                 @default(now()) @updatedAt @db.Timestamp(6)
-  item_files      Json?
-  receipt_file_id Int?
   items           PurchaseRequestItem[]
   timeline        PurchaseRequestTimeline[]
   user            User                      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
@@ -85,16 +83,12 @@ model PurchaseRequestItem {
   url                 String?
   price               Decimal         @db.Decimal(10, 2)
   quantity            Int             @default(1)
-  image_url           String?
   specifications      String?
   variant             String?         @db.VarChar(255)
   created_at          DateTime?       @default(now()) @db.Timestamp(6)
-  attachment_file_ids Int[]
-  photo_url           String?
   updated_at          DateTime        @default(now()) @updatedAt @db.Timestamp(6)
   purchase_request    PurchaseRequest @relation(fields: [purchase_request_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  @@index([photo_url], map: "idx_purchase_request_items_photo_url")
   @@map("purchase_request_items")
 }
 
@@ -137,15 +131,11 @@ model Package {
   insurance_details String?
   created_at        DateTime?         @default(now()) @db.Timestamp(6)
   updated_at        DateTime?         @default(now()) @updatedAt @db.Timestamp(6)
-  receipt_files     String[]
-  document_file_ids Int[]
-  receipt_url       String?
   items             PackageItem[]
   timeline          PackageTimeline[]
   user              User              @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@index([created_at], map: "idx_packages_created_at")
-  @@index([receipt_url], map: "idx_packages_receipt_url")
   @@index([status], map: "idx_packages_status")
   @@index([tracking_number], map: "idx_packages_tracking")
   @@index([user_id], map: "idx_packages_user_id")
@@ -158,7 +148,6 @@ model PackageItem {
   name       String    @db.VarChar(500)
   quantity   Int       @default(1)
   value      Decimal?  @db.Decimal(10, 2)
-  image_url  String?
   created_at DateTime? @default(now()) @db.Timestamp(6)
   updated_at DateTime  @default(now()) @updatedAt @db.Timestamp(6)
   package    Package   @relation(fields: [package_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
@@ -190,8 +179,8 @@ model Attachment {
   file_name       String    @db.VarChar(500)
   file_size       Int?
   file_type       String?   @db.VarChar(100)
-  attachment_type String    @db.VarChar(50)
-  related_type    String?   @db.VarChar(50)
+  attachment_type String    @db.VarChar(50) // 'photo', 'document', 'receipt', 'invoice', etc.
+  related_type    String?   @db.VarChar(50) // 'package', 'package_item', 'purchase_request', 'purchase_request_item'
   related_id      String?   @db.VarChar(255)
   uploaded_at     DateTime? @default(now()) @db.Timestamp(6)
   created_at      DateTime? @default(now()) @db.Timestamp(6)

@@ -222,8 +222,8 @@ export const db = {
     })
 
     if (packageData) {
-      // Fetch attachments related to this package
-      const attachments = await prisma.attachment.findMany({
+      // Fetch attachments related to this package directly
+      const packageAttachments = await prisma.attachment.findMany({
         where: {
           related_type: 'package',
           related_id: id,
@@ -231,12 +231,25 @@ export const db = {
         orderBy: { created_at: 'desc' },
       })
 
+      // Fetch attachments related to package items
+      const itemAttachments = await prisma.attachment.findMany({
+        where: {
+          related_type: 'package_item',
+          related_id: {
+            in: packageData.items.map(item => item.id.toString())
+          },
+        },
+        orderBy: { created_at: 'desc' },
+      })
+
+      // Combine both types of attachments
+      const allAttachments = [...packageAttachments, ...itemAttachments]
+
       return {
         ...packageData,
-        attachments,
+        attachments: allAttachments,
       }
     }
-
     return packageData
   },
 
