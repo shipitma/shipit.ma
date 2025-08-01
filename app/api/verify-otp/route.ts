@@ -1,16 +1,22 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { verifyOTPCode, createNeonSession, userExists, getNeonUserByPhone, updateUserLastLogin, cleanupPendingRegistrationSessions } from "@/lib/auth"
+import { serverTranslate, getLanguageFromRequest } from "@/lib/server-translations"
 
 export async function POST(request: NextRequest) {
   try {
     const { phoneNumber, otp } = await request.json()
+    
+    // Get user's preferred language from request headers
+    const language = getLanguageFromRequest(request)
 
     if (!phoneNumber || !otp) {
-      return NextResponse.json({ error: "Numéro de téléphone et code OTP requis" }, { status: 400 })
+      const errorMessage = await serverTranslate('auth.phoneNumber', language, 'Phone Number')
+      return NextResponse.json({ error: errorMessage }, { status: 400 })
     }
 
     if (otp.length !== 6) {
-      return NextResponse.json({ error: "Format OTP invalide" }, { status: 400 })
+      const errorMessage = await serverTranslate('errors.invalidOtp', language, 'Invalid OTP format')
+      return NextResponse.json({ error: errorMessage }, { status: 400 })
     }
 
     // Check if user exists to determine purpose
@@ -21,7 +27,8 @@ export async function POST(request: NextRequest) {
     const verificationResult = await verifyOTPCode(phoneNumber, otp, purpose)
 
     if (!verificationResult.success) {
-      return NextResponse.json({ error: verificationResult.message }, { status: 400 })
+      const errorMessage = await serverTranslate('errors.invalidOtp', language, 'Invalid OTP code')
+      return NextResponse.json({ error: errorMessage }, { status: 400 })
     }
 
     // Get user agent and IP for session tracking
@@ -32,7 +39,8 @@ export async function POST(request: NextRequest) {
       // User exists - create authenticated session with Neon Auth
       const user = await getNeonUserByPhone(phoneNumber)
       if (!user) {
-        return NextResponse.json({ error: "Utilisateur non trouvé" }, { status: 404 })
+        const errorMessage = await serverTranslate('errors.userNotFound', language, 'User not found')
+        return NextResponse.json({ error: errorMessage }, { status: 404 })
       }
 
       // Clean up any pending registration sessions for this user
@@ -82,6 +90,8 @@ export async function POST(request: NextRequest) {
       })
     }
   } catch (error) {
-    return NextResponse.json({ error: "Échec de la vérification OTP" }, { status: 500 })
+    const language = getLanguageFromRequest(request)
+    const errorMessage = await serverTranslate('errors.otpVerificationFailed', language, 'OTP verification failed')
+    return NextResponse.json({ error: errorMessage }, { status: 500 })
   }
 }

@@ -92,6 +92,45 @@
     "description": "Description",
     "value": "Value",
     "insurance": "Insurance",
+    "tracking": "Tracking",
+    "carrier": "Carrier",
+    "eta": "ETA",
+    "weight": "Weight",
+    "dimensions": "Dimensions",
+    "shippingCost": "Shipping Cost",
+    "insurance": "Insurance",
+    "progress": "Progress",
+    "items": "Items",
+    "additionalItems": "additional items",
+    "lastUpdated": "Last Updated",
+    "viewDetails": "View Details",
+    "payShipping": "Pay Shipping",
+    "pending": "Pending",
+    "searchPlaceholder": "Search packages...",
+    "statusFilter": "Status",
+    "allStatuses": "All Statuses",
+    "emptyState": {
+      "title": "No packages found",
+      "description": "No packages match your search criteria.",
+      "descriptionNoPackages": "You don't have any packages yet. Start by adding your first package.",
+      "addFirstPackage": "Add your first package"
+    },
+    "stats": {
+      "expected": "Expected",
+      "arrived": "Arrived",
+      "inTransit": "In Transit",
+      "delivered": "Delivered"
+    },
+    "statusLabels": {
+      "expected": "Expected",
+      "processing": "Processing",
+      "arrived": "Arrived",
+      "in_transit": "In Transit",
+      "delivered": "Delivered"
+    },
+    "errors": {
+      "sessionExpired": "Session expired, please log in again"
+    },
     "statuses": {
       "pending": "Pending",
       "inTransit": "In Transit",
@@ -144,6 +183,32 @@
       "amount": "Amount",
       "confirmButton": "Confirm Payment",
       "success": "Payment processed successfully"
+    },
+    "searchPlaceholder": "Search purchases...",
+    "statusFilter": "Status",
+    "allStatuses": "All Statuses",
+    "emptyState": {
+      "title": "No purchases found",
+      "description": "No purchases match your search criteria.",
+      "descriptionNoPurchases": "You don't have any purchases yet. Start by creating your first purchase request.",
+      "createFirstRequest": "Create your first request"
+    },
+    "stats": {
+      "pendingReview": "Pending Review",
+      "pendingPayment": "Pending Payment",
+      "inProgress": "In Progress",
+      "completed": "Completed"
+    },
+    "statusLabels": {
+      "pending_review": "Pending Review",
+      "pending_payment": "Pending Payment",
+      "confirmed": "Confirmed",
+      "purchasing": "Purchasing",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "errors": {
+      "sessionExpired": "Session expired, please log in again"
     }
   },
   "purchaseDetail": {
@@ -178,7 +243,8 @@
     "otpVerification": "OTP Verification",
     "enterOtp": "Enter OTP Code",
     "resendOtp": "Resend OTP",
-    "verifyOtp": "Verify OTP"
+    "verifyOtp": "Verify OTP",
+    "whatsappOtpMessage": "Your shipit.ma verification code is: {otp}\n\nThis code will expire in 10 minutes. Do not share this code with anyone."
   },
   "login": {
     "title": "Welcome to shipit.ma",
@@ -268,7 +334,15 @@
     "emailAlreadyExists": "Email already exists",
     "phoneAlreadyExists": "Phone number already exists",
     "invalidOtp": "Invalid OTP code",
-    "otpExpired": "OTP code expired"
+    "otpExpired": "OTP code expired",
+    "whatsappSendFailed": "Failed to send OTP via WhatsApp",
+    "userNotFound": "User not found",
+    "otpVerificationFailed": "OTP verification failed",
+    "rateLimitExceeded": "Too many attempts. Please try again in 15 minutes.",
+    "incompleteRegistration": "Incomplete registration data",
+    "invalidSession": "Invalid or expired session",
+    "registrationFailed": "User registration failed",
+    "userCheckFailed": "Failed to check user"
   },
   "success": {
     "profileUpdated": "Profile updated successfully",
@@ -295,9 +369,8 @@
     }
   },
   "header": {
-    "products": "Products",
-    "resources": "Resources",
-    "features": "Features",
+    "about": "About",
+    "contact": "Contact",
     "pricing": "Pricing",
     "myAccount": "My Account",
     "register": "Register",
@@ -321,15 +394,7 @@
     "step3": "3. Consolidate your packages to pay less"
   },
   "footer": {
-    "description": "The benefits of a mailbox in Turkey, France, Spain or the US to deliver everything you want to Morocco.",
-    "termsOfUse": "Terms of Use",
-    "privacyPolicy": "Privacy Policy",
-    "gdprAgreement": "GDPR Data Processing Agreement",
-    "gdprFaq": "GDPR FAQ",
-    "privacyNotice": "shipit Privacy Notice",
-    "editorialPolicy": "shipit Editorial Policy",
-    "returnPolicy": "Return and Refund Policy",
-    "paymentSecurity": "Payment & Security"
+    "copyright": "All rights reserved."
   },
   "mainLayout": {
     "loading": "Loading...",
@@ -354,7 +419,8 @@
       "packages": "Packages",
       "purchases": "Purchases",
       "profile": "Profile",
-      "create": "Create"
+      "create": "Create",
+      "details": "Details"
     },
     "help": {
       "needHelp": "Need Help?",
@@ -485,6 +551,10 @@
       "descriptionNoRequests": "You don't have any purchase requests yet. Start by creating your first request.",
       "createFirstRequest": "Create your first request"
     },
+    "total": "Total",
+    "items": "Items",
+    "created": "Created",
+    "pay": "Pay",
     "errors": {
       "sessionExpired": "Session expired, please log in again",
       "loadError": "Unable to load data"
@@ -628,7 +698,8 @@
          "error": "Error",
          "success": "Success",
          "loading": "Loading...",
-         "user": "User"
+         "user": "User",
+         "view": "View"
        },
        "packageDetail": {
          "loading": "Loading...",
@@ -720,5 +791,21 @@
            "submitted": "Payment Submitted",
            "submittedDescription": "Your payment has been submitted for review"
          }
+       },
+       "paymentCard": {
+         "title": "Payment Request",
+         "purchase": "Purchase",
+         "shipping": "Shipping",
+         "dueDate": "Due Date",
+         "paymentDate": "Payment Date",
+         "breakdown": "Breakdown",
+         "others": "others",
+         "acceptedMethods": "Accepted Methods",
+         "overdue": "Payment Overdue",
+         "submittedPayments": "Submitted Payments",
+                   "amount": "Amount",
+          "method": "Method",
+          "date": "Date",
+          "payNow": "Pay Now"
        }
 } 

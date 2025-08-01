@@ -10,8 +10,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast"
 import { useAnalytics } from "@/hooks/use-analytics"
 import { formatCurrency } from "@/lib/database"
-import type { PackageType } from "@/lib/database"
+import type { Package } from "@/lib/database"
 import { useTranslations } from "@/lib/hooks/use-translations"
+import { useLanguage } from "@/lib/context/language-context"
 
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -35,7 +36,7 @@ const getStatusColor = (status: string) => {
 export default function PackagesPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
-  const [packages, setPackages] = useState<PackageType[]>([])
+  const [packages, setPackages] = useState<any[]>([])
   const [stats, setStats] = useState({
     expected: 0,
     arrived: 0,
@@ -46,6 +47,7 @@ export default function PackagesPage() {
   const { toast } = useToast()
   const { trackPackage, trackError } = useAnalytics()
   const { t } = useTranslations()
+  const { language } = useLanguage()
 
   const getStatusLabel = (status: string) => {
     switch (status) {
@@ -394,7 +396,7 @@ export default function PackagesPage() {
                 <div>
                   <h4 className="font-medium text-sm mb-2">{t('packages.items', 'Items')} ({pkg.items?.length || 0})</h4>
                   <div className="space-y-1">
-                    {pkg.items?.slice(0, 2).map((item, index) => (
+                    {pkg.items?.slice(0, 2).map((item: any, index: number) => (
                       <p key={index} className="text-sm text-gray-600 flex items-center gap-1">
                         <span className="w-1 h-1 bg-gray-400 rounded-full flex-shrink-0"></span>
                         {item.name}
@@ -412,7 +414,7 @@ export default function PackagesPage() {
                 {/* Last Update */}
                 {pkg.updated_at && (
                   <div className="text-sm text-gray-400 pt-1 border-t border-gray-100">
-                    {t('packages.lastUpdated', 'Last Updated')}: {new Date(pkg.updated_at).toLocaleDateString('fr-FR', { 
+                    {t('packages.lastUpdated', 'Last Updated')}: {new Date(pkg.updated_at).toLocaleDateString(language === 'fr' ? 'fr-FR' : 'en-US', { 
                       day: '2-digit', 
                       month: '2-digit',
                       hour: '2-digit',

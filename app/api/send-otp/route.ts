@@ -1,12 +1,17 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { createOTPCode, userExists } from "@/lib/auth"
+import { serverTranslate, getLanguageFromRequest } from "@/lib/server-translations"
 
 export async function POST(request: NextRequest) {
   try {
     const { phoneNumber } = await request.json()
+    
+    // Get user's preferred language from request headers
+    const language = getLanguageFromRequest(request)
 
     if (!phoneNumber) {
-      return NextResponse.json({ error: "Numéro de téléphone requis" }, { status: 400 })
+      const errorMessage = await serverTranslate('auth.phoneNumber', language, 'Phone Number')
+      return NextResponse.json({ error: errorMessage }, { status: 400 })
     }
 
     // Check if user exists to determine purpose
@@ -16,36 +21,50 @@ export async function POST(request: NextRequest) {
     // Create OTP code
     const otp = await createOTPCode(phoneNumber, purpose)
 
-    // Sanitize phone number: remove leading '+' and spaces
-    const sanitizedPhone = phoneNumber.replace(/^\+/, '').replace(/\s+/g, '')
-    const chatId = `${sanitizedPhone}@c.us`
-    const text = `Votre code de vérification shipit.ma est : ${otp}\n\nCe code expirera dans 10 minutes. Ne partagez pas ce code avec qui que ce soit.`
+    // Get translated OTP message
+    const text = await serverTranslate('auth.whatsappOtpMessage', language, 
+      `Your shipit.ma verification code is: ${otp}\n\nThis code will expire in 10 minutes. Do not share this code with anyone.`,
+      { otp }
+    )
 
-    // Send OTP via the new API
-    const otpResponse = await fetch("https://otpsender.ship-it.me/api/sendText", {
+    // Send OTP via WasenderAPI
+    const whatsappApiUrl = process.env.WHATSAPP_API_URL || "https://wasenderapi.com/api/send-message"
+    const whatsappApiToken = process.env.WHATSAPP_API_TOKEN || "05dacfccde5e02a41517764948a82825ab896e3f9a7c878142309eb1346b003c"
+    
+    const otpResponse = await fetch(whatsappApiUrl, {
       method: "POST",
       headers: {
+        "Authorization": `Bearer ${whatsappApiToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        chatId: chatId,
+        to: phoneNumber,
         text: text,
-        session: "default",
       }),
     })
 
     if (!otpResponse.ok) {
-      // Don't fail the request if the OTP sender fails, for development purposes
-      // In production, you might want to handle this differently
-      console.error("Failed to send OTP:", await otpResponse.text())
+      const errorText = await otpResponse.text()
+      console.error("Failed to send OTP via WasenderAPI:", errorText)
+      
+      // Return error response for better debugging
+      const errorMessage = await serverTranslate('errors.whatsappSendFailed', language, 'Failed to send OTP via WhatsApp')
+      return NextResponse.json({ 
+        error: errorMessage,
+        details: errorText
+      }, { status: 500 })
     }
 
+    const successMessage = await serverTranslate('success.otpSent', language, 'OTP code sent successfully')
+    
     return NextResponse.json({
       success: true,
       purpose,
-      message: `Code OTP envoyé pour ${purpose === "login" ? "connexion" : "inscription"}`,
+      message: successMessage,
     })
   } catch (error) {
-    return NextResponse.json({ error: "Échec de l'envoi de l'OTP" }, { status: 500 })
+    const language = getLanguageFromRequest(request)
+    const errorMessage = await serverTranslate('errors.whatsappSendFailed', language, 'Failed to send OTP')
+    return NextResponse.json({ error: errorMessage }, { status: 500 })
   }
 }

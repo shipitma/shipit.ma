@@ -92,6 +92,45 @@
     "description": "Description",
     "value": "Valeur",
     "insurance": "Assurance",
+    "tracking": "Suivi",
+    "carrier": "Transporteur",
+    "eta": "ETA",
+    "weight": "Poids",
+    "dimensions": "Dimensions",
+    "shippingCost": "Coût d'Expédition",
+    "insurance": "Assurance",
+    "progress": "Progression",
+    "items": "Articles",
+    "additionalItems": "articles supplémentaires",
+    "lastUpdated": "Dernière Mise à Jour",
+    "viewDetails": "Voir les Détails",
+    "payShipping": "Payer l'Expédition",
+    "pending": "En Attente",
+    "searchPlaceholder": "Rechercher des colis...",
+    "statusFilter": "Statut",
+    "allStatuses": "Tous les Statuts",
+    "emptyState": {
+      "title": "Aucun colis trouvé",
+      "description": "Aucun colis ne correspond à vos critères de recherche.",
+      "descriptionNoPackages": "Vous n'avez pas encore de colis. Commencez par ajouter votre premier colis.",
+      "addFirstPackage": "Ajouter votre premier colis"
+    },
+    "stats": {
+      "expected": "Attendu",
+      "arrived": "Arrivé",
+      "inTransit": "En Transit",
+      "delivered": "Livré"
+    },
+    "statusLabels": {
+      "expected": "Attendu",
+      "processing": "En Traitement",
+      "arrived": "Arrivé",
+      "in_transit": "En Transit",
+      "delivered": "Livré"
+    },
+    "errors": {
+      "sessionExpired": "Session expirée, veuillez vous reconnecter"
+    },
     "statuses": {
       "pending": "En Attente",
       "inTransit": "En Transit",
@@ -144,6 +183,32 @@
       "amount": "Montant",
       "confirmButton": "Confirmer le Paiement",
       "success": "Paiement traité avec succès"
+    },
+    "searchPlaceholder": "Rechercher des achats...",
+    "statusFilter": "Statut",
+    "allStatuses": "Tous les Statuts",
+    "emptyState": {
+      "title": "Aucun achat trouvé",
+      "description": "Aucun achat ne correspond à vos critères de recherche.",
+      "descriptionNoPurchases": "Vous n'avez pas encore d'achats. Commencez par créer votre première demande d'achat.",
+      "createFirstRequest": "Créer votre première demande"
+    },
+    "stats": {
+      "pendingReview": "En Attente de Révision",
+      "pendingPayment": "En Attente de Paiement",
+      "inProgress": "En Cours",
+      "completed": "Terminé"
+    },
+    "statusLabels": {
+      "pending_review": "En Attente de Révision",
+      "pending_payment": "En Attente de Paiement",
+      "confirmed": "Confirmé",
+      "purchasing": "Achat en Cours",
+      "completed": "Terminé",
+      "cancelled": "Annulé"
+    },
+    "errors": {
+      "sessionExpired": "Session expirée, veuillez vous reconnecter"
     }
   },
   "purchaseDetail": {
@@ -178,7 +243,8 @@
     "otpVerification": "Vérification OTP",
     "enterOtp": "Entrez le code OTP",
     "resendOtp": "Renvoyer OTP",
-    "verifyOtp": "Vérifier OTP"
+    "verifyOtp": "Vérifier OTP",
+    "whatsappOtpMessage": "Votre code de vérification shipit.ma est : {otp}\n\nCe code expirera dans 10 minutes. Ne partagez pas ce code avec qui que ce soit."
   },
   "login": {
     "title": "Bienvenue sur shipit.ma",
@@ -268,7 +334,15 @@
     "emailAlreadyExists": "Cet email existe déjà",
     "phoneAlreadyExists": "Ce numéro de téléphone existe déjà",
     "invalidOtp": "Code OTP invalide",
-    "otpExpired": "Code OTP expiré"
+    "otpExpired": "Code OTP expiré",
+    "whatsappSendFailed": "Échec de l'envoi de l'OTP via WhatsApp",
+    "userNotFound": "Utilisateur non trouvé",
+    "otpVerificationFailed": "Échec de la vérification OTP",
+    "rateLimitExceeded": "Trop de tentatives. Réessayez dans 15 minutes.",
+    "incompleteRegistration": "Données d'inscription incomplètes",
+    "invalidSession": "Session invalide ou expirée",
+    "registrationFailed": "Échec de l'enregistrement de l'utilisateur",
+    "userCheckFailed": "Échec de la vérification de l'utilisateur"
   },
   "success": {
     "profileUpdated": "Profil mis à jour avec succès",
@@ -295,9 +369,8 @@
     }
   },
   "header": {
-    "products": "Produits",
-    "resources": "Ressources",
-    "features": "Fonctionnalités",
+    "about": "À Propos",
+    "contact": "Contact",
     "pricing": "Tarifs",
     "myAccount": "Mon Compte",
     "register": "S'inscrire",
@@ -321,15 +394,7 @@
     "step3": "3. Regroupez vos colis pour payer moins cher"
   },
   "footer": {
-    "description": "Les avantages d'une boîte postale en Turquie, en France, en Espagne ou aux US pour faire livrer tout ce que vous voulez au Maroc.",
-    "termsOfUse": "Conditions d'Utilisation",
-    "privacyPolicy": "Politique de Confidentialité",
-    "gdprAgreement": "Accord de Traitement des Données GDPR",
-    "gdprFaq": "FAQ sur le GDPR",
-    "privacyNotice": "Avis de Confidentialité shipit",
-    "editorialPolicy": "Politique Éditoriale shipit",
-    "returnPolicy": "Politique de Retour et Remboursement",
-    "paymentSecurity": "Paiement & Sécurité"
+    "copyright": "Tous droits réservés."
   },
   "mainLayout": {
     "loading": "Chargement...",
@@ -354,7 +419,8 @@
       "packages": "Colis",
       "purchases": "Achats",
       "profile": "Profil",
-      "create": "Créer"
+      "create": "Créer",
+      "details": "Détails"
     },
     "help": {
       "needHelp": "Besoin d'aide ?",
@@ -483,12 +549,16 @@
             "title": "Aucune demande trouvée",
             "description": "Aucune demande ne correspond à vos critères de recherche.",
             "descriptionNoRequests": "Vous n'avez pas encore de demandes d'achat. Commencez par créer votre première demande.",
-            "createFirstRequest": "Créer votre première demande"
-          },
-          "errors": {
-            "sessionExpired": "Session expirée, veuillez vous reconnecter",
-            "loadError": "Impossible de charger les données"
-          }
+                  "createFirstRequest": "Créer votre première demande"
+    },
+    "total": "Total",
+    "items": "Articles",
+    "created": "Créé",
+    "pay": "Payer",
+    "errors": {
+      "sessionExpired": "Session expirée, veuillez vous reconnecter",
+      "loadError": "Impossible de charger les données"
+    }
         },
         "packages": {
           "title": "Colis",
@@ -628,7 +698,8 @@
          "error": "Erreur",
          "success": "Succès",
          "loading": "Chargement...",
-         "user": "Utilisateur"
+         "user": "Utilisateur",
+         "view": "Voir"
        },
        "packageDetail": {
          "loading": "Chargement...",
@@ -720,5 +791,21 @@
            "submitted": "Payment Submitted",
            "submittedDescription": "Your payment has been submitted for review"
          }
+       },
+       "paymentCard": {
+         "title": "Demande de Paiement",
+         "purchase": "Achat",
+         "shipping": "Expédition",
+         "dueDate": "Date d'Échéance",
+         "paymentDate": "Date de Paiement",
+         "breakdown": "Répartition",
+         "others": "autres",
+         "acceptedMethods": "Méthodes Acceptées",
+         "overdue": "Paiement en Retard",
+         "submittedPayments": "Paiements Soumis",
+                   "amount": "Montant",
+          "method": "Méthode",
+          "date": "Date",
+          "payNow": "Payer Maintenant"
        }
 } 

@@ -135,7 +135,7 @@
       "cancelled": "ملغي"
     },
     "total": "المجموع",
-    "items": "المواد",
+    "items": "العناصر",
     "created": "تم الإنشاء",
     "pay": "ادفع",
     "payment": {
@@ -144,6 +144,32 @@
       "amount": "المبلغ",
       "confirmButton": "تأكيد الدفع",
       "success": "تم معالجة الدفع بنجاح"
+    },
+    "searchPlaceholder": "البحث في المشتريات...",
+    "statusFilter": "الحالة",
+    "allStatuses": "جميع الحالات",
+    "emptyState": {
+      "title": "لم يتم العثور على مشتريات",
+      "description": "لا توجد مشتريات تطابق معايير البحث الخاصة بك.",
+      "descriptionNoPurchases": "ليس لديك أي مشتريات بعد. ابدأ بإنشاء طلب شراءك الأول.",
+      "createFirstRequest": "إنشاء طلبك الأول"
+    },
+    "stats": {
+      "pendingReview": "في انتظار المراجعة",
+      "pendingPayment": "في انتظار الدفع",
+      "inProgress": "قيد التنفيذ",
+      "completed": "مكتمل"
+    },
+    "statusLabels": {
+      "pending_review": "في انتظار المراجعة",
+      "pending_payment": "في انتظار الدفع",
+      "confirmed": "مؤكد",
+      "purchasing": "قيد الشراء",
+      "completed": "مكتمل",
+      "cancelled": "ملغي"
+    },
+    "errors": {
+      "sessionExpired": "انتهت صلاحية الجلسة، يرجى تسجيل الدخول مرة أخرى"
     }
   },
   "purchaseDetail": {
@@ -178,7 +204,8 @@
     "otpVerification": "التحقق من رمز OTP",
     "enterOtp": "أدخل رمز OTP",
     "resendOtp": "إعادة إرسال OTP",
-    "verifyOtp": "التحقق من OTP"
+    "verifyOtp": "التحقق من OTP",
+    "whatsappOtpMessage": "رمز التحقق الخاص بك من shipit.ma هو: {otp}\n\nسينتهي هذا الرمز خلال 10 دقائق. لا تشارك هذا الرمز مع أي شخص."
   },
   "login": {
     "title": "مرحباً بك في shipit.ma",
@@ -268,7 +295,15 @@
     "emailAlreadyExists": "البريد الإلكتروني موجود بالفعل",
     "phoneAlreadyExists": "رقم الهاتف موجود بالفعل",
     "invalidOtp": "رمز OTP غير صحيح",
-    "otpExpired": "رمز OTP منتهي الصلاحية"
+    "otpExpired": "رمز OTP منتهي الصلاحية",
+    "whatsappSendFailed": "فشل في إرسال OTP عبر واتساب",
+    "userNotFound": "المستخدم غير موجود",
+    "otpVerificationFailed": "فشل في التحقق من OTP",
+    "rateLimitExceeded": "محاولات كثيرة جداً. يرجى المحاولة مرة أخرى خلال 15 دقيقة.",
+    "incompleteRegistration": "بيانات التسجيل غير مكتملة",
+    "invalidSession": "جلسة غير صالحة أو منتهية الصلاحية",
+    "registrationFailed": "فشل في تسجيل المستخدم",
+    "userCheckFailed": "فشل في التحقق من المستخدم"
   },
   "success": {
     "profileUpdated": "تم تحديث الملف الشخصي بنجاح",
@@ -295,9 +330,8 @@
     }
   },
   "header": {
-    "products": "المنتجات",
-    "resources": "الموارد",
-    "features": "الميزات",
+    "about": "حول",
+    "contact": "اتصل بنا",
     "pricing": "الأسعار",
     "myAccount": "حسابي",
     "register": "التسجيل",
@@ -321,15 +355,7 @@
     "step3": "3. اجمع طرودك لتدفع أقل"
   },
   "footer": {
-    "description": "مزايا صندوق بريد في تركيا وفرنسا وإسبانيا أو الولايات المتحدة لتوصيل كل ما تريد إلى المغرب.",
-    "termsOfUse": "شروط الاستخدام",
-    "privacyPolicy": "سياسة الخصوصية",
-    "gdprAgreement": "اتفاقية معالجة البيانات GDPR",
-    "gdprFaq": "الأسئلة الشائعة حول GDPR",
-    "privacyNotice": "إشعار الخصوصية shipit",
-    "editorialPolicy": "السياسة التحريرية shipit",
-    "returnPolicy": "سياسة الإرجاع والاسترداد",
-    "paymentSecurity": "الدفع والأمان"
+    "copyright": "جميع الحقوق محفوظة."
   },
   "mainLayout": {
     "loading": "جاري التحميل...",
@@ -354,7 +380,8 @@
       "packages": "الطرود",
       "purchases": "المشتريات",
       "profile": "الملف الشخصي",
-      "create": "إنشاء"
+      "create": "إنشاء",
+      "details": "التفاصيل"
     },
     "help": {
       "needHelp": "تحتاج مساعدة؟",
@@ -486,6 +513,10 @@
       "descriptionNoRequests": "ليس لديك أي طلبات شراء بعد. ابدأ بإنشاء طلبك الأول.",
       "createFirstRequest": "إنشاء طلبك الأول"
     },
+    "total": "المجموع",
+    "items": "العناصر",
+    "created": "تم الإنشاء",
+    "pay": "ادفع",
     "errors": {
       "sessionExpired": "انتهت صلاحية الجلسة، يرجى تسجيل الدخول مرة أخرى",
       "loadError": "تعذر تحميل البيانات"
@@ -517,6 +548,20 @@
       "descriptionNoPackages": "ليس لديك أي طرود بعد. ابدأ بإضافة طردك الأول.",
       "addFirstPackage": "إضافة طردك الأول"
     },
+    "tracking": "التتبع",
+    "carrier": "الناقل",
+    "eta": "الوقت المتوقع للوصول",
+    "weight": "الوزن",
+    "dimensions": "الأبعاد",
+    "shippingCost": "تكلفة الشحن",
+    "insurance": "التأمين",
+    "progress": "التقدم",
+    "items": "العناصر",
+    "additionalItems": "عناصر إضافية",
+    "lastUpdated": "آخر تحديث",
+    "viewDetails": "عرض التفاصيل",
+    "payShipping": "دفع الشحن",
+    "pending": "في الانتظار",
     "errors": {
       "sessionExpired": "انتهت صلاحية الجلسة، يرجى تسجيل الدخول مرة أخرى",
       "loadError": "تعذر تحميل البيانات"
@@ -629,7 +674,8 @@
          "error": "خطأ",
          "success": "نجح",
          "loading": "جاري التحميل...",
-         "user": "المستخدم"
+         "user": "المستخدم",
+         "view": "عرض"
        },
        "packageDetail": {
          "loading": "جاري التحميل...",
@@ -721,5 +767,21 @@
            "submitted": "تم إرسال الدفع",
            "submittedDescription": "تم إرسال دفعتك للمراجعة"
          }
+       },
+       "paymentCard": {
+         "title": "طلب الدفع",
+         "purchase": "شراء",
+         "shipping": "شحن",
+         "dueDate": "تاريخ الاستحقاق",
+         "paymentDate": "تاريخ الدفع",
+         "breakdown": "التفصيل",
+         "others": "أخرى",
+         "acceptedMethods": "الطرق المقبولة",
+         "overdue": "دفع متأخر",
+         "submittedPayments": "المدفوعات المقدمة",
+                   "amount": "المبلغ",
+          "method": "الطريقة",
+          "date": "التاريخ",
+          "payNow": "ادفع الآن"
        }
 } 

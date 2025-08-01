@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Menu, ChevronDown } from "lucide-react"
+import { Menu } from "lucide-react"
 import { useState } from "react"
 import { useAuth } from "@/lib/auth-context"
 import { LanguageSelector } from "@/components/ui/LanguageSelector"
@@ -11,16 +11,9 @@ import { useTranslations } from "@/lib/hooks/use-translations"
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [openDropdowns, setOpenDropdowns] = useState<{ [key: string]: boolean }>({})
   const { user } = useAuth()
   const { t } = useTranslations()
 
-  const toggleDropdown = (key: string) => {
-    setOpenDropdowns((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }))
-  }
   return (
     <header className="sticky top-0 z-50 bg-transparent">
       <div className="container mx-auto px-4 py-4">
@@ -63,144 +56,12 @@ export function Header() {
 
             {/* Navigation Items */}
             <div className="flex items-center space-x-6">
-              {/* Products Dropdown */}
-              <div className="relative group">
-                <button className="flex items-center space-x-1 text-gray-700 hover:text-orange-600 transition-colors py-2">
-                  <span>{t('header.products', 'Produits')}</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                  <div className="py-2">
-                    <a
-                      href="/calculator"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Calculateur de Frais
-                    </a>
-                    <a
-                      href="/online-store"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Achats en ligne
-                    </a>
-                    <a href="/test" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors">
-                      Suivi de Colis
-                    </a>
-                    <a
-                      href="/lead-capture-form"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Formulaire d'Envoi
-                    </a>
-                    <a
-                      href="/landing-page-creator"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Pages de Service
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              {/* Resources Dropdown */}
-              <div className="relative group">
-                <button className="flex items-center space-x-1 text-gray-700 hover:text-orange-600 transition-colors py-2">
-                  <span>{t('header.resources', 'Ressources')}</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                  <div className="py-2">
-                    <a href="/blog" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors">
-                      Notre Blog
-                    </a>
-                    <a
-                      href="https://help.marquiz.io/"
-                      target="_blank"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
-                      rel="noreferrer"
-                    >
-                      Base de Connaissances
-                    </a>
-                    <a href="/faq" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors">
-                      FAQ
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              {/* Features Dropdown */}
-              <div className="relative group">
-                <button className="flex items-center space-x-1 text-gray-700 hover:text-orange-600 transition-colors py-2">
-                  <span>{t('header.features', 'Fonctionnalités')}</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                  <div className="py-2">
-                    <a
-                      href="/features#payment"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Traitement des Paiements
-                    </a>
-                    <a
-                      href="/features#discounts"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Remises Dynamiques
-                    </a>
-                    <a
-                      href="/features/#ab"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Regroupement de Colis
-                    </a>
-                    <a
-                      href="/features/#results"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Options de Livraison
-                    </a>
-                    <a
-                      href="/features/#utm"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Suivi Personnalisé
-                    </a>
-                    <a
-                      href="/features/#analytics"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Analyse des Coûts
-                    </a>
-                    <a
-                      href="/features/#vetvlenie"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Assistance Client
-                    </a>
-                    <a
-                      href="/features/#meta"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Déclarations Douanières
-                    </a>
-                    <a
-                      href="/features/#dog"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Achats Personnels
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              {/* Plans Link */}
+              <a href="/about-us" className="text-gray-700 hover:text-orange-600 transition-colors py-2">
+                {t('header.about', 'À Propos')}
+              </a>
+              <a href="/contact" className="text-gray-700 hover:text-orange-600 transition-colors py-2">
+                {t('header.contact', 'Contact')}
+              </a>
               <a href="/pricing" className="text-gray-700 hover:text-orange-600 transition-colors py-2">
                 {t('header.pricing', 'Tarifs')}
               </a>
@@ -275,108 +136,12 @@ export function Header() {
             <a href="/" className="block py-2 text-gray-700 hover:text-orange-600">
               Accueil
             </a>
-
-            {/* Products Section */}
-            <div>
-              <div
-                className="flex items-center justify-between py-2 cursor-pointer"
-                onClick={() => toggleDropdown("mobile-products")}
-              >
-                <span className="text-gray-700 hover:text-orange-600">Produits</span>
-                <ChevronDown
-                  className={`w-4 h-4 text-gray-400 transition-transform ${openDropdowns["mobile-products"] ? "rotate-180" : ""}`}
-                />
-              </div>
-              <div className={`ml-4 space-y-2 ${openDropdowns["mobile-products"] ? "block" : "hidden"}`}>
-                <a href="/calculator" className="block py-1 text-gray-600 hover:text-orange-600">
-                  Calculateur de Frais
-                </a>
-                <a href="/online-store" className="block py-1 text-gray-600 hover:text-orange-600">
-                  Achats en ligne
-                </a>
-                <a href="/test" className="block py-1 text-gray-600 hover:text-orange-600">
-                  Suivi de Colis
-                </a>
-                <a href="/lead-capture-form" className="block py-1 text-gray-600 hover:text-orange-600">
-                  Formulaire d'Envoi
-                </a>
-                <a href="/landing-page-creator" className="block py-1 text-gray-600 hover:text-orange-600">
-                  Pages de Service
-                </a>
-              </div>
-            </div>
-
-            {/* Resources Section */}
-            <div>
-              <div
-                className="flex items-center justify-between py-2 cursor-pointer"
-                onClick={() => toggleDropdown("mobile-resources")}
-              >
-                <span className="text-gray-700 hover:text-orange-600">Ressources</span>
-                <ChevronDown
-                  className={`w-4 h-4 text-gray-400 transition-transform ${openDropdowns["mobile-resources"] ? "rotate-180" : ""}`}
-                />
-              </div>
-              <div className={`ml-4 space-y-2 ${openDropdowns["mobile-resources"] ? "block" : "hidden"}`}>
-                <a href="/blog" className="block py-1 text-gray-600 hover:text-orange-600">
-                  Notre Blog
-                </a>
-                <a
-                  href="https://help.marquiz.io/"
-                  target="_blank"
-                  className="block py-1 text-gray-600 hover:text-orange-600"
-                  rel="noreferrer"
-                >
-                  Base de Connaissances
-                </a>
-                <a href="/faq" className="block py-1 text-gray-600 hover:text-orange-600">
-                  FAQ
-                </a>
-              </div>
-            </div>
-
-            {/* Features Section */}
-            <div>
-              <div
-                className="flex items-center justify-between py-2 cursor-pointer"
-                onClick={() => toggleDropdown("mobile-features")}
-              >
-                <span className="text-gray-700 hover:text-orange-600">Fonctionnalités</span>
-                <ChevronDown
-                  className={`w-4 h-4 text-gray-400 transition-transform ${openDropdowns["mobile-features"] ? "rotate-180" : ""}`}
-                />
-              </div>
-              <div className={`ml-4 space-y-2 ${openDropdowns["mobile-features"] ? "block" : "hidden"}`}>
-                <a href="/features#payment" className="block py-1 text-gray-600 hover:text-orange-600">
-                  Traitement des Paiements
-                </a>
-                <a href="/features#discounts" className="block py-1 text-gray-600 hover:text-orange-600">
-                  Remises Dynamiques
-                </a>
-                <a href="/features/#ab" className="block py-1 text-gray-600 hover:text-orange-600">
-                  Regroupement de Colis
-                </a>
-                <a href="/features/#results" className="block py-1 text-gray-600 hover:text-orange-600">
-                  Options de Livraison
-                </a>
-                <a href="/features/#utm" className="block py-1 text-gray-600 hover:text-orange-600">
-                  Suivi Personnalisé
-                </a>
-                <a href="/features/#analytics" className="block py-1 text-gray-600 hover:text-orange-600">
-                  Analyse des Coûts
-                </a>
-                <a href="/features/#vetvlenie" className="block py-1 text-gray-600 hover:text-orange-600">
-                  Assistance Client
-                </a>
-                <a href="/features/#meta" className="block py-1 text-gray-600 hover:text-orange-600">
-                  Déclarations Douanières
-                </a>
-                <a href="/features/#dog" className="block py-1 text-gray-600 hover:text-orange-600">
-                  Achats Personnels
-                </a>
-              </div>
-            </div>
-
+            <a href="/about-us" className="block py-2 text-gray-700 hover:text-orange-600">
+              À Propos
+            </a>
+            <a href="/contact" className="block py-2 text-gray-700 hover:text-orange-600">
+              Contact
+            </a>
             <a href="/pricing" className="block py-2 text-gray-700 hover:text-orange-600">
               Tarifs
             </a>

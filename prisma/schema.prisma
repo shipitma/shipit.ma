@@ -1,0 +1,330 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String            @id @default(cuid()) @db.VarChar(50)
+  phone_number      String            @unique @db.VarChar(20)
+  first_name        String            @db.VarChar(100)
+  last_name         String            @db.VarChar(100)
+  email             String?           @db.VarChar(255)
+  address_line      String?           @db.VarChar(500)
+  city              String?           @db.VarChar(100)
+  state             String?           @db.VarChar(100)
+  zip               String?           @db.VarChar(20)
+  country           String            @default("Morocco") @db.VarChar(100)
+  created_at        DateTime?         @default(now()) @db.Timestamp(6)
+  updated_at        DateTime?         @default(now()) @updatedAt @db.Timestamp(6)
+  email_verified    Boolean?          @default(false)
+  phone_verified    Boolean?          @default(false)
+  last_login        DateTime?         @db.Timestamp(6)
+  attachments       Attachment[]
+  packages          Package[]
+  payment_requests  PaymentRequest[]
+  payments          Payment[]
+  purchase_requests PurchaseRequest[]
+  sessions          Session[]
+
+  @@index([email], map: "idx_users_email")
+  @@index([phone_number], map: "idx_users_phone")
+  @@index([phone_number], map: "idx_users_phone_number")
+  @@index([phone_number, phone_verified], map: "idx_users_phone_verified")
+  @@map("users")
+}
+
+model Warehouse {
+  id           Int       @id @default(autoincrement())
+  name         String    @db.VarChar(100)
+  country      String    @db.VarChar(100)
+  address_line String    @db.VarChar(500)
+  city         String    @db.VarChar(100)
+  state        String?   @db.VarChar(100)
+  zip          String?   @db.VarChar(20)
+  phone        String?   @db.VarChar(30)
+  notes        String?
+  created_at   DateTime? @default(now()) @db.Timestamp(6)
+  updated_at   DateTime? @default(now()) @updatedAt @db.Timestamp(6)
+  address      String    @default("") @db.VarChar(255)
+
+  @@map("warehouses")
+}
+
+model PurchaseRequest {
+  id              String                    @id @db.VarChar(50)
+  user_id         String                    @db.VarChar(50)
+  date            DateTime                  @db.Date
+  status          String                    @db.VarChar(50)
+  total_amount    Decimal                   @db.Decimal(10, 2)
+  payment_due     Decimal?                  @db.Decimal(10, 2)
+  items_cost      Decimal?                  @db.Decimal(10, 2)
+  shipping_fee    Decimal?                  @db.Decimal(10, 2)
+  service_fee     Decimal?                  @db.Decimal(10, 2)
+  processing_fee  Decimal?                  @db.Decimal(10, 2)
+  taxes           Decimal?                  @db.Decimal(10, 2)
+  admin_notes     String?
+  created_at      DateTime?                 @default(now()) @db.Timestamp(6)
+  updated_at      DateTime?                 @default(now()) @updatedAt @db.Timestamp(6)
+  item_files      Json?
+  receipt_file_id Int?
+  items           PurchaseRequestItem[]
+  timeline        PurchaseRequestTimeline[]
+  user            User                      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([date], map: "idx_purchase_requests_date")
+  @@index([status], map: "idx_purchase_requests_status")
+  @@index([user_id], map: "idx_purchase_requests_user_id")
+  @@map("purchase_requests")
+}
+
+model PurchaseRequestItem {
+  id                  Int             @id @default(autoincrement())
+  purchase_request_id String          @db.VarChar(50)
+  name                String          @db.VarChar(500)
+  url                 String?
+  price               Decimal         @db.Decimal(10, 2)
+  quantity            Int             @default(1)
+  image_url           String?
+  specifications      String?
+  variant             String?         @db.VarChar(255)
+  created_at          DateTime?       @default(now()) @db.Timestamp(6)
+  attachment_file_ids Int[]
+  photo_url           String?
+  updated_at          DateTime        @default(now()) @updatedAt @db.Timestamp(6)
+  purchase_request    PurchaseRequest @relation(fields: [purchase_request_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([photo_url], map: "idx_purchase_request_items_photo_url")
+  @@map("purchase_request_items")
+}
+
+model PurchaseRequestTimeline {
+  id                  Int             @id @default(autoincrement())
+  purchase_request_id String          @db.VarChar(50)
+  status              String          @db.VarChar(255)
+  date                DateTime        @db.Date
+  time                DateTime        @db.Time(6)
+  completed           Boolean         @default(false)
+  description         String?
+  created_at          DateTime?       @default(now()) @db.Timestamp(6)
+  updated_at          DateTime        @default(now()) @updatedAt @db.Timestamp(6)
+  purchase_request    PurchaseRequest @relation(fields: [purchase_request_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("purchase_request_timeline")
+}
+
+model Package {
+  id                String            @id @db.VarChar(50)
+  user_id           String            @db.VarChar(50)
+  description       String            @db.VarChar(500)
+  status            String            @db.VarChar(50)
+  tracking_number   String?           @unique @db.VarChar(100)
+  weight            String?           @db.VarChar(50)
+  dimensions        String?           @db.VarChar(100)
+  estimated_value   Decimal?          @db.Decimal(10, 2)
+  shipping_cost     Decimal?          @db.Decimal(10, 2)
+  insurance         Decimal?          @db.Decimal(10, 2)
+  progress          Int?              @default(0)
+  eta               String?           @db.VarChar(100)
+  carrier           String?           @db.VarChar(100)
+  origin            String?           @db.VarChar(255)
+  destination       String?           @db.VarChar(255)
+  retailer          String?           @db.VarChar(255)
+  shipping_method   String?           @db.VarChar(100)
+  service           String?           @db.VarChar(100)
+  transit_time      String?           @db.VarChar(100)
+  tracking_url      String?
+  insurance_details String?
+  created_at        DateTime?         @default(now()) @db.Timestamp(6)
+  updated_at        DateTime?         @default(now()) @updatedAt @db.Timestamp(6)
+  receipt_files     String[]
+  document_file_ids Int[]
+  receipt_url       String?
+  items             PackageItem[]
+  timeline          PackageTimeline[]
+  user              User              @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([created_at], map: "idx_packages_created_at")
+  @@index([receipt_url], map: "idx_packages_receipt_url")
+  @@index([status], map: "idx_packages_status")
+  @@index([tracking_number], map: "idx_packages_tracking")
+  @@index([user_id], map: "idx_packages_user_id")
+  @@map("packages")
+}
+
+model PackageItem {
+  id         Int       @id @default(autoincrement())
+  package_id String    @db.VarChar(50)
+  name       String    @db.VarChar(500)
+  quantity   Int       @default(1)
+  value      Decimal?  @db.Decimal(10, 2)
+  image_url  String?
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_at DateTime  @default(now()) @updatedAt @db.Timestamp(6)
+  package    Package   @relation(fields: [package_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("package_items")
+}
+
+model PackageTimeline {
+  id          Int       @id @default(autoincrement())
+  package_id  String    @db.VarChar(50)
+  status      String    @db.VarChar(255)
+  location    String?   @db.VarChar(255)
+  date        DateTime  @db.Date
+  time        String    @db.VarChar(50)
+  completed   Boolean   @default(false)
+  description String?
+  icon        String?   @db.VarChar(50)
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  updated_at  DateTime  @default(now()) @updatedAt @db.Timestamp(6)
+  package     Package   @relation(fields: [package_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("package_timeline")
+}
+
+model PaymentRequest {
+  id              String             @id @db.VarChar(50)
+  user_id         String             @db.VarChar(50)
+  type            String             @db.VarChar(50)
+  related_id      String             @db.VarChar(50)
+  amount          Decimal            @db.Decimal(10, 2)
+  due_date        DateTime           @db.Date
+  status          String             @db.VarChar(50)
+  paid_date       DateTime?          @db.Date
+  receipt_url     String?
+  created_at      DateTime?          @default(now()) @db.Timestamp(6)
+  updated_at      DateTime?          @default(now()) @updatedAt @db.Timestamp(6)
+  payment_methods String[]
+  breakdowns      PaymentBreakdown[]
+  user            User               @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  payments        Payment[]
+
+  @@index([due_date], map: "idx_payment_requests_due_date")
+  @@index([related_id], map: "idx_payment_requests_related_id")
+  @@index([status], map: "idx_payment_requests_status")
+  @@index([user_id], map: "idx_payment_requests_user_id")
+  @@map("payment_requests")
+}
+
+model Payment {
+  id                 String            @id @default(cuid()) @db.VarChar(50)
+  user_id            String            @db.VarChar(50)
+  payment_request_id String            @db.VarChar(50)
+  amount             Decimal           @db.Decimal(10, 2)
+  payment_method     String            @db.VarChar(50)
+  transaction_id     String?           @db.VarChar(100)
+  payment_proof_url  String?
+  payment_date       DateTime          @db.Date
+  status             String            @default("submitted") @db.VarChar(50)
+  admin_notes        String?
+  verified_at        DateTime?         @db.Timestamp(6)
+  verified_by        String?           @db.VarChar(50)
+  created_at         DateTime?         @default(now()) @db.Timestamp(6)
+  updated_at         DateTime?         @default(now()) @updatedAt @db.Timestamp(6)
+  payment_timeline   PaymentTimeline[]
+  payment_request    PaymentRequest    @relation(fields: [payment_request_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user               User              @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([payment_date], map: "idx_payments_payment_date")
+  @@index([payment_request_id], map: "idx_payments_payment_request_id")
+  @@index([status], map: "idx_payments_status")
+  @@index([user_id], map: "idx_payments_user_id")
+  @@map("payments")
+}
+
+model PaymentBreakdown {
+  id                 Int            @id @default(autoincrement())
+  payment_request_id String         @db.VarChar(50)
+  item_key           String         @db.VarChar(100)
+  item_value         Decimal        @db.Decimal(10, 2)
+  created_at         DateTime?      @default(now()) @db.Timestamp(6)
+  payment_request    PaymentRequest @relation(fields: [payment_request_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("payment_breakdowns")
+}
+
+model PaymentTimeline {
+  id          Int       @id @default(autoincrement())
+  payment_id  String    @db.VarChar(50)
+  status      String    @db.VarChar(50)
+  date        DateTime  @db.Date
+  time        DateTime  @db.Time(6)
+  completed   Boolean   @default(false)
+  description String?
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  payments    Payment   @relation(fields: [payment_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([payment_id], map: "idx_payment_timeline_payment_id")
+  @@index([status], map: "idx_payment_timeline_status")
+  @@map("payment_timeline")
+}
+
+model Attachment {
+  id              Int       @id @default(autoincrement())
+  user_id         String    @db.VarChar(255)
+  file_url        String
+  file_name       String    @db.VarChar(500)
+  file_size       Int?
+  file_type       String?   @db.VarChar(100)
+  attachment_type String    @db.VarChar(50)
+  related_type    String?   @db.VarChar(50)
+  related_id      String?   @db.VarChar(255)
+  uploaded_at     DateTime? @default(now()) @db.Timestamp(6)
+  created_at      DateTime? @default(now()) @db.Timestamp(6)
+  updated_at      DateTime? @default(now()) @updatedAt @db.Timestamp(6)
+  user            User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_attachments_user")
+
+  @@index([related_type, related_id], map: "idx_attachments_related")
+  @@index([attachment_type], map: "idx_attachments_type")
+  @@index([uploaded_at], map: "idx_attachments_uploaded_at")
+  @@index([user_id], map: "idx_attachments_user_id")
+  @@map("attachments")
+}
+
+model Session {
+  id            String    @id @db.VarChar(100)
+  user_id       String?   @db.VarChar(50)
+  phone_number  String    @db.VarChar(20)
+  session_type  String    @db.VarChar(20)
+  expires_at    DateTime  @db.Timestamp(6)
+  created_at    DateTime? @default(now()) @db.Timestamp(6)
+  last_accessed DateTime? @default(now()) @db.Timestamp(6)
+  user_agent    String?
+  ip_address    String?   @db.Inet
+  access_token  String?
+  refresh_token String?
+  user          User?     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([expires_at], map: "idx_sessions_expires")
+  @@index([expires_at], map: "idx_sessions_expires_at")
+  @@index([phone_number], map: "idx_sessions_phone")
+  @@index([session_type], map: "idx_sessions_type")
+  @@index([user_id], map: "idx_sessions_user_id")
+  @@index([user_id, session_type], map: "idx_sessions_user_type")
+  @@map("sessions")
+}
+
+model OtpCode {
+  id           Int       @id @default(autoincrement())
+  phone_number String    @db.VarChar(20)
+  code         String    @db.VarChar(6)
+  purpose      String    @db.VarChar(20)
+  expires_at   DateTime  @db.Timestamp(6)
+  verified     Boolean?  @default(false)
+  attempts     Int?      @default(0)
+  max_attempts Int?      @default(3)
+  created_at   DateTime? @default(now()) @db.Timestamp(6)
+  verified_at  DateTime? @db.Timestamp(6)
+  updated_at   DateTime  @default(now()) @updatedAt @db.Timestamp(6)
+
+  @@index([code], map: "idx_otp_codes_code")
+  @@index([expires_at], map: "idx_otp_codes_expires")
+  @@index([phone_number], map: "idx_otp_codes_phone")
+  @@index([phone_number, purpose], map: "idx_otp_codes_phone_purpose")
+  @@index([purpose], map: "idx_otp_codes_purpose")
+  @@map("otp_codes")
+}

@@ -60,11 +60,13 @@ export default function MainLayout({
   ]
 
   const breadcrumbNameMap: { [key: string]: string } = {
-    "/dashboard": t('mainLayout.breadcrumbs.dashboard', 'Tableau de Bord'),
-    "/packages": t('mainLayout.breadcrumbs.packages', 'Colis'),
-    "/purchases": t('mainLayout.breadcrumbs.purchases', 'Achats'),
-    "/profile": t('mainLayout.breadcrumbs.profile', 'Profil'),
-    "/create": t('mainLayout.breadcrumbs.create', 'Créer'),
+    "/dashboard": t('mainLayout.breadcrumbs.dashboard', 'Dashboard'),
+    "/packages": t('mainLayout.breadcrumbs.packages', 'Packages'),
+    "/purchases": t('mainLayout.breadcrumbs.purchases', 'Purchases'),
+    "/profile": t('mainLayout.breadcrumbs.profile', 'Profile'),
+    "/create": t('mainLayout.breadcrumbs.create', 'Create'),
+    "/purchases/create": t('mainLayout.actions.newPurchaseRequest', 'New Purchase Request'),
+    "/packages/create": t('mainLayout.actions.addPackage', 'Add Package'),
   }
 
   // Show loading screen while auth is initializing
@@ -131,13 +133,16 @@ export default function MainLayout({
           {pathSegments.map((segment, index) => {
             currentPath += `/${segment}`
             const isLast = index === pathSegments.length - 1
-            const name = breadcrumbNameMap[currentPath] || segment.charAt(0).toUpperCase() + segment.slice(1)
+            const name = breadcrumbNameMap[currentPath] || 
+              (segment === 'create' ? t('mainLayout.breadcrumbs.create', 'Create') :
+               segment === 'id' ? t('mainLayout.breadcrumbs.details', 'Details') :
+               segment.charAt(0).toUpperCase() + segment.slice(1))
             // Check if currentPath is a valid link, otherwise don't make it a link.
             const isLink = Object.keys(breadcrumbNameMap).includes(currentPath) || /\[id\]/.test(currentPath) === false
 
             return (
               <React.Fragment key={currentPath}>
-                <BreadcrumbSeparator />
+                <BreadcrumbSeparator isRTL={isRTL} />
                 <BreadcrumbItem>
                   {isLast ? (
                     <BreadcrumbPage className="text-sm">{name}</BreadcrumbPage>

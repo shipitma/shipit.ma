@@ -24,9 +24,10 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Upload } from "lucide-react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { type PurchaseRequest, formatCurrency, formatDate } from "@/lib/database"
+import { type PurchaseRequest, formatCurrency, formatDateWithLanguage } from "@/lib/database"
 import { useAuth } from "@/lib/auth-context"
 import { useTranslations } from "@/lib/hooks/use-translations"
+import { useLanguage } from "@/lib/context/language-context"
 
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -52,7 +53,7 @@ const getStatusColor = (status: string) => {
 export default function PurchasesPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
-  const [purchaseRequests, setPurchaseRequests] = useState<PurchaseRequest[]>([])
+  const [purchaseRequests, setPurchaseRequests] = useState<any[]>([])
   const [stats, setStats] = useState({
     pending_review: 0,
     pending_payment: 0,
@@ -67,6 +68,7 @@ export default function PurchasesPage() {
   const { trackPurchase, trackError } = useAnalytics()
   const { user } = useAuth()
   const { t } = useTranslations()
+  const { language } = useLanguage()
 
   const getStatusLabel = (status: string) => {
     switch (status) {
@@ -182,8 +184,8 @@ export default function PurchasesPage() {
     }
   }
 
-  const getTotalItemsCount = (request: PurchaseRequest) => {
-    return request.items?.reduce((total, item) => total + (item.quantity || 0), 0) || 0
+  const getTotalItemsCount = (request: any) => {
+    return request.items?.reduce((total: number, item: any) => total + (item.quantity || 0), 0) || 0
   }
 
   return (
@@ -382,7 +384,7 @@ export default function PurchasesPage() {
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">{t('purchases.total', 'Total')}:</span>
-                    <span className="font-medium">{formatCurrency(request.total_amount)}</span>
+                    <span className="font-medium">{formatCurrency(request.total_amount ? Number(request.total_amount) : null)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">{t('purchases.items', 'Items')}:</span>
@@ -390,7 +392,7 @@ export default function PurchasesPage() {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">{t('purchases.created', 'Created')}:</span>
-                    <span className="font-medium">{formatDate(request.created_at)}</span>
+                    <span className="font-medium">{formatDateWithLanguage(request.created_at, language)}</span>
                   </div>
                 </div>
 
@@ -434,7 +436,7 @@ export default function PurchasesPage() {
             <div className="bg-gray-50 p-4 rounded-lg">
               <div className="flex justify-between mb-2">
                 <span>{t('purchases.payment.amount', 'Montant')}:</span>
-                <span className="font-medium">{selectedRequest && formatCurrency(selectedRequest.total_amount)}</span>
+                                    <span className="font-medium">{selectedRequest && formatCurrency(selectedRequest.total_amount ? Number(selectedRequest.total_amount) : null)}</span>
               </div>
             </div>
             <div className="flex gap-2">

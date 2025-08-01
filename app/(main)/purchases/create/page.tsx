@@ -7,14 +7,16 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { ArrowLeft, Plus, X, ShoppingCart } from "lucide-react"
+import { ArrowLeft, ArrowRight, Plus, X, ShoppingCart } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { useTranslations } from "@/lib/hooks/use-translations"
+import { useLanguage } from "@/lib/context/language-context"
 
 export default function CreatePurchaseRequestPage() {
   const router = useRouter()
   const { toast } = useToast()
   const { t } = useTranslations()
+  const { isRTL } = useLanguage()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [newRequest, setNewRequest] = useState({
     items: [{ name: "", url: "", variant: "", quantity: 1 }],
@@ -103,7 +105,7 @@ export default function CreatePurchaseRequestPage() {
         {/* Header */}
         <div className="flex items-center gap-3 mb-4">
           <Button variant="ghost" size="sm" onClick={() => router.back()} className="h-7 w-7 p-0">
-            <ArrowLeft className="w-3 h-3" />
+            {isRTL ? <ArrowRight className="w-3 h-3" /> : <ArrowLeft className="w-3 h-3" />}
           </Button>
           <div className="space-y-1">
             <h1 className="text-lg font-semibold">{t('createPurchase.title', 'Créer une Demande d\'Achat')}</h1>

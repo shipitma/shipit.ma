@@ -21,7 +21,7 @@ export default function LoginPage() {
   const { toast } = useToast()
   const { trackAuth, trackError } = useAnalytics()
   const { t } = useTranslations()
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -43,7 +43,10 @@ export default function LoginPage() {
 
       const response = await fetch("/api/send-otp", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "X-Language": language // Send current language preference
+        },
         body: JSON.stringify({ phoneNumber: fullPhoneNumber }),
       })
 

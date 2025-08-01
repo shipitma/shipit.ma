@@ -1,12 +1,17 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { userExists } from "@/lib/auth"
+import { serverTranslate, getLanguageFromRequest } from "@/lib/server-translations"
 
 export async function POST(request: NextRequest) {
   try {
     const { phoneNumber } = await request.json()
+    
+    // Get user's preferred language from request headers
+    const language = getLanguageFromRequest(request)
 
     if (!phoneNumber) {
-      return NextResponse.json({ error: "Numéro de téléphone requis" }, { status: 400 })
+      const errorMessage = await serverTranslate('auth.phoneNumber', language, 'Phone Number')
+      return NextResponse.json({ error: errorMessage }, { status: 400 })
     }
 
     const exists = await userExists(phoneNumber)
@@ -16,6 +21,8 @@ export async function POST(request: NextRequest) {
       exists,
     })
   } catch (error) {
-    return NextResponse.json({ error: "Échec de la vérification de l'utilisateur" }, { status: 500 })
+    const language = getLanguageFromRequest(request)
+    const errorMessage = await serverTranslate('errors.userCheckFailed', language, 'Failed to check user')
+    return NextResponse.json({ error: errorMessage }, { status: 500 })
   }
 } 

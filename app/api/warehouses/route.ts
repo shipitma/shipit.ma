@@ -1,12 +1,17 @@
 import { NextResponse } from 'next/server';
-import { getDatabase } from '@/lib/database';
+import { prisma } from '@/lib/prisma';
 
 export async function GET() {
   try {
-    const sql = getDatabase();
-    const warehouses = await sql`SELECT * FROM warehouses ORDER BY country, name`;
+    const warehouses = await prisma.warehouse.findMany({
+      orderBy: [
+        { country: 'asc' },
+        { name: 'asc' }
+      ]
+    });
     return NextResponse.json({ warehouses });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch warehouses', details: error }, { status: 500 });
+    console.error('Error fetching warehouses:', error);
+    return NextResponse.json({ error: 'Failed to fetch warehouses' }, { status: 500 });
   }
 } 

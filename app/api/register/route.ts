@@ -7,19 +7,25 @@ import {
   updateUserLastLogin,
   cleanupPendingRegistrationSessions,
 } from "@/lib/auth"
+import { serverTranslate, getLanguageFromRequest } from "@/lib/server-translations"
 
 export async function POST(request: NextRequest) {
   try {
     const { sessionId, firstName, lastName, email, address } = await request.json()
+    
+    // Get user's preferred language from request headers
+    const language = getLanguageFromRequest(request)
 
     if (!sessionId || !firstName || !lastName || !address) {
-      return NextResponse.json({ error: "Données d'inscription incomplètes" }, { status: 400 })
+      const errorMessage = await serverTranslate('errors.incompleteRegistration', language, 'Incomplete registration data')
+      return NextResponse.json({ error: errorMessage }, { status: 400 })
     }
 
     // Verify session
     const session = await getNeonSession(sessionId)
     if (!session || session.session_type !== "pending_registration") {
-      return NextResponse.json({ error: "Session invalide ou expirée" }, { status: 401 })
+      const errorMessage = await serverTranslate('errors.invalidSession', language, 'Invalid or expired session')
+      return NextResponse.json({ error: errorMessage }, { status: 401 })
     }
 
     // Create user with Neon Auth
@@ -70,6 +76,8 @@ export async function POST(request: NextRequest) {
       },
     })
   } catch (error) {
-    return NextResponse.json({ error: "Échec de l'enregistrement de l'utilisateur" }, { status: 500 })
+    const language = getLanguageFromRequest(request)
+    const errorMessage = await serverTranslate('errors.registrationFailed', language, 'User registration failed')
+    return NextResponse.json({ error: errorMessage }, { status: 500 })
   }
 }

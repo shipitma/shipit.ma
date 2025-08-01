@@ -28,7 +28,7 @@ export default function VerifyPage() {
   const { login } = useAuth()
   const { trackAuth, trackError } = useAnalytics()
   const { t } = useTranslations()
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
 
   useEffect(() => {
     const storedPhone = sessionStorage.getItem("phoneNumber")
@@ -125,7 +125,10 @@ export default function VerifyPage() {
     try {
       const response = await fetch("/api/verify-otp", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "X-Language": language // Send current language preference
+        },
         body: JSON.stringify({ phoneNumber, otp: code }),
       })
 
@@ -178,7 +181,10 @@ export default function VerifyPage() {
     try {
       const response = await fetch("/api/send-otp", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "X-Language": language // Send current language preference
+        },
         body: JSON.stringify({ phoneNumber }),
       })
 
