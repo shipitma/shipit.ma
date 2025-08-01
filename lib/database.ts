@@ -134,7 +134,7 @@ export const db = {
   },
 
   getPurchaseRequest: async (id: string) => {
-    return await prisma.purchaseRequest.findUnique({
+    const purchaseRequestData = await prisma.purchaseRequest.findUnique({
       where: { id },
       include: {
         items: true,
@@ -143,6 +143,38 @@ export const db = {
         },
       },
     })
+
+    if (purchaseRequestData) {
+      // Fetch attachments related to this purchase request directly
+      const directAttachments = await prisma.attachment.findMany({
+        where: {
+          related_type: 'purchase_request',
+          related_id: id,
+        },
+        orderBy: { created_at: 'desc' },
+      })
+
+      // Fetch attachments related to purchase request items
+      const itemAttachments = await prisma.attachment.findMany({
+        where: {
+          related_type: 'purchase_request_item',
+          related_id: {
+            in: purchaseRequestData.items.map(item => item.id.toString())
+          },
+        },
+        orderBy: { created_at: 'desc' },
+      })
+
+      // Combine both types of attachments
+      const allAttachments = [...directAttachments, ...itemAttachments]
+
+      return {
+        ...purchaseRequestData,
+        attachments: allAttachments,
+      }
+    }
+
+    return purchaseRequestData
   },
 
   createPurchaseRequest: async (data: {
@@ -179,7 +211,7 @@ export const db = {
   },
 
   getPackage: async (id: string) => {
-    return await prisma.package.findUnique({
+    const packageData = await prisma.package.findUnique({
       where: { id },
       include: {
         items: true,
@@ -188,6 +220,24 @@ export const db = {
         },
       },
     })
+
+    if (packageData) {
+      // Fetch attachments related to this package
+      const attachments = await prisma.attachment.findMany({
+        where: {
+          related_type: 'package',
+          related_id: id,
+        },
+        orderBy: { created_at: 'desc' },
+      })
+
+      return {
+        ...packageData,
+        attachments,
+      }
+    }
+
+    return packageData
   },
 
   createPackage: async (data: {
