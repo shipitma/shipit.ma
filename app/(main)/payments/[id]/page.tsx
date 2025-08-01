@@ -691,7 +691,7 @@ export default function PaymentDetailsPage({ params }: { params: Promise<{ id: s
                   <div className={`text-sm text-${selectedMethodDetails.color}-800 space-y-1`}>
                     {Object.entries(selectedMethodDetails.details).map(([key, value]) => (
                       <p key={key}>
-                        <strong>{key}:</strong> {value}
+                        <strong>{key}:</strong> {key === "Téléphone" ? <span dir="ltr">{value}</span> : value}
                       </p>
                     ))}
                     <p>

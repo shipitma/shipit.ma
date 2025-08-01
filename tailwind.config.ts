@@ -11,7 +11,9 @@ const config: Config = {
   theme: {
   	extend: {
   		fontFamily: {
-  			sans: ["Satoshi", "sans-serif"],
+  			sans: ["IBM Plex Sans", "sans-serif"],
+  			"ibm-plex-sans": ["IBM Plex Sans", "sans-serif"],
+  			"ibm-plex-sans-arabic": ["IBM Plex Sans Arabic", "sans-serif"],
   		},
   		colors: {
   			background: 'hsl(var(--background))',

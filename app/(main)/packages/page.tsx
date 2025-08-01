@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast"
 import { useAnalytics } from "@/hooks/use-analytics"
 import { formatCurrency } from "@/lib/database"
 import type { PackageType } from "@/lib/database"
+import { useTranslations } from "@/lib/hooks/use-translations"
 
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -29,22 +30,7 @@ const getStatusColor = (status: string) => {
   }
 }
 
-const getStatusLabel = (status: string) => {
-  switch (status) {
-    case "expected":
-      return "Attendu"
-    case "processing":
-      return "En Traitement"
-    case "arrived":
-      return "Arrivé"
-    case "in_transit":
-      return "En Transit"
-    case "delivered":
-      return "Livré"
-    default:
-      return status.replace("_", " ")
-  }
-}
+// ... existing code ...
 
 export default function PackagesPage() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -59,6 +45,24 @@ export default function PackagesPage() {
   const [loading, setLoading] = useState(true)
   const { toast } = useToast()
   const { trackPackage, trackError } = useAnalytics()
+  const { t } = useTranslations()
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case "expected":
+        return t('packages.statusLabels.expected', 'Attendu')
+      case "processing":
+        return t('packages.statusLabels.processing', 'En Traitement')
+      case "arrived":
+        return t('packages.statusLabels.arrived', 'Arrivé')
+      case "in_transit":
+        return t('packages.statusLabels.in_transit', 'En Transit')
+      case "delivered":
+        return t('packages.statusLabels.delivered', 'Livré')
+      default:
+        return status.replace("_", " ")
+    }
+  }
 
   const fetchData = async (status?: string) => {
     try {
@@ -66,8 +70,8 @@ export default function PackagesPage() {
       const sessionId = localStorage.getItem("authToken")
       if (!sessionId) {
         toast({
-          title: "Erreur",
-          description: "Session expirée, veuillez vous reconnecter",
+          title: t('common.error', 'Erreur'),
+          description: t('packages.errors.sessionExpired', 'Session expirée, veuillez vous reconnecter'),
           variant: "destructive",
         })
         return
@@ -100,8 +104,8 @@ export default function PackagesPage() {
       console.error("Error fetching data:", error)
       setPackages([])
       toast({
-        title: "Erreur",
-        description: "Impossible de charger les données",
+        title: t('common.error', 'Erreur'),
+        description: t('packages.errors.loadError', 'Impossible de charger les données'),
         variant: "destructive",
       })
     } finally {
@@ -144,26 +148,26 @@ export default function PackagesPage() {
           <Button size="sm" asChild className="h-7 text-sm">
             <a href="/packages/create">
               <Plus className="w-3 h-3 mr-1" />
-              Ajouter Colis
+              {t('packages.addPackageButton', 'Ajouter Colis')}
             </a>
           </Button>
         </div>
         <div>
-          <h1 className="text-lg font-semibold">Colis</h1>
-          <p className="text-sm text-gray-600">Suivez vos colis du Maroc vers la Turquie</p>
+          <h1 className="text-lg font-semibold">{t('packages.title', 'Colis')}</h1>
+          <p className="text-sm text-gray-600">{t('packages.subtitle', 'Suivez vos colis du Maroc vers la Turquie')}</p>
         </div>
       </div>
 
       {/* Desktop Header */}
       <div className="hidden lg:flex items-center justify-between">
         <div>
-          <h1 className="text-lg font-semibold">Colis</h1>
-          <p className="text-sm text-gray-600">Suivez vos colis du Maroc vers la Turquie</p>
+          <h1 className="text-lg font-semibold">{t('packages.title', 'Colis')}</h1>
+          <p className="text-sm text-gray-600">{t('packages.subtitle', 'Suivez vos colis du Maroc vers la Turquie')}</p>
         </div>
         <Button size="sm" asChild className="h-7 text-sm">
           <a href="/packages/create">
             <Plus className="w-3 h-3 mr-1" />
-            Ajouter Colis
+            {t('packages.addPackageButton', 'Ajouter Colis')}
           </a>
         </Button>
       </div>
@@ -174,7 +178,7 @@ export default function PackagesPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600 mb-1">Attendu</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">{t('packages.stats.expected', 'Attendu')}</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.expected}</p>
               </div>
               <div className="p-2 rounded-md bg-gray-100">
@@ -187,7 +191,7 @@ export default function PackagesPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600 mb-1">Arrivé</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">{t('packages.stats.arrived', 'Arrivé')}</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.arrived}</p>
               </div>
               <div className="p-2 rounded-md bg-orange-100">
@@ -200,7 +204,7 @@ export default function PackagesPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600 mb-1">En Transit</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">{t('packages.stats.inTransit', 'En Transit')}</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.in_transit}</p>
               </div>
               <div className="p-2 rounded-md bg-green-100">
@@ -213,7 +217,7 @@ export default function PackagesPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600 mb-1">Livré</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">{t('packages.stats.delivered', 'Livré')}</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.delivered}</p>
               </div>
               <div className="p-2 rounded-md bg-purple-100">
@@ -229,7 +233,7 @@ export default function PackagesPage() {
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-2 top-2 w-3 h-3 text-gray-400" />
           <Input
-            placeholder="Rechercher des colis..."
+            placeholder={t('packages.searchPlaceholder', 'Rechercher des colis...')}
             value={searchTerm}
             onChange={(e) => handleSearch(e.target.value)}
             className="pl-7 h-8 text-sm"
@@ -238,23 +242,23 @@ export default function PackagesPage() {
         <Select value={statusFilter} onValueChange={setStatusFilter}>
           <SelectTrigger className="w-40 h-8 text-sm">
             <Filter className="w-3 h-3 mr-1" />
-            <SelectValue placeholder="Statut" />
+            <SelectValue placeholder={t('packages.statusFilter', 'Statut')} />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all" className="text-sm">
-              Tous les Statuts
+              {t('packages.allStatuses', 'Tous les Statuts')}
             </SelectItem>
             <SelectItem value="expected" className="text-sm">
-              Attendu
+              {t('packages.statusLabels.expected', 'Attendu')}
             </SelectItem>
             <SelectItem value="arrived" className="text-sm">
-              Arrivé
+              {t('packages.statusLabels.arrived', 'Arrivé')}
             </SelectItem>
             <SelectItem value="in_transit" className="text-sm">
-              En Transit
+              {t('packages.statusLabels.in_transit', 'En Transit')}
             </SelectItem>
             <SelectItem value="delivered" className="text-sm">
-              Livré
+              {t('packages.statusLabels.delivered', 'Livré')}
             </SelectItem>
           </SelectContent>
         </Select>
@@ -293,12 +297,12 @@ export default function PackagesPage() {
               </div>
             </div>
             <CardTitle className="text-lg font-semibold text-gray-900">
-              Aucun colis trouvé
+              {t('packages.emptyState.title', 'Aucun colis trouvé')}
             </CardTitle>
             <CardDescription className="text-sm text-gray-600">
               {searchTerm || statusFilter !== "all"
-                ? "Aucun colis ne correspond à vos critères de recherche."
-                : "Vous n'avez pas encore de colis. Commencez par ajouter votre premier colis."}
+                ? t('packages.emptyState.description', 'Aucun colis ne correspond à vos critères de recherche.')
+                : t('packages.emptyState.descriptionNoPackages', 'Vous n\'avez pas encore de colis. Commencez par ajouter votre premier colis.')}
             </CardDescription>
           </CardHeader>
           <CardContent className="text-center pt-0">
@@ -306,7 +310,7 @@ export default function PackagesPage() {
               <Button size="sm" asChild>
                 <a href="/packages/create">
                   <Plus className="w-4 h-4 mr-2" />
-                  Ajouter votre premier colis
+                  {t('packages.emptyState.addFirstPackage', 'Ajouter votre premier colis')}
                 </a>
               </Button>
             )}
@@ -329,42 +333,43 @@ export default function PackagesPage() {
               <CardContent className="pt-0 space-y-3">
                 <div className="space-y-1 text-sm">
                   <div className="flex justify-between py-0.5">
-                    <span className="text-gray-500">Suivi:</span>
+                    <span className="text-gray-500">{t('packages.tracking', 'Tracking')}:</span>
                     <span className="font-mono text-sm">{pkg.tracking_number || "N/A"}</span>
                   </div>
+
                   {pkg.carrier && (
                     <div className="flex justify-between py-0.5">
-                      <span className="text-gray-500">Transporteur:</span>
+                      <span className="text-gray-500">{t('packages.carrier', 'Carrier')}:</span>
                       <span className="font-medium">{pkg.carrier}</span>
                     </div>
                   )}
                   {pkg.eta && (
                     <div className="flex justify-between py-0.5">
-                      <span className="text-gray-500">ETA:</span>
+                      <span className="text-gray-500">{t('packages.eta', 'ETA')}:</span>
                       <span className="font-medium">{pkg.eta}</span>
                     </div>
                   )}
                   {pkg.weight && (
                     <div className="flex justify-between py-0.5">
-                      <span className="text-gray-500">Poids:</span>
+                      <span className="text-gray-500">{t('packages.weight', 'Poids')}:</span>
                       <span className="font-medium">{pkg.weight}</span>
                     </div>
                   )}
                   {pkg.dimensions && (
                     <div className="flex justify-between py-0.5">
-                      <span className="text-gray-500">Dimensions:</span>
+                      <span className="text-gray-500">{t('packages.dimensions', 'Dimensions')}:</span>
                       <span className="font-medium">{pkg.dimensions}</span>
                     </div>
                   )}
                   <div className="flex justify-between py-0.5">
-                    <span className="text-gray-500">Coût d'Expédition:</span>
+                    <span className="text-gray-500">{t('packages.shippingCost', 'Shipping Cost')}:</span>
                     <span className={pkg.shipping_cost ? "font-semibold" : "text-orange-600 font-medium"}>
-                      {pkg.shipping_cost ? formatCurrency(pkg.shipping_cost) : "Pending"}
+                      {pkg.shipping_cost ? formatCurrency(pkg.shipping_cost) : t('packages.pending', 'Pending')}
                     </span>
                   </div>
                   {pkg.insurance && (
                     <div className="flex justify-between py-0.5">
-                      <span className="text-gray-500">Assurance:</span>
+                      <span className="text-gray-500">{t('packages.insurance', 'Assurance')}:</span>
                       <span className="font-medium">{formatCurrency(pkg.insurance)}</span>
                     </div>
                   )}
@@ -374,7 +379,7 @@ export default function PackagesPage() {
                 {pkg.progress !== undefined && (
                   <div className="space-y-1">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-500">Progression:</span>
+                      <span className="text-sm text-gray-500">{t('packages.progress', 'Progress')}:</span>
                       <span className="text-sm font-medium">{pkg.progress}%</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-1.5">
@@ -387,7 +392,7 @@ export default function PackagesPage() {
                 )}
 
                 <div>
-                  <h4 className="font-medium text-sm mb-2">Items ({pkg.items?.length || 0})</h4>
+                  <h4 className="font-medium text-sm mb-2">{t('packages.items', 'Items')} ({pkg.items?.length || 0})</h4>
                   <div className="space-y-1">
                     {pkg.items?.slice(0, 2).map((item, index) => (
                       <p key={index} className="text-sm text-gray-600 flex items-center gap-1">
@@ -398,7 +403,7 @@ export default function PackagesPage() {
                     {pkg.items && pkg.items.length > 2 && (
                       <p className="text-sm text-gray-600 flex items-center gap-1">
                         <span className="w-1 h-1 bg-gray-400 rounded-full flex-shrink-0"></span>+{pkg.items.length - 2}{" "}
-                        articles supplémentaires
+                        {t('packages.additionalItems', 'additional items')}
                       </p>
                     )}
                   </div>
@@ -407,7 +412,7 @@ export default function PackagesPage() {
                 {/* Last Update */}
                 {pkg.updated_at && (
                   <div className="text-sm text-gray-400 pt-1 border-t border-gray-100">
-                    Mis à jour: {new Date(pkg.updated_at).toLocaleDateString('fr-FR', { 
+                    {t('packages.lastUpdated', 'Last Updated')}: {new Date(pkg.updated_at).toLocaleDateString('fr-FR', { 
                       day: '2-digit', 
                       month: '2-digit',
                       hour: '2-digit',
@@ -426,7 +431,7 @@ export default function PackagesPage() {
                   >
                     <a href={`/packages/${pkg.id}`}>
                       <Eye className="w-3 h-3 mr-1" />
-                      Voir Détails
+                      {t('packages.viewDetails', 'View Details')}
                     </a>
                   </Button>
                   {pkg.status === "arrived" && (
@@ -439,7 +444,7 @@ export default function PackagesPage() {
                       })}
                     >
                       <DollarSign className="w-3 h-3 mr-1" />
-                      Payer Expédition
+                      {t('packages.payShipping', 'Pay Shipping')}
                     </Button>
                   )}
                 </div>

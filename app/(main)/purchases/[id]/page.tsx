@@ -12,6 +12,7 @@ import { PaymentCard } from "@/components/ui/payment-card"
 import { ArrowLeft, DollarSign, Check, Upload, ExternalLink, Package, FileText, ImageIcon, Receipt, Clock, CheckCircle, AlertCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { type PurchaseRequest, formatCurrency, formatDate } from "@/lib/database"
+import { useTranslations } from "@/lib/hooks/use-translations"
 import * as React from "react"
 
 const getStatusColor = (status: string) => {
@@ -33,20 +34,20 @@ const getStatusColor = (status: string) => {
   }
 }
 
-const getStatusLabel = (status: string) => {
+const getStatusLabel = (status: string, t: (key: string, fallback?: string) => string) => {
   switch (status) {
     case "pending_review":
-      return "En Attente de Révision"
+      return t('purchases.statusLabels.pending_review', 'En Attente de Révision')
     case "pending_payment":
-      return "En Attente de Paiement"
+      return t('purchases.statusLabels.pending_payment', 'En Attente de Paiement')
     case "confirmed":
-      return "Confirmé"
+      return t('purchases.statusLabels.confirmed', 'Confirmé')
     case "purchasing":
-      return "Achat en Cours"
+      return t('purchases.statusLabels.purchasing', 'Achat en Cours')
     case "completed":
-      return "Terminé"
+      return t('purchases.statusLabels.completed', 'Terminé')
     case "cancelled":
-      return "Annulé"
+      return t('purchases.statusLabels.cancelled', 'Annulé')
     default:
       return status.replace("_", " ")
   }
@@ -73,6 +74,7 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
   const { id } = React.use(params)
   const router = useRouter()
   const { toast } = useToast()
+  const { t } = useTranslations()
   const [isPaymentOpen, setIsPaymentOpen] = useState(false)
   const [purchaseRequest, setPurchaseRequest] = useState<(PurchaseRequest & { paymentRequest?: any; payments: any[] }) | null>(null)
   const [loading, setLoading] = useState(true)
@@ -86,16 +88,16 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
           setPurchaseRequest(data)
         } else {
           toast({
-            title: "Erreur",
-            description: "Demande d'achat introuvable",
+            title: t('common.error', 'Erreur'),
+            description: t('purchaseDetail.notFound', 'Demande d\'achat introuvable'),
             variant: "destructive",
           })
         }
       } catch (error) {
         console.error("Error fetching purchase request:", error)
         toast({
-          title: "Erreur",
-          description: "Impossible de charger la demande d'achat",
+          title: t('common.error', 'Erreur'),
+          description: t('purchaseDetail.loadError', 'Impossible de charger la demande d\'achat'),
           variant: "destructive",
         })
       } finally {
@@ -104,22 +106,22 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
     }
 
     fetchPurchaseRequest()
-  }, [id, toast])
+  }, [id, toast, t])
 
   const handlePayment = () => {
     toast({
-      title: "Payment Submitted",
-      description: "Your payment has been submitted for review",
+      title: t('purchaseDetail.payment.submitted', 'Payment Submitted'),
+      description: t('purchaseDetail.payment.submittedDescription', 'Your payment has been submitted for review'),
     })
     setIsPaymentOpen(false)
   }
 
   if (loading) {
-    return <div className="flex items-center justify-center h-64">Chargement...</div>
+    return <div className="flex items-center justify-center h-64">{t('purchaseDetail.loading', 'Chargement...')}</div>
   }
 
   if (!purchaseRequest) {
-    return <div>Purchase request not found</div>
+    return <div>{t('purchaseDetail.notFound', 'Purchase request not found')}</div>
   }
 
   return (
@@ -132,7 +134,7 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
         <div className="flex items-center gap-2">
             <h1 className="text-lg font-semibold">{purchaseRequest.id}</h1>
             <Badge className={getStatusColor(purchaseRequest.status) + ' text-xs'} variant="secondary">
-              {getStatusLabel(purchaseRequest.status)}
+              {getStatusLabel(purchaseRequest.status, t)}
             </Badge>
         </div>
       </div>
@@ -143,42 +145,42 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
           {/* Purchase Request Summary */}
           <Card className="border-gray-200">
             <CardHeader className="pb-3">
-              <CardTitle className="text-base font-semibold">Résumé de la Demande</CardTitle>
+              <CardTitle className="text-base font-semibold">{t('purchaseDetail.summary.title', 'Résumé de la Demande')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Coût des Articles :</span>
+                <span className="text-sm text-gray-500">{t('purchaseDetail.summary.itemsCost', 'Coût des Articles')} :</span>
                 <span className="text-sm font-medium">
                   {purchaseRequest.items_cost ? formatCurrency(purchaseRequest.items_cost) : "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Frais d'Expédition :</span>
+                <span className="text-sm text-gray-500">{t('purchaseDetail.summary.shippingFee', 'Frais d\'Expédition')} :</span>
                 <span className="text-sm font-medium">
                   {purchaseRequest.shipping_fee ? formatCurrency(purchaseRequest.shipping_fee) : "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Frais de Service :</span>
+                <span className="text-sm text-gray-500">{t('purchaseDetail.summary.serviceFee', 'Frais de Service')} :</span>
                 <span className="text-sm font-medium">
                   {purchaseRequest.service_fee ? formatCurrency(purchaseRequest.service_fee) : "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Frais de Traitement :</span>
+                <span className="text-sm text-gray-500">{t('purchaseDetail.summary.processingFee', 'Frais de Traitement')} :</span>
                 <span className="text-sm font-medium">
                   {purchaseRequest.processing_fee ? formatCurrency(purchaseRequest.processing_fee) : "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Taxes :</span>
+                <span className="text-sm text-gray-500">{t('purchaseDetail.summary.taxes', 'Taxes')} :</span>
                 <span className="text-sm font-medium">
                   {purchaseRequest.taxes ? formatCurrency(purchaseRequest.taxes) : "N/A"}
                 </span>
               </div>
               <div className="border-t border-gray-200 pt-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium">Montant Total :</span>
+                  <span className="text-sm font-medium">{t('purchaseDetail.summary.totalAmount', 'Montant Total')} :</span>
                   <span className="text-lg font-bold text-orange-600">
                     {formatCurrency(purchaseRequest.payment_due || purchaseRequest.total_amount)}
                   </span>
@@ -191,7 +193,7 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
           {purchaseRequest.timeline && purchaseRequest.timeline.length > 0 && (
             <Card className="border-gray-200">
               <CardHeader className="pb-3">
-                <CardTitle className="text-base font-semibold">Progression de la Demande</CardTitle>
+                <CardTitle className="text-base font-semibold">{t('purchaseDetail.timeline.title', 'Progression de la Demande')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -233,7 +235,7 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
                 <CardHeader className="pb-3">
                   <CardTitle className="flex items-center gap-2 text-base font-semibold">
                     <Package className="w-4 h-4" />
-                    Articles Demandés ({purchaseRequest.items?.length || 0})
+                    {t('purchaseDetail.items.title', 'Articles Demandés')} ({purchaseRequest.items?.length || 0})
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -250,7 +252,7 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
                             <div>
                               <h3 className="text-sm font-medium">{item.name}</h3>
                               {item.specifications && <p className="text-sm text-gray-500">{item.specifications}</p>}
-                              <p className="text-sm text-gray-500">Quantité : {item.quantity}</p>
+                              <p className="text-sm text-gray-500">{t('purchaseDetail.items.quantity', 'Quantité')} : {item.quantity}</p>
                             </div>
                             <div className="text-right">
                               <p className="text-sm font-semibold">{formatCurrency(item.price)}</p>
@@ -258,7 +260,7 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
                                 <Button variant="outline" size="sm" asChild className="h-6 text-sm mt-1">
                                   <a href={item.url} target="_blank" rel="noopener noreferrer">
                                     <ExternalLink className="w-3 h-3 mr-1" />
-                                    Voir le Produit
+                                    {t('purchaseDetail.items.viewProduct', 'Voir le Produit')}
                                   </a>
                                 </Button>
                               )}
@@ -272,7 +274,7 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
                         <div className="ml-3 pl-3 border-l-2 border-gray-100">
                           <div className="space-y-2">
                             <Label className="text-sm font-medium text-gray-700">
-                              Fichiers Joints ({item.attachments.length})
+                              {t('purchaseDetail.items.attachments', 'Fichiers Joints')} ({item.attachments.length})
                             </Label>
                             <div className="space-y-1">
                               {item.attachments.map((attachment) => {

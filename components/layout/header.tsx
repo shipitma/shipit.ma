@@ -6,11 +6,14 @@ import { Button } from "@/components/ui/button"
 import { Menu, ChevronDown } from "lucide-react"
 import { useState } from "react"
 import { useAuth } from "@/lib/auth-context"
+import { LanguageSelector } from "@/components/ui/LanguageSelector"
+import { useTranslations } from "@/lib/hooks/use-translations"
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [openDropdowns, setOpenDropdowns] = useState<{ [key: string]: boolean }>({})
   const { user } = useAuth()
+  const { t } = useTranslations()
 
   const toggleDropdown = (key: string) => {
     setOpenDropdowns((prev) => ({
@@ -63,7 +66,7 @@ export function Header() {
               {/* Products Dropdown */}
               <div className="relative group">
                 <button className="flex items-center space-x-1 text-gray-700 hover:text-orange-600 transition-colors py-2">
-                  <span>Produits</span>
+                  <span>{t('header.products', 'Produits')}</span>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
@@ -104,7 +107,7 @@ export function Header() {
               {/* Resources Dropdown */}
               <div className="relative group">
                 <button className="flex items-center space-x-1 text-gray-700 hover:text-orange-600 transition-colors py-2">
-                  <span>Ressources</span>
+                  <span>{t('header.resources', 'Ressources')}</span>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
@@ -132,7 +135,7 @@ export function Header() {
               {/* Features Dropdown */}
               <div className="relative group">
                 <button className="flex items-center space-x-1 text-gray-700 hover:text-orange-600 transition-colors py-2">
-                  <span>Fonctionnalités</span>
+                  <span>{t('header.features', 'Fonctionnalités')}</span>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
@@ -199,34 +202,15 @@ export function Header() {
 
               {/* Plans Link */}
               <a href="/pricing" className="text-gray-700 hover:text-orange-600 transition-colors py-2">
-                Tarifs
+                {t('header.pricing', 'Tarifs')}
               </a>
             </div>
           </div>
 
           {/* Right side buttons with colored borders */}
           <div className="flex items-center space-x-3">
-            {/* Language Dropdown */}
-            <div className="relative group">
-              <Button
-                variant="outline"
-                size="sm"
-                className="bg-white text-gray-700 border-orange-200 hover:border-orange-400 hover:bg-orange-50 flex items-center space-x-1 rounded-full px-4 py-2"
-              >
-                <span>FR</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </Button>
-              <div className="absolute top-full right-0 mt-2 w-20 bg-white rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <div className="py-2">
-
-                  <a href="/ar/" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors">
-                    AR
-                  </a>
-                </div>
-              </div>
-            </div>
+            {/* Language Selector */}
+            <LanguageSelector />
 
             {/* Auth Buttons */}
             {user ? (
@@ -234,7 +218,7 @@ export function Header() {
                 asChild
                 className="bg-orange-600 hover:bg-orange-700 text-white border border-orange-600 border-white rounded-full px-6 py-2"
               >
-                <Link href="/dashboard">Mon Compte</Link>
+                <Link href="/dashboard">{t('header.myAccount', 'Mon Compte')}</Link>
               </Button>
             ) : (
               <>
@@ -242,13 +226,13 @@ export function Header() {
                   asChild
                   className="bg-white text-gray-700 hover:bg-gray-100 border border-orange-200 hover:border-orange-400 rounded-full px-6 py-2"
                 >
-                  <Link href="/register">S'inscrire</Link>
+                  <Link href="/register">{t('header.register', 'S\'inscrire')}</Link>
                 </Button>
                 <Button
                   asChild
                   className="bg-orange-600 hover:bg-orange-700 text-white border border-orange-600 rounded-full px-6 py-2"
                 >
-                  <Link href="/login">Se Connecter</Link>
+                  <Link href="/login">{t('header.login', 'Se Connecter')}</Link>
                 </Button>
               </>
             )}
@@ -257,27 +241,8 @@ export function Header() {
 
         {/* Mobile Header */}
         <div className="lg:hidden flex items-center justify-between">
-          {/* Mobile Language Dropdown */}
-          <div className="relative group">
-            <Button
-              variant="outline"
-              size="sm"
-              className="bg-white text-gray-700 border-orange-200 hover:border-orange-400 hover:bg-orange-50 flex items-center space-x-1 rounded-full px-3 py-1"
-            >
-              <span>FR</span>
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </Button>
-            <div className="absolute top-full left-0 mt-2 w-20 bg-white rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-              <div className="py-2">
-
-                <a href="/ar/" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors">
-                  AR
-                </a>
-              </div>
-            </div>
-          </div>
+          {/* Mobile Language Selector */}
+          <LanguageSelector />
 
           {/* Centered Logo with pill */}
           <div className="absolute left-1/2 transform -translate-x-1/2">
@@ -294,7 +259,7 @@ export function Header() {
             size="icon"
             className="bg-white border-orange-200 hover:border-orange-400 hover:bg-orange-50 rounded-full p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Ouvrir le menu"
+            aria-label={t('header.openMenu', 'Ouvrir le menu')}
           >
             <Menu className="h-5 w-5 text-gray-700" />
           </Button>

@@ -1,16 +1,19 @@
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import { useTranslations } from "@/lib/hooks/use-translations"
 
 export function HowItWorksSection() {
+  const { t } = useTranslations()
+  
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6 leading-tight">
-            Comment Ça Marche ?
+            {t('howItWorks.title', 'Comment Ça Marche ?')}
           </h2>
           <p className="text-lg md:text-xl text-gray-600">
-            Transformez vos désirs d'achats en réalité grâce à un processus simple et interactif
+            {t('howItWorks.subtitle', 'Transformez vos désirs d\'achats en réalité grâce à un processus simple et interactif')}
           </p>
         </div>
 
@@ -44,7 +47,7 @@ export function HowItWorksSection() {
             {/* Traffic */}
             <div className="generation_box_item item1 text-center group">
               <div className="generation_box_label bg-gray-100 text-gray-700 group-hover:bg-orange-500 group-hover:text-white transition-colors duration-300 px-6 py-3 rounded-full text-sm font-medium mb-6 inline-block">
-                1. Inscrivez-vous et obtenez une adresse de livraison grâce à Shipit.
+                {t('howItWorks.step1', '1. Inscrivez-vous et obtenez une adresse de livraison grâce à Shipit.')}
               </div>
               <div className="generation_box_imgs relative">
                 <Image
@@ -67,7 +70,7 @@ export function HowItWorksSection() {
             {/* Quiz */}
             <div className="generation_box_item item2 text-center group">
               <div className="generation_box_label bg-gray-100 text-gray-700 group-hover:bg-orange-500 group-hover:text-white transition-colors duration-300 px-6 py-3 rounded-full text-sm font-medium mb-6 inline-block">
-                2. Achetez dans les boutiques de votre choix et expédiez vos articles à votre nouvelle adresse.
+                {t('howItWorks.step2', '2. Achetez dans les boutiques de votre choix et expédiez vos articles à votre nouvelle adresse.')}
               </div>
               <div className="generation_box_imgs relative">
                 <Image
@@ -90,7 +93,7 @@ export function HowItWorksSection() {
             {/* Warm Leads */}
             <div className="generation_box_item item1 text-center group">
               <div className="generation_box_label bg-gray-100 text-gray-700 group-hover:bg-orange-500 group-hover:text-white transition-colors duration-300 px-6 py-3 rounded-full text-sm font-medium mb-6 inline-block">
-                3. Regroupez vos colis pour payer moins cher
+                {t('howItWorks.step3', '3. Regroupez vos colis pour payer moins cher')}
               </div>
               <div className="generation_box_imgs relative">
                 <Image

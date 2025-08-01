@@ -10,10 +10,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { ArrowLeft, Upload, Package, Plus, X, Loader2, ExternalLink, Trash2 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useTranslations } from "@/lib/hooks/use-translations"
 
 export default function CreatePackagePage() {
   const router = useRouter()
   const { toast } = useToast()
+  const { t } = useTranslations()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isUploadingReceipt, setIsUploadingReceipt] = useState(false)
   const [deletingFiles, setDeletingFiles] = useState<Set<string>>(new Set())
@@ -83,14 +85,14 @@ export default function CreatePackagePage() {
       }))
 
       toast({
-        title: "Succès",
-        description: "Fichier téléchargé avec succès",
+        title: t('common.success', 'Succès'),
+        description: t('createPackage.success.uploadSuccess', 'Fichier téléchargé avec succès'),
       })
     } catch (error) {
       console.error("Upload error:", error)
       toast({
-        title: "Erreur",
-        description: error instanceof Error ? error.message : "Erreur lors du téléchargement du fichier",
+        title: t('common.error', 'Erreur'),
+        description: error instanceof Error ? error.message : t('createPackage.errors.uploadError', 'Erreur lors du téléchargement du fichier'),
         variant: "destructive",
       })
     } finally {
@@ -206,8 +208,8 @@ export default function CreatePackagePage() {
             <ArrowLeft className="w-3 h-3" />
           </Button>
           <div className="space-y-1">
-            <h1 className="text-lg font-semibold">Ajouter un Nouveau Colis</h1>
-            <p className="text-sm text-gray-600">Ajoutez un colis que vous attendez de recevoir</p>
+            <h1 className="text-lg font-semibold">{t('createPackage.title', 'Ajouter un Nouveau Colis')}</h1>
+            <p className="text-sm text-gray-600">{t('createPackage.subtitle', 'Ajoutez un colis que vous attendez de recevoir')}</p>
           </div>
         </div>
 
@@ -216,25 +218,25 @@ export default function CreatePackagePage() {
           <CardHeader className="pb-4">
             <CardTitle className="flex items-center gap-2 text-base font-semibold">
               <Package className="w-4 h-4" />
-              Informations du Colis
+              {t('createPackage.cardTitle', 'Informations du Colis')}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Basic Info */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <Label className="text-sm">Description du Colis *</Label>
+                <Label className="text-sm">{t('createPackage.description', 'Description du Colis *')}</Label>
                 <Input
-                  placeholder="ex: Colis Électronique"
+                  placeholder={t('createPackage.descriptionPlaceholder', 'ex: Colis Électronique')}
                   value={newPackage.description}
                   onChange={(e) => setNewPackage((prev) => ({ ...prev, description: e.target.value }))}
                   className="h-8 text-sm"
                 />
               </div>
               <div className="space-y-1">
-                <Label className="text-sm">Nom du Détaillant/Magasin ou URL *</Label>
+                <Label className="text-sm">{t('createPackage.retailer', 'Nom du Détaillant/Magasin ou URL *')}</Label>
                 <Input
-                  placeholder="ex: Amazon, Best Buy, ou site web du magasin"
+                  placeholder={t('createPackage.retailerPlaceholder', 'ex: Amazon, Best Buy, ou site web du magasin')}
                   value={newPackage.retailer}
                   onChange={(e) => setNewPackage((prev) => ({ ...prev, retailer: e.target.value }))}
                   className="h-8 text-sm"
@@ -244,18 +246,18 @@ export default function CreatePackagePage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <Label className="text-sm">Numéro de Suivi (Optionnel)</Label>
+                <Label className="text-sm">{t('createPackage.trackingNumber', 'Numéro de Suivi (Optionnel)')}</Label>
                 <Input
-                  placeholder="ex: TK123456789"
+                  placeholder={t('createPackage.trackingNumberPlaceholder', 'ex: TK123456789')}
                   value={newPackage.trackingNumber}
                   onChange={(e) => setNewPackage((prev) => ({ ...prev, trackingNumber: e.target.value }))}
                   className="h-8 text-sm"
                 />
               </div>
               <div className="space-y-1">
-                <Label className="text-sm">Poids (Optionnel)</Label>
+                <Label className="text-sm">{t('createPackage.weight', 'Poids (Optionnel)')}</Label>
                 <Input
-                  placeholder="ex: 2,5 kg"
+                  placeholder={t('createPackage.weightPlaceholder', 'ex: 2,5 kg')}
                   value={newPackage.weight}
                   onChange={(e) => setNewPackage((prev) => ({ ...prev, weight: e.target.value }))}
                   className="h-8 text-sm"
@@ -264,9 +266,9 @@ export default function CreatePackagePage() {
             </div>
 
             <div className="space-y-1">
-              <Label className="text-sm">Dimensions (Optionnel)</Label>
+              <Label className="text-sm">{t('createPackage.dimensions', 'Dimensions (Optionnel)')}</Label>
               <Input
-                placeholder="ex: 30x20x15 cm"
+                placeholder={t('createPackage.dimensionsPlaceholder', 'ex: 30x20x15 cm')}
                 value={newPackage.dimensions}
                 onChange={(e) => setNewPackage((prev) => ({ ...prev, dimensions: e.target.value }))}
                 className="h-8 text-sm"
@@ -275,12 +277,12 @@ export default function CreatePackagePage() {
 
             {/* Package Items */}
             <div>
-              <Label className="text-sm font-medium">Articles du Colis</Label>
+              <Label className="text-sm font-medium">{t('createPackage.itemsLabel', 'Articles du Colis')}</Label>
               <div className="space-y-2 mt-1">
                 {newPackage.items.map((item, index) => (
                   <div key={index} className="flex gap-2">
                     <Input
-                      placeholder="Description de l'article"
+                      placeholder={t('createPackage.itemPlaceholder', 'Description de l\'article')}
                       value={item}
                       onChange={(e) => updateItem(index, e.target.value)}
                       className="flex-1 h-8 text-sm"
@@ -294,7 +296,7 @@ export default function CreatePackagePage() {
                 ))}
                 <Button variant="outline" size="sm" onClick={addItem} className="w-full h-7 text-sm">
                   <Plus className="w-3 h-3 mr-1" />
-                  Ajouter Article
+                  {t('createPackage.addItem', 'Ajouter Article')}
                 </Button>
               </div>
             </div>
@@ -302,7 +304,7 @@ export default function CreatePackagePage() {
             {/* File Upload with Type Selection */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <Label className="text-sm">Fichiers (Optionnel)</Label>
+                <Label className="text-sm">{t('createPackage.filesLabel', 'Fichiers (Optionnel)')}</Label>
                 <Select
                   value={newPackage.attachmentType}
                   onValueChange={(value) => setNewPackage((prev) => ({ ...prev, attachmentType: value }))}
@@ -312,13 +314,13 @@ export default function CreatePackagePage() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="receipt" className="text-sm">
-                      Reçu
+                      {t('createPackage.attachmentType.receipt', 'Reçu')}
                     </SelectItem>
                     <SelectItem value="photo" className="text-sm">
-                      Photo
+                      {t('createPackage.attachmentType.photo', 'Photo')}
                     </SelectItem>
                     <SelectItem value="document" className="text-sm">
-                      Document
+                      {t('createPackage.attachmentType.document', 'Document')}
                     </SelectItem>
                   </SelectContent>
                 </Select>
@@ -333,14 +335,14 @@ export default function CreatePackagePage() {
                 {isUploadingReceipt ? (
                   <>
                     <Loader2 className="w-8 h-8 mx-auto text-blue-500 mb-2 animate-spin" />
-                    <p className="text-sm font-medium text-blue-700">Téléchargement en cours...</p>
+                    <p className="text-sm font-medium text-blue-700">{t('createPackage.uploadArea.uploading', 'Téléchargement en cours...')}</p>
                   </>
                 ) : (
                   <>
                     <Upload className="w-8 h-8 mx-auto text-gray-400 mb-2" />
                     <div className="space-y-1">
-                      <p className="text-sm font-medium text-gray-700">Cliquez pour télécharger vos fichiers</p>
-                      <p className="text-sm text-gray-500">PNG, JPG, PDF jusqu'à 10MB chacun</p>
+                      <p className="text-sm font-medium text-gray-700">{t('createPackage.uploadArea.title', 'Cliquez pour télécharger vos fichiers')}</p>
+                      <p className="text-sm text-gray-500">{t('createPackage.uploadArea.subtitle', 'PNG, JPG, PDF jusqu\'à 10MB chacun')}</p>
                     </div>
                   </>
                 )}
@@ -364,7 +366,7 @@ export default function CreatePackagePage() {
               {newPackage.receipts.length > 0 && (
                 <div className="space-y-2">
                   <Label className="text-sm font-medium text-green-700">
-                    Fichiers téléchargés ({newPackage.receipts.length})
+                    {t('createPackage.uploadedFiles', 'Fichiers téléchargés ({count})', { count: newPackage.receipts.length })}
                   </Label>
                   <div className="space-y-1">
                     {newPackage.receipts.map((receipt, receiptIndex) => {
@@ -389,7 +391,7 @@ export default function CreatePackagePage() {
                               className="h-6 px-2 text-green-600 hover:text-green-800 flex-shrink-0"
                             >
                               <ExternalLink className="w-3 h-3 mr-1" />
-                              Voir
+                              {t('createPackage.viewFile', 'Voir')}
                             </Button>
                           </div>
                           <Button
@@ -414,9 +416,9 @@ export default function CreatePackagePage() {
 
             {/* Additional Notes */}
             <div>
-              <Label className="text-sm">Notes Supplémentaires</Label>
+              <Label className="text-sm">{t('createPackage.notes', 'Notes Supplémentaires')}</Label>
               <Textarea
-                placeholder="Toute instruction spéciale ou note sur ce colis..."
+                placeholder={t('createPackage.notesPlaceholder', 'Toute instruction spéciale ou note sur ce colis...')}
                 value={newPackage.notes}
                 onChange={(e) => setNewPackage((prev) => ({ ...prev, notes: e.target.value }))}
                 className="mt-1 text-sm"
@@ -427,10 +429,10 @@ export default function CreatePackagePage() {
             {/* Actions */}
             <div className="flex gap-2 pt-4 border-t border-gray-200">
               <Button onClick={handleSubmitPackage} className="flex-1 h-8 text-sm" disabled={isSubmitting}>
-                {isSubmitting ? "Ajout..." : "Ajouter Colis"}
+                {isSubmitting ? t('createPackage.submitting', 'Ajout...') : t('createPackage.submit', 'Ajouter Colis')}
               </Button>
               <Button variant="outline" onClick={() => router.back()} className="h-8 text-sm">
-                Annuler
+                {t('createPackage.cancel', 'Annuler')}
               </Button>
             </div>
           </CardContent>

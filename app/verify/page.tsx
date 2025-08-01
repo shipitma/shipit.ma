@@ -11,6 +11,8 @@ import { Loader2, ArrowLeft, MessageCircle, CheckCircle, XCircle } from "lucide-
 import { useToast } from "@/hooks/use-toast"
 import { useAuth } from "@/lib/auth-context"
 import { useAnalytics } from "@/hooks/use-analytics"
+import { useTranslations } from "@/lib/hooks/use-translations"
+import { useLanguage } from "@/lib/context/language-context"
 
 export default function VerifyPage() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""])
@@ -25,6 +27,8 @@ export default function VerifyPage() {
   const { toast } = useToast()
   const { login } = useAuth()
   const { trackAuth, trackError } = useAnalytics()
+  const { t } = useTranslations()
+  const { isRTL } = useLanguage()
 
   useEffect(() => {
     const storedPhone = sessionStorage.getItem("phoneNumber")
@@ -109,8 +113,8 @@ export default function VerifyPage() {
         phoneNumber: phoneNumber 
       })
       toast({
-        title: "Erreur",
-        description: "Veuillez entrer un code OTP valide (6 chiffres).",
+        title: t('common.error', 'Erreur'),
+        description: t('verify.errors.invalidOtp', 'Veuillez entrer un code OTP valide (6 chiffres).'),
         variant: "destructive",
       })
       return
@@ -142,22 +146,22 @@ export default function VerifyPage() {
           router.push("/dashboard")
         }
         toast({
-          title: "Succès",
+          title: t('common.success', 'Succès'),
           description: data.isNewUser 
-            ? "Numéro de téléphone vérifié avec succès! Complétez votre inscription." 
-            : "Connexion réussie!",
+            ? t('verify.success.newUser', 'Numéro de téléphone vérifié avec succès! Complétez votre inscription.') 
+            : t('verify.success.existingUser', 'Connexion réussie!'),
         })
       } else {
         trackError('API_ERROR', { 
           error_message: data.error || 'Unknown error',
           endpoint: '/api/verify-otp'
         })
-        throw new Error(data.error || "Échec de la vérification")
+        throw new Error(data.error || t('verify.errors.verificationFailed', 'Échec de la vérification'))
       }
     } catch (error) {
       toast({
-        title: "Erreur",
-        description: error instanceof Error ? error.message : "Une erreur est survenue.",
+        title: t('common.error', 'Erreur'),
+        description: error instanceof Error ? error.message : t('common.unknownError', 'Une erreur est survenue.'),
         variant: "destructive",
       })
       // Clear OTP on error
@@ -182,8 +186,8 @@ export default function VerifyPage() {
         setCanResend(false)
         setResendTimer(60)
         toast({
-          title: "Code Envoyé",
-          description: "Un nouveau code de vérification a été envoyé sur votre WhatsApp",
+          title: t('verify.success.codeSent', 'Code Envoyé'),
+          description: t('verify.success.newCodeSent', 'Un nouveau code de vérification a été envoyé sur votre WhatsApp'),
         })
 
         // Restart timer
@@ -200,8 +204,8 @@ export default function VerifyPage() {
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to resend code. Please try again.",
+        title: t('common.error', 'Erreur'),
+        description: t('verify.errors.resendFailed', 'Échec de l\'envoi du code. Veuillez réessayer.'),
         variant: "destructive",
       })
     }
@@ -219,16 +223,16 @@ export default function VerifyPage() {
           >
             <ArrowLeft className="w-3 h-3" />
           </Button>
-          <CardTitle className="text-lg font-semibold">Vérifiez Votre Téléphone</CardTitle>
+          <CardTitle className="text-lg font-semibold">{t('verify.title', 'Vérifiez Votre Téléphone')}</CardTitle>
           <CardDescription className="text-sm text-gray-600">
-            Entrez le code à 6 chiffres envoyé sur votre WhatsApp
+            {t('verify.subtitle', 'Entrez le code à 6 chiffres envoyé sur votre WhatsApp')}
             <br />
             <span className="font-medium">{phoneNumber}</span>
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="flex justify-center gap-2">
+            <div className={`flex justify-center gap-2 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
               {otp.map((digit, index) => (
                 <Input
                   key={index}
@@ -242,7 +246,8 @@ export default function VerifyPage() {
                   onChange={(e) => handleOtpChange(index, e.target.value)}
                   onPaste={(e) => handlePaste(e, index)}
                   onKeyDown={(e) => handleKeyDown(index, e)}
-                  className="w-10 h-10 text-center text-sm font-semibold"
+                  className="w-10 h-10 text-center text-sm font-semibold text-left"
+                  dir="ltr"
                   disabled={isLoading}
                 />
               ))}
@@ -256,10 +261,10 @@ export default function VerifyPage() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-1 h-3 w-3 animate-spin" />
-                  Vérification...
+                  {t('verify.verifying', 'Vérification...')}
                 </>
               ) : (
-                "Vérifier le Code"
+                t('verify.verifyButton', 'Vérifier le Code')
               )}
             </Button>
 
@@ -267,10 +272,10 @@ export default function VerifyPage() {
               {canResend ? (
                 <Button variant="link" onClick={handleResend} className="p-0 h-auto text-sm">
                   <MessageCircle className="mr-1 h-3 w-3" />
-                  Renvoyer le Code
+                  {t('verify.resendCode', 'Renvoyer le Code')}
                 </Button>
               ) : (
-                <p className="text-sm text-gray-500">Renvoyer le code dans {resendTimer}s</p>
+                <p className="text-sm text-gray-500">{t('verify.resendTimer', 'Renvoyer le code dans')} {resendTimer}s</p>
               )}
             </div>
           </div>

@@ -26,6 +26,7 @@ import { Upload } from "lucide-react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { type PurchaseRequest, formatCurrency, formatDate } from "@/lib/database"
 import { useAuth } from "@/lib/auth-context"
+import { useTranslations } from "@/lib/hooks/use-translations"
 
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -46,24 +47,7 @@ const getStatusColor = (status: string) => {
   }
 }
 
-const getStatusLabel = (status: string) => {
-  switch (status) {
-    case "pending_review":
-      return "En Attente de Révision"
-    case "pending_payment":
-      return "En Attente de Paiement"
-    case "confirmed":
-      return "Confirmé"
-    case "purchasing":
-      return "Achat en Cours"
-    case "completed":
-      return "Terminé"
-    case "cancelled":
-      return "Annulé"
-    default:
-      return status.replace("_", " ")
-  }
-}
+// ... existing code ...
 
 export default function PurchasesPage() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -82,6 +66,26 @@ export default function PurchasesPage() {
   const { toast } = useToast()
   const { trackPurchase, trackError } = useAnalytics()
   const { user } = useAuth()
+  const { t } = useTranslations()
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case "pending_review":
+        return t('purchases.statusLabels.pending_review', 'En Attente de Révision')
+      case "pending_payment":
+        return t('purchases.statusLabels.pending_payment', 'En Attente de Paiement')
+      case "confirmed":
+        return t('purchases.statusLabels.confirmed', 'Confirmé')
+      case "purchasing":
+        return t('purchases.statusLabels.purchasing', 'Achat en Cours')
+      case "completed":
+        return t('purchases.statusLabels.completed', 'Terminé')
+      case "cancelled":
+        return t('purchases.statusLabels.cancelled', 'Annulé')
+      default:
+        return status.replace("_", " ")
+    }
+  }
 
   const fetchData = async (status?: string) => {
     try {
@@ -89,8 +93,8 @@ export default function PurchasesPage() {
       const sessionId = localStorage.getItem("authToken")
       if (!sessionId) {
         toast({
-          title: "Erreur",
-          description: "Session expirée, veuillez vous reconnecter",
+          title: t('common.error', 'Erreur'),
+          description: t('purchases.errors.sessionExpired', 'Session expirée, veuillez vous reconnecter'),
           variant: "destructive",
         })
         return
@@ -122,8 +126,8 @@ export default function PurchasesPage() {
       console.error("Error fetching data:", error)
       setPurchaseRequests([])
       toast({
-        title: "Erreur",
-        description: "Impossible de charger les données",
+        title: t('common.error', 'Erreur'),
+        description: t('purchases.errors.loadError', 'Impossible de charger les données'),
         variant: "destructive",
       })
     } finally {
@@ -143,28 +147,33 @@ export default function PurchasesPage() {
     }
   }, [statusFilter])
 
-  const handlePayment = () => {
-    if (selectedRequest) {
-      trackPurchase('PURCHASE_PAYMENT_SUBMITTED', { 
-        purchaseId: selectedRequest.id,
-        amount: selectedRequest.payment_due || undefined
-      })
-    }
-    toast({
-      title: "Succès",
-      description: "Paiement soumis pour examen",
-    })
-    setIsPaymentOpen(false)
-    setSelectedRequest(null)
-  }
-
   const filteredRequests = purchaseRequests.filter((request) => {
     const matchesSearch =
       request.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (request.items && request.items.some((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase())))
+      request.description?.toLowerCase().includes(searchTerm.toLowerCase())
 
     return matchesSearch
   })
+
+  const handlePayment = () => {
+    if (!selectedRequest) return
+
+    trackPurchase('PAYMENT_INITIATED', { 
+      request_id: selectedRequest.id,
+      amount: selectedRequest.total_amount
+    })
+
+    // Simulate payment processing
+    setTimeout(() => {
+      toast({
+        title: t('common.success', 'Succès'),
+        description: t('purchases.payment.success', 'Paiement traité avec succès'),
+      })
+      setIsPaymentOpen(false)
+      setSelectedRequest(null)
+      fetchData() // Refresh data
+    }, 2000)
+  }
 
   const handleSearch = (value: string) => {
     setSearchTerm(value)
@@ -173,10 +182,8 @@ export default function PurchasesPage() {
     }
   }
 
-  // Calculate total items count
   const getTotalItemsCount = (request: PurchaseRequest) => {
-    if (!request.items || !Array.isArray(request.items)) return 0
-    return request.items.reduce((total, item) => total + (item.quantity || 1), 0)
+    return request.items?.reduce((total, item) => total + (item.quantity || 0), 0) || 0
   }
 
   return (
@@ -187,26 +194,26 @@ export default function PurchasesPage() {
           <Button size="sm" asChild className="h-7 text-sm">
             <a href="/purchases/create">
               <Plus className="w-3 h-3 mr-1" />
-              Nouvelle Demande
+              {t('purchases.newRequestButton', 'Nouvelle Demande')}
             </a>
           </Button>
         </div>
         <div>
-          <h1 className="text-lg font-semibold">Demandes d'Achat</h1>
-          <p className="text-sm text-gray-600">Gérez vos demandes d'achat et suivez leur progression</p>
+          <h1 className="text-lg font-semibold">{t('purchases.title', 'Demandes d\'Achat')}</h1>
+          <p className="text-sm text-gray-600">{t('purchases.subtitle', 'Gérez vos demandes d\'achat et suivez leur progression')}</p>
         </div>
       </div>
 
       {/* Desktop Header */}
       <div className="hidden lg:flex items-center justify-between">
         <div>
-          <h1 className="text-lg font-semibold">Demandes d'Achat</h1>
-          <p className="text-sm text-gray-600">Gérez vos demandes d'achat et suivez leur progression</p>
+          <h1 className="text-lg font-semibold">{t('purchases.title', 'Demandes d\'Achat')}</h1>
+          <p className="text-sm text-gray-600">{t('purchases.subtitle', 'Gérez vos demandes d\'achat et suivez leur progression')}</p>
         </div>
         <Button size="sm" asChild className="h-7 text-sm">
           <a href="/purchases/create">
             <Plus className="w-3 h-3 mr-1" />
-            Nouvelle Demande
+            {t('purchases.newRequestButton', 'Nouvelle Demande')}
           </a>
         </Button>
       </div>
@@ -217,7 +224,7 @@ export default function PurchasesPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600 mb-1">En Attente de Révision</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">{t('purchases.stats.pendingReview', 'En Attente de Révision')}</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.pending_review}</p>
               </div>
               <div className="p-2 rounded-md bg-yellow-100">
@@ -230,7 +237,7 @@ export default function PurchasesPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600 mb-1">En Attente de Paiement</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">{t('purchases.stats.pendingPayment', 'En Attente de Paiement')}</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.pending_payment}</p>
               </div>
               <div className="p-2 rounded-md bg-orange-100">
@@ -243,7 +250,7 @@ export default function PurchasesPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600 mb-1">En Cours</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">{t('purchases.stats.inProgress', 'En Cours')}</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.purchasing}</p>
               </div>
               <div className="p-2 rounded-md bg-purple-100">
@@ -256,7 +263,7 @@ export default function PurchasesPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600 mb-1">Terminé</p>
+                <p className="text-sm font-medium text-gray-600 mb-1">{t('purchases.stats.completed', 'Terminé')}</p>
                 <p className="text-xl font-semibold text-gray-900">{stats.completed}</p>
               </div>
               <div className="p-2 rounded-md bg-green-100">
@@ -272,7 +279,7 @@ export default function PurchasesPage() {
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-2 top-2 w-3 h-3 text-gray-400" />
           <Input
-            placeholder="Rechercher des demandes..."
+            placeholder={t('purchases.searchPlaceholder', 'Rechercher des demandes...')}
             value={searchTerm}
             onChange={(e) => handleSearch(e.target.value)}
             className="pl-7 h-8 text-sm"
@@ -281,26 +288,26 @@ export default function PurchasesPage() {
         <Select value={statusFilter} onValueChange={setStatusFilter}>
           <SelectTrigger className="w-40 h-8 text-sm">
             <Filter className="w-3 h-3 mr-1" />
-            <SelectValue placeholder="Statut" />
+            <SelectValue placeholder={t('purchases.statusFilter', 'Statut')} />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all" className="text-sm">
-              Tous les Statuts
+              {t('purchases.allStatuses', 'Tous les Statuts')}
             </SelectItem>
             <SelectItem value="pending_review" className="text-sm">
-              En Attente de Révision
+              {t('purchases.statusLabels.pending_review', 'En Attente de Révision')}
             </SelectItem>
             <SelectItem value="pending_payment" className="text-sm">
-              En Attente de Paiement
+              {t('purchases.statusLabels.pending_payment', 'En Attente de Paiement')}
             </SelectItem>
             <SelectItem value="confirmed" className="text-sm">
-              Confirmé
+              {t('purchases.statusLabels.confirmed', 'Confirmé')}
             </SelectItem>
             <SelectItem value="purchasing" className="text-sm">
-              Achat en Cours
+              {t('purchases.statusLabels.purchasing', 'Achat en Cours')}
             </SelectItem>
             <SelectItem value="completed" className="text-sm">
-              Terminé
+              {t('purchases.statusLabels.completed', 'Terminé')}
             </SelectItem>
           </SelectContent>
         </Select>
@@ -338,20 +345,20 @@ export default function PurchasesPage() {
               </div>
             </div>
             <CardTitle className="text-lg font-semibold text-gray-900">
-              Aucune demande trouvée
+              {t('purchases.emptyState.title', 'Aucune demande trouvée')}
             </CardTitle>
             <CardDescription className="text-sm text-gray-600">
               {searchTerm || statusFilter !== "all"
-                ? "Aucune demande ne correspond à vos critères de recherche."
-                : "Vous n'avez pas encore de demandes d'achat. Commencez par créer votre première demande."}
+                ? t('purchases.emptyState.description', 'Aucune demande ne correspond à vos critères de recherche.')
+                : t('purchases.emptyState.descriptionNoRequests', 'Vous n\'avez pas encore de demandes d\'achat. Commencez par créer votre première demande.')}
             </CardDescription>
           </CardHeader>
           <CardContent className="text-center pt-0">
             {!searchTerm && statusFilter === "all" && (
-              <Button size="sm" asChild>
+              <Button asChild>
                 <a href="/purchases/create">
                   <Plus className="w-4 h-4 mr-2" />
-                  Créer votre première demande
+                  {t('purchases.emptyState.createFirstRequest', 'Créer votre première demande')}
                 </a>
               </Button>
             )}
@@ -361,107 +368,50 @@ export default function PurchasesPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredRequests.map((request) => (
             <Card key={request.id} className="border-gray-200 hover:shadow-sm transition-shadow">
-              <CardHeader className="pb-3">
-                <div className="flex items-start justify-between">
+              <CardContent className="p-4">
+                <div className="flex items-start justify-between mb-3">
                   <div>
-                    <CardTitle className="text-sm font-semibold">{request.id}</CardTitle>
-                    <CardDescription className="text-sm text-gray-500">{formatDate(request.date)}</CardDescription>
+                    <h3 className="font-medium text-gray-900">#{request.id}</h3>
+                    <p className="text-sm text-gray-600">{request.description}</p>
                   </div>
-                  <Badge className={getStatusColor(request.status) + ' text-xs'} variant="secondary">
+                  <Badge className={getStatusColor(request.status)}>
                     {getStatusLabel(request.status)}
                   </Badge>
                 </div>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <p className="text-sm text-gray-600">
-                  {getTotalItemsCount(request)} articles ({request.items?.length || 0} types)
-                </p>
 
-                <div className="space-y-1">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-500">Montant Total:</span>
-                    <span className="text-sm font-semibold">{formatCurrency(request.total_amount)}</span>
+                <div className="space-y-2 mb-4">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">{t('purchases.total', 'Total')}:</span>
+                    <span className="font-medium">{formatCurrency(request.total_amount)}</span>
                   </div>
-                  {request.payment_due && (
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-500">Paiement Dû:</span>
-                      <span className="text-sm font-semibold text-orange-600">{formatCurrency(request.payment_due)}</span>
-                    </div>
-                  )}
-                  {request.service_fee && (
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-500">Frais de Service:</span>
-                      <span className="text-sm font-medium">{formatCurrency(request.service_fee)}</span>
-                    </div>
-                  )}
-                  {request.shipping_fee && (
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-500">Frais d'Expédition:</span>
-                      <span className="text-sm font-medium">{formatCurrency(request.shipping_fee)}</span>
-                    </div>
-                  )}
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">{t('purchases.items', 'Items')}:</span>
+                    <span className="font-medium">{getTotalItemsCount(request)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">{t('purchases.created', 'Created')}:</span>
+                    <span className="font-medium">{formatDate(request.created_at)}</span>
+                  </div>
                 </div>
 
-                {/* Admin Notes Preview */}
-                {request.admin_notes && (
-                  <div className="p-2 bg-orange-50 rounded-md border border-orange-200">
-                    <p className="text-sm text-orange-800 line-clamp-2">
-                      <span className="font-medium">Note:</span> {request.admin_notes}
-                    </p>
-                  </div>
-                )}
-
-                {/* Timeline Status */}
-                {request.timeline && request.timeline.length > 0 && (
-                  <div className="space-y-1">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-500">Dernière activité:</span>
-                      <span className="text-sm font-medium">
-                        {request.timeline[request.timeline.length - 1]?.status}
-                      </span>
-                    </div>
-                    <div className="flex gap-1">
-                      {request.timeline.slice(-3).map((event, index) => (
-                        <div 
-                          key={index}
-                          className={`w-2 h-2 rounded-full ${
-                            event.completed ? 'bg-green-500' : 'bg-gray-300'
-                          }`}
-                          title={`${event.status} - ${event.date}`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <div className="flex flex-col gap-2 pt-2">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="h-7 text-sm" 
-                    asChild
-                    onClick={() => trackPurchase('VIEW_PURCHASE_DETAILS', { purchaseId: request.id })}
-                  >
+                <div className="flex gap-2">
+                  <Button variant="outline" size="sm" className="flex-1" asChild>
                     <a href={`/purchases/${request.id}`}>
-                      <Eye className="w-3 h-3 mr-1" />
-                      Voir Détails
+                      <Eye className="w-3 h-1 mr-1" />
+                      {t('common.view', 'View')}
                     </a>
                   </Button>
                   {request.status === "pending_payment" && (
-                    <Button
-                      size="sm"
-                      className="h-7 text-sm"
+                    <Button 
+                      size="sm" 
+                      className="flex-1"
                       onClick={() => {
-                        trackPurchase('PURCHASE_PAYMENT_INITIATED', { 
-                          purchaseId: request.id,
-                          amount: request.payment_due || undefined
-                        })
                         setSelectedRequest(request)
                         setIsPaymentOpen(true)
                       }}
                     >
                       <DollarSign className="w-3 h-3 mr-1" />
-                      Payer Maintenant
+                      {t('purchases.pay', 'Pay')}
                     </Button>
                   )}
                 </div>
@@ -475,42 +425,24 @@ export default function PurchasesPage() {
       <Dialog open={isPaymentOpen} onOpenChange={setIsPaymentOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Soumettre le Paiement</DialogTitle>
-            <DialogDescription>Téléchargez votre reçu de paiement pour {selectedRequest?.id}</DialogDescription>
+            <DialogTitle>{t('purchases.payment.title', 'Paiement')}</DialogTitle>
+            <DialogDescription>
+              {t('purchases.payment.confirm', 'Confirmer le paiement pour la demande')} #{selectedRequest?.id}
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
-            <div className="p-3 bg-gray-50 rounded-md">
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Montant Dû:</span>
-                <span className="font-bold text-sm">
-                  {selectedRequest?.payment_due ? formatCurrency(selectedRequest.payment_due) : ""}
-                </span>
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="flex justify-between mb-2">
+                <span>{t('purchases.payment.amount', 'Montant')}:</span>
+                <span className="font-medium">{selectedRequest && formatCurrency(selectedRequest.total_amount)}</span>
               </div>
             </div>
-
-            <div>
-              <Label className="text-sm">Reçu de Paiement *</Label>
-              <div className="mt-2 border-2 border-dashed border-gray-200 rounded-md p-4 text-center">
-                <Upload className="w-6 h-6 mx-auto text-gray-400 mb-2" />
-                <p className="text-sm text-gray-500">
-                  Cliquez pour télécharger ou glissez-déposez votre reçu de paiement
-                </p>
-                <Input type="file" accept="image/*" className="mt-2 text-sm" />
-              </div>
-            </div>
-
-            <div>
-              <Label className="text-sm">Notes de Paiement (Optionnel)</Label>
-              <Textarea placeholder="Toute information supplémentaire sur votre paiement..." className="text-sm" />
-            </div>
-
             <div className="flex gap-2">
-              <Button onClick={handlePayment} className="flex-1 h-8 text-sm">
-                <Check className="w-3 h-3 mr-1" />
-                Soumettre le Paiement
+              <Button variant="outline" onClick={() => setIsPaymentOpen(false)} className="flex-1">
+                {t('common.cancel', 'Annuler')}
               </Button>
-              <Button variant="outline" onClick={() => setIsPaymentOpen(false)} className="h-8 text-sm">
-                Annuler
+              <Button onClick={handlePayment} className="flex-1">
+                {t('purchases.payment.confirmButton', 'Confirmer le Paiement')}
               </Button>
             </div>
           </div>

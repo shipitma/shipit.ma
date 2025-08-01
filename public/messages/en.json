@@ -1,0 +1,724 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "open": "Open",
+    "yes": "Yes",
+    "no": "No",
+    "confirm": "Confirm",
+    "language": "Language",
+    "view": "View",
+    "unknownError": "An unknown error occurred",
+    "countries": {
+      "turkey": "Turkey",
+      "usa": "USA",
+      "europe": "Europe",
+      "france": "France",
+      "spain": "Spain",
+      "morocco": "Morocco"
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "packages": "Packages",
+    "purchases": "Purchases",
+    "profile": "Profile",
+    "settings": "Settings",
+    "help": "Help",
+    "contact": "Contact",
+    "logout": "Logout",
+    "login": "Login",
+    "register": "Register"
+  },
+  "dashboard": {
+    "title": "Home",
+    "subtitle": "Overview of your packages and recent activity",
+    "welcomeBack": "Welcome back, {name}!",
+    "statsDescription": "You have {shipped} packages in transit and {expected} expected packages to review.",
+    "quickAccess": "Quick Access",
+    "newRequestButton": "New Request",
+    "addPackageButton": "Add Package",
+    "stats": {
+      "expectedPackages": "Expected Packages",
+      "inWarehouse": "In Warehouse",
+      "shipped": "Shipped",
+      "purchaseAssistance": "Purchase Assistance",
+      "totalPackages": "Total Packages",
+      "pendingPackages": "Pending Packages",
+      "shippedPackages": "Shipped Packages",
+      "totalPurchases": "Total Purchases"
+    },
+    "recentActivity": "Recent Activity",
+    "quickActions": "Quick Actions",
+    "newPurchaseRequest": "New Purchase Request",
+    "addPackage": "Add Package",
+    "viewExpectedPackages": "View Expected Packages",
+    "viewWarehousePackages": "View Warehouse Packages",
+    "viewShippedPackages": "View Shipped Packages",
+    "viewPurchaseAssistance": "View Purchase Assistance",
+    "warehouseAddresses": {
+      "title": "Warehouse Addresses",
+      "subtitle": "Your international shipping addresses",
+      "accountHolder": "Account Holder",
+      "important": "Important:",
+      "includeFullName": "Always include your full name as recipient."
+    }
+  },
+  "packages": {
+    "title": "Packages",
+    "addNew": "Add Package",
+    "trackingNumber": "Tracking Number",
+    "status": "Status",
+    "weight": "Weight",
+    "dimensions": "Dimensions",
+    "shippingDate": "Shipping Date",
+    "expectedDelivery": "Expected Delivery",
+    "recipient": "Recipient",
+    "sender": "Sender",
+    "description": "Description",
+    "value": "Value",
+    "insurance": "Insurance",
+    "statuses": {
+      "pending": "Pending",
+      "inTransit": "In Transit",
+      "delivered": "Delivered",
+      "lost": "Lost",
+      "damaged": "Damaged"
+    },
+    "tracking": "Tracking",
+    "carrier": "Carrier",
+    "eta": "ETA",
+    "weight": "Weight",
+    "dimensions": "Dimensions",
+    "shippingCost": "Shipping Cost",
+    "pending": "Pending",
+    "insurance": "Insurance",
+    "progress": "Progress",
+    "items": "Items",
+    "additionalItems": "additional items",
+    "lastUpdated": "Last Updated",
+    "viewDetails": "View Details",
+    "payShipping": "Pay Shipping"
+  },
+  "purchases": {
+    "title": "Purchases",
+    "newRequest": "New Request",
+    "productName": "Product Name",
+    "quantity": "Quantity",
+    "price": "Price",
+    "total": "Total",
+    "status": "Status",
+    "orderDate": "Order Date",
+    "expectedDelivery": "Expected Delivery",
+    "supplier": "Supplier",
+    "link": "Product Link",
+    "notes": "Notes",
+    "statuses": {
+      "pending": "Pending",
+      "ordered": "Ordered",
+      "shipped": "Shipped",
+      "received": "Received",
+      "cancelled": "Cancelled"
+    },
+    "total": "Total",
+    "items": "Items",
+    "created": "Created",
+    "pay": "Pay",
+    "payment": {
+      "title": "Payment",
+      "confirm": "Confirm payment for request",
+      "amount": "Amount",
+      "confirmButton": "Confirm Payment",
+      "success": "Payment processed successfully"
+    }
+  },
+  "purchaseDetail": {
+    "loading": "Loading...",
+    "notFound": "Purchase request not found",
+    "loadError": "Unable to load purchase request",
+    "payment": {
+      "submitted": "Payment Submitted",
+      "submittedDescription": "Your payment has been submitted for review"
+    },
+    "items": {
+      "title": "Requested Items",
+      "quantity": "Quantity",
+      "viewProduct": "View Product",
+      "attachments": "Attachments"
+    }
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "phoneNumber": "Phone Number",
+    "forgotPassword": "Forgot Password",
+    "rememberMe": "Remember Me",
+    "dontHaveAccount": "Don't have an account?",
+    "alreadyHaveAccount": "Already have an account?",
+    "createAccount": "Create Account",
+    "loginToAccount": "Login to Account",
+    "otpVerification": "OTP Verification",
+    "enterOtp": "Enter OTP Code",
+    "resendOtp": "Resend OTP",
+    "verifyOtp": "Verify OTP"
+  },
+  "login": {
+    "title": "Welcome to shipit.ma",
+    "subtitle": "Enter your phone number to sign in or create an account",
+    "phoneLabel": "Phone Number",
+    "phonePlaceholder": "Phone number*",
+    "continueButton": "Continue",
+    "sendingCode": "Sending code...",
+    "newUser": "New to shipit.ma?",
+    "createAccount": "Create an account",
+    "termsAcceptance": "By continuing, you agree to our Terms of Use and Privacy Policy",
+    "success": {
+      "codeSent": "Code Sent",
+      "checkWhatsApp": "Check your WhatsApp for the verification code"
+    },
+    "errors": {
+      "phoneRequired": "Please enter your phone number",
+      "sendFailed": "Failed to send code. Please try again."
+    }
+  },
+  "register": {
+    "title": "Create Account",
+    "subtitle": "Step 1/2: Start by giving us some basic information",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "whatsappPhone": "WhatsApp Phone",
+    "continueButton": "Continue",
+    "sendingCode": "Sending code...",
+    "haveAccount": "Already have an account?",
+    "signIn": "Sign In",
+    "success": {
+      "codeSent": "Code Sent",
+      "checkWhatsApp": "Check your WhatsApp for the verification code"
+    },
+    "errors": {
+      "fillAllFields": "Please fill all required fields",
+      "existingAccount": "Existing Account",
+      "accountExists": "An account already exists with this number. Please sign in.",
+      "sendFailed": "Failed to send OTP code."
+    }
+  },
+  "verify": {
+    "title": "Verify Your Phone",
+    "subtitle": "Enter the 6-digit code sent to your WhatsApp",
+    "verifying": "Verifying...",
+    "verifyButton": "Verify Code",
+    "resendCode": "Resend Code",
+    "resendTimer": "Resend code in",
+    "success": {
+      "codeSent": "Code Sent",
+      "newCodeSent": "A new verification code has been sent to your WhatsApp",
+      "newUser": "Phone number verified successfully! Complete your registration.",
+      "existingUser": "Login successful!"
+    },
+    "errors": {
+      "invalidOtp": "Please enter a valid OTP code (6 digits)",
+      "verificationFailed": "Verification failed",
+      "resendFailed": "Failed to resend code. Please try again."
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "personalInfo": "Personal Information",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "city": "City",
+    "country": "Country",
+    "postalCode": "Postal Code",
+    "saveChanges": "Save Changes",
+    "changePassword": "Change Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password"
+  },
+  "errors": {
+    "general": "An error occurred",
+    "network": "Network error",
+    "validation": "Validation error",
+    "notFound": "Page not found",
+    "unauthorized": "Unauthorized",
+    "forbidden": "Access forbidden",
+    "serverError": "Server error",
+    "invalidCredentials": "Invalid credentials",
+    "emailAlreadyExists": "Email already exists",
+    "phoneAlreadyExists": "Phone number already exists",
+    "invalidOtp": "Invalid OTP code",
+    "otpExpired": "OTP code expired"
+  },
+  "success": {
+    "profileUpdated": "Profile updated successfully",
+    "passwordChanged": "Password changed successfully",
+    "packageAdded": "Package added successfully",
+    "purchaseRequested": "Purchase request created successfully",
+    "otpSent": "OTP code sent successfully",
+    "loginSuccessful": "Login successful",
+    "registrationSuccessful": "Registration successful"
+  },
+  "landing": {
+    "hero": {
+      "title": "Simplify your international purchases",
+      "subtitle": "Shop online and get delivered to Morocco with ease",
+      "cta": "Get Started Now",
+      "learnMore": "Learn More"
+    },
+    "features": {
+      "title": "Why Choose Shipit?",
+      "shipping": "Fast Shipping",
+      "tracking": "Real-time Tracking",
+      "security": "Guaranteed Security",
+      "support": "24/7 Support"
+    }
+  },
+  "header": {
+    "products": "Products",
+    "resources": "Resources",
+    "features": "Features",
+    "pricing": "Pricing",
+    "myAccount": "My Account",
+    "register": "Register",
+    "login": "Login",
+    "openMenu": "Open menu"
+  },
+  "hero": {
+    "title": "Your Global Purchases in Morocco: Simplified, Fast, No Surprises.",
+    "subtitle": "Access the best brands from USA, Turkey, Spain and France. We handle everything from purchase to direct delivery to your door in Morocco. Experience borderless shopping!",
+    "startButton": "Get Started!",
+    "discoverButton": "Discover Our Services",
+    "testimonial": "Thanks to shipit, I was able to order exclusive items from the USA that I couldn't find in Morocco. The consolidation really reduced costs, and delivery was fast with no customs issues. I recommend 100%!",
+    "testimonialAuthor": "Fatima Z., Casablanca",
+    "testimonialRole": "Satisfied Customer"
+  },
+  "howItWorks": {
+    "title": "How It Works?",
+    "subtitle": "Transform your shopping desires into reality through a simple and interactive process",
+    "step1": "1. Sign up and get a delivery address through Shipit.",
+    "step2": "2. Shop at stores of your choice and ship your items to your new address.",
+    "step3": "3. Consolidate your packages to pay less"
+  },
+  "footer": {
+    "description": "The benefits of a mailbox in Turkey, France, Spain or the US to deliver everything you want to Morocco.",
+    "termsOfUse": "Terms of Use",
+    "privacyPolicy": "Privacy Policy",
+    "gdprAgreement": "GDPR Data Processing Agreement",
+    "gdprFaq": "GDPR FAQ",
+    "privacyNotice": "shipit Privacy Notice",
+    "editorialPolicy": "shipit Editorial Policy",
+    "returnPolicy": "Return and Refund Policy",
+    "paymentSecurity": "Payment & Security"
+  },
+  "mainLayout": {
+    "loading": "Loading...",
+    "quickActions": "Quick Actions",
+    "language": "Language",
+    "navigation": {
+      "home": "Home",
+      "purchases": "Purchases",
+      "packages": "Packages",
+      "profile": "Profile"
+    },
+    "actions": {
+      "newPurchaseRequest": "New Purchase Request",
+      "addPackage": "Add Package"
+    },
+    "support": {
+      "support": "Support",
+      "contact": "Contact"
+    },
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "packages": "Packages",
+      "purchases": "Purchases",
+      "profile": "Profile",
+      "create": "Create"
+    },
+    "help": {
+      "needHelp": "Need Help?",
+      "callUs": "I call at",
+      "contactWhatsapp": "I contact on Whatsapp",
+      "consultHelpPage": "I consult the help page"
+    },
+    "user": {
+      "profile": "Profile",
+      "logout": "Logout",
+      "logoutLoading": "Logging out...",
+      "loading": "Loading...",
+      "user": "User"
+    }
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "Sorry, the page you're looking for doesn't exist or has been moved.",
+    "errorCode": "404",
+    "errorMessage": "The page you're looking for couldn't be found on our servers.",
+    "backButton": "Back",
+    "dashboardButton": "Back to Dashboard",
+    "packagesButton": "View My Packages",
+    "loginButton": "Sign In",
+    "registerButton": "Create Account",
+    "quickNavigation": "Quick Navigation",
+    "learnMore": "Learn More",
+    "quickLinks": {
+      "myPackages": "My Packages",
+      "myPurchases": "My Purchases",
+      "payments": "Payments",
+      "login": "Login",
+      "register": "Register",
+      "homepage": "shipit.ma"
+    }
+  },
+  "login": {
+    "title": "Welcome to shipit.ma",
+    "subtitle": "Enter your phone number to sign in or create an account",
+    "phoneLabel": "Phone Number",
+    "phonePlaceholder": "Phone number*",
+    "continueButton": "Continue",
+    "sendingCode": "Sending code...",
+    "newUser": "New to shipit.ma?",
+    "createAccount": "Create an account",
+    "termsAcceptance": "By continuing, you accept our Terms of Use and Privacy Policy",
+    "errors": {
+      "phoneRequired": "Please enter your phone number",
+      "sendFailed": "Failed to send code. Please try again."
+    },
+    "success": {
+      "codeSent": "Code Sent",
+      "checkWhatsApp": "Check your WhatsApp for the verification code"
+    }
+  },
+  "landing": {
+    "sections": {
+      "whyChooseUs": {
+        "title": "Why Choose shipit?",
+        "subtitle": "Discover the benefits that make shipit your trusted partner"
+      },
+      "ourServices": {
+        "title": "Our Services",
+        "subtitle": "A complete range of services to meet all your needs"
+      },
+      "weBuyForYou": {
+        "title": "We Buy For You",
+        "subtitle": "Let us handle your purchases while you focus on what matters"
+      },
+      "partnerBrands": {
+        "title": "Partner Brands",
+        "subtitle": "Working with the best international brands"
+      },
+      "trust": {
+        "title": "They Trust Us",
+        "subtitle": "Join thousands of satisfied customers"
+      },
+      "pricing": {
+        "title": "Transparent Pricing",
+        "subtitle": "Clear prices with no hidden surprises"
+      }
+    }
+  },
+  "dashboard": {
+    "title": "Home",
+    "subtitle": "Overview of your packages and recent activity",
+    "welcomeBack": "Welcome back, {name}!",
+    "statsDescription": "You have {shipped} packages in transit and {expected} expected packages to review.",
+    "newRequestButton": "New Request",
+    "addPackageButton": "Add Package",
+    "stats": {
+      "expectedPackages": "Expected Packages",
+      "inWarehouse": "In Warehouse",
+      "shipped": "Shipped",
+      "purchaseAssistance": "Purchase Assistance"
+    },
+    "warehouseAddresses": {
+      "title": "Warehouse Addresses",
+      "subtitle": "Your international shipping addresses",
+      "accountHolder": "Account Holder",
+      "important": "Important:"
+    }
+  },
+  "purchases": {
+    "title": "Purchase Requests",
+    "subtitle": "Manage your purchase requests and track their progress",
+    "newRequestButton": "New Request",
+    "searchPlaceholder": "Search requests...",
+    "statusFilter": "Status",
+    "allStatuses": "All Statuses",
+    "stats": {
+      "pendingReview": "Pending Review",
+      "pendingPayment": "Pending Payment",
+      "inProgress": "In Progress",
+      "completed": "Completed"
+    },
+    "statusLabels": {
+      "pending_review": "Pending Review",
+      "pending_payment": "Pending Payment",
+      "confirmed": "Confirmed",
+      "purchasing": "Purchasing",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "emptyState": {
+      "title": "No requests found",
+      "description": "No requests match your search criteria.",
+      "descriptionNoRequests": "You don't have any purchase requests yet. Start by creating your first request.",
+      "createFirstRequest": "Create your first request"
+    },
+    "errors": {
+      "sessionExpired": "Session expired, please log in again",
+      "loadError": "Unable to load data"
+    }
+  },
+  "packages": {
+    "title": "Packages",
+    "subtitle": "Track your packages from Morocco to Turkey",
+    "addPackageButton": "Add Package",
+    "searchPlaceholder": "Search packages...",
+    "statusFilter": "Status",
+    "allStatuses": "All Statuses",
+    "stats": {
+      "expected": "Expected",
+      "arrived": "Arrived",
+      "inTransit": "In Transit",
+      "delivered": "Delivered"
+    },
+    "statusLabels": {
+      "expected": "Expected",
+      "processing": "Processing",
+      "arrived": "Arrived",
+      "in_transit": "In Transit",
+      "delivered": "Delivered"
+    },
+    "emptyState": {
+      "title": "No packages found",
+      "description": "No packages match your search criteria.",
+      "descriptionNoPackages": "You don't have any packages yet. Start by adding your first package.",
+      "addFirstPackage": "Add your first package"
+    },
+    "errors": {
+      "sessionExpired": "Session expired, please log in again",
+      "loadError": "Unable to load data"
+    }
+  },
+  "profile": {
+    "title": "Profile Settings",
+    "personalInfo": {
+      "title": "Personal Information",
+      "subtitle": "Manage your basic information",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phone": "Phone",
+      "editButton": "Edit",
+      "saveButton": "Save",
+      "cancelButton": "Cancel"
+    },
+    "shippingAddress": {
+      "title": "Shipping Address",
+      "subtitle": "Your delivery address in Morocco",
+      "addressLine": "Address",
+      "city": "City",
+      "state": "State/Region",
+      "zip": "ZIP Code",
+      "country": "Country",
+      "editButton": "Edit",
+      "saveButton": "Save",
+      "cancelButton": "Cancel"
+    },
+    "success": {
+      "personalInfoSaved": "Your personal information has been saved successfully",
+      "addressSaved": "Your shipping address has been saved successfully"
+    },
+    "errors": {
+      "saveError": "Unable to save changes",
+      "addressSaveError": "Unable to save address"
+    }
+  },
+         "createPurchase": {
+         "title": "Create Purchase Request",
+         "subtitle": "Add items you want us to purchase for you",
+         "cardTitle": "Purchase Request Details",
+         "itemsLabel": "Items to Purchase",
+         "itemTitle": "Item {index}",
+         "itemName": "Item Name *",
+         "itemNamePlaceholder": "ex: iPhone 15 Pro",
+         "quantity": "Quantity",
+         "url": "Product URL *",
+         "urlPlaceholder": "https://example.com/product",
+         "variant": "Variant (Size, Color, Type, etc.)",
+         "variantPlaceholder": "ex: Large, Blue, 256GB",
+         "addAnotherItem": "Add Another Item",
+         "notes": "Additional Notes",
+         "notesPlaceholder": "Any special instructions or preferences...",
+         "submit": "Submit Purchase Request",
+         "submitting": "Submitting...",
+         "cancel": "Cancel",
+         "errors": {
+           "validationError": "Please fill in the name and URL for all items",
+           "submitError": "Error submitting the request"
+         },
+         "success": {
+           "submitted": "Purchase request submitted successfully"
+         }
+       },
+       "createPackage": {
+         "title": "Add New Package",
+         "subtitle": "Add a package you're expecting to receive",
+         "cardTitle": "Package Information",
+         "description": "Package Description *",
+         "descriptionPlaceholder": "ex: Electronic Package",
+         "retailer": "Retailer/Store Name or URL *",
+         "retailerPlaceholder": "ex: Amazon, Best Buy, or store website",
+         "trackingNumber": "Tracking Number (Optional)",
+         "trackingNumberPlaceholder": "ex: TK123456789",
+         "weight": "Weight (Optional)",
+         "weightPlaceholder": "ex: 2.5 kg",
+         "dimensions": "Dimensions (Optional)",
+         "dimensionsPlaceholder": "ex: 30x20x15 cm",
+         "itemsLabel": "Package Items",
+         "itemPlaceholder": "Item description",
+         "addItem": "Add Item",
+         "filesLabel": "Files (Optional)",
+         "attachmentType": {
+           "receipt": "Receipt",
+           "photo": "Photo",
+           "document": "Document"
+         },
+         "uploadArea": {
+           "title": "Click to upload your files",
+           "subtitle": "PNG, JPG, PDF up to 10MB each",
+           "uploading": "Uploading..."
+         },
+         "uploadedFiles": "Uploaded Files ({count})",
+         "viewFile": "View",
+         "notes": "Additional Notes",
+         "notesPlaceholder": "Any special instructions or notes about this package...",
+         "submit": "Add Package",
+         "submitting": "Adding...",
+         "cancel": "Cancel",
+         "errors": {
+           "uploadError": "Error uploading file"
+         },
+         "success": {
+           "uploadSuccess": "File uploaded successfully"
+         }
+       },
+       "common": {
+         "error": "Error",
+         "success": "Success",
+         "loading": "Loading...",
+         "user": "User"
+       },
+       "packageDetail": {
+         "loading": "Loading...",
+         "notFound": "Package not found",
+         "loadError": "Unable to load package",
+         "backButton": "Back",
+         "payShippingButton": "Pay Shipping Fees",
+         "summary": {
+           "title": "Package Summary",
+           "weight": "Weight",
+           "dimensions": "Dimensions",
+           "value": "Value",
+           "shipping": "Shipping",
+           "insurance": "Insurance",
+           "carrier": "Carrier",
+           "trackingNumber": "Tracking Number",
+           "eta": "Estimated Arrival Date"
+         },
+         "timeline": {
+           "title": "Package Tracking"
+         },
+         "contents": {
+           "title": "Package Contents",
+           "items": "items",
+           "quantity": "Quantity",
+           "totalValue": "Total Estimated Value"
+         },
+         "attachments": {
+           "title": "Documents",
+           "view": "View",
+           "fileSize": "KB"
+         },
+         "tracking": {
+           "title": "Online Tracking",
+           "trackOn": "Track on",
+           "carrierSite": "carrier website"
+         },
+         "alerts": {
+           "paymentRequired": {
+             "title": "Payment Required",
+             "description": "Your package has arrived at our warehouse. Please pay shipping fees to proceed with delivery."
+           },
+           "insurance": {
+             "title": "Insurance"
+           }
+         },
+         "payment": {
+           "title": "Pay Shipping Fees",
+           "description": "Make payment to ship your package to Morocco",
+           "shippingCost": "Shipping Cost",
+           "insurance": "Insurance",
+           "total": "Total",
+           "payNow": "Pay Now",
+           "cancel": "Cancel",
+           "submitted": "Payment Submitted",
+           "submittedDescription": "Your shipping payment has been submitted for processing"
+         }
+       },
+       "purchaseDetail": {
+         "loading": "Loading...",
+         "notFound": "Purchase request not found",
+         "loadError": "Unable to load purchase request",
+         "backButton": "Back",
+         "summary": {
+           "title": "Request Summary",
+           "itemsCost": "Items Cost",
+           "shippingFee": "Shipping Fee",
+           "serviceFee": "Service Fee",
+           "processingFee": "Processing Fee",
+           "taxes": "Taxes",
+           "totalAmount": "Total Amount"
+         },
+         "timeline": {
+           "title": "Request Progress"
+         },
+         "items": {
+           "title": "Requested Items",
+           "items": "items",
+           "quantity": "Quantity",
+           "value": "Value",
+           "totalValue": "Total Estimated Value"
+         },
+         "attachments": {
+           "title": "Documents",
+           "view": "View",
+           "fileSize": "KB"
+         },
+         "payment": {
+           "submitted": "Payment Submitted",
+           "submittedDescription": "Your payment has been submitted for review"
+         }
+       }
+} 

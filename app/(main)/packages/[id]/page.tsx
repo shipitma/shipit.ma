@@ -24,6 +24,7 @@ import {
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { type PackageType, formatCurrency } from "@/lib/database"
+import { useTranslations } from "@/lib/hooks/use-translations"
 import * as React from "react"
 
 const getStatusColor = (status: string) => {
@@ -87,6 +88,7 @@ const getTimelineIcon = (icon: string) => {
 export default function PackageDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter()
   const { toast } = useToast()
+  const { t } = useTranslations()
   const [isPaymentOpen, setIsPaymentOpen] = useState(false)
   const [packageData, setPackageData] = useState<(PackageType & { paymentRequest?: any; payments: any[] }) | null>(null)
   const [loading, setLoading] = useState(true)
@@ -101,16 +103,16 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
           setPackageData(data)
         } else {
           toast({
-            title: "Erreur",
-            description: "Colis introuvable",
+            title: t('common.error', 'Erreur'),
+            description: t('packageDetail.notFound', 'Colis introuvable'),
             variant: "destructive",
           })
         }
       } catch (error) {
         console.error("Error fetching package:", error)
         toast({
-          title: "Erreur",
-          description: "Impossible de charger le colis",
+          title: t('common.error', 'Erreur'),
+          description: t('packageDetail.loadError', 'Impossible de charger le colis'),
           variant: "destructive",
         })
       } finally {
@@ -119,22 +121,22 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
     }
 
     fetchPackage()
-  }, [id, toast])
+  }, [id, toast, t])
 
   const handlePayShipping = () => {
     toast({
-      title: "Paiement Soumis",
-      description: "Votre paiement d'expédition a été soumis pour traitement",
+      title: t('packageDetail.payment.submitted', 'Paiement Soumis'),
+      description: t('packageDetail.payment.submittedDescription', 'Votre paiement d\'expédition a été soumis pour traitement'),
     })
     setIsPaymentOpen(false)
   }
 
   if (loading) {
-    return <div className="flex items-center justify-center h-64">Chargement...</div>
+    return <div className="flex items-center justify-center h-64">{t('packageDetail.loading', 'Chargement...')}</div>
   }
 
   if (!packageData) {
-    return <div>Package not found</div>
+    return <div>{t('packageDetail.notFound', 'Package not found')}</div>
   }
 
   return (
@@ -153,7 +155,7 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
         {packageData.status === "arrived" && (
           <Button onClick={() => setIsPaymentOpen(true)} size="sm" className="h-7 text-sm ml-auto">
             <DollarSign className="w-3 h-3 mr-1" />
-            Payer les Frais d'Expédition
+            {t('packageDetail.payShippingButton', 'Payer les Frais d\'Expédition')}
           </Button>
         )}
       </div>
@@ -164,50 +166,50 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
           {/* Package Summary */}
           <Card className="border-gray-200">
             <CardHeader className="pb-3">
-              <CardTitle className="text-base font-semibold">Résumé du Colis</CardTitle>
+              <CardTitle className="text-base font-semibold">{t('packageDetail.summary.title', 'Résumé du Colis')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Poids :</span>
+                <span className="text-sm text-gray-500">{t('packageDetail.summary.weight', 'Poids')} :</span>
                 <span className="text-sm font-medium">{packageData.weight || "N/A"}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Dimensions :</span>
+                <span className="text-sm text-gray-500">{t('packageDetail.summary.dimensions', 'Dimensions')} :</span>
                 <span className="text-sm font-medium">{packageData.dimensions || "N/A"}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Valeur :</span>
+                <span className="text-sm text-gray-500">{t('packageDetail.summary.value', 'Valeur')} :</span>
                 <span className="text-sm font-medium">
                   {packageData.estimated_value ? formatCurrency(packageData.estimated_value) : "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Expédition :</span>
+                <span className="text-sm text-gray-500">{t('packageDetail.summary.shipping', 'Expédition')} :</span>
                 <span className="text-sm font-medium">
                   {packageData.shipping_cost ? formatCurrency(packageData.shipping_cost) : "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Assurance :</span>
+                <span className="text-sm text-gray-500">{t('packageDetail.summary.insurance', 'Assurance')} :</span>
                 <span className="text-sm font-medium">
                   {packageData.insurance ? formatCurrency(packageData.insurance) : "N/A"}
                 </span>
               </div>
               {packageData.carrier && (
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-500">Transporteur :</span>
+                  <span className="text-sm text-gray-500">{t('packageDetail.summary.carrier', 'Transporteur')} :</span>
                   <span className="text-sm font-medium">{packageData.carrier}</span>
                 </div>
               )}
               {packageData.tracking_number && (
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-500">Numéro de Suivi :</span>
+                  <span className="text-sm text-gray-500">{t('packageDetail.summary.trackingNumber', 'Numéro de Suivi')} :</span>
                   <span className="text-sm font-medium">{packageData.tracking_number}</span>
                 </div>
               )}
               {packageData.eta && (
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-500">Date d'Arrivée Estimée :</span>
+                  <span className="text-sm text-gray-500">{t('packageDetail.summary.eta', 'Date d\'Arrivée Estimée')} :</span>
                   <span className="text-sm font-medium">{packageData.eta}</span>
                 </div>
               )}
@@ -218,7 +220,7 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
           {packageData.timeline && packageData.timeline.length > 0 && (
             <Card className="border-gray-200">
               <CardHeader className="pb-3">
-                <CardTitle className="text-base font-semibold">Suivi du Colis</CardTitle>
+                <CardTitle className="text-base font-semibold">{t('packageDetail.timeline.title', 'Suivi du Colis')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -263,7 +265,7 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-base font-semibold">
                 <Package className="w-4 h-4" />
-                Contenu du Colis ({packageData.items?.length || 0} articles)
+                {t('packageDetail.contents.title', 'Contenu du Colis')} ({packageData.items?.length || 0} {t('packageDetail.contents.items', 'articles')})
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -280,7 +282,7 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
                       <div className="flex items-start justify-between">
                         <div>
                           <h3 className="text-sm font-medium">{item.name}</h3>
-                          <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
+                          <p className="text-sm text-gray-500">{t('packageDetail.contents.quantity', 'Quantity')}: {item.quantity}</p>
                         </div>
                         <div className="text-right">
                           <p className="text-sm font-semibold">{item.value ? formatCurrency(item.value) : "N/A"}</p>
@@ -293,7 +295,7 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
 
               <div className="border-t border-gray-200 pt-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium">Valeur Totale Estimée :</span>
+                  <span className="text-sm font-medium">{t('packageDetail.contents.totalValue', 'Valeur Totale Estimée')} :</span>
                   <span className="text-lg font-bold text-orange-600">
                     {packageData.estimated_value ? formatCurrency(packageData.estimated_value) : "N/A"}
                   </span>
@@ -308,7 +310,7 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-base font-semibold">
                   <FileText className="w-4 h-4" />
-                  Documents ({packageData.attachments.length})
+                  {t('packageDetail.attachments.title', 'Documents')} ({packageData.attachments.length})
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -326,14 +328,14 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
                         <div>
                           <p className="text-sm font-medium">{attachment.file_name}</p>
                           <p className="text-sm text-gray-500">
-                            {attachment.file_size ? `${(attachment.file_size / 1024).toFixed(1)} KB` : "N/A"}
+                            {attachment.file_size ? `${(attachment.file_size / 1024).toFixed(1)} ${t('packageDetail.attachments.fileSize', 'KB')}` : "N/A"}
                           </p>
                         </div>
                       </div>
                       <Button variant="outline" size="sm" asChild className="h-7 text-sm">
                         <a href={attachment.file_url} target="_blank" rel="noopener noreferrer">
                           <ExternalLink className="w-3 h-3 mr-1" />
-                          Voir
+                          {t('packageDetail.attachments.view', 'Voir')}
                         </a>
                       </Button>
                     </div>
@@ -368,11 +370,11 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
             <Card className="border-blue-200 bg-blue-50">
               <CardContent className="p-3">
                 <div className="space-y-2">
-                  <h4 className="text-sm font-medium text-blue-900">Suivi en Ligne</h4>
+                  <h4 className="text-sm font-medium text-blue-900">{t('packageDetail.tracking.title', 'Suivi en Ligne')}</h4>
                   <Button variant="outline" size="sm" asChild className="w-full h-8 text-sm">
                     <a href={packageData.tracking_url} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="w-3 h-3 mr-1" />
-                      Suivre sur {packageData.carrier || "le site du transporteur"}
+                      {t('packageDetail.tracking.trackOn', 'Suivre sur')} {packageData.carrier || t('packageDetail.tracking.carrierSite', 'le site du transporteur')}
                     </a>
                   </Button>
                 </div>
@@ -387,10 +389,9 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
                 <div className="flex gap-2">
                   <AlertCircle className="w-4 h-4 text-orange-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-sm font-medium text-orange-900">Paiement Requis</h4>
+                    <h4 className="text-sm font-medium text-orange-900">{t('packageDetail.alerts.paymentRequired.title', 'Paiement Requis')}</h4>
                     <p className="text-sm text-orange-800 mt-1">
-                      Votre colis est arrivé dans notre entrepôt. Veuillez payer les frais d'expédition pour procéder à
-                      la livraison.
+                      {t('packageDetail.alerts.paymentRequired.description', 'Votre colis est arrivé dans notre entrepôt. Veuillez payer les frais d\'expédition pour procéder à la livraison.')}
                     </p>
                   </div>
                 </div>
@@ -405,7 +406,7 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
                 <div className="flex gap-2">
                   <Shield className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-sm font-medium text-green-900">Assurance</h4>
+                    <h4 className="text-sm font-medium text-green-900">{t('packageDetail.alerts.insurance.title', 'Assurance')}</h4>
                     <p className="text-sm text-green-800 mt-1">{packageData.insurance_details}</p>
                   </div>
                 </div>
@@ -419,26 +420,26 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
       <Dialog open={isPaymentOpen} onOpenChange={setIsPaymentOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Payer les Frais d'Expédition - {packageData.id}</DialogTitle>
-            <DialogDescription>Effectuez le paiement pour expédier votre colis vers le Maroc</DialogDescription>
+            <DialogTitle>{t('packageDetail.payment.title', 'Payer les Frais d\'Expédition')} - {packageData.id}</DialogTitle>
+            <DialogDescription>{t('packageDetail.payment.description', 'Effectuez le paiement pour expédier votre colis vers le Maroc')}</DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             <div className="p-3 bg-gray-50 rounded-md">
               <div className="space-y-1">
                 <div className="flex justify-between">
-                  <span className="text-sm">Coût d'Expédition :</span>
+                  <span className="text-sm">{t('packageDetail.payment.shippingCost', 'Coût d\'Expédition')} :</span>
                   <span className="text-sm font-medium">
                     {packageData.shipping_cost ? formatCurrency(packageData.shipping_cost) : "N/A"}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm">Assurance :</span>
+                  <span className="text-sm">{t('packageDetail.payment.insurance', 'Assurance')} :</span>
                   <span className="text-sm font-medium">
                     {packageData.insurance ? formatCurrency(packageData.insurance) : "N/A"}
                   </span>
                 </div>
                 <div className="border-t border-gray-200 pt-1 flex justify-between">
-                  <span className="text-sm font-medium">Total :</span>
+                  <span className="text-sm font-medium">{t('packageDetail.payment.total', 'Total')} :</span>
                   <span className="text-sm font-bold">
                     {packageData.shipping_cost && packageData.insurance
                       ? formatCurrency(packageData.shipping_cost + packageData.insurance)
@@ -451,10 +452,10 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
             <div className="flex gap-2">
               <Button onClick={handlePayShipping} className="flex-1 h-8 text-sm">
                 <DollarSign className="w-3 h-3 mr-1" />
-                Payer Maintenant
+                {t('packageDetail.payment.payNow', 'Payer Maintenant')}
               </Button>
               <Button variant="outline" onClick={() => setIsPaymentOpen(false)} className="h-8 text-sm">
-                Annuler
+                {t('packageDetail.payment.cancel', 'Annuler')}
               </Button>
             </div>
           </div>

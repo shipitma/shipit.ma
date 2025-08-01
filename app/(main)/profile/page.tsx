@@ -1,465 +1,108 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Badge } from "@/components/ui/badge"
-import { User, Phone, Mail, MapPin, Edit, Save, X } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { User, Phone, Mail, MapPin } from "lucide-react"
 import { useAuth } from "@/lib/auth-context"
-import { useAnalytics } from "@/hooks/use-analytics"
+import { useTranslations } from "@/lib/hooks/use-translations"
 
 export default function ProfilePage() {
-  const [isEditingPersonal, setIsEditingPersonal] = useState(false)
-  const [isEditingAddresses, setIsEditingAddresses] = useState(false)
-  const [saving, setSaving] = useState(false)
-  const { user, sessionId, accessToken, refreshUser } = useAuth()
-  const { trackProfile, trackError } = useAnalytics()
-
-  const [personalData, setPersonalData] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    phone_number: "",
-  })
-
-  const [address, setAddress] = useState({
-    address_line: "",
-    city: "",
-    state: "",
-    zip: "",
-    country: "",
-  })
-
-  const { toast } = useToast()
-
-  useEffect(() => {
-    if (user) {
-      setPersonalData({
-        first_name: user.first_name || "",
-        last_name: user.last_name || "",
-        email: user.email || "",
-        phone_number: user.phone_number || "",
-      })
-      setAddress({
-        address_line: user.address_line || "",
-        city: user.city || "",
-        state: user.state || "",
-        zip: user.zip || "",
-        country: user.country || "",
-      })
-    }
-  }, [user])
-
-  const handleSavePersonal = async () => {
-    if (!user || (!sessionId && !accessToken)) return
-
-    setSaving(true)
-    try {
-      const token = accessToken || sessionId
-      const response = await fetch(`/api/users/${user.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(personalData),
-      })
-
-      if (response.ok) {
-        trackProfile('UPDATE_PROFILE_SUCCESS', { 
-          field_updated: 'personal_info',
-          hasEmail: !!personalData.email
-        })
-        toast({
-          title: "Succès",
-          description: "Vos informations personnelles ont été sauvegardées avec succès",
-        })
-        setIsEditingPersonal(false)
-        await refreshUser()
-      } else {
-        throw new Error("Failed to update profile")
-      }
-    } catch (error) {
-      trackError('API_ERROR', { 
-        error_message: error instanceof Error ? error.message : 'Unknown error',
-        endpoint: `/api/users/${user.id}`
-      })
-      console.error("Error updating profile:", error)
-      toast({
-        title: "Erreur",
-        description: "Impossible de sauvegarder les modifications",
-        variant: "destructive",
-      })
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  const handleSaveAddresses = async () => {
-    if (!user || (!sessionId && !accessToken)) return
-
-    setSaving(true)
-    try {
-      const token = accessToken || sessionId
-      const response = await fetch(`/api/users/${user.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(address),
-      })
-
-      if (response.ok) {
-        trackProfile('UPDATE_PROFILE_SUCCESS', { 
-          field_updated: 'address',
-          country: address.country
-        })
-        toast({
-          title: "Succès",
-          description: "Votre adresse d'expédition a été sauvegardée avec succès",
-        })
-        setIsEditingAddresses(false)
-        await refreshUser()
-      } else {
-        throw new Error("Failed to update address")
-      }
-    } catch (error) {
-      trackError('API_ERROR', { 
-        error_message: error instanceof Error ? error.message : 'Unknown error',
-        endpoint: `/api/users/${user.id}`
-      })
-      console.error("Error updating address:", error)
-      toast({
-        title: "Erreur",
-        description: "Impossible de sauvegarder l'adresse",
-        variant: "destructive",
-      })
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  if (!user) {
-    return (
-      <div className="space-y-4">
-        <div>
-          <h1 className="text-lg font-semibold">Paramètres du Profil</h1>
-          <p className="text-sm text-gray-600">Gérez les informations de votre compte et les adresses de livraison</p>
-        </div>
-      </div>
-    )
-  }
+  const { user } = useAuth()
+  const { t } = useTranslations()
 
   return (
-    <div className="space-y-4">
-      {/* Mobile Header */}
-      <div className="lg:hidden">
-        <div>
-          <h1 className="text-lg font-semibold">Paramètres du Profil</h1>
-          <p className="text-sm text-gray-600">Gérez les informations de votre compte et les adresses de livraison</p>
-        </div>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-lg font-semibold">{t('profile.title', 'Paramètres du Profil')}</h1>
+        <p className="text-sm text-gray-600">Gérez vos informations personnelles et votre adresse de livraison</p>
       </div>
 
-      {/* Desktop Header */}
-      <div className="hidden lg:flex items-center justify-between">
-        <div>
-          <h1 className="text-lg font-semibold">Paramètres du Profil</h1>
-          <p className="text-sm text-gray-600">Gérez les informations de votre compte et les adresses de livraison</p>
-        </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Personal Information */}
+        <Card className="border-gray-200">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <User className="w-4 h-4 text-orange-600" />
+              {t('profile.personalInfo.title', 'Informations Personnelles')}
+            </CardTitle>
+            <CardDescription>
+              {t('profile.personalInfo.subtitle', 'Gérez vos informations de base')}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <User className="w-4 h-4 text-gray-500" />
+                <div>
+                  <p className="text-sm font-medium">{t('profile.personalInfo.firstName', 'Prénom')} & {t('profile.personalInfo.lastName', 'Nom')}</p>
+                  <p className="text-xs text-gray-500">{user?.first_name} {user?.last_name}</p>
+                </div>
+              </div>
+              {user?.email && (
+                <div className="flex items-center gap-3">
+                  <Mail className="w-4 h-4 text-gray-500" />
+                  <div>
+                    <p className="text-sm font-medium">{t('profile.personalInfo.email', 'Email')}</p>
+                    <p className="text-xs text-gray-500">{user.email}</p>
+                  </div>
+                </div>
+              )}
+              <div className="flex items-center gap-3">
+                <Phone className="w-4 h-4 text-gray-500" />
+                <div>
+                  <p className="text-sm font-medium">{t('profile.personalInfo.phone', 'Téléphone')}</p>
+                  <p className="text-xs text-gray-500" dir="ltr">{user?.phone_number}</p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Shipping Address */}
+        <Card className="border-gray-200">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-orange-600" />
+              {t('profile.shippingAddress.title', 'Adresse d\'Expédition')}
+            </CardTitle>
+            <CardDescription>
+              {t('profile.shippingAddress.subtitle', 'Votre adresse de livraison au Maroc')}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-3">
+              {user?.address_line && (
+                <div className="flex items-center gap-3">
+                  <MapPin className="w-4 h-4 text-gray-500" />
+                  <div>
+                    <p className="text-sm font-medium">{t('profile.shippingAddress.addressLine', 'Adresse')}</p>
+                    <p className="text-xs text-gray-500">{user.address_line}</p>
+                  </div>
+                </div>
+              )}
+              {(user?.city || user?.state || user?.zip) && (
+                <div className="flex items-center gap-3">
+                  <MapPin className="w-4 h-4 text-gray-500" />
+                  <div>
+                    <p className="text-sm font-medium">{t('profile.shippingAddress.city', 'Ville')}, {t('profile.shippingAddress.state', 'Région/État')}, {t('profile.shippingAddress.zip', 'Code Postal')}</p>
+                    <p className="text-xs text-gray-500">
+                      {[user.city, user.state, user.zip].filter(Boolean).join(", ")}
+                    </p>
+                  </div>
+                </div>
+              )}
+              {user?.country && (
+                <div className="flex items-center gap-3">
+                  <MapPin className="w-4 h-4 text-gray-500" />
+                  <div>
+                    <p className="text-sm font-medium">{t('profile.shippingAddress.country', 'Pays')}</p>
+                    <p className="text-xs text-gray-500">{user.country}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
       </div>
-
-      {/* Personal Information */}
-      <Card className="border-gray-200">
-        <CardHeader className="pb-3">
-          {/* Mobile Header */}
-          <div className="lg:hidden">
-            <div className="flex justify-end mb-2">
-              <Button
-                variant={isEditingPersonal ? "outline" : "default"}
-                size="sm"
-                className="h-7 text-sm"
-                onClick={() => (isEditingPersonal ? setIsEditingPersonal(false) : setIsEditingPersonal(true))}
-                disabled={saving}
-              >
-                {isEditingPersonal ? (
-                  <>
-                    <X className="w-3 h-3 mr-1" />
-                    Annuler
-                  </>
-                ) : (
-                  <>
-                    <Edit className="w-3 h-3 mr-1" />
-                    Modifier
-                  </>
-                )}
-              </Button>
-            </div>
-            <div>
-              <CardTitle className="text-base font-semibold">Informations Personnelles</CardTitle>
-              <CardDescription className="text-sm text-gray-500">
-                Mettez à jour vos détails personnels et informations de contact
-              </CardDescription>
-            </div>
-          </div>
-
-          {/* Desktop Header */}
-          <div className="hidden lg:flex items-center justify-between">
-            <div>
-              <CardTitle className="text-base font-semibold">Informations Personnelles</CardTitle>
-              <CardDescription className="text-sm text-gray-500">
-                Mettez à jour vos détails personnels et informations de contact
-              </CardDescription>
-            </div>
-            <Button
-              variant={isEditingPersonal ? "outline" : "default"}
-              size="sm"
-              className="h-7 text-sm"
-              onClick={() => (isEditingPersonal ? setIsEditingPersonal(false) : setIsEditingPersonal(true))}
-              disabled={saving}
-            >
-              {isEditingPersonal ? (
-                <>
-                  <X className="w-3 h-3 mr-1" />
-                  Annuler
-                </>
-              ) : (
-                <>
-                  <Edit className="w-3 h-3 mr-1" />
-                  Modifier
-                </>
-              )}
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div>
-              <Label htmlFor="firstName" className="text-sm">
-                Prénom
-              </Label>
-              <div className="relative">
-                <User className="absolute left-2 top-2 w-3 h-3 text-gray-400" />
-                <Input
-                  id="firstName"
-                  value={personalData.first_name}
-                  onChange={(e) => setPersonalData((prev) => ({ ...prev, first_name: e.target.value }))}
-                  disabled={!isEditingPersonal || saving}
-                  className="pl-7 h-8 text-sm"
-                />
-              </div>
-            </div>
-            <div>
-              <Label htmlFor="lastName" className="text-sm">
-                Nom
-              </Label>
-              <div className="relative">
-                <User className="absolute left-2 top-2 w-3 h-3 text-gray-400" />
-                <Input
-                  id="lastName"
-                  value={personalData.last_name}
-                  onChange={(e) => setPersonalData((prev) => ({ ...prev, last_name: e.target.value }))}
-                  disabled={!isEditingPersonal || saving}
-                  className="pl-7 h-8 text-sm"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div>
-              <Label htmlFor="email" className="text-sm">
-                Adresse Email
-              </Label>
-              <div className="relative">
-                <Mail className="absolute left-2 top-2 w-3 h-3 text-gray-400" />
-                <Input
-                  id="email"
-                  type="email"
-                  value={personalData.email}
-                  onChange={(e) => setPersonalData((prev) => ({ ...prev, email: e.target.value }))}
-                  disabled={!isEditingPersonal || saving}
-                  className="pl-7 h-8 text-sm"
-                />
-              </div>
-            </div>
-            <div>
-              <Label htmlFor="phone" className="text-sm">
-                Numéro de Téléphone
-              </Label>
-              <div className="relative">
-                <Phone className="absolute left-2 top-2 w-3 h-3 text-gray-400" />
-                <Input
-                  id="phone"
-                  value={personalData.phone_number}
-                  onChange={(e) => setPersonalData((prev) => ({ ...prev, phone_number: e.target.value }))}
-                  disabled={true}
-                  className="pl-7 h-8 text-sm bg-gray-50"
-                />
-              </div>
-              <p className="text-sm text-gray-500 mt-1">Le numéro de téléphone ne peut pas être modifié</p>
-            </div>
-          </div>
-
-          {isEditingPersonal && (
-            <div className="flex gap-2 pt-2">
-              <Button onClick={handleSavePersonal} className="flex-1 h-7 text-sm" disabled={saving}>
-                <Save className="w-3 h-3 mr-1" />
-                {saving ? "Sauvegarde..." : "Sauvegarder les Modifications"}
-              </Button>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Shipping Address */}
-      <Card className="border-gray-200">
-        <CardHeader className="pb-3">
-          {/* Mobile Header */}
-          <div className="lg:hidden">
-            <div className="flex justify-end mb-2">
-              <Button
-                variant={isEditingAddresses ? "outline" : "default"}
-                size="sm"
-                className="h-7 text-sm"
-                onClick={() => (isEditingAddresses ? setIsEditingAddresses(false) : setIsEditingAddresses(true))}
-                disabled={saving}
-              >
-                {isEditingAddresses ? (
-                  <>
-                    <X className="w-3 h-3 mr-1" />
-                    Annuler
-                  </>
-                ) : (
-                  <>
-                    <Edit className="w-3 h-3 mr-1" />
-                    Modifier
-                  </>
-                )}
-              </Button>
-            </div>
-            <div>
-              <CardTitle className="text-base font-semibold">Adresse de Livraison</CardTitle>
-              <CardDescription className="text-sm text-gray-500">
-                Gérez votre adresse d'expédition au Maroc
-              </CardDescription>
-            </div>
-          </div>
-
-          {/* Desktop Header */}
-          <div className="hidden lg:flex items-center justify-between">
-            <div>
-              <CardTitle className="text-base font-semibold">Adresse de Livraison</CardTitle>
-              <CardDescription className="text-sm text-gray-500">
-                Gérez votre adresse d'expédition au Maroc
-              </CardDescription>
-            </div>
-            <Button
-              variant={isEditingAddresses ? "outline" : "default"}
-              size="sm"
-              className="h-7 text-sm"
-              onClick={() => (isEditingAddresses ? setIsEditingAddresses(false) : setIsEditingAddresses(true))}
-              disabled={saving}
-            >
-              {isEditingAddresses ? (
-                <>
-                  <X className="w-3 h-3 mr-1" />
-                  Annuler
-                </>
-              ) : (
-                <>
-                  <Edit className="w-3 h-3 mr-1" />
-                  Modifier
-                </>
-              )}
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <div className="p-3 border border-gray-200 rounded-md space-y-3">
-            <div className="flex items-center gap-2">
-              <MapPin className="w-3 h-3 text-gray-400" />
-              <Badge variant="secondary" className="text-xs h-4">
-                Adresse Principale
-              </Badge>
-            </div>
-
-            <div className="grid grid-cols-1 gap-3">
-              <div>
-                <Label htmlFor="line" className="text-sm">
-                  Ligne d'Adresse
-                </Label>
-                <Input
-                  id="line"
-                  value={address.address_line}
-                  onChange={(e) => setAddress((prev) => ({ ...prev, address_line: e.target.value }))}
-                  disabled={!isEditingAddresses || saving}
-                  placeholder="Adresse, appartement, suite, etc."
-                  className="h-8 text-sm"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div>
-                  <Label htmlFor="city" className="text-sm">
-                    Ville
-                  </Label>
-                  <Input
-                    id="city"
-                    value={address.city}
-                    onChange={(e) => setAddress((prev) => ({ ...prev, city: e.target.value }))}
-                    disabled={!isEditingAddresses || saving}
-                    className="h-8 text-sm"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="state" className="text-sm">
-                    État/Province
-                  </Label>
-                  <Input
-                    id="state"
-                    value={address.state || ""}
-                    onChange={(e) => setAddress((prev) => ({ ...prev, state: e.target.value }))}
-                    disabled={!isEditingAddresses || saving}
-                    className="h-8 text-sm"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="zip" className="text-sm">
-                    Code Postal
-                  </Label>
-                  <Input
-                    id="zip"
-                    value={address.zip || ""}
-                    onChange={(e) => setAddress((prev) => ({ ...prev, zip: e.target.value }))}
-                    disabled={!isEditingAddresses || saving}
-                    className="h-8 text-sm"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <Label htmlFor="country" className="text-sm">
-                  Pays
-                </Label>
-                <Input id="country" value={address.country} disabled className="bg-gray-50 h-8 text-sm" />
-              </div>
-            </div>
-          </div>
-
-          {isEditingAddresses && (
-            <div className="flex gap-2 pt-2">
-              <Button onClick={handleSaveAddresses} className="flex-1 h-7 text-sm" disabled={saving}>
-                <Save className="w-3 h-3 mr-1" />
-                {saving ? "Sauvegarde..." : "Sauvegarder l'Adresse"}
-              </Button>
-            </div>
-          )}
-        </CardContent>
-      </Card>
     </div>
   )
 }

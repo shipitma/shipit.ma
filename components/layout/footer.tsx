@@ -4,9 +4,11 @@ import Image from "next/image"
 import Link from "next/link"
 import { ChevronDown } from "lucide-react"
 import { useState } from "react"
+import { useTranslations } from "@/lib/hooks/use-translations"
 
 export function Footer() {
   const [openDropdowns, setOpenDropdowns] = useState<{ [key: string]: boolean }>({})
+  const { t } = useTranslations()
 
   const toggleDropdown = (key: string) => {
     setOpenDropdowns((prev) => ({
@@ -35,28 +37,28 @@ export function Footer() {
             {/* Legal Links */}
             <div className="space-y-2 mb-6">
               <a href="/terms-of-use" className="block text-sm text-gray-500 hover:text-gray-700">
-                Conditions d'Utilisation
+                {t('footer.termsOfUse', 'Conditions d\'Utilisation')}
               </a>
               <a href="/policy" className="block text-sm text-gray-500 hover:text-gray-700">
-                Politique de Confidentialité
+                {t('footer.privacyPolicy', 'Politique de Confidentialité')}
               </a>
               <a href="#" className="block text-sm text-gray-500 hover:text-gray-700">
-                Accord de Traitement des Données GDPR
+                {t('footer.gdprAgreement', 'Accord de Traitement des Données GDPR')}
               </a>
               <a href="/gdpr-faq" className="block text-sm text-gray-500 hover:text-gray-700">
-                FAQ sur le GDPR
+                {t('footer.gdprFaq', 'FAQ sur le GDPR')}
               </a>
               <a href="/marquiz-privacy-notice" className="block text-sm text-gray-500 hover:text-gray-700">
-                Avis de Confidentialité shipit
+                {t('footer.privacyNotice', 'Avis de Confidentialité shipit')}
               </a>
               <a href="/red-politika" className="block text-sm text-gray-500 hover:text-gray-700">
-                Politique Éditoriale shipit
+                {t('footer.editorialPolicy', 'Politique Éditoriale shipit')}
               </a>
               <a href="/return-and-refund-policy" className="block text-sm text-gray-500 hover:text-gray-700">
-                Politique de Retour et Remboursement
+                {t('footer.returnPolicy', 'Politique de Retour et Remboursement')}
               </a>
               <a href="/payment-security/" className="block text-sm text-gray-500 hover:text-gray-700">
-                Paiement & Sécurité
+                {t('footer.paymentSecurity', 'Paiement & Sécurité')}
               </a>
             </div>
 

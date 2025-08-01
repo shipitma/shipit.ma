@@ -10,6 +10,8 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { useDashboardStats } from "@/hooks/use-dashboard-stats"
 import { useAnalytics } from "@/hooks/use-analytics"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import { useTranslations } from "@/lib/hooks/use-translations"
+import { useLanguage } from "@/lib/context/language-context"
 
 export default function DashboardPage() {
   const { user } = useAuth()
@@ -18,6 +20,40 @@ export default function DashboardPage() {
   const { trackDashboard, trackError } = useAnalytics()
   const [warehouses, setWarehouses] = useState<any[]>([])
   const [loadingWarehouses, setLoadingWarehouses] = useState(true)
+  const { t, language } = useTranslations()
+  const { isRTL } = useLanguage()
+
+  // Helper function to get translated country name
+  const getCountryName = (country: string) => {
+    const countryMap: { [key: string]: { [key: string]: string } } = {
+      fr: {
+        'Turkey': 'Turquie',
+        'USA': 'États-Unis',
+        'Europe': 'Europe',
+        'France': 'France',
+        'Spain': 'Espagne',
+        'Morocco': 'Maroc'
+      },
+      en: {
+        'Turkey': 'Turkey',
+        'USA': 'USA',
+        'Europe': 'Europe',
+        'France': 'France',
+        'Spain': 'Spain',
+        'Morocco': 'Morocco'
+      },
+      ar: {
+        'Turkey': 'تركيا',
+        'USA': 'الولايات المتحدة',
+        'Europe': 'أوروبا',
+        'France': 'فرنسا',
+        'Spain': 'إسبانيا',
+        'Morocco': 'المغرب'
+      }
+    }
+    
+    return countryMap[language]?.[country] || country
+  }
 
   // Track page view
   useEffect(() => {
@@ -36,12 +72,12 @@ export default function DashboardPage() {
         endpoint: '/api/dashboard/stats'
       })
       toast({
-        title: "Erreur",
+        title: t('common.error', 'Erreur'),
         description: error,
         variant: "destructive",
       })
     }
-  }, [error, toast, trackError])
+  }, [error, toast, trackError, t])
 
   useEffect(() => {
     setLoadingWarehouses(true)
@@ -60,12 +96,12 @@ export default function DashboardPage() {
   const europeWarehouses = warehouses.filter(w => w.country === "France" || w.country === "Spain")
 
   const getFullName = () => {
-    if (!user) return "Utilisateur"
-    return `${user.first_name || ""} ${user.last_name || ""}`.trim() || "Utilisateur"
+    if (!user) return t('common.user', 'Utilisateur')
+    return `${user.first_name || ""} ${user.last_name || ""}`.trim() || t('common.user', 'Utilisateur')
   }
 
   const getFirstName = () => {
-    return user?.first_name || "Utilisateur"
+    return user?.first_name || t('common.user', 'Utilisateur')
   }
 
   const handleActionClick = (action: string) => {
@@ -74,7 +110,7 @@ export default function DashboardPage() {
 
   const statsCards = [
     {
-      title: "Colis Attendus",
+      title: t('dashboard.stats.expectedPackages', 'Colis Attendus'),
       value: loading ? <Skeleton className="h-6 w-8" /> : stats?.expected_packages?.toString() || "0",
       icon: Clock,
       color: "text-orange-600",
@@ -82,7 +118,7 @@ export default function DashboardPage() {
       href: "/packages",
     },
     {
-      title: "En Entrepôt",
+      title: t('dashboard.stats.inWarehouse', 'En Entrepôt'),
       value: loading ? <Skeleton className="h-6 w-8" /> : stats?.warehouse_packages?.toString() || "0",
       icon: Package,
       color: "text-green-600",
@@ -90,7 +126,7 @@ export default function DashboardPage() {
       href: "/packages",
     },
     {
-      title: "Envoyés",
+      title: t('dashboard.stats.shipped', 'Envoyés'),
       value: loading ? <Skeleton className="h-6 w-8" /> : stats?.shipped_packages?.toString() || "0",
       icon: Truck,
       color: "text-blue-600",
@@ -98,7 +134,7 @@ export default function DashboardPage() {
       href: "/packages",
     },
     {
-      title: "Achat Assisté",
+      title: t('dashboard.stats.purchaseAssistance', 'Achat Assisté'),
       value: loading ? <Skeleton className="h-6 w-8" /> : stats?.purchase_assistance?.toString() || "0",
       icon: ShoppingCart,
       color: "text-purple-600",
@@ -112,23 +148,26 @@ export default function DashboardPage() {
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-lg font-semibold">Accueil</h1>
-            <p className="text-sm text-gray-600">Aperçu de vos colis et activité récente</p>
+            <h1 className="text-lg font-semibold">{t('dashboard.title', 'Accueil')}</h1>
+            <p className="text-sm text-gray-600">{t('dashboard.subtitle', 'Aperçu de vos colis et activité récente')}</p>
+
           </div>
         </div>
 
         {/* Welcome Section */}
         <div className="bg-gradient-to-r from-orange-600 to-orange-700 rounded-lg p-4 text-white">
-          <h2 className="text-base font-semibold mb-1">Bon retour, {getFirstName()} !</h2>
+          <h2 className="text-base font-semibold mb-1">{t('dashboard.welcomeBack', 'Bon retour, {name} !', { name: getFirstName() })}</h2>
           <p className="text-orange-100 text-sm mb-3">
-            Vous avez {stats?.shipped_packages || 0} colis en transit et {stats?.expected_packages || 0} colis attendus
-            à examiner.
+            {t('dashboard.statsDescription', 'Vous avez {shipped} colis en transit et {expected} colis attendus à examiner.', { 
+              shipped: stats?.shipped_packages || 0, 
+              expected: stats?.expected_packages || 0 
+            })}
           </p>
           <div className="flex gap-2">
             <Button variant="secondary" size="sm" asChild className="h-7 text-sm">
               <a href="/purchases/create" onClick={() => handleActionClick('new_purchase_request')}>
                 <Plus className="w-3 h-3 mr-1" />
-                Nouvelle Demande
+                {t('dashboard.newRequestButton', 'Nouvelle Demande')}
               </a>
             </Button>
             <Button
@@ -139,7 +178,7 @@ export default function DashboardPage() {
             >
               <a href="/packages/create" onClick={() => handleActionClick('add_package')}>
                 <Package className="w-3 h-3 mr-1" />
-                Ajouter Colis
+                {t('dashboard.addPackageButton', 'Ajouter Colis')}
               </a>
             </Button>
           </div>
@@ -173,10 +212,10 @@ export default function DashboardPage() {
           <CardHeader className="pb-3">
             <CardTitle className="text-base font-semibold flex items-center gap-2">
               <MapPin className="w-4 h-4 text-orange-600" />
-              Adresses d'entrepôt
+              {t('dashboard.warehouseAddresses.title', 'Adresses d\'entrepôt')}
             </CardTitle>
             <CardDescription className="text-sm text-gray-500">
-              Vos adresses d'expédition internationales
+              {t('dashboard.warehouseAddresses.subtitle', 'Vos adresses d\'expédition internationales')}
             </CardDescription>
           </CardHeader>
           <CardContent className="pt-0 space-y-4">
@@ -185,26 +224,60 @@ export default function DashboardPage() {
             ) : (
               <Tabs defaultValue={turkeyWarehouse ? "turkey" : europeWarehouses.length ? "europe" : "usa"} className="w-full">
                 <TabsList className="mb-2 w-full flex">
-                  {turkeyWarehouse && <TabsTrigger value="turkey" className="flex-1">Turkey</TabsTrigger>}
-                  {europeWarehouses.length > 0 && <TabsTrigger value="europe" className="flex-1">Europe</TabsTrigger>}
-                  {usaWarehouse && <TabsTrigger value="usa" className="flex-1">USA</TabsTrigger>}
+                  {isRTL ? (
+                    <>
+                      {usaWarehouse && <TabsTrigger value="usa" className="flex-1">{getCountryName("USA")}</TabsTrigger>}
+                      {europeWarehouses.length > 0 && <TabsTrigger value="europe" className="flex-1">{getCountryName("Europe")}</TabsTrigger>}
+                      {turkeyWarehouse && <TabsTrigger value="turkey" className="flex-1">{getCountryName("Turkey")}</TabsTrigger>}
+                    </>
+                  ) : (
+                    <>
+                      {turkeyWarehouse && <TabsTrigger value="turkey" className="flex-1">{getCountryName("Turkey")}</TabsTrigger>}
+                      {europeWarehouses.length > 0 && <TabsTrigger value="europe" className="flex-1">{getCountryName("Europe")}</TabsTrigger>}
+                      {usaWarehouse && <TabsTrigger value="usa" className="flex-1">{getCountryName("USA")}</TabsTrigger>}
+                    </>
+                  )}
                 </TabsList>
                 {turkeyWarehouse && (
                   <TabsContent value="turkey">
-                    <WarehouseCard warehouse={turkeyWarehouse} getFullName={getFullName} />
+                    <WarehouseCard warehouse={turkeyWarehouse} getFullName={getFullName} getCountryName={getCountryName} isRTL={isRTL} />
                   </TabsContent>
                 )}
                 {europeWarehouses.length > 0 && (
                   <TabsContent value="europe">
                     <Tabs defaultValue={europeWarehouses[0].country.toLowerCase()} className="w-full">
                       <TabsList className="mb-2 w-full flex">
-                        {europeWarehouses.map(w => (
-                          <TabsTrigger key={w.country} value={w.country.toLowerCase()} className="flex-1">{w.country}</TabsTrigger>
-                        ))}
+                        {isRTL ? (
+                          <>
+                            {europeWarehouses.filter(w => w.country === "Spain").map(w => (
+                              <TabsTrigger key={w.country} value={w.country.toLowerCase()} className="flex-1">
+                                {getCountryName(w.country)}
+                              </TabsTrigger>
+                            ))}
+                            {europeWarehouses.filter(w => w.country === "France").map(w => (
+                              <TabsTrigger key={w.country} value={w.country.toLowerCase()} className="flex-1">
+                                {getCountryName(w.country)}
+                              </TabsTrigger>
+                            ))}
+                          </>
+                        ) : (
+                          <>
+                            {europeWarehouses.filter(w => w.country === "France").map(w => (
+                              <TabsTrigger key={w.country} value={w.country.toLowerCase()} className="flex-1">
+                                {getCountryName(w.country)}
+                              </TabsTrigger>
+                            ))}
+                            {europeWarehouses.filter(w => w.country === "Spain").map(w => (
+                              <TabsTrigger key={w.country} value={w.country.toLowerCase()} className="flex-1">
+                                {getCountryName(w.country)}
+                              </TabsTrigger>
+                            ))}
+                          </>
+                        )}
                       </TabsList>
                       {europeWarehouses.map(w => (
                         <TabsContent key={w.country} value={w.country.toLowerCase()}>
-                          <WarehouseCard warehouse={w} getFullName={getFullName} />
+                          <WarehouseCard warehouse={w} getFullName={getFullName} getCountryName={getCountryName} isRTL={isRTL} />
                         </TabsContent>
                       ))}
                     </Tabs>
@@ -212,7 +285,7 @@ export default function DashboardPage() {
                 )}
                 {usaWarehouse && (
                   <TabsContent value="usa">
-                    <WarehouseCard warehouse={usaWarehouse} getFullName={getFullName} />
+                    <WarehouseCard warehouse={usaWarehouse} getFullName={getFullName} getCountryName={getCountryName} isRTL={isRTL} />
                   </TabsContent>
                 )}
               </Tabs>
@@ -225,35 +298,35 @@ export default function DashboardPage() {
 }
 
 // WarehouseCard component
-function WarehouseCard({ warehouse, getFullName }: { warehouse: any, getFullName: () => string }) {
+function WarehouseCard({ warehouse, getFullName, getCountryName, isRTL }: { warehouse: any, getFullName: () => string, getCountryName: (country: string) => string, isRTL: boolean }) {
+  const { t } = useTranslations()
+  
   return (
     <div className="bg-gray-50 p-3 rounded-md">
       <div className="space-y-2">
-        <div className="flex items-center gap-2">
+        <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
           <User className="w-3 h-3 text-gray-600" />
           <div>
-            <p className="text-sm font-medium text-gray-900">{getFullName()}</p>
-            <p className="text-sm text-gray-500">Titulaire du Compte</p>
+            <p className={`text-sm font-medium text-gray-900 ${isRTL ? 'text-right' : ''}`}>{t('dashboard.warehouseAddresses.accountHolder', 'Titulaire du Compte')}</p>
+            <p className={`text-sm text-gray-500 ${isRTL ? 'text-right' : ''}`}>{getFullName()}</p>
           </div>
         </div>
         <div className="border-t border-gray-200 pt-2 space-y-1">
-          <p className="text-sm font-medium text-gray-900">shipit.ma {warehouse.name}</p>
-          <p className="text-sm text-gray-600">{warehouse.address_line}</p>
-          <p className="text-sm text-gray-600">{warehouse.city}{warehouse.state ? `, ${warehouse.state}` : ""} {warehouse.zip}</p>
-          <p className="text-sm text-gray-600">{warehouse.country}</p>
+          <p className={`text-sm font-medium text-gray-900 ${isRTL ? 'text-right' : ''}`}>shipit.ma {warehouse.name}</p>
+          <p className={`text-sm text-gray-600 ${isRTL ? 'text-right' : ''}`}>{warehouse.address_line}</p>
+          <p className={`text-sm text-gray-600 ${isRTL ? 'text-right' : ''}`}>{warehouse.city}{warehouse.state ? `, ${warehouse.state}` : ""} {warehouse.zip}</p>
+          <p className={`text-sm text-gray-600 ${isRTL ? 'text-right' : ''}`}>{getCountryName(warehouse.country)}</p>
         </div>
-        <div className="border-t border-gray-200 pt-2 flex items-center gap-2">
+        <div className={`border-t border-gray-200 pt-2 flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
           <Phone className="w-3 h-3 text-gray-600" />
-          <p className="text-sm font-medium text-gray-900">{warehouse.phone}</p>
+          <p className={`text-sm font-medium text-gray-900 ${isRTL ? 'text-right' : ''}`} dir="ltr">{warehouse.phone}</p>
         </div>
       </div>
-      {warehouse.notes && (
-        <div className="bg-yellow-50 border border-yellow-200 rounded-md p-3 mt-2">
-          <p className="text-sm text-yellow-800">
-            <strong>Important:</strong> {warehouse.notes.replace('{getFullName()}', getFullName())}
-          </p>
-        </div>
-      )}
+      <div className="bg-yellow-50 border border-yellow-200 rounded-md p-3 mt-2">
+        <p className={`text-sm text-yellow-800 ${isRTL ? 'text-right' : ''}`}>
+          <strong>{t('dashboard.warehouseAddresses.important', 'Important:')}</strong> {t('dashboard.warehouseAddresses.includeFullName', 'تأكد دائماً من تضمين اسمك الكامل كمستلم.')}
+        </p>
+      </div>
     </div>
   )
 }

@@ -25,40 +25,47 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Input } from "@/components/ui/input"
-
-const navigation = [
-  { name: "Accueil", href: "/dashboard", icon: Home },
-  { name: "Achats", href: "/purchases", icon: ShoppingCart },
-  { name: "Colis", href: "/packages", icon: Package },
-]
-
-const createActions = [
-  { name: "Nouvelle Demande d'Achat", href: "/purchases/create", icon: ShoppingCart },
-  { name: "Ajouter un Colis", href: "/packages/create", icon: Package },
-]
-
-const supportLinks = [
-  { name: "Support", href: "/help", icon: HelpCircle },
-  { name: "Contact", href: "/contact", icon: Phone },
-]
-
-const breadcrumbNameMap: { [key: string]: string } = {
-  "/dashboard": "Tableau de Bord",
-  "/packages": "Colis",
-  "/purchases": "Achats",
-  "/profile": "Profil",
-  "/create": "Créer",
-}
+import { useTranslations } from "@/lib/hooks/use-translations"
+import { useLanguage } from '@/lib/context/language-context'
+import { LanguageSelector } from '@/components/ui/LanguageSelector'
 
 export default function MainLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const { t } = useTranslations()
+  const { isRTL } = useLanguage()
   const router = useRouter()
   const pathname = usePathname()
   const { user, logout, loading } = useAuth()
   const [logoutLoading, setLogoutLoading] = useState(false)
+  
+  const navigation = [
+    { name: t('mainLayout.navigation.home', 'Accueil'), href: "/dashboard", icon: Home },
+    { name: t('mainLayout.navigation.purchases', 'Achats'), href: "/purchases", icon: ShoppingCart },
+    { name: t('mainLayout.navigation.packages', 'Colis'), href: "/packages", icon: Package },
+  ]
+
+  const profileNavigation = { name: t('mainLayout.navigation.profile', 'Profil'), href: "/profile", icon: User }
+
+  const createActions = [
+    { name: t('mainLayout.actions.newPurchaseRequest', 'Nouvelle Demande d\'Achat'), href: "/purchases/create", icon: ShoppingCart },
+    { name: t('mainLayout.actions.addPackage', 'Ajouter un Colis'), href: "/packages/create", icon: Package },
+  ]
+
+  const supportLinks = [
+    { name: t('mainLayout.support.support', 'Support'), href: "/help", icon: HelpCircle },
+    { name: t('mainLayout.support.contact', 'Contact'), href: "/contact", icon: Phone },
+  ]
+
+  const breadcrumbNameMap: { [key: string]: string } = {
+    "/dashboard": t('mainLayout.breadcrumbs.dashboard', 'Tableau de Bord'),
+    "/packages": t('mainLayout.breadcrumbs.packages', 'Colis'),
+    "/purchases": t('mainLayout.breadcrumbs.purchases', 'Achats'),
+    "/profile": t('mainLayout.breadcrumbs.profile', 'Profil'),
+    "/create": t('mainLayout.breadcrumbs.create', 'Créer'),
+  }
 
   // Show loading screen while auth is initializing
   if (loading) {
@@ -66,7 +73,7 @@ export default function MainLayout({
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mx-auto mb-4"></div>
-          <p className="text-sm text-gray-600">Chargement...</p>
+          <p className="text-sm text-gray-600">{t('mainLayout.loading', 'Chargement...')}</p>
         </div>
       </div>
     )
@@ -100,12 +107,12 @@ export default function MainLayout({
   }
 
   const getFullName = () => {
-    if (!user) return "Chargement..."
-    return `${user.first_name || ""} ${user.last_name || ""}`.trim() || "Utilisateur"
+    if (!user) return t('mainLayout.user.loading', 'Chargement...')
+    return `${user.first_name || ""} ${user.last_name || ""}`.trim() || t('mainLayout.user.user', 'Utilisateur')
   }
 
   const getPhoneNumber = () => {
-    return user?.phone_number || "Chargement..."
+    return user?.phone_number || t('mainLayout.user.loading', 'Chargement...')
   }
 
   const generateBreadcrumbs = () => {
@@ -151,9 +158,9 @@ export default function MainLayout({
   }
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen bg-[#fafafa]" dir={isRTL ? 'rtl' : 'ltr'}>
       {/* Desktop Sidebar */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
+      <div className={`hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col ${isRTL ? 'lg:right-0' : 'lg:left-0'}`}>
         <div className="flex grow flex-col gap-y-4 overflow-y-auto bg-[#fafafa] px-4 pb-4">
           {/* Logo */}
           <div className="flex h-14 shrink-0 items-center">
@@ -178,7 +185,7 @@ export default function MainLayout({
                         }`}
                       >
                         <item.icon className="h-4 w-4 shrink-0" />
-                        {item.name}
+                        <span>{item.name}</span>
                       </a>
                     </li>
                   ))}
@@ -187,7 +194,7 @@ export default function MainLayout({
 
               {/* Create Actions */}
               <li>
-                <div className="text-sm font-medium leading-5 text-gray-400">Actions Rapides</div>
+                <div className="text-sm font-medium leading-5 text-gray-400">{t('mainLayout.quickActions', 'Actions Rapides')}</div>
                 <ul role="list" className="-mx-2 mt-2 space-y-1">
                   {createActions.map((item) => (
                     <li key={item.name}>
@@ -196,15 +203,23 @@ export default function MainLayout({
                         className="text-gray-700 hover:text-orange-600 hover:bg-gray-50 group flex gap-x-2 rounded-md p-2 text-sm font-medium"
                       >
                         <Plus className="h-4 w-4 shrink-0" />
-                        {item.name}
+                        <span>{item.name}</span>
                       </a>
                     </li>
                   ))}
                 </ul>
               </li>
 
-              {/* Support Links */}
+              {/* Language Selector */}
               <li className="mt-auto">
+                <div className="text-sm font-medium leading-5 text-gray-400 mb-2">{t('mainLayout.language', 'Langue')}</div>
+                <div className="px-2">
+                  <LanguageSelector />
+                </div>
+              </li>
+
+              {/* Support Links */}
+              <li>
                 <ul role="list" className="-mx-2 mt-2 space-y-1">
                   {supportLinks.map((item) => (
                     <li key={item.name}>
@@ -213,7 +228,7 @@ export default function MainLayout({
                         className="group flex gap-x-2 rounded-md p-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-orange-600"
                       >
                         <item.icon className="h-4 w-4 shrink-0" />
-                        {item.name}
+                        <span>{item.name}</span>
                       </a>
                     </li>
                   ))}
@@ -230,9 +245,9 @@ export default function MainLayout({
                           <AvatarImage src="/placeholder-user.jpg" alt="User" />
                           <AvatarFallback className="text-sm">{getUserInitials()}</AvatarFallback>
                         </Avatar>
-                        <div className="text-left">
+                        <div className={isRTL ? "text-right" : "text-left"}>
                           <p className="text-sm font-medium">{getFullName()}</p>
-                          <p className="text-sm text-gray-500">{getPhoneNumber()}</p>
+                          <p className="text-sm text-gray-500" dir="ltr">{getPhoneNumber()}</p>
                         </div>
                       </div>
                     </Button>
@@ -241,18 +256,18 @@ export default function MainLayout({
                     <DropdownMenuLabel className="font-normal">
                       <div className="flex flex-col space-y-1">
                         <p className="text-sm font-medium leading-none">{getFullName()}</p>
-                        <p className="text-sm leading-none text-gray-500">{getPhoneNumber()}</p>
+                        <p className="text-sm leading-none text-gray-500" dir="ltr">{getPhoneNumber()}</p>
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={() => router.push("/profile")} className="text-sm">
-                      <User className="mr-2 h-3 w-3" />
-                      <span>Profil</span>
+                      <User className="h-3 w-3" />
+                      <span>{t('mainLayout.user.profile', 'Profil')}</span>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogout} className="text-sm" disabled={logoutLoading}>
-                      <LogOut className="mr-2 h-3 w-3" />
-                      <span>{logoutLoading ? "Déconnexion..." : "Se Déconnecter"}</span>
+                      <LogOut className="h-3 w-3" />
+                      <span>{logoutLoading ? t('mainLayout.user.logoutLoading', 'Déconnexion...') : t('mainLayout.user.logout', 'Se Déconnecter')}</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -284,23 +299,24 @@ export default function MainLayout({
             }`}
           >
             <User className="h-4 w-4 mb-1" />
-            <span className="truncate">Profil</span>
+            <span className="truncate">{profileNavigation.name}</span>
           </a>
         </div>
       </div>
 
       {/* Main content */}
-      <div className="lg:pl-72">
-        <div className="bg-white lg:rounded-tl-2xl lg:min-h-screen">
+      <div className={isRTL ? "lg:pr-72" : "lg:pl-72"}>
+        <div className={`bg-white lg:min-h-screen ${isRTL ? 'lg:rounded-tr-2xl' : 'lg:rounded-tl-2xl'}`}>
           {/* Desktop Header */}
           <div className="hidden lg:sticky lg:top-0 lg:z-40 lg:flex h-14 items-center justify-between bg-transparent px-6">
             <div>{generateBreadcrumbs()}</div>
             <div className="flex items-center space-x-3">
+              <LanguageSelector />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="flex items-center gap-1 h-8 px-2 text-red-600 font-semibold underline underline-offset-2">
                     <MessageCircle className="h-5 w-5" />
-                    <span>Besoin d'aide&nbsp;?</span>
+                    <span>{t('mainLayout.help.needHelp', 'Besoin d\'aide ?')}</span>
                     <ChevronDown className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -308,19 +324,19 @@ export default function MainLayout({
                   <DropdownMenuItem asChild>
                     <a href="tel:0522300900" className="flex items-center gap-2 py-2">
                       <Phone className="h-5 w-5 text-gray-500" />
-                      <span>J'appelle au <span className="font-semibold">0522 300 900</span></span>
+                      <span>{t('mainLayout.help.callUs', 'J\'appelle au')} <span className="font-semibold">0522 300 900</span></span>
                     </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <a href="https://wa.me/212522300900" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 py-2">
                       <span className="inline-flex items-center justify-center h-5 w-5 rounded bg-green-500"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51-.173-.008-.372-.01-.571-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.099 3.2 5.077 4.363.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.288.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 6.318h-.001a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.455 4.436-9.89 9.893-9.89 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.896 6.991c-.003 5.456-4.438 9.891-9.897 9.891zm8.413-18.306A11.815 11.815 0 0 0 12.05 0C5.495 0 .06 5.435.058 12.088c0 2.13.557 4.21 1.615 6.032L0 24l6.063-1.591a11.876 11.876 0 0 0 5.987 1.527h.005c6.554 0 11.989-5.435 11.991-12.088a11.86 11.86 0 0 0-3.497-8.594z"/></svg></span>
-                      <span>Je prends contact sur Whatsapp</span>
+                      <span>{t('mainLayout.help.contactWhatsapp', 'Je prends contact sur Whatsapp')}</span>
                     </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <a href="/help" className="flex items-center gap-2 py-2">
                       <HelpCircle className="h-5 w-5 text-gray-500" />
-                      <span>Je consulte la page d'aide</span>
+                      <span>{t('mainLayout.help.consultHelpPage', 'Je consulte la page d\'aide')}</span>
                     </a>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -336,11 +352,12 @@ export default function MainLayout({
             </div>
 
             <div className="flex items-center gap-3">
+              <LanguageSelector />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="flex items-center gap-1 h-8 px-2 text-red-600 font-semibold underline underline-offset-2">
                     <MessageCircle className="h-5 w-5" />
-                    <span>Besoin d'aide&nbsp;?</span>
+                    <span>{t('mainLayout.help.needHelp', 'Besoin d\'aide ?')}</span>
                     <ChevronDown className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -348,19 +365,19 @@ export default function MainLayout({
                   <DropdownMenuItem asChild>
                     <a href="tel:0522300900" className="flex items-center gap-2 py-2">
                       <Phone className="h-5 w-5 text-gray-500" />
-                      <span>J'appelle au <span className="font-semibold">0522 300 900</span></span>
+                      <span>{t('mainLayout.help.callUs', 'J\'appelle au')} <span className="font-semibold">0522 300 900</span></span>
                     </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <a href="https://wa.me/212522300900" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 py-2">
                       <span className="inline-flex items-center justify-center h-5 w-5 rounded bg-green-500"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51-.173-.008-.372-.01-.571-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.099 3.2 5.077 4.363.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.288.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 6.318h-.001a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.455 4.436-9.89 9.893-9.89 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.896 6.991c-.003 5.456-4.438 9.891-9.897 9.891zm8.413-18.306A11.815 11.815 0 0 0 12.05 0C5.495 0 .06 5.435.058 12.088c0 2.13.557 4.21 1.615 6.032L0 24l6.063-1.591a11.876 11.876 0 0 0 5.987 1.527h.005c6.554 0 11.989-5.435 11.991-12.088a11.86 11.86 0 0 0-3.497-8.594z"/></svg></span>
-                      <span>Je prends contact sur Whatsapp</span>
+                      <span>{t('mainLayout.help.contactWhatsapp', 'Je prends contact sur Whatsapp')}</span>
                     </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <a href="/help" className="flex items-center gap-2 py-2">
                       <HelpCircle className="h-5 w-5 text-gray-500" />
-                      <span>Je consulte la page d'aide</span>
+                      <span>{t('mainLayout.help.consultHelpPage', 'Je consulte la page d\'aide')}</span>
                     </a>
                   </DropdownMenuItem>
                 </DropdownMenuContent>

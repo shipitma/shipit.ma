@@ -11,6 +11,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Loader2, MessageCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { useAnalytics } from "@/hooks/use-analytics"
+import { useTranslations } from "@/lib/hooks/use-translations"
+import { useLanguage } from "@/lib/context/language-context"
 
 export default function LoginPage() {
   const [phoneNumber, setPhoneNumber] = useState("")
@@ -18,6 +20,8 @@ export default function LoginPage() {
   const router = useRouter()
   const { toast } = useToast()
   const { trackAuth, trackError } = useAnalytics()
+  const { t } = useTranslations()
+  const { isRTL } = useLanguage()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -25,8 +29,8 @@ export default function LoginPage() {
     if (!phoneNumber.trim()) {
       trackAuth('LOGIN_VALIDATION_ERROR', { missing_fields: ['phoneNumber'] })
       toast({
-        title: "Erreur",
-        description: "Veuillez entrer votre numéro de téléphone",
+        title: t('common.error', 'Erreur'),
+        description: t('login.errors.phoneRequired', 'Veuillez entrer votre numéro de téléphone'),
         variant: "destructive",
       })
       return
@@ -49,8 +53,8 @@ export default function LoginPage() {
         sessionStorage.setItem("phoneNumber", fullPhoneNumber)
         router.push("/verify")
         toast({
-          title: "Code Envoyé",
-          description: "Vérifiez votre WhatsApp pour le code de vérification",
+          title: t('login.success.codeSent', 'Code Envoyé'),
+          description: t('login.success.checkWhatsApp', 'Vérifiez votre WhatsApp pour le code de vérification'),
         })
       } else {
         throw new Error("Failed to send OTP")
@@ -61,8 +65,8 @@ export default function LoginPage() {
         endpoint: '/api/send-otp'
       })
       toast({
-        title: "Erreur",
-        description: "Échec de l'envoi du code. Veuillez réessayer.",
+        title: t('common.error', 'Erreur'),
+        description: t('login.errors.sendFailed', 'Échec de l\'envoi du code. Veuillez réessayer.'),
         variant: "destructive",
       })
     } finally {
@@ -77,28 +81,29 @@ export default function LoginPage() {
           <div className="mx-auto mb-3">
             <img src="https://placehold.co/48x48/f97316/ffffff?text=shipit.ma" alt="Logo" className="w-12 h-12" />
           </div>
-          <CardTitle className="text-lg font-semibold">Bienvenue sur shipit.ma</CardTitle>
+          <CardTitle className="text-lg font-semibold">{t('login.title', 'Bienvenue sur shipit.ma')}</CardTitle>
           <CardDescription className="text-sm text-gray-600">
-            Entrez votre numéro de téléphone pour vous connecter ou créer un compte
+            {t('login.subtitle', 'Entrez votre numéro de téléphone pour vous connecter ou créer un compte')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
           <form onSubmit={handleSubmit} className="space-y-3">
             <div className="space-y-1">
               <Label htmlFor="phone" className="text-sm">
-                Numéro de Téléphone
+                {t('login.phoneLabel', 'Numéro de Téléphone')}
               </Label>
-              <div className="flex">
-                <div className="flex items-center px-2 border border-r-0 rounded-l-md bg-gray-50 text-gray-600 text-sm">
+              <div className={`flex ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+                <div className="flex items-center px-2 border border-r-0 rounded-l-md bg-gray-50 text-gray-600 text-sm" dir="ltr">
                   +212
                 </div>
                 <Input
                   id="phone"
                   type="tel"
-                  placeholder="Numéro de téléphone*"
+                  placeholder={t('login.phonePlaceholder', 'Numéro de téléphone*')}
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="rounded-l-none h-8 text-sm"
+                  className="rounded-l-none h-8 text-sm text-left"
+                  dir="ltr"
                   required
                 />
               </div>
@@ -108,12 +113,12 @@ export default function LoginPage() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-1 h-3 w-3 animate-spin" />
-                  Envoi du code...
+                  {t('login.sendingCode', 'Envoi du code...')}
                 </>
               ) : (
                 <>
                   <MessageCircle className="mr-1 h-3 w-3" />
-                  Continuer
+                  {t('login.continueButton', 'Continuer')}
                 </>
               )}
             </Button>
@@ -121,15 +126,15 @@ export default function LoginPage() {
 
           <div className="mt-4 text-center text-sm">
             <p className="text-gray-500">
-              Nouveau sur shipit.ma ?{" "}
+              {t('login.newUser', 'Nouveau sur shipit.ma ?')}{" "}
               <a href="/register" className="font-medium text-orange-600 hover:underline">
-                Créer un compte
+                {t('login.createAccount', 'Créer un compte')}
               </a>
             </p>
           </div>
 
           <div className="mt-2 text-center text-sm text-gray-500">
-            <p>En continuant, vous acceptez nos Conditions d'Utilisation et notre Politique de Confidentialité</p>
+            <p>{t('login.termsAcceptance', 'En continuant, vous acceptez nos Conditions d\'Utilisation et notre Politique de Confidentialité')}</p>
           </div>
         </CardContent>
       </Card>
