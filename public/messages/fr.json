@@ -1,120 +1,41 @@
 {
   "common": {
-    "loading": "Chargement...",
     "error": "Erreur",
     "success": "Succès",
-    "cancel": "Annuler",
-    "save": "Enregistrer",
-    "delete": "Supprimer",
-    "edit": "Modifier",
-    "add": "Ajouter",
-    "search": "Rechercher",
-    "filter": "Filtrer",
-    "sort": "Trier",
-    "back": "Retour",
-    "next": "Suivant",
-    "previous": "Précédent",
-    "close": "Fermer",
-    "open": "Ouvrir",
-    "yes": "Oui",
-    "no": "Non",
-    "confirm": "Confirmer",
-    "language": "Langue",
-    "view": "Voir",
-    "unknownError": "Une erreur inconnue s'est produite",
-    "countries": {
-      "turkey": "Turquie",
-      "usa": "États-Unis",
-      "europe": "Europe",
-      "france": "France",
-      "spain": "Espagne",
-      "morocco": "Maroc"
-    }
+    "loading": "Chargement...",
+    "user": "Utilisateur",
+    "view": "Voir"
   },
   "navigation": {
-    "home": "Accueil",
-    "dashboard": "Tableau de Bord",
-    "packages": "Colis",
-    "purchases": "Achats",
-    "profile": "Profil",
-    "settings": "Paramètres",
-    "help": "Aide",
-    "contact": "Contact",
-    "logout": "Déconnexion",
-    "login": "Connexion",
-    "register": "Inscription"
+    "help": "Aide"
   },
   "dashboard": {
     "title": "Accueil",
     "subtitle": "Aperçu de vos colis et activité récente",
     "welcomeBack": "Bon retour, {name} !",
     "statsDescription": "Vous avez {shipped} colis en transit et {expected} colis attendus à examiner.",
-    "quickAccess": "Accès Rapide",
     "newRequestButton": "Nouvelle Demande",
     "addPackageButton": "Ajouter Colis",
     "stats": {
       "expectedPackages": "Colis Attendus",
       "inWarehouse": "En Entrepôt",
       "shipped": "Envoyés",
-      "purchaseAssistance": "Achat Assisté",
-      "totalPackages": "Total Colis",
-      "pendingPackages": "Colis en Attente",
-      "shippedPackages": "Colis Expédiés",
-      "totalPurchases": "Total Achats"
+      "purchaseAssistance": "Achat Assisté"
     },
-    "recentActivity": "Activité Récente",
-    "quickActions": "Actions Rapides",
-    "newPurchaseRequest": "Nouvelle Demande d'Achat",
-    "addPackage": "Ajouter un Colis",
-    "viewExpectedPackages": "Voir Colis Attendus",
-    "viewWarehousePackages": "Voir en Entrepôt",
-    "viewShippedPackages": "Voir Expédiés",
-    "viewPurchaseAssistance": "Voir Achat Assisté",
     "warehouseAddresses": {
       "title": "Adresses d'entrepôt",
       "subtitle": "Vos adresses d'expédition internationales",
       "accountHolder": "Titulaire du Compte",
-      "important": "Important:",
-      "includeFullName": "Incluez toujours votre nom complet comme destinataire."
+      "important": "Important:"
     }
   },
   "packages": {
     "title": "Colis",
-    "addNew": "Ajouter un Colis",
-    "trackingNumber": "Numéro de Suivi",
-    "status": "Statut",
-    "weight": "Poids",
-    "dimensions": "Dimensions",
-    "shippingDate": "Date d'Expédition",
-    "expectedDelivery": "Livraison Prévue",
-    "recipient": "Destinataire",
-    "sender": "Expéditeur",
-    "description": "Description",
-    "value": "Valeur",
-    "insurance": "Assurance",
-    "tracking": "Suivi",
-    "carrier": "Transporteur",
-    "eta": "ETA",
-    "weight": "Poids",
-    "dimensions": "Dimensions",
-    "shippingCost": "Coût d'Expédition",
-    "insurance": "Assurance",
-    "progress": "Progression",
-    "items": "Articles",
-    "additionalItems": "articles supplémentaires",
-    "lastUpdated": "Dernière Mise à Jour",
-    "viewDetails": "Voir les Détails",
-    "payShipping": "Payer l'Expédition",
-    "pending": "En Attente",
+    "subtitle": "Suivez vos colis du Maroc vers la Turquie",
+    "addPackageButton": "Ajouter Colis",
     "searchPlaceholder": "Rechercher des colis...",
     "statusFilter": "Statut",
     "allStatuses": "Tous les Statuts",
-    "emptyState": {
-      "title": "Aucun colis trouvé",
-      "description": "Aucun colis ne correspond à vos critères de recherche.",
-      "descriptionNoPackages": "Vous n'avez pas encore de colis. Commencez par ajouter votre premier colis.",
-      "addFirstPackage": "Ajouter votre premier colis"
-    },
     "stats": {
       "expected": "Attendu",
       "arrived": "Arrivé",
@@ -128,74 +49,26 @@
       "in_transit": "En Transit",
       "delivered": "Livré"
     },
+    "emptyState": {
+      "title": "Aucun colis trouvé",
+      "description": "Aucun colis ne correspond à vos critères de recherche.",
+      "descriptionNoPackages": "Vous n'avez pas encore de colis. Commencez par ajouter votre premier colis.",
+      "addFirstPackage": "Ajouter votre premier colis"
+    },
     "errors": {
-      "sessionExpired": "Session expirée, veuillez vous reconnecter"
-    },
-    "statuses": {
-      "pending": "En Attente",
-      "inTransit": "En Transit",
-      "delivered": "Livré",
-      "lost": "Perdu",
-      "damaged": "Endommagé"
-    },
-    "tracking": "Suivi",
-    "carrier": "Transporteur",
-    "eta": "ETA",
-    "weight": "Poids",
-    "dimensions": "Dimensions",
-    "shippingCost": "Coût d'Expédition",
-    "pending": "Pending",
-    "insurance": "Assurance",
-    "progress": "Progression",
-    "items": "Items",
-    "additionalItems": "articles supplémentaires",
-    "lastUpdated": "Mis à jour",
-    "viewDetails": "Voir Détails",
-    "payShipping": "Payer Expédition"
+      "sessionExpired": "Session expirée, veuillez vous reconnecter",
+      "loadError": "Impossible de charger les données"
+    }
   },
   "purchases": {
-    "title": "Achats",
-    "newRequest": "Nouvelle Demande",
-    "productName": "Nom du Produit",
-    "quantity": "Quantité",
-    "price": "Prix",
-    "total": "Total",
-    "status": "Statut",
-    "orderDate": "Date de Commande",
-    "expectedDelivery": "Livraison Prévue",
-    "supplier": "Fournisseur",
-    "link": "Lien du Produit",
-    "notes": "Notes",
-    "statuses": {
-      "pending": "En Attente",
-      "ordered": "Commandé",
-      "shipped": "Expédié",
-      "received": "Reçu",
-      "cancelled": "Annulé"
-    },
-    "total": "Total",
-    "items": "Articles",
-    "created": "Créé",
-    "pay": "Payer",
-    "payment": {
-      "title": "Paiement",
-      "confirm": "Confirmer le paiement pour la demande",
-      "amount": "Montant",
-      "confirmButton": "Confirmer le Paiement",
-      "success": "Paiement traité avec succès"
-    },
-    "searchPlaceholder": "Rechercher des achats...",
+    "title": "Demandes d'Achat",
+    "subtitle": "Gérez vos demandes d'achat et suivez leur progression",
+    "newRequestButton": "Nouvelle Demande",
+    "searchPlaceholder": "Rechercher des demandes...",
     "statusFilter": "Statut",
     "allStatuses": "Tous les Statuts",
-    "emptyState": {
-      "title": "Aucun achat trouvé",
-      "description": "Aucun achat ne correspond à vos critères de recherche.",
-      "descriptionNoPurchases": "Vous n'avez pas encore d'achats. Commencez par créer votre première demande d'achat.",
-      "createFirstRequest": "Créer votre première demande"
-    },
     "stats": {
       "pendingReview": "En Attente de Révision",
-      "pendingPayment": "En Attente de Paiement",
       "inProgress": "En Cours",
       "completed": "Terminé"
     },
@@ -207,44 +80,38 @@
       "completed": "Terminé",
       "cancelled": "Annulé"
     },
+    "emptyState": {
+      "title": "Aucune demande trouvée",
+      "description": "Aucune demande ne correspond à vos critères de recherche.",
+      "descriptionNoRequests": "Vous n'avez pas encore de demandes d'achat. Commencez par créer votre première demande.",
+      "createFirstRequest": "Créer votre première demande"
+    },
+    "total": "Total",
+    "items": "Articles",
+    "created": "Créé",
     "errors": {
-      "sessionExpired": "Session expirée, veuillez vous reconnecter"
+      "sessionExpired": "Session expirée, veuillez vous reconnecter",
+      "loadError": "Impossible de charger les données"
     }
   },
   "purchaseDetail": {
     "loading": "Chargement...",
     "notFound": "Demande d'achat introuvable",
     "loadError": "Impossible de charger la demande d'achat",
-    "payment": {
-      "submitted": "Paiement Soumis",
-      "submittedDescription": "Votre paiement a été soumis pour examen"
+    "summary": {
+      "title": "Résumé de la Demande",
+      "itemsCost": "Coût des Articles",
+      "shippingFee": "Frais d'Expédition",
+      "serviceFee": "Frais de Service",
+      "processingFee": "Frais de Traitement",
+      "taxes": "Taxes",
+      "totalAmount": "Montant Total"
     },
-    "items": {
-      "title": "Articles Demandés",
-      "quantity": "Quantité",
-      "viewProduct": "Voir le Produit",
-      "attachments": "Fichiers Joints"
+    "attachments": {
+      "title": "Documents",
+      "view": "Voir",
+      "fileSize": "KB"
     }
-  },
-  "auth": {
-    "signIn": "Se Connecter",
-    "signUp": "S'inscrire",
-    "signOut": "Se Déconnecter",
-    "email": "Email",
-    "password": "Mot de Passe",
-    "confirmPassword": "Confirmer le Mot de Passe",
-    "phoneNumber": "Numéro de Téléphone",
-    "forgotPassword": "Mot de Passe Oublié",
-    "rememberMe": "Se Souvenir de Moi",
-    "dontHaveAccount": "Vous n'avez pas de compte ?",
-    "alreadyHaveAccount": "Vous avez déjà un compte ?",
-    "createAccount": "Créer un Compte",
-    "loginToAccount": "Se Connecter au Compte",
-    "otpVerification": "Vérification OTP",
-    "enterOtp": "Entrez le code OTP",
-    "resendOtp": "Renvoyer OTP",
-    "verifyOtp": "Vérifier OTP",
-    "whatsappOtpMessage": "Votre code de vérification shipit.ma est : {otp}\n\nCe code expirera dans 10 minutes. Ne partagez pas ce code avec qui que ce soit."
   },
   "login": {
     "title": "Bienvenue sur shipit.ma",
@@ -256,13 +123,13 @@
     "newUser": "Nouveau sur shipit.ma ?",
     "createAccount": "Créer un compte",
     "termsAcceptance": "En continuant, vous acceptez nos Conditions d'Utilisation et notre Politique de Confidentialité",
-    "success": {
-      "codeSent": "Code Envoyé",
-      "checkWhatsApp": "Vérifiez votre WhatsApp pour le code de vérification"
-    },
     "errors": {
       "phoneRequired": "Veuillez entrer votre numéro de téléphone",
       "sendFailed": "Échec de l'envoi du code. Veuillez réessayer."
+    },
+    "success": {
+      "codeSent": "Code Envoyé",
+      "checkWhatsApp": "Vérifiez votre WhatsApp pour le code de vérification"
     }
   },
   "register": {
@@ -306,66 +173,23 @@
     }
   },
   "profile": {
-    "title": "Profil",
-    "personalInfo": "Informations Personnelles",
-    "firstName": "Prénom",
-    "lastName": "Nom",
-    "email": "Email",
-    "phone": "Téléphone",
-    "address": "Adresse",
-    "city": "Ville",
-    "country": "Pays",
-    "postalCode": "Code Postal",
-    "saveChanges": "Enregistrer les Modifications",
-    "changePassword": "Changer le Mot de Passe",
-    "currentPassword": "Mot de Passe Actuel",
-    "newPassword": "Nouveau Mot de Passe",
-    "confirmNewPassword": "Confirmer le Nouveau Mot de Passe"
-  },
-  "errors": {
-    "general": "Une erreur s'est produite",
-    "network": "Erreur de réseau",
-    "validation": "Erreur de validation",
-    "notFound": "Page non trouvée",
-    "unauthorized": "Non autorisé",
-    "forbidden": "Accès interdit",
-    "serverError": "Erreur du serveur",
-    "invalidCredentials": "Identifiants invalides",
-    "emailAlreadyExists": "Cet email existe déjà",
-    "phoneAlreadyExists": "Ce numéro de téléphone existe déjà",
-    "invalidOtp": "Code OTP invalide",
-    "otpExpired": "Code OTP expiré",
-    "whatsappSendFailed": "Échec de l'envoi de l'OTP via WhatsApp",
-    "userNotFound": "Utilisateur non trouvé",
-    "otpVerificationFailed": "Échec de la vérification OTP",
-    "rateLimitExceeded": "Trop de tentatives. Réessayez dans 15 minutes.",
-    "incompleteRegistration": "Données d'inscription incomplètes",
-    "invalidSession": "Session invalide ou expirée",
-    "registrationFailed": "Échec de l'enregistrement de l'utilisateur",
-    "userCheckFailed": "Échec de la vérification de l'utilisateur"
-  },
-  "success": {
-    "profileUpdated": "Profil mis à jour avec succès",
-    "passwordChanged": "Mot de passe changé avec succès",
-    "packageAdded": "Colis ajouté avec succès",
-    "purchaseRequested": "Demande d'achat créée avec succès",
-    "otpSent": "Code OTP envoyé avec succès",
-    "loginSuccessful": "Connexion réussie",
-    "registrationSuccessful": "Inscription réussie"
-  },
-  "landing": {
-    "hero": {
-      "title": "Simplifiez vos achats internationaux",
-      "subtitle": "Achetez en ligne et faites-vous livrer au Maroc en toute simplicité",
-      "cta": "Commencer Maintenant",
-      "learnMore": "En Savoir Plus"
+    "title": "Paramètres du Profil",
+    "personalInfo": {
+      "title": "Informations Personnelles",
+      "subtitle": "Gérez vos informations de base",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Email",
+      "phone": "Téléphone"
     },
-    "features": {
-      "title": "Pourquoi Choisir Shipit ?",
-      "shipping": "Livraison Rapide",
-      "tracking": "Suivi en Temps Réel",
-      "security": "Sécurité Garantie",
-      "support": "Support 24/7"
+    "shippingAddress": {
+      "title": "Adresse d'Expédition",
+      "subtitle": "Votre adresse de livraison au Maroc",
+      "addressLine": "Adresse",
+      "city": "Ville",
+      "state": "Région/État",
+      "zip": "Code Postal",
+      "country": "Pays"
     }
   },
   "header": {
@@ -451,361 +275,109 @@
     "quickLinks": {
       "myPackages": "Mes Colis",
       "myPurchases": "Mes Achats",
-      "payments": "Paiements",
       "login": "Connexion",
       "register": "Inscription",
       "homepage": "shipit.ma"
     }
   },
-  "login": {
-    "title": "Bienvenue sur shipit.ma",
-    "subtitle": "Entrez votre numéro de téléphone pour vous connecter ou créer un compte",
-    "phoneLabel": "Numéro de Téléphone",
-    "phonePlaceholder": "Numéro de téléphone*",
-    "continueButton": "Continuer",
-    "sendingCode": "Envoi du code...",
-    "newUser": "Nouveau sur shipit.ma ?",
-    "createAccount": "Créer un compte",
-    "termsAcceptance": "En continuant, vous acceptez nos Conditions d'Utilisation et notre Politique de Confidentialité",
+  "createPurchase": {
+    "title": "Créer une Demande d'Achat",
+    "subtitle": "Ajoutez des articles que vous souhaitez que nous achetions pour vous",
+    "cardTitle": "Détails de la Demande d'Achat",
+    "itemsLabel": "Articles à Acheter",
+    "itemTitle": "Article {index}",
+    "itemName": "Nom de l'Article *",
+    "itemNamePlaceholder": "ex: iPhone 15 Pro",
+    "quantity": "Quantité",
+    "url": "URL du Produit *",
+    "urlPlaceholder": "https://exemple.com/produit",
+    "variant": "Variante (Taille, Couleur, Type, etc.)",
+    "variantPlaceholder": "ex: Large, Bleu, 256GB",
+    "addAnotherItem": "Ajouter un Autre Article",
+    "notes": "Notes Supplémentaires",
+    "notesPlaceholder": "Toute instruction spéciale ou préférence...",
+    "submit": "Soumettre la Demande d'Achat",
+    "submitting": "Soumission...",
+    "cancel": "Annuler",
     "errors": {
-      "phoneRequired": "Veuillez entrer votre numéro de téléphone",
-      "sendFailed": "Échec de l'envoi du code. Veuillez réessayer."
+      "validationError": "Veuillez remplir le nom et l'URL de tous les articles",
+      "submitError": "Erreur lors de la soumission de la demande"
     },
     "success": {
-      "codeSent": "Code Envoyé",
-      "checkWhatsApp": "Vérifiez votre WhatsApp pour le code de vérification"
+      "submitted": "Demande d'achat soumise avec succès"
     }
   },
-          "landing": {
-          "sections": {
-            "whyChooseUs": {
-              "title": "Pourquoi Choisir shipit ?",
-              "subtitle": "Découvrez les avantages qui font de shipit votre partenaire de confiance"
-            },
-            "ourServices": {
-              "title": "Nos Services",
-              "subtitle": "Une gamme complète de services pour répondre à tous vos besoins"
-            },
-            "weBuyForYou": {
-              "title": "Nous Achetons Pour Vous",
-              "subtitle": "Laissez-nous gérer vos achats pendant que vous vous concentrez sur l'essentiel"
-            },
-            "partnerBrands": {
-              "title": "Marques Partenaires",
-              "subtitle": "Travaillons avec les meilleures marques internationales"
-            },
-            "trust": {
-              "title": "Ils Nous Font Confiance",
-              "subtitle": "Rejoignez des milliers de clients satisfaits"
-            },
-            "pricing": {
-              "title": "Tarifs Transparents",
-              "subtitle": "Des prix clairs sans surprises cachées"
-            }
-          }
-        },
-        "dashboard": {
-          "title": "Accueil",
-          "subtitle": "Aperçu de vos colis et activité récente",
-          "welcomeBack": "Bon retour, {name} !",
-          "statsDescription": "Vous avez {shipped} colis en transit et {expected} colis attendus à examiner.",
-          "newRequestButton": "Nouvelle Demande",
-          "addPackageButton": "Ajouter Colis",
-          "stats": {
-            "expectedPackages": "Colis Attendus",
-            "inWarehouse": "En Entrepôt",
-            "shipped": "Envoyés",
-            "purchaseAssistance": "Achat Assisté"
-          },
-          "warehouseAddresses": {
-            "title": "Adresses d'entrepôt",
-            "subtitle": "Vos adresses d'expédition internationales",
-            "accountHolder": "Titulaire du Compte",
-            "important": "Important:"
-          }
-        },
-        "purchases": {
-          "title": "Demandes d'Achat",
-          "subtitle": "Gérez vos demandes d'achat et suivez leur progression",
-          "newRequestButton": "Nouvelle Demande",
-          "searchPlaceholder": "Rechercher des demandes...",
-          "statusFilter": "Statut",
-          "allStatuses": "Tous les Statuts",
-          "stats": {
-            "pendingReview": "En Attente de Révision",
-            "pendingPayment": "En Attente de Paiement",
-            "inProgress": "En Cours",
-            "completed": "Terminé"
-          },
-          "statusLabels": {
-            "pending_review": "En Attente de Révision",
-            "pending_payment": "En Attente de Paiement",
-            "confirmed": "Confirmé",
-            "purchasing": "Achat en Cours",
-            "completed": "Terminé",
-            "cancelled": "Annulé"
-          },
-          "emptyState": {
-            "title": "Aucune demande trouvée",
-            "description": "Aucune demande ne correspond à vos critères de recherche.",
-            "descriptionNoRequests": "Vous n'avez pas encore de demandes d'achat. Commencez par créer votre première demande.",
-                  "createFirstRequest": "Créer votre première demande"
+  "createPackage": {
+    "title": "Ajouter un Nouveau Colis",
+    "subtitle": "Ajoutez un colis que vous attendez de recevoir",
+    "cardTitle": "Informations du Colis",
+    "description": "Description du Colis *",
+    "descriptionPlaceholder": "ex: Colis Électronique",
+    "retailer": "Nom du Détaillant/Magasin ou URL *",
+    "retailerPlaceholder": "ex: Amazon, Best Buy, ou site web du magasin",
+    "trackingNumber": "Numéro de Suivi (Optionnel)",
+    "trackingNumberPlaceholder": "ex: TK123456789",
+    "weight": "Poids (Optionnel)",
+    "weightPlaceholder": "ex: 2,5 kg",
+    "dimensions": "Dimensions (Optionnel)",
+    "dimensionsPlaceholder": "ex: 30x20x15 cm",
+    "itemsLabel": "Articles du Colis",
+    "itemPlaceholder": "Description de l'article",
+    "addItem": "Ajouter Article",
+    "filesLabel": "Fichiers (Optionnel)",
+    "attachmentType": {
+      "receipt": "Reçu",
+      "photo": "Photo",
+      "document": "Document"
     },
-    "total": "Total",
-    "items": "Articles",
-    "created": "Créé",
-    "pay": "Payer",
+    "uploadArea": {
+      "title": "Cliquez pour télécharger vos fichiers",
+      "subtitle": "PNG, JPG, PDF jusqu'à 10MB chacun",
+      "uploading": "Téléchargement en cours..."
+    },
+    "uploadedFiles": "Fichiers téléchargés ({count})",
+    "viewFile": "Voir",
+    "notes": "Notes Supplémentaires",
+    "notesPlaceholder": "Toute instruction spéciale ou note sur ce colis...",
+    "submit": "Ajouter Colis",
+    "submitting": "Ajout...",
+    "cancel": "Annuler",
     "errors": {
-      "sessionExpired": "Session expirée, veuillez vous reconnecter",
-      "loadError": "Impossible de charger les données"
+      "uploadError": "Erreur lors du téléchargement du fichier"
+    },
+    "success": {
+      "uploadSuccess": "Fichier téléchargé avec succès"
     }
-        },
-        "packages": {
-          "title": "Colis",
-          "subtitle": "Suivez vos colis du Maroc vers la Turquie",
-          "addPackageButton": "Ajouter Colis",
-          "searchPlaceholder": "Rechercher des colis...",
-          "statusFilter": "Statut",
-          "allStatuses": "Tous les Statuts",
-          "stats": {
-            "expected": "Attendu",
-            "arrived": "Arrivé",
-            "inTransit": "En Transit",
-            "delivered": "Livré"
-          },
-          "statusLabels": {
-            "expected": "Attendu",
-            "processing": "En Traitement",
-            "arrived": "Arrivé",
-            "in_transit": "En Transit",
-            "delivered": "Livré"
-          },
-          "emptyState": {
-            "title": "Aucun colis trouvé",
-            "description": "Aucun colis ne correspond à vos critères de recherche.",
-            "descriptionNoPackages": "Vous n'avez pas encore de colis. Commencez par ajouter votre premier colis.",
-            "addFirstPackage": "Ajouter votre premier colis"
-          },
-          "errors": {
-            "sessionExpired": "Session expirée, veuillez vous reconnecter",
-            "loadError": "Impossible de charger les données"
-          }
-        },
-        "profile": {
-          "title": "Paramètres du Profil",
-          "personalInfo": {
-            "title": "Informations Personnelles",
-            "subtitle": "Gérez vos informations de base",
-            "firstName": "Prénom",
-            "lastName": "Nom",
-            "email": "Email",
-            "phone": "Téléphone",
-            "editButton": "Modifier",
-            "saveButton": "Sauvegarder",
-            "cancelButton": "Annuler"
-          },
-          "shippingAddress": {
-            "title": "Adresse d'Expédition",
-            "subtitle": "Votre adresse de livraison au Maroc",
-            "addressLine": "Adresse",
-            "city": "Ville",
-            "state": "Région/État",
-            "zip": "Code Postal",
-            "country": "Pays",
-            "editButton": "Modifier",
-            "saveButton": "Sauvegarder",
-            "cancelButton": "Annuler"
-          },
-          "success": {
-            "personalInfoSaved": "Vos informations personnelles ont été sauvegardées avec succès",
-            "addressSaved": "Votre adresse d'expédition a été sauvegardée avec succès"
-          },
-          "errors": {
-            "saveError": "Impossible de sauvegarder les modifications",
-            "addressSaveError": "Impossible de sauvegarder l'adresse"
-          }
-        },
-               "createPurchase": {
-         "title": "Créer une Demande d'Achat",
-         "subtitle": "Ajoutez des articles que vous souhaitez que nous achetions pour vous",
-         "cardTitle": "Détails de la Demande d'Achat",
-         "itemsLabel": "Articles à Acheter",
-         "itemTitle": "Article {index}",
-         "itemName": "Nom de l'Article *",
-         "itemNamePlaceholder": "ex: iPhone 15 Pro",
-         "quantity": "Quantité",
-         "url": "URL du Produit *",
-         "urlPlaceholder": "https://exemple.com/produit",
-         "variant": "Variante (Taille, Couleur, Type, etc.)",
-         "variantPlaceholder": "ex: Large, Bleu, 256GB",
-         "addAnotherItem": "Ajouter un Autre Article",
-         "notes": "Notes Supplémentaires",
-         "notesPlaceholder": "Toute instruction spéciale ou préférence...",
-         "submit": "Soumettre la Demande d'Achat",
-         "submitting": "Soumission...",
-         "cancel": "Annuler",
-         "errors": {
-           "validationError": "Veuillez remplir le nom et l'URL de tous les articles",
-           "submitError": "Erreur lors de la soumission de la demande"
-         },
-         "success": {
-           "submitted": "Demande d'achat soumise avec succès"
-         }
-       },
-       "createPackage": {
-         "title": "Ajouter un Nouveau Colis",
-         "subtitle": "Ajoutez un colis que vous attendez de recevoir",
-         "cardTitle": "Informations du Colis",
-         "description": "Description du Colis *",
-         "descriptionPlaceholder": "ex: Colis Électronique",
-         "retailer": "Nom du Détaillant/Magasin ou URL *",
-         "retailerPlaceholder": "ex: Amazon, Best Buy, ou site web du magasin",
-         "trackingNumber": "Numéro de Suivi (Optionnel)",
-         "trackingNumberPlaceholder": "ex: TK123456789",
-         "weight": "Poids (Optionnel)",
-         "weightPlaceholder": "ex: 2,5 kg",
-         "dimensions": "Dimensions (Optionnel)",
-         "dimensionsPlaceholder": "ex: 30x20x15 cm",
-         "itemsLabel": "Articles du Colis",
-         "itemPlaceholder": "Description de l'article",
-         "addItem": "Ajouter Article",
-         "filesLabel": "Fichiers (Optionnel)",
-         "attachmentType": {
-           "receipt": "Reçu",
-           "photo": "Photo",
-           "document": "Document"
-         },
-         "uploadArea": {
-           "title": "Cliquez pour télécharger vos fichiers",
-           "subtitle": "PNG, JPG, PDF jusqu'à 10MB chacun",
-           "uploading": "Téléchargement en cours..."
-         },
-         "uploadedFiles": "Fichiers téléchargés ({count})",
-         "viewFile": "Voir",
-         "notes": "Notes Supplémentaires",
-         "notesPlaceholder": "Toute instruction spéciale ou note sur ce colis...",
-         "submit": "Ajouter Colis",
-         "submitting": "Ajout...",
-         "cancel": "Annuler",
-         "errors": {
-           "uploadError": "Erreur lors du téléchargement du fichier"
-         },
-         "success": {
-           "uploadSuccess": "Fichier téléchargé avec succès"
-         }
-       },
-       "common": {
-         "error": "Erreur",
-         "success": "Succès",
-         "loading": "Chargement...",
-         "user": "Utilisateur",
-         "view": "Voir"
-       },
-       "packageDetail": {
-         "loading": "Chargement...",
-         "notFound": "Colis introuvable",
-         "loadError": "Impossible de charger le colis",
-         "backButton": "Retour",
-         "payShippingButton": "Payer les Frais d'Expédition",
-         "summary": {
-           "title": "Résumé du Colis",
-           "weight": "Poids",
-           "dimensions": "Dimensions",
-           "value": "Valeur",
-           "shipping": "Expédition",
-           "insurance": "Assurance",
-           "carrier": "Transporteur",
-           "trackingNumber": "Numéro de Suivi",
-           "eta": "Date d'Arrivée Estimée"
-         },
-         "timeline": {
-           "title": "Suivi du Colis"
-         },
-         "contents": {
-           "title": "Contenu du Colis",
-           "items": "articles",
-           "quantity": "Quantité",
-           "totalValue": "Valeur Totale Estimée"
-         },
-         "attachments": {
-           "title": "Documents",
-           "view": "Voir",
-           "fileSize": "KB"
-         },
-         "tracking": {
-           "title": "Suivi en Ligne",
-           "trackOn": "Suivre sur",
-           "carrierSite": "le site du transporteur"
-         },
-         "alerts": {
-           "paymentRequired": {
-             "title": "Paiement Requis",
-             "description": "Votre colis est arrivé dans notre entrepôt. Veuillez payer les frais d'expédition pour procéder à la livraison."
-           },
-           "insurance": {
-             "title": "Assurance"
-           }
-         },
-         "payment": {
-           "title": "Payer les Frais d'Expédition",
-           "description": "Effectuez le paiement pour expédier votre colis vers le Maroc",
-           "shippingCost": "Coût d'Expédition",
-           "insurance": "Assurance",
-           "total": "Total",
-           "payNow": "Payer Maintenant",
-           "cancel": "Annuler",
-           "submitted": "Paiement Soumis",
-           "submittedDescription": "Votre paiement d'expédition a été soumis pour traitement"
-         }
-       },
-       "purchaseDetail": {
-         "loading": "Chargement...",
-         "notFound": "Demande d'achat introuvable",
-         "loadError": "Impossible de charger la demande d'achat",
-         "backButton": "Retour",
-         "summary": {
-           "title": "Résumé de la Demande",
-           "itemsCost": "Coût des Articles",
-           "shippingFee": "Frais d'Expédition",
-           "serviceFee": "Frais de Service",
-           "processingFee": "Frais de Traitement",
-           "taxes": "Taxes",
-           "totalAmount": "Montant Total"
-         },
-         "timeline": {
-           "title": "Progression de la Demande"
-         },
-         "items": {
-           "title": "Articles Demandés",
-           "items": "articles",
-           "quantity": "Quantité",
-           "value": "Valeur",
-           "totalValue": "Valeur Totale Estimée"
-         },
-         "attachments": {
-           "title": "Documents",
-           "view": "Voir",
-           "fileSize": "KB"
-         },
-         "payment": {
-           "submitted": "Payment Submitted",
-           "submittedDescription": "Your payment has been submitted for review"
-         }
-       },
-       "paymentCard": {
-         "title": "Demande de Paiement",
-         "purchase": "Achat",
-         "shipping": "Expédition",
-         "dueDate": "Date d'Échéance",
-         "paymentDate": "Date de Paiement",
-         "breakdown": "Répartition",
-         "others": "autres",
-         "acceptedMethods": "Méthodes Acceptées",
-         "overdue": "Paiement en Retard",
-         "submittedPayments": "Paiements Soumis",
-                   "amount": "Montant",
-          "method": "Méthode",
-          "date": "Date",
-          "payNow": "Payer Maintenant"
-       }
-} 
+  },
+  "packageDetail": {
+    "loading": "Chargement...",
+    "notFound": "Colis introuvable",
+    "loadError": "Impossible de charger le colis",
+    "summary": {
+      "title": "Résumé du Colis",
+      "weight": "Poids",
+      "dimensions": "Dimensions",
+      "value": "Valeur",
+      "shipping": "Expédition",
+      "insurance": "Assurance",
+      "carrier": "Transporteur",
+      "trackingNumber": "Numéro de Suivi",
+      "eta": "Date d'Arrivée Estimée"
+    },
+    "attachments": {
+      "title": "Documents",
+      "view": "Voir",
+      "fileSize": "KB"
+    },
+    "tracking": {
+      "title": "Suivi en Ligne",
+      "trackOn": "Suivre sur",
+      "carrierSite": "le site du transporteur"
+    },
+    "alerts": {
+      "insurance": {
+        "title": "Assurance"
+      }
+    }
+  }
+}
