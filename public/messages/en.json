@@ -177,13 +177,7 @@
     "items": "Items",
     "created": "Created",
     "pay": "Pay",
-    "payment": {
-      "title": "Payment",
-      "confirm": "Confirm payment for request",
-      "amount": "Amount",
-      "confirmButton": "Confirm Payment",
-      "success": "Payment processed successfully"
-    },
+
     "searchPlaceholder": "Search purchases...",
     "statusFilter": "Status",
     "allStatuses": "All Statuses",
@@ -195,13 +189,13 @@
     },
     "stats": {
       "pendingReview": "Pending Review",
-      "pendingPayment": "Pending Payment",
+
       "inProgress": "In Progress",
       "completed": "Completed"
     },
     "statusLabels": {
       "pending_review": "Pending Review",
-      "pending_payment": "Pending Payment",
+
       "confirmed": "Confirmed",
       "purchasing": "Purchasing",
       "completed": "Completed",
@@ -215,10 +209,7 @@
     "loading": "Loading...",
     "notFound": "Purchase request not found",
     "loadError": "Unable to load purchase request",
-    "payment": {
-      "submitted": "Payment Submitted",
-      "submittedDescription": "Your payment has been submitted for review"
-    },
+
     "items": {
       "title": "Requested Items",
       "quantity": "Quantity",
@@ -451,7 +442,7 @@
     "quickLinks": {
       "myPackages": "My Packages",
       "myPurchases": "My Purchases",
-      "payments": "Payments",
+
       "login": "Login",
       "register": "Register",
       "homepage": "shipit.ma"
@@ -738,24 +729,9 @@
            "carrierSite": "carrier website"
          },
          "alerts": {
-           "paymentRequired": {
-             "title": "Payment Required",
-             "description": "Your package has arrived at our warehouse. Please pay shipping fees to proceed with delivery."
-           },
            "insurance": {
              "title": "Insurance"
            }
-         },
-         "payment": {
-           "title": "Pay Shipping Fees",
-           "description": "Make payment to ship your package to Morocco",
-           "shippingCost": "Shipping Cost",
-           "insurance": "Insurance",
-           "total": "Total",
-           "payNow": "Pay Now",
-           "cancel": "Cancel",
-           "submitted": "Payment Submitted",
-           "submittedDescription": "Your shipping payment has been submitted for processing"
          }
        },
        "purchaseDetail": {
@@ -786,26 +762,7 @@
            "title": "Documents",
            "view": "View",
            "fileSize": "KB"
-         },
-         "payment": {
-           "submitted": "Payment Submitted",
-           "submittedDescription": "Your payment has been submitted for review"
          }
-       },
-       "paymentCard": {
-         "title": "Payment Request",
-         "purchase": "Purchase",
-         "shipping": "Shipping",
-         "dueDate": "Due Date",
-         "paymentDate": "Payment Date",
-         "breakdown": "Breakdown",
-         "others": "others",
-         "acceptedMethods": "Accepted Methods",
-         "overdue": "Payment Overdue",
-         "submittedPayments": "Submitted Payments",
-                   "amount": "Amount",
-          "method": "Method",
-          "date": "Date",
-          "payNow": "Pay Now"
        }
+
 } 

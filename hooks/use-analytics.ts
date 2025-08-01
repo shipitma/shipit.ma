@@ -6,7 +6,6 @@ import type {
   DashboardEventProperties,
   PackageEventProperties,
   PurchaseEventProperties,
-  PaymentEventProperties,
   ProfileEventProperties,
   NavigationEventProperties,
   SearchEventProperties,
@@ -52,10 +51,7 @@ export function useAnalytics() {
     posthog.capture(ANALYTICS_EVENTS.PURCHASES[event], properties)
   }, [])
 
-  // Payment events
-  const trackPayment = useCallback((event: keyof typeof ANALYTICS_EVENTS.PAYMENTS, properties?: PaymentEventProperties) => {
-    posthog.capture(ANALYTICS_EVENTS.PAYMENTS[event], properties)
-  }, [])
+
 
   // Profile events
   const trackProfile = useCallback((event: keyof typeof ANALYTICS_EVENTS.PROFILE, properties?: ProfileEventProperties) => {
@@ -133,7 +129,7 @@ export function useAnalytics() {
     trackDashboard,
     trackPackage,
     trackPurchase,
-    trackPayment,
+
     trackProfile,
     trackNavigation,
     trackSearch,

@@ -25,8 +25,6 @@ model User {
   last_login        DateTime?         @db.Timestamp(6)
   attachments       Attachment[]
   packages          Package[]
-  payment_requests  PaymentRequest[]
-  payments          Payment[]
   purchase_requests PurchaseRequest[]
   sessions          Session[]
 
@@ -60,7 +58,6 @@ model PurchaseRequest {
   date            DateTime                  @db.Date
   status          String                    @db.VarChar(50)
   total_amount    Decimal                   @db.Decimal(10, 2)
-  payment_due     Decimal?                  @db.Decimal(10, 2)
   items_cost      Decimal?                  @db.Decimal(10, 2)
   shipping_fee    Decimal?                  @db.Decimal(10, 2)
   service_fee     Decimal?                  @db.Decimal(10, 2)
@@ -184,83 +181,6 @@ model PackageTimeline {
   package     Package   @relation(fields: [package_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("package_timeline")
-}
-
-model PaymentRequest {
-  id              String             @id @db.VarChar(50)
-  user_id         String             @db.VarChar(50)
-  type            String             @db.VarChar(50)
-  related_id      String             @db.VarChar(50)
-  amount          Decimal            @db.Decimal(10, 2)
-  due_date        DateTime           @db.Date
-  status          String             @db.VarChar(50)
-  paid_date       DateTime?          @db.Date
-  receipt_url     String?
-  created_at      DateTime?          @default(now()) @db.Timestamp(6)
-  updated_at      DateTime?          @default(now()) @updatedAt @db.Timestamp(6)
-  payment_methods String[]
-  breakdowns      PaymentBreakdown[]
-  user            User               @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  payments        Payment[]
-
-  @@index([due_date], map: "idx_payment_requests_due_date")
-  @@index([related_id], map: "idx_payment_requests_related_id")
-  @@index([status], map: "idx_payment_requests_status")
-  @@index([user_id], map: "idx_payment_requests_user_id")
-  @@map("payment_requests")
-}
-
-model Payment {
-  id                 String            @id @default(cuid()) @db.VarChar(50)
-  user_id            String            @db.VarChar(50)
-  payment_request_id String            @db.VarChar(50)
-  amount             Decimal           @db.Decimal(10, 2)
-  payment_method     String            @db.VarChar(50)
-  transaction_id     String?           @db.VarChar(100)
-  payment_proof_url  String?
-  payment_date       DateTime          @db.Date
-  status             String            @default("submitted") @db.VarChar(50)
-  admin_notes        String?
-  verified_at        DateTime?         @db.Timestamp(6)
-  verified_by        String?           @db.VarChar(50)
-  created_at         DateTime?         @default(now()) @db.Timestamp(6)
-  updated_at         DateTime?         @default(now()) @updatedAt @db.Timestamp(6)
-  payment_timeline   PaymentTimeline[]
-  payment_request    PaymentRequest    @relation(fields: [payment_request_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  user               User              @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@index([payment_date], map: "idx_payments_payment_date")
-  @@index([payment_request_id], map: "idx_payments_payment_request_id")
-  @@index([status], map: "idx_payments_status")
-  @@index([user_id], map: "idx_payments_user_id")
-  @@map("payments")
-}
-
-model PaymentBreakdown {
-  id                 Int            @id @default(autoincrement())
-  payment_request_id String         @db.VarChar(50)
-  item_key           String         @db.VarChar(100)
-  item_value         Decimal        @db.Decimal(10, 2)
-  created_at         DateTime?      @default(now()) @db.Timestamp(6)
-  payment_request    PaymentRequest @relation(fields: [payment_request_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("payment_breakdowns")
-}
-
-model PaymentTimeline {
-  id          Int       @id @default(autoincrement())
-  payment_id  String    @db.VarChar(50)
-  status      String    @db.VarChar(50)
-  date        DateTime  @db.Date
-  time        DateTime  @db.Time(6)
-  completed   Boolean   @default(false)
-  description String?
-  created_at  DateTime? @default(now()) @db.Timestamp(6)
-  payments    Payment   @relation(fields: [payment_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@index([payment_id], map: "idx_payment_timeline_payment_id")
-  @@index([status], map: "idx_payment_timeline_status")
-  @@map("payment_timeline")
 }
 
 model Attachment {

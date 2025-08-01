@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import {
-  DollarSign,
   Check,
   Search,
   Plus,
@@ -15,7 +14,6 @@ import {
   Clock,
   CheckCircle,
   ShoppingCart,
-  CreditCard,
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { useAnalytics } from "@/hooks/use-analytics"
@@ -33,8 +31,6 @@ const getStatusColor = (status: string) => {
   switch (status) {
     case "pending_review":
       return "bg-yellow-100 text-yellow-800"
-    case "pending_payment":
-      return "bg-orange-100 text-orange-800"
     case "confirmed":
       return "bg-orange-100 text-orange-800"
     case "purchasing":
@@ -56,13 +52,12 @@ export default function PurchasesPage() {
   const [purchaseRequests, setPurchaseRequests] = useState<any[]>([])
   const [stats, setStats] = useState({
     pending_review: 0,
-    pending_payment: 0,
     purchasing: 0,
     completed: 0,
   })
   const [loading, setLoading] = useState(true)
   const [isCreateOpen, setIsCreateOpen] = useState(false)
-  const [isPaymentOpen, setIsPaymentOpen] = useState(false)
+
   const [selectedRequest, setSelectedRequest] = useState<PurchaseRequest | null>(null)
   const { toast } = useToast()
   const { trackPurchase, trackError } = useAnalytics()
@@ -74,8 +69,7 @@ export default function PurchasesPage() {
     switch (status) {
       case "pending_review":
         return t('purchases.statusLabels.pending_review', 'En Attente de Révision')
-      case "pending_payment":
-        return t('purchases.statusLabels.pending_payment', 'En Attente de Paiement')
+      
       case "confirmed":
         return t('purchases.statusLabels.confirmed', 'Confirmé')
       case "purchasing":
@@ -157,25 +151,7 @@ export default function PurchasesPage() {
     return matchesSearch
   })
 
-  const handlePayment = () => {
-    if (!selectedRequest) return
 
-    trackPurchase('PAYMENT_INITIATED', { 
-      request_id: selectedRequest.id,
-      amount: selectedRequest.total_amount
-    })
-
-    // Simulate payment processing
-    setTimeout(() => {
-      toast({
-        title: t('common.success', 'Succès'),
-        description: t('purchases.payment.success', 'Paiement traité avec succès'),
-      })
-      setIsPaymentOpen(false)
-      setSelectedRequest(null)
-      fetchData() // Refresh data
-    }, 2000)
-  }
 
   const handleSearch = (value: string) => {
     setSearchTerm(value)
@@ -235,19 +211,7 @@ export default function PurchasesPage() {
             </div>
           </CardContent>
         </Card>
-        <Card className="border-gray-200">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600 mb-1">{t('purchases.stats.pendingPayment', 'En Attente de Paiement')}</p>
-                <p className="text-xl font-semibold text-gray-900">{stats.pending_payment}</p>
-              </div>
-              <div className="p-2 rounded-md bg-orange-100">
-                <CreditCard className="w-4 h-4 text-orange-600" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+
         <Card className="border-gray-200">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
@@ -403,19 +367,7 @@ export default function PurchasesPage() {
                       {t('common.view', 'View')}
                     </a>
                   </Button>
-                  {request.status === "pending_payment" && (
-                    <Button 
-                      size="sm" 
-                      className="flex-1"
-                      onClick={() => {
-                        setSelectedRequest(request)
-                        setIsPaymentOpen(true)
-                      }}
-                    >
-                      <DollarSign className="w-3 h-3 mr-1" />
-                      {t('purchases.pay', 'Pay')}
-                    </Button>
-                  )}
+
                 </div>
               </CardContent>
             </Card>
@@ -423,33 +375,7 @@ export default function PurchasesPage() {
         </div>
       )}
 
-      {/* Payment Dialog */}
-      <Dialog open={isPaymentOpen} onOpenChange={setIsPaymentOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t('purchases.payment.title', 'Paiement')}</DialogTitle>
-            <DialogDescription>
-              {t('purchases.payment.confirm', 'Confirmer le paiement pour la demande')} #{selectedRequest?.id}
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <div className="flex justify-between mb-2">
-                <span>{t('purchases.payment.amount', 'Montant')}:</span>
-                                    <span className="font-medium">{selectedRequest && formatCurrency(selectedRequest.total_amount ? Number(selectedRequest.total_amount) : null)}</span>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <Button variant="outline" onClick={() => setIsPaymentOpen(false)} className="flex-1">
-                {t('common.cancel', 'Annuler')}
-              </Button>
-              <Button onClick={handlePayment} className="flex-1">
-                {t('purchases.payment.confirmButton', 'Confirmer le Paiement')}
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+
     </div>
   )
 }

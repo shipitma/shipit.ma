@@ -74,30 +74,10 @@ export const ANALYTICS_EVENTS = {
     PURCHASE_STATUS_CHANGE: 'purchase_request_status_change',
     PURCHASE_FILTER: 'purchase_request_filter',
     PURCHASE_SEARCH: 'purchase_request_search',
-    PURCHASE_PAYMENT_INITIATED: 'purchase_payment_initiated',
-    PURCHASE_PAYMENT_SUBMITTED: 'purchase_payment_submitted',
-    PURCHASE_PAYMENT_SUCCESS: 'purchase_payment_success',
-    PURCHASE_PAYMENT_FAILED: 'purchase_payment_failed',
+
   },
 
-  // Payment Events
-  PAYMENTS: {
-    PAGE_VIEW: 'payments_page_view',
-    CREATE_PAYMENT: 'payment_create',
-    CREATE_PAYMENT_SUCCESS: 'payment_create_success',
-    CREATE_PAYMENT_FAILED: 'payment_create_failed',
-    VIEW_PAYMENT_DETAILS: 'payment_view_details',
-    UPDATE_PAYMENT: 'payment_update',
-    UPDATE_PAYMENT_SUCCESS: 'payment_update_success',
-    UPDATE_PAYMENT_FAILED: 'payment_update_failed',
-    DELETE_PAYMENT: 'payment_delete',
-    DELETE_PAYMENT_SUCCESS: 'payment_delete_success',
-    DELETE_PAYMENT_FAILED: 'payment_delete_failed',
-    PAYMENT_STATUS_CHANGE: 'payment_status_change',
-    PAYMENT_FILTER: 'payment_filter',
-    PAYMENT_SEARCH: 'payment_search',
-    PAYMENT_METHOD_SELECTED: 'payment_method_selected',
-  },
+
 
   // Profile & Settings Events
   PROFILE: {
@@ -232,16 +212,7 @@ export interface PurchaseEventProperties {
   search_query?: string
 }
 
-export interface PaymentEventProperties {
-  paymentId?: string
-  status?: string
-  amount?: number
-  currency?: string
-  payment_method?: string
-  error?: string
-  filter_type?: string
-  search_query?: string
-}
+
 
 export interface ProfileEventProperties {
   field_updated?: string
@@ -297,7 +268,7 @@ export interface PerformanceEventProperties {
 export interface BusinessEventProperties {
   packageId?: string
   purchaseId?: string
-  paymentId?: string
+  
   amount?: number
   currency?: string
   status?: string

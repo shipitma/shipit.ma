@@ -101,9 +101,7 @@ export default function NotFound() {
                   <Link href="/purchases" className="text-orange-600 hover:text-orange-700">
                     {t('notFound.quickLinks.myPurchases', 'Mes Achats')}
                   </Link>
-                  <Link href="/payments" className="text-orange-600 hover:text-orange-700">
-                    {t('notFound.quickLinks.payments', 'Paiements')}
-                  </Link>
+                  
                 </>
               ) : (
                 // Non-logged-in user links

@@ -50,10 +50,7 @@ async function checkCurrentData() {
         (SELECT COUNT(*) FROM package_items) AS package_items_count,
         (SELECT COUNT(*) FROM package_timeline) AS package_timeline_count,
         (SELECT COUNT(*) FROM packages) AS packages_count,
-        (SELECT COUNT(*) FROM payment_breakdowns) AS payment_breakdowns_count,
-        (SELECT COUNT(*) FROM payment_requests) AS payment_requests_count,
-        (SELECT COUNT(*) FROM payment_timeline) AS payment_timeline_count,
-        (SELECT COUNT(*) FROM payments) AS payments_count,
+
         (SELECT COUNT(*) FROM purchase_request_items) AS purchase_request_items_count,
         (SELECT COUNT(*) FROM purchase_request_timeline) AS purchase_request_timeline_count,
         (SELECT COUNT(*) FROM purchase_requests) AS purchase_requests_count,

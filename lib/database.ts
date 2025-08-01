@@ -13,22 +13,19 @@ export type {
   Package,
   PackageItem,
   PackageTimeline,
-  PaymentRequest,
-  Payment,
-  PaymentBreakdown,
-  PaymentTimeline,
   Attachment,
   Session,
   OtpCode,
 } from '@prisma/client'
 
 // Utility functions
-export const formatCurrency = (amount: number | null | undefined): string => {
+export const formatCurrency = (amount: number | null | undefined | any): string => {
   if (amount === null || amount === undefined) return '0,00 €'
+  const numAmount = typeof amount === 'object' && amount !== null ? Number(amount) : Number(amount)
   return new Intl.NumberFormat('fr-FR', {
     style: 'currency',
     currency: 'EUR',
-  }).format(amount)
+  }).format(numAmount)
 }
 
 export const formatDate = (date: Date | string | null | undefined): string => {
@@ -99,8 +96,6 @@ export const db = {
       include: {
         purchase_requests: true,
         packages: true,
-        payment_requests: true,
-        payments: true,
         attachments: true,
       },
     })
@@ -223,88 +218,7 @@ export const db = {
     })
   },
 
-  // Payment Request operations
-  getPaymentRequests: async (userId: string) => {
-    return await prisma.paymentRequest.findMany({
-      where: { user_id: userId },
-      include: {
-        payments: true,
-        breakdowns: true,
-      },
-      orderBy: { created_at: 'desc' },
-    })
-  },
 
-  getPaymentRequest: async (id: string) => {
-    return await prisma.paymentRequest.findUnique({
-      where: { id },
-      include: {
-        payments: true,
-        breakdowns: true,
-      },
-    })
-  },
-
-  createPaymentRequest: async (data: {
-    id: string
-    user_id: string
-    type: string
-    related_id: string
-    amount: number
-    due_date?: Date
-    status: string
-    paid_date?: Date
-    receipt_url?: string
-    payment_methods: string[]
-  }) => {
-    return await prisma.paymentRequest.create({
-      data,
-    })
-  },
-
-  // Payment operations
-  getPayments: async (userId: string) => {
-    return await prisma.payment.findMany({
-      where: { user_id: userId },
-      include: {
-        payment_request: true,
-        timeline: {
-          orderBy: { created_at: 'desc' },
-        },
-      },
-      orderBy: { created_at: 'desc' },
-    })
-  },
-
-  getPayment: async (id: string) => {
-    return await prisma.payment.findUnique({
-      where: { id },
-      include: {
-        payment_request: true,
-        timeline: {
-          orderBy: { created_at: 'desc' },
-        },
-      },
-    })
-  },
-
-  createPayment: async (data: {
-    user_id: string
-    payment_request_id: string
-    amount: number
-    payment_method: string
-    transaction_id?: string
-    payment_proof_url?: string
-    payment_date?: Date
-    status: string
-    admin_notes?: string
-    verified_at?: Date
-    verified_by?: string
-  }) => {
-    return await prisma.payment.create({
-      data,
-    })
-  },
 
   // Attachment operations
   getAttachments: async (userId: string) => {
@@ -389,17 +303,12 @@ export const getPurchaseRequests = db.getPurchaseRequests
 export const getPurchaseRequestById = db.getPurchaseRequest
 export const getPackages = db.getPackages
 export const getPackageById = db.getPackage
-export const getPaymentRequests = db.getPaymentRequests
-export const getPaymentById = db.getPayment
-export const getPayments = db.getPayments
 
 // Stats functions
 export const getDashboardStats = async (userId: string) => {
-  const [purchaseRequests, packages, paymentRequests, payments] = await Promise.all([
+  const [purchaseRequests, packages] = await Promise.all([
     prisma.purchaseRequest.count({ where: { user_id: userId } }),
     prisma.package.count({ where: { user_id: userId } }),
-    prisma.paymentRequest.count({ where: { user_id: userId } }),
-    prisma.payment.count({ where: { user_id: userId } }),
   ])
 
   // Get package stats by status
@@ -473,13 +382,7 @@ export const getNextPackageId = async (): Promise<string> => {
   return `PKG-2025-${nextNumber.toString().padStart(3, '0')}`
 }
 
-// Timeline functions
-export const getPaymentTimeline = async (paymentId: string) => {
-  return await prisma.paymentTimeline.findMany({
-    where: { payment_id: paymentId },
-    orderBy: { created_at: 'desc' },
-  })
-}
+
 
 // Legacy database function for backward compatibility
 export const getDatabase = () => prisma

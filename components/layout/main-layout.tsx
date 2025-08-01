@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Package, ShoppingCart, CreditCard, User, LogOut, Home, Plus, HelpCircle, Phone, MessageCircle, ChevronDown } from "lucide-react"
+import { Package, ShoppingCart, User, LogOut, Home, Plus, HelpCircle, Phone, MessageCircle, ChevronDown } from "lucide-react"
 import { useAuth } from "@/lib/auth-context"
 import { useState } from "react"
 import {
