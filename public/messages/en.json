@@ -208,7 +208,38 @@
     "discoverButton": "Discover Our Services",
     "testimonial": "Thanks to shipit, I was able to order exclusive items from the USA that I couldn't find in Morocco. The consolidation really reduced costs, and delivery was fast with no customs issues. I recommend 100%!",
     "testimonialAuthor": "Fatima Z., Casablanca",
-    "testimonialRole": "Satisfied Customer"
+    "testimonialRole": "Satisfied Customer",
+    "carouselTestimonial1": {
+      "quote": "Shipit has completely transformed my online shopping experience. No more worrying about customs fees or delivery delays. The service is exceptional and the team is incredibly responsive!",
+      "author": "Ahmed M.",
+      "role": "Loyal Customer, Rabat"
+    },
+    "carouselTestimonial2": {
+      "quote": "Excellent service! I received my orders faster than expected. The team is very professional and responsive. Highly recommend for anyone shopping internationally.",
+      "author": "Sara K.",
+      "role": "Regular Customer, Marrakech"
+    },
+    "carouselTestimonial3": {
+      "quote": "The consolidation feature saved me so much money on shipping. I can now buy from multiple stores and ship everything together. This is exactly what I needed!",
+      "author": "Youssef B.",
+      "role": "Tech Enthusiast, Fes"
+    },
+    "carouselTestimonial4": {
+      "quote": "Amazing customer support! They helped me with every step of my first international purchase. The process was smooth and transparent from start to finish.",
+      "author": "Layla R.",
+      "role": "First-time Customer, Agadir"
+    },
+    "carouselTestimonial5": {
+      "quote": "I've been using Shipit for over a year now. Their reliability and attention to detail make them my go-to for all international purchases.",
+      "author": "Karim T.",
+      "role": "Long-term Customer, Tangier"
+    },
+    "testimonialsSection": {
+      "title": "What Our Customers Say",
+      "subtitle": "Over",
+      "subtitle2": "in Morocco trust us for their international purchases",
+      "clients": "clients"
+    }
   },
   "howItWorks": {
     "title": "How It Works?",

@@ -208,7 +208,38 @@
     "discoverButton": "Découvrir Nos Services",
     "testimonial": "Grâce à shipit, j'ai pu commander des articles exclusifs des USA que je ne trouvais pas au Maroc. Le regroupement a vraiment réduit les frais, et la livraison a été rapide et sans aucun souci de douane. Je recommande à 100% !",
     "testimonialAuthor": "Fatima Z., Casablanca",
-    "testimonialRole": "Cliente satisfaite"
+    "testimonialRole": "Cliente satisfaite",
+    "carouselTestimonial1": {
+      "quote": "Shipit a complètement transformé mon expérience de shopping en ligne. Plus besoin de se soucier des frais de douane ou des délais de livraison. Le service est exceptionnel et l'équipe est incroyablement réactive !",
+      "author": "Ahmed M.",
+      "role": "Client fidèle, Rabat"
+    },
+    "carouselTestimonial2": {
+      "quote": "Service excellent ! J'ai reçu mes commandes plus rapidement que prévu. L'équipe est très professionnelle et réactive. Je recommande vivement pour quiconque fait du shopping international.",
+      "author": "Sara K.",
+      "role": "Cliente régulière, Marrakech"
+    },
+    "carouselTestimonial3": {
+      "quote": "La fonctionnalité de consolidation m'a fait économiser tellement d'argent sur l'expédition. Je peux maintenant acheter dans plusieurs magasins et expédier tout ensemble. C'est exactement ce dont j'avais besoin !",
+      "author": "Youssef B.",
+      "role": "Passionné de tech, Fès"
+    },
+    "carouselTestimonial4": {
+      "quote": "Support client incroyable ! Ils m'ont aidé à chaque étape de mon premier achat international. Le processus était fluide et transparent du début à la fin.",
+      "author": "Layla R.",
+      "role": "Cliente première fois, Agadir"
+    },
+    "carouselTestimonial5": {
+      "quote": "J'utilise Shipit depuis plus d'un an maintenant. Leur fiabilité et leur attention aux détails en font mon choix pour tous mes achats internationaux.",
+      "author": "Karim T.",
+      "role": "Client de longue date, Tanger"
+    },
+    "testimonialsSection": {
+      "title": "Ce que disent nos clients",
+      "subtitle": "Plus de",
+      "subtitle2": "au Maroc nous font confiance pour leurs achats internationaux",
+      "clients": "clients"
+    }
   },
   "howItWorks": {
     "title": "Comment Ça Marche ?",

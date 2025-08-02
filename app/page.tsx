@@ -35,6 +35,11 @@ const PricingSection = dynamic(() =>
     mod => mod.PricingSection,
   ),
 )
+const ReviewCardSection = dynamic(() =>
+  import("@/components/landing/review-card-section").then(
+    mod => mod.ReviewCardSection,
+  ),
+)
 const Footer = dynamic(() =>
   import("@/components/layout/footer").then(mod => mod.Footer),
 )
@@ -50,7 +55,7 @@ export default function Component() {
         <OurServiceSection />
         <WeBuyForYouSection />
         <WhyChooseUsSection />
-
+        <ReviewCardSection />
         <PricingSection />
         <Footer />
       </div>
