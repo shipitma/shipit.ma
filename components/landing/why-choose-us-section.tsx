@@ -24,7 +24,7 @@ export function WhyChooseUsSection() {
                 {t('landing.ourServices.whyChooseUs.traditionalSolutions.title', 'Les autres solutions : Complexes et limitées !')}
               </h3>
               <Image
-                src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/66ec02b1cb344ea14e7abf15_shop.jpg"
+                src="/placeholder.jpg"
                 alt="Online store interface"
                 width={522}
                 height={350}
@@ -103,7 +103,7 @@ export function WhyChooseUsSection() {
                 {t('landing.ourServices.whyChooseUs.ourPlatform.title', 'Notre plateforme : Service tout-en-un, pensé pour vous !')}
               </h3>
               <Image
-                src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/66f2646a4be1bb9a1d5d12da_quiz.jpg"
+                src="/placeholder.jpg"
                 alt="Quiz interface"
                 width={522}
                 height={350}
