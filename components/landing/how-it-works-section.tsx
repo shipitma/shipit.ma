@@ -19,29 +19,29 @@ export function HowItWorksSection() {
 
         {/* Generation Box */}
         <div className="generation_box relative">
-          {/* Desktop Arrow - hidden on mobile */}
-          <div
-            className="hidden md:block absolute inset-0 pointer-events-none"
-            style={{
-              backgroundImage:
-                "url(https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/673443538de5bc7d2a86578c_arrow.svg)",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
-              backgroundSize: "contain",
-            }}
-          />
+                     {/* Desktop Arrow - hidden on mobile */}
+           <div
+             className="hidden md:block absolute inset-0 pointer-events-none rtl:scale-x-[-1]"
+             style={{
+               backgroundImage:
+                 "url(https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/673443538de5bc7d2a86578c_arrow.svg)",
+               backgroundRepeat: "no-repeat",
+               backgroundPosition: "center",
+               backgroundSize: "contain",
+             }}
+           />
 
-          {/* Mobile Arrow - visible only on mobile */}
-          <div
-            className="md:hidden absolute inset-0 pointer-events-none"
-            style={{
-              backgroundImage:
-                "url(https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/673d88919a5cd6110dd31da7_arrow_img.svg)",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
-              backgroundSize: "contain",
-            }}
-          />
+                     {/* Mobile Arrow - visible only on mobile */}
+           <div
+             className="md:hidden absolute inset-0 pointer-events-none rtl:scale-x-[-1]"
+             style={{
+               backgroundImage:
+                 "url(https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/673d88919a5cd6110dd31da7_arrow_img.svg)",
+               backgroundRepeat: "no-repeat",
+               backgroundPosition: "center",
+               backgroundSize: "contain",
+             }}
+           />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 items-center relative z-10">
             {/* Traffic */}
@@ -117,7 +117,7 @@ export function HowItWorksSection() {
 
         <div className="text-center">
           <Button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 text-base font-medium">
-            Commencez Votre Aventure Shopping !
+            {t('howItWorks.startButton', 'Commencez Votre Aventure Shopping !')}
           </Button>
         </div>
       </div>

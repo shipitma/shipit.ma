@@ -1,7 +1,10 @@
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import { useTranslations } from "@/lib/hooks/use-translations"
 
 export function PricingSection() {
+  const { t } = useTranslations()
+  
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4 max-w-6xl">
@@ -9,21 +12,27 @@ export function PricingSection() {
           <div className="flex flex-col lg:flex-row justify-between relative z-10 items-stretch">
             {/* Left Content */}
             <div className="lg:w-2/3 mb-8 lg:mb-0 text-white">
-              <h2 className="text-2xl lg:text-3xl font-bold mb-4">Commencez à Économiser Aujourd'hui !</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold mb-4">
+                {t('landing.ourServices.pricing.title', 'Commencez à Économiser Aujourd\'hui !')}
+              </h2>
               <p className="text-base lg:text-lg leading-relaxed opacity-90">
-              Obtenez une adresse gratuite aux États-Unis,Turquie, Espagne ou France. Nous gérons tout, de l'achat à la livraison directe à votre porte au Maroc. 
+                {t('landing.ourServices.pricing.subtitle', 'Obtenez une adresse gratuite aux États-Unis,Turquie, Espagne ou France. Nous gérons tout, de l\'achat à la livraison directe à votre porte au Maroc.')}
               </p>
             </div>
 
             {/* Right Content */}
             <div className="lg:w-1/3 lg:text-right text-white text-left">
               <div className="mb-6">
-                <div className="text-3xl lg:text-4xl font-bold">À partir de 19 MAD</div>
-                <div className="text-lg opacity-90">par envoi</div>
+                              <div className="text-3xl lg:text-4xl font-bold">
+                {t('landing.ourServices.pricing.price', 'À partir de 19 MAD')}
               </div>
-              <Button className="bg-white text-orange-600 hover:bg-gray-100 px-8 py-3 font-medium">
-                Voir les Tarifs
-              </Button>
+              <div className="text-lg opacity-90">
+                {t('landing.ourServices.pricing.priceUnit', 'par envoi')}
+              </div>
+            </div>
+            <Button className="bg-white text-orange-600 hover:bg-gray-100 px-8 py-3 font-medium">
+              {t('landing.ourServices.pricing.button', 'Voir les Tarifs')}
+            </Button>
             </div>
           </div>
 

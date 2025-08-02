@@ -29,9 +29,7 @@ const WhyChooseUsSection = dynamic(() =>
     mod => mod.WhyChooseUsSection,
   ),
 )
-const TrustSection = dynamic(() =>
-  import("@/components/landing/trust-section").then(mod => mod.TrustSection),
-)
+
 const PricingSection = dynamic(() =>
   import("@/components/landing/pricing-section").then(
     mod => mod.PricingSection,
@@ -52,7 +50,7 @@ export default function Component() {
         <OurServiceSection />
         <WeBuyForYouSection />
         <WhyChooseUsSection />
-        <TrustSection />
+
         <PricingSection />
         <Footer />
       </div>

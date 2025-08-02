@@ -1,17 +1,18 @@
 import Image from "next/image"
+import { useTranslations } from "@/lib/hooks/use-translations"
 
 export function WhyChooseUsSection() {
+  const { t } = useTranslations()
+  
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-            Pourquoi Choisir Notre Plateforme Plutôt que les Solutions Traditionnelles ?
+            {t('landing.ourServices.whyChooseUs.title', 'Pourquoi Choisir Notre Plateforme Plutôt que les Solutions Traditionnelles ?')}
           </h2>
           <p className="text-lg md:text-xl text-gray-600">
-            Contrairement aux solutions traditionnelles ou aux faveurs familiales à l'étranger, nous sommes la première
-            plateforme marocaine offrant un service complet d'achat international et de réexpédition avec garantie de
-            satisfaction.
+            {t('landing.ourServices.whyChooseUs.subtitle', 'Contrairement aux solutions traditionnelles ou aux faveurs familiales à l\'étranger, nous sommes la première plateforme marocaine offrant un service complet d\'achat international et de réexpédition avec garantie de satisfaction.')}
           </p>
         </div>
 
@@ -20,7 +21,7 @@ export function WhyChooseUsSection() {
           <div className="bg-white rounded-2xl border border-[#dd473b] overflow-hidden">
             <div className="p-6 bg-transparent">
               <h3 className="text-lg font-semibold mb-4 text-[#dd473b]">
-                Les autres solutions : Complexes et limitées !
+                {t('landing.ourServices.whyChooseUs.traditionalSolutions.title', 'Les autres solutions : Complexes et limitées !')}
               </h3>
               <Image
                 src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/66ec02b1cb344ea14e7abf15_shop.jpg"
@@ -39,7 +40,7 @@ export function WhyChooseUsSection() {
                     className="flex-shrink-0"
                   />
                   <span className="text-[#dd473b]">
-                    <b>Démarches complexes :</b> Multiples intermédiaires et formalités.
+                    <b>{t('landing.ourServices.whyChooseUs.traditionalSolutions.issue1.title', 'Démarches complexes :')}</b> {t('landing.ourServices.whyChooseUs.traditionalSolutions.issue1.description', 'Multiples intermédiaires et formalités.')}
                   </span>
                 </div>
                 <div className="flex items-center space-x-3">
@@ -51,7 +52,7 @@ export function WhyChooseUsSection() {
                     className="flex-shrink-0"
                   />
                   <span className="text-[#dd473b]">
-                    <b>Carte bancaire internationale requise :</b> Impossible d'acheter sans carte internationale.
+                    <b>{t('landing.ourServices.whyChooseUs.traditionalSolutions.issue2.title', 'Carte bancaire internationale requise :')}</b> {t('landing.ourServices.whyChooseUs.traditionalSolutions.issue2.description', 'Impossible d\'acheter sans carte internationale.')}
                   </span>
                 </div>
                 <div className="flex items-center space-x-3">
@@ -63,7 +64,7 @@ export function WhyChooseUsSection() {
                     className="flex-shrink-0"
                   />
                   <span className="text-[#dd473b]">
-                    <b>Coûts cachés :</b> Frais supplémentaires découverts à la livraison.
+                    <b>{t('landing.ourServices.whyChooseUs.traditionalSolutions.issue3.title', 'Coûts cachés :')}</b> {t('landing.ourServices.whyChooseUs.traditionalSolutions.issue3.description', 'Frais supplémentaires découverts à la livraison.')}
                   </span>
                 </div>
                 <div className="flex items-center space-x-3">
@@ -75,7 +76,7 @@ export function WhyChooseUsSection() {
                     className="flex-shrink-0"
                   />
                   <span className="text-[#dd473b]">
-                    <b>Délais imprévisibles :</b> Aucune garantie sur les temps de transit.
+                    <b>{t('landing.ourServices.whyChooseUs.traditionalSolutions.issue4.title', 'Délais imprévisibles :')}</b> {t('landing.ourServices.whyChooseUs.traditionalSolutions.issue4.description', 'Aucune garantie sur les temps de transit.')}
                   </span>
                 </div>
 
@@ -88,7 +89,7 @@ export function WhyChooseUsSection() {
                     className="flex-shrink-0"
                   />
                   <span className="text-[#dd473b]">
-                    <b>Support limité :</b> Assistance uniquement en cas de problème majeur.
+                    <b>{t('landing.ourServices.whyChooseUs.traditionalSolutions.issue5.title', 'Support limité :')}</b> {t('landing.ourServices.whyChooseUs.traditionalSolutions.issue5.description', 'Assistance uniquement en cas de problème majeur.')}
                   </span>
                 </div>
               </div>
@@ -99,7 +100,7 @@ export function WhyChooseUsSection() {
           <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
             <div className="p-6 bg-[rgba(234,88,12,1)]">
               <h3 className="text-lg font-semibold mb-4 text-white">
-                Notre plateforme : Service tout-en-un, pensé pour vous !
+                {t('landing.ourServices.whyChooseUs.ourPlatform.title', 'Notre plateforme : Service tout-en-un, pensé pour vous !')}
               </h3>
               <Image
                 src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/66f2646a4be1bb9a1d5d12da_quiz.jpg"
@@ -118,7 +119,7 @@ export function WhyChooseUsSection() {
                     className="flex-shrink-0"
                   />
                   <span className="text-white">
-                    <b>Plateforme tout-en-un :</b> Réexpédition ET achat assisté sur une seule interface.
+                    <b>{t('landing.ourServices.whyChooseUs.ourPlatform.benefit1.title', 'Plateforme tout-en-un :')}</b> {t('landing.ourServices.whyChooseUs.ourPlatform.benefit1.description', 'Réexpédition ET achat assisté sur une seule interface.')}
                   </span>
                 </div>
                 <div className="flex items-center space-x-3">
@@ -130,7 +131,7 @@ export function WhyChooseUsSection() {
                     className="flex-shrink-0"
                   />
                   <span className="text-white">
-                    <b>Transparence totale :</b> Tous les frais affichés dès le départ, sans surprise.
+                    <b>{t('landing.ourServices.whyChooseUs.ourPlatform.benefit2.title', 'Transparence totale :')}</b> {t('landing.ourServices.whyChooseUs.ourPlatform.benefit2.description', 'Tous les frais affichés dès le départ, sans surprise.')}
                   </span>
                 </div>
                 <div className="flex items-center space-x-3">
@@ -142,7 +143,7 @@ export function WhyChooseUsSection() {
                     className="flex-shrink-0"
                   />
                   <span className="text-white">
-                    <b>Suivi en temps réel :</b> Visibilité complète de votre commande à chaque étape.
+                    <b>{t('landing.ourServices.whyChooseUs.ourPlatform.benefit3.title', 'Suivi en temps réel :')}</b> {t('landing.ourServices.whyChooseUs.ourPlatform.benefit3.description', 'Visibilité complète de votre commande à chaque étape.')}
                   </span>
                 </div>
                 <div className="flex items-center space-x-3">
@@ -154,7 +155,19 @@ export function WhyChooseUsSection() {
                     className="flex-shrink-0"
                   />
                   <span className="text-white">
-                    <b>Accompagnement personnalisé :</b> Support dédié de l'achat à la livraison.
+                    <b>{t('landing.ourServices.whyChooseUs.ourPlatform.benefit4.title', 'Accompagnement personnalisé :')}</b> {t('landing.ourServices.whyChooseUs.ourPlatform.benefit4.description', 'Support dédié de l\'achat à la livraison.')}
+                  </span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Image
+                    src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/66ec02b1cb344ea14e7abee9_gl.svg"
+                    alt="Benefit icon"
+                    width={20}
+                    height={20}
+                    className="flex-shrink-0"
+                  />
+                  <span className="text-white">
+                    <b>{t('landing.ourServices.whyChooseUs.ourPlatform.benefit5.title', 'Garantie de satisfaction :')}</b> {t('landing.ourServices.whyChooseUs.ourPlatform.benefit5.description', 'Service garanti avec remboursement si vous n\'êtes pas satisfait.')}
                   </span>
                 </div>
               </div>

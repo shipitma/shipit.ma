@@ -215,7 +215,8 @@
     "subtitle": "Transform your shopping desires into reality through a simple and interactive process",
     "step1": "1. Sign up and get a delivery address through Shipit.",
     "step2": "2. Shop at stores of your choice and ship your items to your new address.",
-    "step3": "3. Consolidate your packages to pay less"
+    "step3": "3. Consolidate your packages to pay less",
+    "startButton": "Start Your Shopping Adventure!"
   },
   "footer": {
     "copyright": "All rights reserved."
@@ -377,6 +378,133 @@
     "alerts": {
       "insurance": {
         "title": "Insurance"
+      }
+    }
+  },
+  "landing": {
+    "ourServices": {
+      "title": "You Buy, We Deliver.",
+      "subtitle": "Our process is designed to be simple and transparent, ensuring you a hassle-free experience from start to finish.",
+      "step1": {
+        "title": "Create Your Account and Get Your FREE Address",
+        "description": "Join Shipit in a few clicks! Instantly receive your personalized reshipping address in Turkey, Europe or the United States."
+      },
+      "step2": {
+        "title": "Shop Online, We Handle Reception",
+        "description": "Make your purchases on your favorite sites in Turkey, Europe or the United States and have them delivered to your new Shipit address. We take over as soon as your package arrives."
+      },
+      "step3": {
+        "title": "Customize Your Shipment: Your Choices, Your Savings",
+        "description": "As soon as your package arrives with us, you are notified! This is the time to customize your shipment so it arrives exactly as you want it.",
+        "feature1": "Detailed photos of content: ensure the condition of your items.",
+        "feature2": "Smart grouping: combine several packages and save up to 80% on shipping costs.",
+        "feature3": "Reinforced protection: add adhesive or extra bubble wrap for optimal security."
+      },
+      "step4": {
+        "title": "Receive Your Package Directly in Morocco",
+        "description": "Once your shipment is configured, relax! We take care of everything so your package arrives at your door in Morocco.",
+        "feature1": "Customs declarations handled",
+        "feature2": "Fast home delivery",
+        "feature3": "Home delivery",
+        "feature4": "Dedicated customer support"
+      },
+      "step5": {
+        "title": "Enjoy Your Purchases!",
+        "description": "Your package has arrived? Congratulations! All you have left is to enjoy your new items. Don't wait for your next shopping sprees, we're here for you!"
+      },
+      "whyChooseUs": {
+        "title": "Why Choose Our Platform Over Traditional Solutions?",
+        "subtitle": "Unlike traditional solutions or family favors abroad, we are the first Moroccan platform offering a complete international purchase and reshipping service with satisfaction guarantee.",
+        "traditionalSolutions": {
+          "title": "Other solutions: Complex and limited!",
+          "issue1": {
+            "title": "Complex procedures:",
+            "description": "Multiple intermediaries and formalities."
+          },
+          "issue2": {
+            "title": "International bank card required:",
+            "description": "Impossible to purchase without international card."
+          },
+          "issue3": {
+            "title": "Hidden costs:",
+            "description": "Additional fees discovered at delivery."
+          },
+          "issue4": {
+            "title": "Unpredictable delays:",
+            "description": "No guarantee on transit times."
+          },
+          "issue5": {
+            "title": "Limited support:",
+            "description": "Assistance only in case of major problem."
+          }
+        },
+        "ourPlatform": {
+          "title": "Our platform: All-in-one service, designed for you!",
+          "benefit1": {
+            "title": "All-in-one platform:",
+            "description": "Reshipping AND assisted purchase on a single interface."
+          },
+          "benefit2": {
+            "title": "Total transparency:",
+            "description": "All fees displayed from the start, no surprises."
+          },
+          "benefit3": {
+            "title": "Real-time tracking:",
+            "description": "Complete visibility of your order at every step."
+          },
+          "benefit4": {
+            "title": "Personalized support:",
+            "description": "Dedicated support from purchase to delivery."
+          },
+          "benefit5": {
+            "title": "Satisfaction guarantee:",
+            "description": "Guaranteed service with refund if you're not satisfied."
+          }
+        },
+        "weBuyForYou": {
+          "title": "We Buy For You!",
+          "subtitle": "No international bank card or difficulties buying online?",
+          "description": "Give us your desired item list. We buy them for you and add them to your shipment.",
+          "column1": {
+            "title": "No Card, No Stress",
+            "subtitle": "We buy for you, no hidden fees."
+          },
+          "button": "Send My Shopping List",
+          "step1": "Tell us what you want",
+          "step2": "We check availability and proceed with purchasing the products",
+          "step3": "Once received, we ship them to you."
+        }
+      },
+
+      "partnerBrands": {
+        "title": "Order from Your Favorite Sites",
+        "subtitle": "Don't limit yourself anymore! Shop on Trendyol, Amazon, Vente-Privée, eBay or any other site in Turkey, Europe or the United States — we take care of the rest."
+      },
+      "pricing": {
+        "title": "Start Saving Today!",
+        "subtitle": "Get a free address in the United States, Turkey, Spain or France. We handle everything from purchase to direct delivery to your door in Morocco.",
+        "price": "Starting from 19 MAD",
+        "priceUnit": "per shipment",
+        "button": "View Pricing"
+      },
+      "testimonials": {
+        "title": "What Our Customers Say",
+        "subtitle": "Discover testimonials from our satisfied customers who trust us for their international purchases",
+        "testimonial1": {
+          "quote": "Thanks to shipit, I was able to order exclusive items from the USA that I couldn't find in Morocco. The consolidation really reduced costs, and delivery was fast with no customs issues. I recommend 100%!",
+          "author": "Fatima Z.",
+          "role": "Satisfied Customer, Casablanca"
+        },
+        "testimonial2": {
+          "quote": "Shipit has transformed my online shopping experience. No more worrying about customs fees or delivery delays. The service is exceptional!",
+          "author": "Ahmed M.",
+          "role": "Loyal Customer, Rabat"
+        },
+        "testimonial3": {
+          "quote": "Excellent service! I received my orders faster than expected. The team is very professional and responsive.",
+          "author": "Sara K.",
+          "role": "Regular Customer, Marrakech"
+        }
       }
     }
   }

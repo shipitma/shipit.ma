@@ -1,69 +1,74 @@
 import Image from "next/image"
+import { useTranslations } from "@/lib/hooks/use-translations"
 
 export function OurServiceSection() {
+  const { t } = useTranslations()
+  
   return (
     <section className="py-20">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Vous Achetez, Nous Livrons.</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+            {t('landing.ourServices.title', 'Vous Achetez, Nous Livrons.')}
+          </h2>
           <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto">
-            Notre processus est conçu pour être simple et transparent, vous garantissant une expérience sans tracas du
-            début à la fin.
+            {t('landing.ourServices.subtitle', 'Notre processus est conçu pour être simple et transparent, vous garantissant une expérience sans tracas du début à la fin.')}
           </p>
         </div>
 
         {/* Steps */}
         <div className="space-y-16">
           {/* Step 1 */}
-          <div className="flex flex-col lg:flex-row items-start gap-12 border border-gray-200 rounded-2xl p-8">
-            <div className="lg:w-1/2">
+          <div className="flex flex-col lg:flex-row border border-gray-200 rounded-2xl overflow-hidden">
+            <div className="lg:w-1/2 p-8 flex flex-col">
               <div className="text-2xl font-medium text-gray-500 mb-4">01</div>
-              <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">Créez Votre Compte et Obtenez Votre Adresse GRATUITE</h3>
+              <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">
+                {t('landing.ourServices.step1.title', 'Créez Votre Compte et Obtenez Votre Adresse GRATUITE')}
+              </h3>
               <p className="text-gray-600 mb-8 text-base leading-relaxed">
-              Rejoignez Shipit en quelques clics ! Recevez instantanément votre adresse de réexpédition personnalisée en Turquie, en Europe ou aux États-Unis.
+                {t('landing.ourServices.step1.description', 'Rejoignez Shipit en quelques clics ! Recevez instantanément votre adresse de réexpédition personnalisée en Turquie, en Europe ou aux États-Unis.')}
               </p>
-
-
             </div>
-            <div className="lg:w-1/2">
+            <div className="lg:w-1/2 relative h-64 lg:h-auto">
               <Image
-                src="/673459963374d61e8a3148d7_work1.svg"
+                src="https://img.freepik.com/free-photo/waist-up-portrait-young-attractive-hipster-girl-orange-hoodie-using-mobile-phone-look-smartphone-display-with-serious-face-writing-message-texting-friend-edit-photo-post-online_176420-37357.jpg?t=st=1754108823~exp=1754112423~hmac=6bd700066a42f84d17889144de1ce67a1f3a7e14395eeace060166ebdb1c5bd2&w=1380"
                 alt="Create start page"
-                width={479}
-                height={400}
-                className="rounded-lg w-full"
+                fill
+                className="object-cover"
               />
             </div>
           </div>
 
           {/* Step 2 */}
-          <div className="flex flex-col lg:flex-row-reverse items-start gap-12 border border-gray-200 rounded-2xl p-8">
-            <div className="lg:w-1/2">
+          <div className="flex flex-col lg:flex-row-reverse border border-gray-200 rounded-2xl overflow-hidden">
+            <div className="lg:w-1/2 p-8 flex flex-col">
               <div className="text-2xl font-medium text-gray-500 mb-4">02</div>
-              <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">Magasinez en Ligne, Nous Nous Chargeons de la Réception</h3>
+              <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">
+                {t('landing.ourServices.step2.title', 'Magasinez en Ligne, Nous Nous Chargeons de la Réception')}
+              </h3>
               <p className="text-gray-600 mb-8 text-base leading-relaxed">
-              Faites vos achats sur vos sites préférés en Turquie, en Europe ou aux États-Unis et faites-les livrer à votre nouvelle adresse Shipit. Nous prenons le relais dès l'arrivée de votre colis.
+                {t('landing.ourServices.step2.description', 'Faites vos achats sur vos sites préférés en Turquie, en Europe ou aux États-Unis et faites-les livrer à votre nouvelle adresse Shipit. Nous prenons le relais dès l\'arrivée de votre colis.')}
               </p>
-
             </div>
-            <div className="lg:w-1/2">
+            <div className="lg:w-1/2 relative h-64 lg:h-auto">
               <Image
-                src="/67345996df2043bc0740828b_work2.svg"
+                src="https://img.freepik.com/free-photo/woman-using-her-credit-card-new-purchase_23-2148675007.jpg?t=st=1754108300~exp=1754111900~hmac=64dac34290513786a6bf9364563f9502c485f4b50189961cf0febbe57ad6d801&w=1380"
                 alt="Set up quiz questions"
-                width={432}
-                height={400}
-                className="rounded-lg w-full"
+                fill
+                className="object-cover"
               />
             </div>
           </div>
 
           {/* Step 3 */}
-          <div className="flex flex-col lg:flex-row items-start gap-12 border border-gray-200 rounded-2xl p-8">
-            <div className="lg:w-1/2">
+          <div className="flex flex-col lg:flex-row border border-gray-200 rounded-2xl overflow-hidden">
+            <div className="lg:w-1/2 p-8 flex flex-col">
               <div className="text-2xl font-medium text-gray-500 mb-4">03</div>
-              <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">Personnalisez Votre Expédition : Vos Choix, Vos Économies</h3>
+              <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">
+                {t('landing.ourServices.step3.title', 'Personnalisez Votre Expédition : Vos Choix, Vos Économies')}
+              </h3>
               <p className="text-gray-600 mb-8 text-base leading-relaxed">
-              Dès que votre colis arrive chez nous, vous êtes notifié ! C'est le moment de personnaliser votre envoi pour qu'il arrive exactement comme vous le souhaitez.
+                {t('landing.ourServices.step3.description', 'Dès que votre colis arrive chez nous, vous êtes notifié ! C\'est le moment de personnaliser votre envoi pour qu\'il arrive exactement comme vous le souhaitez.')}
               </p>
               <div className="mb-6">
 
@@ -75,7 +80,7 @@ export function OurServiceSection() {
                       width={24}
                       height={24}
                     />
-                    <span className="text-gray-700">Photos détaillées du contenu : assurez-vous de l'état de vos articles.</span>
+                    <span className="text-gray-700">{t('landing.ourServices.step3.feature1', 'Photos détaillées du contenu : assurez-vous de l\'état de vos articles.')}</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Image
@@ -84,7 +89,7 @@ export function OurServiceSection() {
                       width={24}
                       height={24}
                     />
-                    <span className="text-gray-700">Regroupement intelligent : combinez plusieurs colis et économisez jusqu'à 80% sur les frais d'expédition.</span>
+                    <span className="text-gray-700">{t('landing.ourServices.step3.feature2', 'Regroupement intelligent : combinez plusieurs colis et économisez jusqu\'à 80% sur les frais d\'expédition.')}</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Image
@@ -93,29 +98,30 @@ export function OurServiceSection() {
                       width={24}
                       height={24}
                     />
-                    <span className="text-gray-700">Protection renforcée : ajoutez de l'adhésif ou du papier-bulles supplémentaire pour une sécurité optimale.</span>
+                    <span className="text-gray-700">{t('landing.ourServices.step3.feature3', 'Protection renforcée : ajoutez de l\'adhésif ou du papier-bulles supplémentaire pour une sécurité optimale.')}</span>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="lg:w-1/2">
+            <div className="lg:w-1/2 relative h-64 lg:h-auto">
               <Image
-                src="/67345996502d24b5aa19ec55_work3.svg"
+                src="https://img.freepik.com/free-photo/woman-safety-equipment-work_23-2148976343.jpg?t=st=1754107063~exp=1754110663~hmac=c1cb95902d8467181e3335418ee2dca2f2d6fec91640f678277aa2bf4f361131&w=1380"
                 alt="Customize results"
-                width={431}
-                height={400}
-                className="rounded-lg w-full"
+                fill
+                className="object-cover"
               />
             </div>
           </div>
 
           {/* Step 4 */}
-          <div className="flex flex-col lg:flex-row-reverse items-start gap-12 border border-gray-200 rounded-2xl p-8">
-            <div className="lg:w-1/2">
+          <div className="flex flex-col lg:flex-row-reverse border border-gray-200 rounded-2xl overflow-hidden">
+            <div className="lg:w-1/2 p-8 flex flex-col">
               <div className="text-2xl font-medium text-gray-500 mb-4">04</div>
-              <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">Recevez Votre Colis Directement au Maroc</h3>
+              <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">
+                {t('landing.ourServices.step4.title', 'Recevez Votre Colis Directement au Maroc')}
+              </h3>
               <p className="text-gray-600 mb-8 text-base leading-relaxed">
-              Une fois votre expédition configurée, détendez-vous ! Nous nous occupons de tout pour que votre colis arrive à votre porte au Maroc.
+                {t('landing.ourServices.step4.description', 'Une fois votre expédition configurée, détendez-vous ! Nous nous occupons de tout pour que votre colis arrive à votre porte au Maroc.')}
               </p>
               <div className="mb-6">
 
@@ -127,7 +133,7 @@ export function OurServiceSection() {
                       width={24}
                       height={24}
                     />
-                    <span className="text-gray-700">Déclarations douanières prises en charge</span>
+                    <span className="text-gray-700">{t('landing.ourServices.step4.feature1', 'Déclarations douanières prises en charge')}</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Image
@@ -136,7 +142,7 @@ export function OurServiceSection() {
                       width={24}
                       height={24}
                     />
-                    <span className="text-gray-700">Livraison rapide à domicile</span>
+                    <span className="text-gray-700">{t('landing.ourServices.step4.feature2', 'Livraison rapide à domicile')}</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Image
@@ -145,7 +151,7 @@ export function OurServiceSection() {
                       width={24}
                       height={24}
                     />
-                    <span className="text-gray-700">Livraison à domicile</span>
+                    <span className="text-gray-700">{t('landing.ourServices.step4.feature3', 'Livraison à domicile')}</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Image
@@ -154,38 +160,38 @@ export function OurServiceSection() {
                       width={24}
                       height={24}
                     />
-                    <span className="text-gray-700">Support client dédié</span>
+                    <span className="text-gray-700">{t('landing.ourServices.step4.feature4', 'Support client dédié')}</span>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="lg:w-1/2">
+            <div className="lg:w-1/2 relative h-64 lg:h-auto">
               <Image
-                src="/673459967caaed53c5346db1_work4.svg"
+                src="https://img.freepik.com/free-photo/smiling-female-customer-standing-near-open-door-receiving-order-from-grocery-store-caucasian-courier-delivering-order-holding-tablet-with-address-food-delivery-service-shopping-concept_74855-12012.jpg?t=st=1754107205~exp=1754110805~hmac=c70c1d6ed166d66f773cd83c598f6893b9ad626fef2d0c464f4111799f5fc518&w=1380"
                 alt="Capture and convert"
-                width={480}
-                height={400}
-                className="rounded-lg w-full"
+                fill
+                className="object-cover"
               />
             </div>
           </div>
 
           {/* Step 5 */}
-          <div className="flex flex-col lg:flex-row items-start gap-12 border border-gray-200 rounded-2xl p-8">
-            <div className="lg:w-1/2">
+          <div className="flex flex-col lg:flex-row border border-gray-200 rounded-2xl overflow-hidden">
+            <div className="lg:w-1/2 p-8 flex flex-col">
               <div className="text-2xl font-medium text-gray-500 mb-4">05</div>
-              <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">Profitez de Vos Achats !</h3>
+              <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6">
+                {t('landing.ourServices.step5.title', 'Profitez de Vos Achats !')}
+              </h3>
               <p className="text-gray-600 mb-8 text-base leading-relaxed">
-              Votre colis est arrivé ? Félicitations ! Il ne vous reste plus qu'à profiter de vos nouveaux articles. N'attendez plus pour vos prochains craquages shopping, nous sommes là pour vous !
+                {t('landing.ourServices.step5.description', 'Votre colis est arrivé ? Félicitations ! Il ne vous reste plus qu\'à profiter de vos nouveaux articles. N\'attendez plus pour vos prochains craquages shopping, nous sommes là pour vous !')}
               </p>
             </div>
-            <div className="lg:w-1/2">
+            <div className="lg:w-1/2 relative h-64 lg:h-auto">
               <Image
-                src="/6734599a90470322c4cd1d92_work5.svg"
+                src="https://img.freepik.com/free-photo/young-beautiful-girl-wearing-orange-t-shirt-holding-paper-package-credit-card-smiling-cheerfully-standing-isolated-orange-background_141793-24560.jpg?t=st=1754107282~exp=1754110882~hmac=387220a9c4fe9fa873d8d457a6e088958327096514551c49af6ee0613648399f&w=1380"
                 alt="Share your quiz"
-                width={421}
-                height={400}
-                className="w-full"
+                fill
+                className="object-cover"
               />
             </div>
           </div>

@@ -49,7 +49,7 @@ export function HeroSection() {
               "{t('hero.testimonial', 'Grâce à shipit, j\'ai pu commander des articles exclusifs des USA que je ne trouvais pas au Maroc. Le regroupement a vraiment réduit les frais, et la livraison a été rapide et sans aucun souci de douane. Je recommande à 100% !')}"
             </blockquote>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-4 rtl:space-x-reverse">
                 <Image
                   src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/66dff36ec5f549ec1f252d5f_rob.jpg"
                   alt="Robbie F."
@@ -57,7 +57,7 @@ export function HeroSection() {
                   height={60}
                   className="rounded-full"
                 />
-                <div className="text-left">
+                <div className="text-left rtl:text-right">
                   <div className="font-semibold text-white">{t('hero.testimonialAuthor', 'Fatima Z., Casablanca')}</div>
                   <div className="text-white/80">{t('hero.testimonialRole', 'Cliente satisfaite')}</div>
                 </div>

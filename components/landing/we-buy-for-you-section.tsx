@@ -1,15 +1,20 @@
 import Image from "next/image"
+import { useTranslations } from "@/lib/hooks/use-translations"
 
 export function WeBuyForYouSection() {
+  const { t } = useTranslations()
+  
   return (
     <section className="bg-white py-20">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-800 mb-6">Nous achetons pour vous !</h2>
+          <h2 className="text-4xl font-bold text-gray-800 mb-6">
+            {t('landing.ourServices.whyChooseUs.weBuyForYou.title', 'Nous achetons pour vous !')}
+          </h2>
           <p className="text-xl text-gray-600">
-          Pas de carte bancaire internationale ou des difficultés à acheter en ligne ?
-          <br />
-          Donnez-nous votre liste d'articles souhaités. Nous les achetons pour vous et les ajoutons à votre envoi.
+            {t('landing.ourServices.whyChooseUs.weBuyForYou.subtitle', 'Pas de carte bancaire internationale ou des difficultés à acheter en ligne ?')}
+            <br />
+            {t('landing.ourServices.whyChooseUs.weBuyForYou.description', 'Donnez-nous votre liste d\'articles souhaités. Nous les achetons pour vous et les ajoutons à votre envoi.')}
           </p>
         </div>
 
@@ -18,13 +23,17 @@ export function WeBuyForYouSection() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
             {/* Column 1 */}
             <div className="text-center lg:text-left">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">Sans Carte, Sans Stress</h3>
-              <p className="text-gray-600 mb-8">Nous achetons pour vous, sans frais cachés.</p>
+              <h3 className="text-xl font-semibold text-gray-800 mb-4 text-left rtl:text-right">
+                {t('landing.ourServices.whyChooseUs.weBuyForYou.column1.title', 'Sans Carte, Sans Stress')}
+              </h3>
+              <p className="text-gray-600 mb-8 text-left rtl:text-right">
+                {t('landing.ourServices.whyChooseUs.weBuyForYou.column1.subtitle', 'Nous achetons pour vous, sans frais cachés.')}
+              </p>
 
               {/* Desktop Button */}
-              <div className="hidden lg:block mb-8">
+              <div className="hidden lg:block mb-8 text-left rtl:text-right">
                 <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-medium transition-colors">
-                  Envoyer ma liste d’achats
+                  {t('landing.ourServices.whyChooseUs.weBuyForYou.button', 'Envoyer ma liste d\'achats')}
                 </button>
               </div>
 
@@ -34,7 +43,7 @@ export function WeBuyForYouSection() {
                   <div className="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-semibold text-lg flex-shrink-0">
                     1
                   </div>
-                  <p className="text-gray-600 text-left">Dites-nous ce que vous voulez</p>
+                  <p className="text-gray-600 text-left rtl:text-right flex-1 rtl:pr-4">{t('landing.ourServices.whyChooseUs.weBuyForYou.step1', 'Dites-nous ce que vous voulez')}</p>
                 </div>
               </div>
 
@@ -57,8 +66,8 @@ export function WeBuyForYouSection() {
                   <div className="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-semibold text-lg flex-shrink-0">
                     2
                   </div>
-                  <p className="text-gray-600 text-left">
-                    Nous vérifions la disponibilité et procédons à l'achat des produits
+                  <p className="text-gray-600 text-left rtl:text-right flex-1 rtl:pr-4">
+                    {t('landing.ourServices.whyChooseUs.weBuyForYou.step2', 'Nous vérifions la disponibilité et procédons à l\'achat des produits')}
                   </p>
                 </div>
               </div>
@@ -103,7 +112,7 @@ export function WeBuyForYouSection() {
                 <div className="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-semibold text-lg flex-shrink-0">
                   3
                 </div>
-                <p className="text-gray-600 text-left">Une fois reçus, nous vous les expédions.</p>
+                <p className="text-gray-600 text-left rtl:text-right flex-1 rtl:pr-4">{t('landing.ourServices.whyChooseUs.weBuyForYou.step3', 'Une fois reçus, nous vous les expédions.')}</p>
               </div>
             </div>
           </div>
@@ -129,7 +138,7 @@ export function WeBuyForYouSection() {
           {/* Mobile Button */}
           <div className="lg:hidden text-center mt-8">
             <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-medium transition-colors">
-              Envoyer ma liste d’achats
+              {t('landing.ourServices.whyChooseUs.weBuyForYou.button', 'Envoyer ma liste d\'achats')}
             </button>
           </div>
         </div>

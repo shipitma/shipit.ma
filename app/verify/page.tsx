@@ -224,16 +224,18 @@ export default function VerifyPage() {
           <Button
             variant="ghost"
             size="sm"
-            className="absolute left-4 top-4 h-7 text-sm"
+            className={`absolute top-4 h-7 text-sm ${isRTL ? 'right-4' : 'left-4'}`}
             onClick={() => router.push("/login")}
           >
-            <ArrowLeft className="w-3 h-3" />
+            <ArrowLeft className={`w-3 h-3 ${isRTL ? 'rotate-180' : ''}`} />
           </Button>
           <CardTitle className="text-lg font-semibold">{t('verify.title', 'Vérifiez Votre Téléphone')}</CardTitle>
           <CardDescription className="text-sm text-gray-600">
             {t('verify.subtitle', 'Entrez le code à 6 chiffres envoyé sur votre WhatsApp')}
             <br />
-            <span className="font-medium">{phoneNumber}</span>
+            <span className="font-medium" dir="ltr">
+              {phoneNumber}
+            </span>
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -266,7 +268,7 @@ export default function VerifyPage() {
             >
               {isLoading ? (
                 <>
-                  <Loader2 className="mr-1 h-3 w-3 animate-spin" />
+                  <Loader2 className={`h-3 w-3 animate-spin ${isRTL ? 'ml-1' : 'mr-1'}`} />
                   {t('verify.verifying', 'Vérification...')}
                 </>
               ) : (
@@ -277,7 +279,7 @@ export default function VerifyPage() {
             <div className="text-center">
               {canResend ? (
                 <Button variant="link" onClick={handleResend} className="p-0 h-auto text-sm">
-                  <MessageCircle className="mr-1 h-3 w-3" />
+                  <MessageCircle className={`h-3 w-3 ${isRTL ? 'ml-1' : 'mr-1'}`} />
                   {t('verify.resendCode', 'Renvoyer le Code')}
                 </Button>
               ) : (
