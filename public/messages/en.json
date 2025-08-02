@@ -129,7 +129,7 @@
     },
     "success": {
       "codeSent": "Code Sent",
-      "checkWhatsApp": "Check your WhatsApp for the verification code"
+      "checkWhatsApp": "Check your WhatsApp for the verification code (Temporarily disabled - check console for OTP)"
     }
   },
   "register": {
@@ -144,13 +144,37 @@
     "signIn": "Sign In",
     "success": {
       "codeSent": "Code Sent",
-      "checkWhatsApp": "Check your WhatsApp for the verification code"
+      "checkWhatsApp": "Check your WhatsApp for the verification code (Temporarily disabled - check console for OTP)"
     },
     "errors": {
       "fillAllFields": "Please fill all required fields",
       "existingAccount": "Existing Account",
       "accountExists": "An account already exists with this number. Please sign in.",
       "sendFailed": "Failed to send OTP code."
+    },
+    "complete": {
+      "title": "Complete Registration",
+      "subtitle": "Add your personal information to finalize your account",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email (optional)",
+      "shippingAddress": "Shipping Address",
+      "addressLine": "Complete Address",
+      "addressLinePlaceholder": "Complete address",
+      "city": "City",
+      "cityPlaceholder": "City",
+      "state": "Region",
+      "statePlaceholder": "Region",
+      "zip": "ZIP Code",
+      "zipPlaceholder": "ZIP Code",
+      "country": "Country",
+      "countryPlaceholder": "Country",
+      "createAccountButton": "Create My Account",
+      "creatingAccount": "Creating account...",
+      "backButton": "Back",
+      "validationError": "Please fill all required fields.",
+      "successTitle": "Registration Successful",
+      "successDescription": "Your account has been created successfully!"
     }
   },
   "verify": {
@@ -162,7 +186,7 @@
     "resendTimer": "Resend code in",
     "success": {
       "codeSent": "Code Sent",
-      "newCodeSent": "A new verification code has been sent to your WhatsApp",
+      "newCodeSent": "A new verification code has been sent to your WhatsApp (Temporarily disabled - check console for OTP)",
       "newUser": "Phone number verified successfully! Complete your registration.",
       "existingUser": "Login successful!"
     },

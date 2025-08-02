@@ -144,7 +144,7 @@
     },
     "success": {
       "codeSent": "تم إرسال الرمز",
-      "checkWhatsApp": "تحقق من WhatsApp للحصول على رمز التحقق"
+      "checkWhatsApp": "تحقق من WhatsApp للحصول على رمز التحقق (معطل مؤقتاً - تحقق من وحدة التحكم للحصول على OTP)"
     }
   },
   "register": {
@@ -159,13 +159,37 @@
     "signIn": "تسجيل الدخول",
     "success": {
       "codeSent": "تم إرسال الكود",
-      "checkWhatsApp": "تحقق من واتساب للحصول على رمز التحقق"
+      "checkWhatsApp": "تحقق من واتساب للحصول على رمز التحقق (معطل مؤقتاً - تحقق من وحدة التحكم للحصول على OTP)"
     },
     "errors": {
       "fillAllFields": "يرجى ملء جميع الحقول المطلوبة",
       "existingAccount": "حساب موجود",
       "accountExists": "يوجد حساب بالفعل بهذا الرقم. يرجى تسجيل الدخول.",
       "sendFailed": "فشل في إرسال رمز OTP."
+    },
+    "complete": {
+      "title": "إكمال التسجيل",
+      "subtitle": "أضف معلوماتك الشخصية لإكمال حسابك",
+      "firstName": "الاسم الأول",
+      "lastName": "اسم العائلة",
+      "email": "البريد الإلكتروني (اختياري)",
+      "shippingAddress": "عنوان الشحن",
+      "addressLine": "العنوان الكامل",
+      "addressLinePlaceholder": "العنوان الكامل",
+      "city": "المدينة",
+      "cityPlaceholder": "المدينة",
+      "state": "المنطقة",
+      "statePlaceholder": "المنطقة",
+      "zip": "الرمز البريدي",
+      "zipPlaceholder": "الرمز البريدي",
+      "country": "البلد",
+      "countryPlaceholder": "البلد",
+      "createAccountButton": "إنشاء حسابي",
+      "creatingAccount": "إنشاء الحساب...",
+      "backButton": "رجوع",
+      "validationError": "يرجى ملء جميع الحقول المطلوبة.",
+      "successTitle": "التسجيل ناجح",
+      "successDescription": "تم إنشاء حسابك بنجاح!"
     }
   },
   "verify": {
@@ -177,7 +201,7 @@
     "resendTimer": "إعادة إرسال الكود في",
     "success": {
       "codeSent": "تم إرسال الكود",
-      "newCodeSent": "تم إرسال رمز تحقق جديد إلى واتساب",
+      "newCodeSent": "تم إرسال رمز تحقق جديد إلى واتساب (معطل مؤقتاً - تحقق من وحدة التحكم للحصول على OTP)",
       "newUser": "تم التحقق من رقم الهاتف بنجاح! أكمل تسجيلك.",
       "existingUser": "تم تسجيل الدخول بنجاح!"
     },

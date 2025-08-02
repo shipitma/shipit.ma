@@ -21,6 +21,26 @@ export async function POST(request: NextRequest) {
     // Create OTP code
     const otp = await createOTPCode(phoneNumber, purpose)
 
+    // TEMPORARILY DISABLED: WhatsApp API to prevent usage limit
+    // TODO: Re-enable when ready to use WhatsApp API again
+    
+    // Mock successful response instead of calling WhatsApp API
+    console.log(`[MOCK] OTP ${otp} would be sent to ${phoneNumber} via WhatsApp`)
+    
+    // For development/testing, you can log the OTP to console
+    // In production, you might want to store it in a secure way or use email fallback
+    
+    const successMessage = await serverTranslate('success.otpSent', language, 'OTP code sent successfully')
+    
+    return NextResponse.json({
+      success: true,
+      purpose,
+      message: successMessage,
+      // Include OTP in response for testing (remove in production)
+      debugOtp: process.env.NODE_ENV === 'development' ? otp : undefined,
+    })
+    
+    /* ORIGINAL WHATSAPP API CODE (DISABLED)
     // Get translated OTP message
     const text = await serverTranslate('auth.whatsappOtpMessage', language, 
       `Your shipit.ma verification code is: ${otp}\n\nThis code will expire in 10 minutes. Do not share this code with anyone.`,
@@ -62,6 +82,7 @@ export async function POST(request: NextRequest) {
       purpose,
       message: successMessage,
     })
+    */
   } catch (error) {
     const language = getLanguageFromRequest(request)
     const errorMessage = await serverTranslate('errors.whatsappSendFailed', language, 'Failed to send OTP')

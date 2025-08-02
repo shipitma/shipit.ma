@@ -11,6 +11,7 @@ import { Loader2, ArrowLeft, User, Mail, MapPin } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { useAuth } from "@/lib/auth-context"
 import { useAnalytics } from "@/hooks/use-analytics"
+import { useTranslations } from "@/lib/hooks/use-translations"
 
 interface FormData {
   firstName: string
@@ -45,6 +46,7 @@ export default function CompleteRegistrationPage() {
   const { toast } = useToast()
   const { login } = useAuth()
   const { trackAuth, trackError } = useAnalytics()
+  const { t } = useTranslations()
 
   useEffect(() => {
     // Get stored data from session storage
@@ -81,8 +83,8 @@ export default function CompleteRegistrationPage() {
     if (missingFields.length > 0) {
       trackAuth('REGISTRATION_COMPLETION_VALIDATION_ERROR', { missing_fields: missingFields })
       toast({
-        title: "Erreur",
-        description: "Veuillez remplir tous les champs requis.",
+        title: t('common.error', 'Error'),
+        description: t('register.complete.validationError', 'Please fill all required fields.'),
         variant: "destructive",
       })
       return
@@ -122,8 +124,8 @@ export default function CompleteRegistrationPage() {
         await login(data.sessionId, data.accessToken, data.refreshToken)
 
         toast({
-          title: "Inscription Réussie",
-          description: "Votre compte a été créé avec succès!",
+          title: t('register.complete.successTitle', 'Registration Successful'),
+          description: t('register.complete.successDescription', 'Your account has been created successfully!'),
         })
 
         router.push("/dashboard")
@@ -132,12 +134,12 @@ export default function CompleteRegistrationPage() {
           error_message: data.error || 'Unknown error',
           endpoint: '/api/register'
         })
-        throw new Error(data.error || "Échec de l'inscription")
+        throw new Error(data.error || t('common.error', 'Registration failed'))
       }
     } catch (error) {
       toast({
-        title: "Erreur",
-        description: error instanceof Error ? error.message : "Une erreur est survenue.",
+        title: t('common.error', 'Error'),
+        description: error instanceof Error ? error.message : t('common.error', 'An error occurred.'),
         variant: "destructive",
       })
     } finally {
@@ -174,11 +176,11 @@ export default function CompleteRegistrationPage() {
           >
             <ArrowLeft className="w-3 h-3" />
           </Button>
-          <CardTitle className="text-lg font-semibold">Compléter l'Inscription</CardTitle>
+          <CardTitle className="text-lg font-semibold">{t('register.complete.title', 'Complete Registration')}</CardTitle>
           <CardDescription className="text-sm text-gray-600">
-            Ajoutez vos informations personnelles pour finaliser votre compte
+            {t('register.complete.subtitle', 'Add your personal information to finalize your account')}
             <br />
-            <span className="font-medium">{phoneNumber}</span>
+            <span className="font-medium" dir="ltr">{phoneNumber}</span>
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -187,12 +189,12 @@ export default function CompleteRegistrationPage() {
               <div className="space-y-1">
                 <Label htmlFor="firstName" className="text-sm flex items-center gap-1">
                   <User className="w-3 h-3" />
-                  Prénom *
+                  {t('register.complete.firstName', 'First Name')} *
                 </Label>
                 <Input
                   id="firstName"
                   type="text"
-                  placeholder="Prénom"
+                  placeholder={t('register.complete.firstName', 'First Name')}
                   value={formData.firstName}
                   onChange={(e) => handleInputChange("firstName", e.target.value)}
                   className="h-9 text-sm"
@@ -202,12 +204,12 @@ export default function CompleteRegistrationPage() {
               <div className="space-y-1">
                 <Label htmlFor="lastName" className="text-sm flex items-center gap-1">
                   <User className="w-3 h-3" />
-                  Nom *
+                  {t('register.complete.lastName', 'Last Name')} *
                 </Label>
                 <Input
                   id="lastName"
                   type="text"
-                  placeholder="Nom"
+                  placeholder={t('register.complete.lastName', 'Last Name')}
                   value={formData.lastName}
                   onChange={(e) => handleInputChange("lastName", e.target.value)}
                   className="h-9 text-sm"
@@ -219,12 +221,12 @@ export default function CompleteRegistrationPage() {
             <div className="space-y-1">
               <Label htmlFor="email" className="text-sm flex items-center gap-1">
                 <Mail className="w-3 h-3" />
-                Email (optionnel)
+                {t('register.complete.email', 'Email (optional)')}
               </Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="votre@email.com"
+                placeholder="your@email.com"
                 value={formData.email}
                 onChange={(e) => handleInputChange("email", e.target.value)}
                 className="h-9 text-sm"
@@ -234,13 +236,13 @@ export default function CompleteRegistrationPage() {
             <div className="space-y-3">
               <Label className="text-sm flex items-center gap-1">
                 <MapPin className="w-3 h-3" />
-                Adresse de Livraison *
+                {t('register.complete.shippingAddress', 'Shipping Address')} *
               </Label>
               
               <div className="space-y-1">
                 <Input
                   type="text"
-                  placeholder="Adresse complète"
+                  placeholder={t('register.complete.addressLinePlaceholder', 'Complete address')}
                   value={formData.address.line}
                   onChange={(e) => handleInputChange("address.line", e.target.value)}
                   className="h-9 text-sm"
@@ -252,7 +254,7 @@ export default function CompleteRegistrationPage() {
                 <div className="space-y-1">
                   <Input
                     type="text"
-                    placeholder="Ville *"
+                    placeholder={t('register.complete.cityPlaceholder', 'City')}
                     value={formData.address.city}
                     onChange={(e) => handleInputChange("address.city", e.target.value)}
                     className="h-9 text-sm"
@@ -262,7 +264,7 @@ export default function CompleteRegistrationPage() {
                 <div className="space-y-1">
                   <Input
                     type="text"
-                    placeholder="Région"
+                    placeholder={t('register.complete.statePlaceholder', 'Region')}
                     value={formData.address.state}
                     onChange={(e) => handleInputChange("address.state", e.target.value)}
                     className="h-9 text-sm"
@@ -274,7 +276,7 @@ export default function CompleteRegistrationPage() {
                 <div className="space-y-1">
                   <Input
                     type="text"
-                    placeholder="Code postal"
+                    placeholder={t('register.complete.zipPlaceholder', 'ZIP Code')}
                     value={formData.address.zip}
                     onChange={(e) => handleInputChange("address.zip", e.target.value)}
                     className="h-9 text-sm"
@@ -283,7 +285,7 @@ export default function CompleteRegistrationPage() {
                 <div className="space-y-1">
                   <Input
                     type="text"
-                    placeholder="Pays"
+                    placeholder={t('register.complete.countryPlaceholder', 'Country')}
                     value={formData.address.country}
                     onChange={(e) => handleInputChange("address.country", e.target.value)}
                     className="h-9 text-sm"
@@ -296,10 +298,10 @@ export default function CompleteRegistrationPage() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Création du compte...
+                  {t('register.complete.creatingAccount', 'Creating account...')}
                 </>
               ) : (
-                "Créer Mon Compte"
+                t('register.complete.createAccountButton', 'Create My Account')
               )}
             </Button>
           </form>

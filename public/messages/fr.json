@@ -129,7 +129,7 @@
     },
     "success": {
       "codeSent": "Code Envoyé",
-      "checkWhatsApp": "Vérifiez votre WhatsApp pour le code de vérification"
+      "checkWhatsApp": "Vérifiez votre WhatsApp pour le code de vérification (Temporairement désactivé - vérifiez la console pour l'OTP)"
     }
   },
   "register": {
@@ -144,13 +144,37 @@
     "signIn": "Se connecter",
     "success": {
       "codeSent": "Code Envoyé",
-      "checkWhatsApp": "Vérifiez votre WhatsApp pour le code de vérification"
+      "checkWhatsApp": "Vérifiez votre WhatsApp pour le code de vérification (Temporairement désactivé - vérifiez la console pour l'OTP)"
     },
     "errors": {
       "fillAllFields": "Veuillez remplir tous les champs requis",
       "existingAccount": "Compte existant",
       "accountExists": "Un compte existe déjà avec ce numéro. Veuillez vous connecter.",
       "sendFailed": "Échec de l'envoi du code OTP."
+    },
+    "complete": {
+      "title": "Compléter l'Inscription",
+      "subtitle": "Ajoutez vos informations personnelles pour finaliser votre compte",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Email (optionnel)",
+      "shippingAddress": "Adresse de Livraison",
+      "addressLine": "Adresse complète",
+      "addressLinePlaceholder": "Adresse complète",
+      "city": "Ville",
+      "cityPlaceholder": "Ville",
+      "state": "Région",
+      "statePlaceholder": "Région",
+      "zip": "Code postal",
+      "zipPlaceholder": "Code postal",
+      "country": "Pays",
+      "countryPlaceholder": "Pays",
+      "createAccountButton": "Créer Mon Compte",
+      "creatingAccount": "Création du compte...",
+      "backButton": "Retour",
+      "validationError": "Veuillez remplir tous les champs requis.",
+      "successTitle": "Inscription Réussie",
+      "successDescription": "Votre compte a été créé avec succès!"
     }
   },
   "verify": {
@@ -162,7 +186,7 @@
     "resendTimer": "Renvoyer le code dans",
     "success": {
       "codeSent": "Code Envoyé",
-      "newCodeSent": "Un nouveau code de vérification a été envoyé sur votre WhatsApp",
+      "newCodeSent": "Un nouveau code de vérification a été envoyé sur votre WhatsApp (Temporairement désactivé - vérifiez la console pour l'OTP)",
       "newUser": "Numéro de téléphone vérifié avec succès ! Complétez votre inscription.",
       "existingUser": "Connexion réussie !"
     },

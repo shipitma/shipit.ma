@@ -75,14 +75,37 @@ export const formatDateTimeWithLanguage = (date: Date | string | null | undefine
 }
 
 // Authentication utilities
-export const getCurrentUserId = async (): Promise<string | null> => {
-  // This would typically get the user ID from the session
-  // For now, return the test user ID
-  return 'neon_user_1750733042197_p07n59m8t'
+export const getCurrentUserId = async (sessionId?: string): Promise<string | null> => {
+  if (!sessionId) {
+    console.error("No session ID provided to getCurrentUserId")
+    return null
+  }
+
+  try {
+    // Check if it's a Neon Auth token (starts with "neon_")
+    if (sessionId.startsWith("neon_")) {
+      const { validateNeonToken } = await import("@/lib/auth")
+      const validation = await validateNeonToken(sessionId)
+      if (validation.valid && validation.userId) {
+        return validation.userId
+      }
+    } else {
+      // Handle regular session ID
+      const { getNeonSession } = await import("@/lib/auth")
+      const session = await getNeonSession(sessionId)
+      if (session && session.user_id) {
+        return session.user_id
+      }
+    }
+  } catch (error) {
+    console.error("Error getting current user ID:", error)
+  }
+
+  return null
 }
 
-export const getCurrentUser = async () => {
-  const userId = await getCurrentUserId()
+export const getCurrentUser = async (sessionId?: string) => {
+  const userId = await getCurrentUserId(sessionId)
   if (!userId) return null
   return await db.getUser(userId)
 }
