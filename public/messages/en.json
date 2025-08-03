@@ -230,9 +230,11 @@
     }
   },
   "header": {
-    "about": "About",
-    "contact": "Contact",
+    "home": "Home",
+    "howItWorks": "How it works",
+    "services": "Our Services",
     "pricing": "Pricing",
+    "contact": "Contact",
     "myAccount": "My Account",
     "register": "Register",
     "login": "Login",
@@ -562,5 +564,13 @@
         }
       }
     }
+  },
+  "contact": {
+    "title": "How to contact us",
+    "description": "Shipit allows you to receive your packages from the United States, Europe and Turkey directly to Morocco. For any questions, the fastest way to reach us is through our support chat.",
+    "chatInstruction": "Simply click on the waving hand icon in the bottom right corner of the screen",
+    "responseTime": "During the week, we usually respond within 2 to 3 minutes.",
+    "emailDescription": "You can also contact us by email. We read all messages, but the response time may be longer.",
+    "socialDescription": "Follow us on social networks, our team is always available in private message!"
   }
 }

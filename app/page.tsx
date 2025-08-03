@@ -73,15 +73,23 @@ export default function Component() {
   return (
     <div className="min-h-screen bg-gradient-to-r from-orange-600 to-orange-800">
       <Header />
-      <HeroSection />
+      <div id="home">
+        <HeroSection />
+      </div>
       <div className="bg-white">
-        <HowItWorksSection />
+        <div id="how-it-works">
+          <HowItWorksSection />
+        </div>
         <PartnerBrandsSection />
-        <OurServiceSection />
+        <div id="services">
+          <OurServiceSection />
+        </div>
         <WeBuyForYouSection />
         <WhyChooseUsSection />
         <ReviewCardSection />
-        <PricingSection />
+        <div id="pricing">
+          <PricingSection />
+        </div>
         <Footer />
       </div>
     </div>
