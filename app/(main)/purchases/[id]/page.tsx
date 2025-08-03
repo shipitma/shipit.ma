@@ -19,6 +19,7 @@ type PurchaseRequestWithAttachments = PurchaseRequest & {
 }
 import { useTranslations } from "@/lib/hooks/use-translations"
 import { useLanguage } from "@/lib/context/language-context"
+import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import * as React from "react"
 
 const getStatusColor = (status: string) => {
@@ -115,7 +116,11 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
 
 
   if (loading) {
-    return <div className="flex items-center justify-center h-64">{t('purchaseDetail.loading', 'Chargement...')}</div>
+    return (
+      <div className="flex items-center justify-center h-64">
+        <LoadingSpinner />
+      </div>
+    )
   }
 
   if (!purchaseRequest) {

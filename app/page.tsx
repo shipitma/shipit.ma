@@ -2,6 +2,9 @@
 
 import { Header } from "@/components/layout/header"
 import { HeroSection } from "@/components/landing/hero-section"
+import { LoadingSpinner } from "@/components/ui/loading-spinner"
+import { useLanguage } from "@/lib/context/language-context"
+import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 
 const HowItWorksSection = dynamic(() =>
@@ -45,6 +48,28 @@ const Footer = dynamic(() =>
 )
 
 export default function Component() {
+  const { language, isRTL } = useLanguage()
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    // Wait for language context to be properly initialized
+    if (language) {
+      const timer = setTimeout(() => {
+        setIsLoading(false)
+      }, 150) // Slightly longer delay to ensure everything is loaded
+
+      return () => clearTimeout(timer)
+    }
+  }, [language])
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-r from-orange-600 to-orange-800 flex items-center justify-center">
+        <LoadingSpinner size="lg" />
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-orange-600 to-orange-800">
       <Header />

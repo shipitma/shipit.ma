@@ -31,6 +31,7 @@ type PackageWithAttachments = PackageType & {
 }
 import { useTranslations } from "@/lib/hooks/use-translations"
 import { useLanguage } from "@/lib/context/language-context"
+import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import * as React from "react"
 
 const getStatusColor = (status: string) => {
@@ -132,7 +133,11 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
 
 
   if (loading) {
-    return <div className="flex items-center justify-center h-64">{t('packageDetail.loading', 'Chargement...')}</div>
+    return (
+      <div className="flex items-center justify-center h-64">
+        <LoadingSpinner />
+      </div>
+    )
   }
 
   if (!packageData) {

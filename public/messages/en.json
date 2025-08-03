@@ -10,10 +10,8 @@
     "help": "Help"
   },
   "dashboard": {
-    "title": "Home",
-    "subtitle": "Overview of your packages and recent activity",
     "welcomeBack": "Welcome back, {name}!",
-    "statsDescription": "You have {shipped} packages in transit and {expected} expected packages to review.",
+    "statsDescription": "You have {shipped} packages in transit and {expected} expected packages awaiting arrival.",
     "newRequestButton": "New Request",
     "addPackageButton": "Add Package",
     "stats": {
@@ -26,7 +24,8 @@
       "title": "Warehouse Addresses",
       "subtitle": "Your international shipping addresses",
       "accountHolder": "Account Holder",
-      "important": "Important:"
+      "important": "Important:",
+      "includeFullName": "Always make sure to include your full name as the recipient."
     }
   },
   "packages": {
@@ -55,6 +54,20 @@
       "descriptionNoPackages": "You don't have any packages yet. Start by adding your first package.",
       "addFirstPackage": "Add your first package"
     },
+    "tracking": "Tracking number",
+    "carrier": "Carrier",
+    "eta": "Estimated arrival time",
+    "weight": "Weight",
+    "dimensions": "Dimensions",
+    "shippingCost": "Shipping cost",
+    "insurance": "Insurance",
+    "progress": "Progress",
+    "items": "Items",
+    "additionalItems": "Additional items",
+    "lastUpdated": "Last updated",
+    "viewDetails": "View details",
+    "payShipping": "Pay shipping",
+    "pending": "Pending",
     "errors": {
       "sessionExpired": "Session expired, please log in again",
       "loadError": "Unable to load data"
@@ -88,7 +101,7 @@
     },
     "total": "Total",
     "items": "Items",
-    "created": "Created",
+    "created": "Created on",
     "errors": {
       "sessionExpired": "Session expired, please log in again",
       "loadError": "Unable to load data"
@@ -108,7 +121,7 @@
       "totalAmount": "Total Amount"
     },
     "attachments": {
-      "title": "Documents",
+      "title": "Attachments",
       "view": "View",
       "fileSize": "KB"
     }
@@ -262,8 +275,8 @@
     "testimonialsSection": {
       "title": "What Our Customers Say",
       "subtitle": "Over",
-      "subtitle2": "in Morocco trust us for their international purchases",
-      "clients": "clients"
+      "subtitle2": "customers in Morocco trust us for their international purchases",
+      "clients": "customers"
     }
   },
   "howItWorks": {
@@ -305,9 +318,9 @@
     },
     "help": {
       "needHelp": "Need Help?",
-      "callUs": "I call at",
-      "contactWhatsapp": "I contact on Whatsapp",
-      "consultHelpPage": "I consult the help page"
+      "callUs": "Call us at",
+      "contactWhatsapp": "Contact on WhatsApp",
+      "consultHelpPage": "Check the help page"
     },
     "user": {
       "profile": "Profile",
@@ -322,20 +335,7 @@
     "description": "Sorry, the page you're looking for doesn't exist or has been moved.",
     "errorCode": "404",
     "errorMessage": "The page you're looking for couldn't be found on our servers.",
-    "backButton": "Back",
-    "dashboardButton": "Back to Dashboard",
-    "packagesButton": "View My Packages",
-    "loginButton": "Sign In",
-    "registerButton": "Create Account",
-    "quickNavigation": "Quick Navigation",
-    "learnMore": "Learn More",
-    "quickLinks": {
-      "myPackages": "My Packages",
-      "myPurchases": "My Purchases",
-      "login": "Login",
-      "register": "Register",
-      "homepage": "shipit.ma"
-    }
+    "backButton": "Back"
   },
   "createPurchase": {
     "title": "Create Purchase Request",
@@ -344,12 +344,12 @@
     "itemsLabel": "Items to Purchase",
     "itemTitle": "Item {index}",
     "itemName": "Item Name *",
-    "itemNamePlaceholder": "ex: iPhone 15 Pro",
+    "itemNamePlaceholder": "e.g., iPhone 15 Pro",
     "quantity": "Quantity",
     "url": "Product URL *",
     "urlPlaceholder": "https://example.com/product",
     "variant": "Variant (Size, Color, Type, etc.)",
-    "variantPlaceholder": "ex: Large, Blue, 256GB",
+    "variantPlaceholder": "e.g., Large, Blue, 256GB",
     "addAnotherItem": "Add Another Item",
     "notes": "Additional Notes",
     "notesPlaceholder": "Any special instructions or preferences...",
@@ -369,16 +369,16 @@
     "subtitle": "Add a package you're expecting to receive",
     "cardTitle": "Package Information",
     "description": "Package Description *",
-    "descriptionPlaceholder": "ex: Electronic Package",
+    "descriptionPlaceholder": "e.g., Electronics Package",
     "retailer": "Retailer/Store Name or URL *",
-    "retailerPlaceholder": "ex: Amazon, Best Buy, or store website",
+    "retailerPlaceholder": "e.g., Amazon, Best Buy, or store website",
     "trackingNumber": "Tracking Number (Optional)",
-    "trackingNumberPlaceholder": "ex: TK123456789",
+    "trackingNumberPlaceholder": "e.g., TK123456789",
     "weight": "Weight (Optional)",
-    "weightPlaceholder": "ex: 2.5 kg",
+    "weightPlaceholder": "e.g., 2.5 kg",
     "dimensions": "Dimensions (Optional)",
-    "dimensionsPlaceholder": "ex: 30x20x15 cm",
-    "itemsLabel": "Package Items",
+    "dimensionsPlaceholder": "e.g., 30×20×15 cm",
+    "itemsLabel": "Package Contents",
     "itemPlaceholder": "Item description",
     "addItem": "Add Item",
     "filesLabel": "Files (Optional)",
@@ -422,7 +422,7 @@
       "eta": "Estimated Arrival Date"
     },
     "attachments": {
-      "title": "Documents",
+      "title": "Attachments",
       "view": "View",
       "fileSize": "KB"
     },
@@ -453,7 +453,7 @@
         "title": "Customize Your Shipment: Your Choices, Your Savings",
         "description": "As soon as your package arrives with us, you are notified! This is the time to customize your shipment so it arrives exactly as you want it.",
         "feature1": "Detailed photos of content: ensure the condition of your items.",
-        "feature2": "Smart grouping: combine several packages and save up to 80% on shipping costs.",
+        "feature2": "Smart consolidation: combine several packages and save up to 80% on shipping costs.",
         "feature3": "Reinforced protection: add adhesive or extra bubble wrap for optimal security."
       },
       "step4": {
@@ -461,12 +461,12 @@
         "description": "Once your shipment is configured, relax! We take care of everything so your package arrives at your door in Morocco.",
         "feature1": "Customs declarations handled",
         "feature2": "Fast home delivery",
-        "feature3": "Home delivery",
+        "feature3": "Door-to-door delivery",
         "feature4": "Dedicated customer support"
       },
       "step5": {
         "title": "Enjoy Your Purchases!",
-        "description": "Your package has arrived? Congratulations! All you have left is to enjoy your new items. Don't wait for your next shopping sprees, we're here for you!"
+        "description": "Your package has arrived? Congratulations! All you have left is to enjoy your new items. Don't wait for your next shopping sessions, we're here for you!"
       },
       "whyChooseUs": {
         "title": "Why Choose Our Platform Over Traditional Solutions?",
@@ -531,7 +531,6 @@
           "step3": "Once received, we ship them to you."
         }
       },
-
       "partnerBrands": {
         "title": "Order from Your Favorite Sites",
         "subtitle": "Don't limit yourself anymore! Shop on Trendyol, Amazon, Vente-Privée, eBay or any other site in Turkey, Europe or the United States — we take care of the rest."

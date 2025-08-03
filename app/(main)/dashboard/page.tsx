@@ -146,14 +146,6 @@ export default function DashboardPage() {
   return (
     <div className="space-y-4">
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-lg font-semibold">{t('dashboard.title', 'Accueil')}</h1>
-            <p className="text-sm text-gray-600">{t('dashboard.subtitle', 'Aperçu de vos colis et activité récente')}</p>
-
-          </div>
-        </div>
-
         {/* Welcome Section */}
         <div className="bg-gradient-to-r from-orange-600 to-orange-700 rounded-lg p-4 text-white">
           <h2 className="text-base font-semibold mb-1">{t('dashboard.welcomeBack', 'Bon retour, {name} !', { name: getFirstName() })}</h2>
@@ -324,7 +316,7 @@ function WarehouseCard({ warehouse, getFullName, getCountryName, isRTL }: { ware
       </div>
       <div className="bg-yellow-50 border border-yellow-200 rounded-md p-3 mt-2">
         <p className={`text-sm text-yellow-800 ${isRTL ? 'text-right' : ''}`}>
-          <strong>{t('dashboard.warehouseAddresses.important', 'Important:')}</strong> {t('dashboard.warehouseAddresses.includeFullName', 'تأكد دائماً من تضمين اسمك الكامل كمستلم.')}
+          <strong>{t('dashboard.warehouseAddresses.important', 'Important:')}</strong> {t('dashboard.warehouseAddresses.includeFullName', 'Assurez-vous toujours d\'inclure votre nom complet comme destinataire.')}
         </p>
       </div>
     </div>

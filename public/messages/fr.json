@@ -10,29 +10,28 @@
     "help": "Aide"
   },
   "dashboard": {
-    "title": "Accueil",
-    "subtitle": "Aperçu de vos colis et activité récente",
     "welcomeBack": "Bon retour, {name} !",
-    "statsDescription": "Vous avez {shipped} colis en transit et {expected} colis attendus à examiner.",
+    "statsDescription": "Vous avez {shipped} colis en transit et {expected} colis en attente de réception.",
     "newRequestButton": "Nouvelle Demande",
-    "addPackageButton": "Ajouter Colis",
+    "addPackageButton": "Ajouter un Colis",
     "stats": {
       "expectedPackages": "Colis Attendus",
       "inWarehouse": "En Entrepôt",
-      "shipped": "Envoyés",
-      "purchaseAssistance": "Achat Assisté"
+      "shipped": "Expédiés",
+      "purchaseAssistance": "Assistance d'Achat"
     },
     "warehouseAddresses": {
       "title": "Adresses d'entrepôt",
       "subtitle": "Vos adresses d'expédition internationales",
       "accountHolder": "Titulaire du Compte",
-      "important": "Important:"
+      "important": "Important :",
+      "includeFullName": "Assurez-vous toujours d'inclure votre nom complet comme destinataire."
     }
   },
   "packages": {
     "title": "Colis",
     "subtitle": "Suivez vos colis du Maroc vers la Turquie",
-    "addPackageButton": "Ajouter Colis",
+    "addPackageButton": "Ajouter un Colis",
     "searchPlaceholder": "Rechercher des colis...",
     "statusFilter": "Statut",
     "allStatuses": "Tous les Statuts",
@@ -55,6 +54,20 @@
       "descriptionNoPackages": "Vous n'avez pas encore de colis. Commencez par ajouter votre premier colis.",
       "addFirstPackage": "Ajouter votre premier colis"
     },
+    "tracking": "Numéro de suivi",
+    "carrier": "Transporteur",
+    "eta": "Heure d'arrivée prévue",
+    "weight": "Poids",
+    "dimensions": "Dimensions",
+    "shippingCost": "Coût d'expédition",
+    "insurance": "Assurance",
+    "progress": "Progrès",
+    "items": "Articles",
+    "additionalItems": "Articles supplémentaires",
+    "lastUpdated": "Dernière mise à jour",
+    "viewDetails": "Voir les détails",
+    "payShipping": "Payer l'expédition",
+    "pending": "En attente",
     "errors": {
       "sessionExpired": "Session expirée, veuillez vous reconnecter",
       "loadError": "Impossible de charger les données"
@@ -88,7 +101,7 @@
     },
     "total": "Total",
     "items": "Articles",
-    "created": "Créé",
+    "created": "Créé le",
     "errors": {
       "sessionExpired": "Session expirée, veuillez vous reconnecter",
       "loadError": "Impossible de charger les données"
@@ -108,9 +121,9 @@
       "totalAmount": "Montant Total"
     },
     "attachments": {
-      "title": "Documents",
+      "title": "Pièces jointes",
       "view": "Voir",
-      "fileSize": "KB"
+      "fileSize": "Ko"
     }
   },
   "login": {
@@ -136,7 +149,7 @@
     "title": "Créer un Compte",
     "subtitle": "Étape 1/2 : Commencez par nous donner quelques informations de base",
     "firstName": "Prénom",
-    "lastName": "Nom",
+    "lastName": "Nom de famille",
     "whatsappPhone": "Téléphone WhatsApp",
     "continueButton": "Continuer",
     "sendingCode": "Envoi du code...",
@@ -153,10 +166,10 @@
       "sendFailed": "Échec de l'envoi du code OTP."
     },
     "complete": {
-      "title": "Compléter l'Inscription",
+      "title": "Finaliser l'Inscription",
       "subtitle": "Ajoutez vos informations personnelles pour finaliser votre compte",
       "firstName": "Prénom",
-      "lastName": "Nom",
+      "lastName": "Nom de famille",
       "email": "Email (optionnel)",
       "shippingAddress": "Adresse de Livraison",
       "addressLine": "Adresse complète",
@@ -174,7 +187,7 @@
       "backButton": "Retour",
       "validationError": "Veuillez remplir tous les champs requis.",
       "successTitle": "Inscription Réussie",
-      "successDescription": "Votre compte a été créé avec succès!"
+      "successDescription": "Votre compte a été créé avec succès !"
     }
   },
   "verify": {
@@ -193,7 +206,7 @@
     "errors": {
       "invalidOtp": "Veuillez entrer un code OTP valide (6 chiffres)",
       "verificationFailed": "Échec de la vérification",
-      "resendFailed": "Échec de l'envoi du code. Veuillez réessayer."
+      "resendFailed": "Échec du renvoi du code. Veuillez réessayer."
     }
   },
   "profile": {
@@ -202,12 +215,12 @@
       "title": "Informations Personnelles",
       "subtitle": "Gérez vos informations de base",
       "firstName": "Prénom",
-      "lastName": "Nom",
+      "lastName": "Nom de famille",
       "email": "Email",
       "phone": "Téléphone"
     },
     "shippingAddress": {
-      "title": "Adresse d'Expédition",
+      "title": "Adresse de Livraison",
       "subtitle": "Votre adresse de livraison au Maroc",
       "addressLine": "Adresse",
       "city": "Ville",
@@ -226,26 +239,26 @@
     "openMenu": "Ouvrir le menu"
   },
   "hero": {
-    "title": "Vos Achats Mondiaux au Maroc : Simplifiés, Rapides, Sans Surprises.",
-    "subtitle": "Accédez aux meilleures marques des USA, Turquie, Espagne et France. Nous gérons tout, de l'achat à la livraison directe à votre porte au Maroc. Vivez l'expérience shopping sans frontières !",
-    "description": "Nous gérons tout, de l'achat à la livraison directe à votre porte au Maroc. Vivez l'expérience shopping sans frontières !",
+    "title": "Vos Achats Internationaux au Maroc : Simplifiés, Rapides, Sans Surprises.",
+    "subtitle": "Accédez aux meilleures marques des USA, Turquie, Espagne et France. Nous gérons tout, de l'achat à la livraison directe à votre porte au Maroc. Vivez l'expérience d'achat sans frontières !",
+    "description": "Nous gérons tout, de l'achat à la livraison directe à votre porte au Maroc. Vivez l'expérience d'achat sans frontières !",
     "startButton": "Commencer !",
     "discoverButton": "Découvrir Nos Services",
-    "testimonial": "Grâce à shipit, j'ai pu commander des articles exclusifs des USA que je ne trouvais pas au Maroc. Le regroupement a vraiment réduit les frais, et la livraison a été rapide et sans aucun souci de douane. Je recommande à 100% !",
+    "testimonial": "Grâce à shipit, j'ai pu commander des articles exclusifs des USA que je ne trouvais pas au Maroc. Le regroupement a vraiment réduit les frais, et la livraison a été rapide sans aucun souci de douane. Je recommande à 100% !",
     "testimonialAuthor": "Fatima Z., Casablanca",
     "testimonialRole": "Cliente satisfaite",
     "carouselTestimonial1": {
-      "quote": "Shipit a complètement transformé mon expérience de shopping en ligne. Plus besoin de se soucier des frais de douane ou des délais de livraison. Le service est exceptionnel et l'équipe est incroyablement réactive !",
+      "quote": "Shipit a complètement transformé mon expérience d'achat en ligne. Plus besoin de se soucier des frais de douane ou des délais de livraison. Le service est exceptionnel et l'équipe est incroyablement réactive !",
       "author": "Ahmed M.",
       "role": "Client fidèle, Rabat"
     },
     "carouselTestimonial2": {
-      "quote": "Service excellent ! J'ai reçu mes commandes plus rapidement que prévu. L'équipe est très professionnelle et réactive. Je recommande vivement pour quiconque fait du shopping international.",
+      "quote": "Service excellent ! J'ai reçu mes commandes plus rapidement que prévu. L'équipe est très professionnelle et réactive. Je recommande vivement pour quiconque fait des achats internationaux.",
       "author": "Sara K.",
       "role": "Cliente régulière, Marrakech"
     },
     "carouselTestimonial3": {
-      "quote": "La fonctionnalité de consolidation m'a fait économiser tellement d'argent sur l'expédition. Je peux maintenant acheter dans plusieurs magasins et expédier tout ensemble. C'est exactement ce dont j'avais besoin !",
+      "quote": "La fonctionnalité de consolidation m'a fait économiser énormément d'argent sur l'expédition. Je peux maintenant acheter dans plusieurs magasins et tout expédier ensemble. C'est exactement ce dont j'avais besoin !",
       "author": "Youssef B.",
       "role": "Passionné de tech, Fès"
     },
@@ -262,13 +275,13 @@
     "testimonialsSection": {
       "title": "Ce que disent nos clients",
       "subtitle": "Plus de",
-      "subtitle2": "au Maroc nous font confiance pour leurs achats internationaux",
+      "subtitle2": "clients au Maroc nous font confiance pour leurs achats internationaux",
       "clients": "clients"
     }
   },
   "howItWorks": {
     "title": "Comment Ça Marche ?",
-    "subtitle": "Transformez vos désirs d'achats en réalité grâce à un processus simple et interactif",
+    "subtitle": "Transformez vos envies d'achats en réalité grâce à un processus simple et interactif",
     "step1": "1. Inscrivez-vous et obtenez une adresse de livraison grâce à Shipit.",
     "step2": "2. Achetez dans les boutiques de votre choix et expédiez vos articles à votre nouvelle adresse.",
     "step3": "3. Regroupez vos colis pour payer moins cher",
@@ -305,9 +318,9 @@
     },
     "help": {
       "needHelp": "Besoin d'aide ?",
-      "callUs": "J'appelle au",
-      "contactWhatsapp": "Je prends contact sur Whatsapp",
-      "consultHelpPage": "Je consulte la page d'aide"
+      "callUs": "Appelez au",
+      "contactWhatsapp": "Contactez sur WhatsApp",
+      "consultHelpPage": "Consultez la page d'aide"
     },
     "user": {
       "profile": "Profil",
@@ -322,20 +335,7 @@
     "description": "Désolé, la page que vous recherchez n'existe pas ou a été déplacée.",
     "errorCode": "404",
     "errorMessage": "La page que vous recherchez n'a pas pu être trouvée sur nos serveurs.",
-    "backButton": "Retour",
-    "dashboardButton": "Retour au Tableau de Bord",
-    "packagesButton": "Voir Mes Colis",
-    "loginButton": "Se Connecter",
-    "registerButton": "Créer un Compte",
-    "quickNavigation": "Navigation Rapide",
-    "learnMore": "En savoir plus",
-    "quickLinks": {
-      "myPackages": "Mes Colis",
-      "myPurchases": "Mes Achats",
-      "login": "Connexion",
-      "register": "Inscription",
-      "homepage": "shipit.ma"
-    }
+    "backButton": "Retour"
   },
   "createPurchase": {
     "title": "Créer une Demande d'Achat",
@@ -344,12 +344,12 @@
     "itemsLabel": "Articles à Acheter",
     "itemTitle": "Article {index}",
     "itemName": "Nom de l'Article *",
-    "itemNamePlaceholder": "ex: iPhone 15 Pro",
+    "itemNamePlaceholder": "ex : iPhone 15 Pro",
     "quantity": "Quantité",
     "url": "URL du Produit *",
     "urlPlaceholder": "https://exemple.com/produit",
     "variant": "Variante (Taille, Couleur, Type, etc.)",
-    "variantPlaceholder": "ex: Large, Bleu, 256GB",
+    "variantPlaceholder": "ex : Large, Bleu, 256Go",
     "addAnotherItem": "Ajouter un Autre Article",
     "notes": "Notes Supplémentaires",
     "notesPlaceholder": "Toute instruction spéciale ou préférence...",
@@ -369,18 +369,18 @@
     "subtitle": "Ajoutez un colis que vous attendez de recevoir",
     "cardTitle": "Informations du Colis",
     "description": "Description du Colis *",
-    "descriptionPlaceholder": "ex: Colis Électronique",
+    "descriptionPlaceholder": "ex : Colis Électronique",
     "retailer": "Nom du Détaillant/Magasin ou URL *",
-    "retailerPlaceholder": "ex: Amazon, Best Buy, ou site web du magasin",
+    "retailerPlaceholder": "ex : Amazon, Best Buy, ou site web du magasin",
     "trackingNumber": "Numéro de Suivi (Optionnel)",
-    "trackingNumberPlaceholder": "ex: TK123456789",
+    "trackingNumberPlaceholder": "ex : TK123456789",
     "weight": "Poids (Optionnel)",
-    "weightPlaceholder": "ex: 2,5 kg",
+    "weightPlaceholder": "ex : 2,5 kg",
     "dimensions": "Dimensions (Optionnel)",
-    "dimensionsPlaceholder": "ex: 30x20x15 cm",
-    "itemsLabel": "Articles du Colis",
+    "dimensionsPlaceholder": "ex : 30×20×15 cm",
+    "itemsLabel": "Contenu du Colis",
     "itemPlaceholder": "Description de l'article",
-    "addItem": "Ajouter Article",
+    "addItem": "Ajouter un Article",
     "filesLabel": "Fichiers (Optionnel)",
     "attachmentType": {
       "receipt": "Reçu",
@@ -389,15 +389,15 @@
     },
     "uploadArea": {
       "title": "Cliquez pour télécharger vos fichiers",
-      "subtitle": "PNG, JPG, PDF jusqu'à 10MB chacun",
+      "subtitle": "PNG, JPG, PDF jusqu'à 10Mo chacun",
       "uploading": "Téléchargement en cours..."
     },
     "uploadedFiles": "Fichiers téléchargés ({count})",
     "viewFile": "Voir",
     "notes": "Notes Supplémentaires",
     "notesPlaceholder": "Toute instruction spéciale ou note sur ce colis...",
-    "submit": "Ajouter Colis",
-    "submitting": "Ajout...",
+    "submit": "Ajouter le Colis",
+    "submitting": "Ajout en cours...",
     "cancel": "Annuler",
     "errors": {
       "uploadError": "Erreur lors du téléchargement du fichier"
@@ -422,9 +422,9 @@
       "eta": "Date d'Arrivée Estimée"
     },
     "attachments": {
-      "title": "Documents",
+      "title": "Pièces jointes",
       "view": "Voir",
-      "fileSize": "KB"
+      "fileSize": "Ko"
     },
     "tracking": {
       "title": "Suivi en Ligne",
@@ -454,7 +454,7 @@
         "description": "Dès que votre colis arrive chez nous, vous êtes notifié ! C'est le moment de personnaliser votre envoi pour qu'il arrive exactement comme vous le souhaitez.",
         "feature1": "Photos détaillées du contenu : assurez-vous de l'état de vos articles.",
         "feature2": "Regroupement intelligent : combinez plusieurs colis et économisez jusqu'à 80% sur les frais d'expédition.",
-        "feature3": "Protection renforcée : ajoutez de l'adhésif ou du papier-bulles supplémentaire pour une sécurité optimale."
+        "feature3": "Protection renforcée : ajoutez de l'adhésif ou du papier bulle supplémentaire pour une sécurité optimale."
       },
       "step4": {
         "title": "Recevez Votre Colis Directement au Maroc",
@@ -466,7 +466,7 @@
       },
       "step5": {
         "title": "Profitez de Vos Achats !",
-        "description": "Votre colis est arrivé ? Félicitations ! Il ne vous reste plus qu'à profiter de vos nouveaux articles. N'attendez plus pour vos prochains craquages shopping, nous sommes là pour vous !"
+        "description": "Votre colis est arrivé ? Félicitations ! Il ne vous reste plus qu'à profiter de vos nouveaux articles. N'attendez plus pour vos prochaines sessions shopping, nous sommes là pour vous !"
       },
       "whyChooseUs": {
         "title": "Pourquoi Choisir Notre Plateforme Plutôt que les Solutions Traditionnelles ?",
@@ -531,14 +531,13 @@
           "step3": "Une fois reçus, nous vous les expédions."
         }
       },
-
       "partnerBrands": {
         "title": "Commandez sur vos sites préférés",
         "subtitle": "Ne vous limitez plus ! Faites votre shopping sur Trendyol, Amazon, Vente-Privée, eBay ou tout autre site en Turquie, en Europe ou aux États-Unis — nous nous occupons du reste."
       },
       "pricing": {
         "title": "Commencez à Économiser Aujourd'hui !",
-        "subtitle": "Obtenez une adresse gratuite aux États-Unis,Turquie, Espagne ou France. Nous gérons tout, de l'achat à la livraison directe à votre porte au Maroc.",
+        "subtitle": "Obtenez une adresse gratuite aux États-Unis, en Turquie, en Espagne ou en France. Nous gérons tout, de l'achat à la livraison directe à votre porte au Maroc.",
         "price": "À partir de 19 MAD",
         "priceUnit": "par envoi",
         "button": "Voir les Tarifs"
@@ -547,7 +546,7 @@
         "title": "Ce que disent nos clients",
         "subtitle": "Découvrez les témoignages de nos clients satisfaits qui nous font confiance pour leurs achats internationaux",
         "testimonial1": {
-          "quote": "Grâce à shipit, j'ai pu commander des articles exclusifs des USA que je ne trouvais pas au Maroc. Le regroupement a vraiment réduit les frais, et la livraison a été rapide et sans aucun souci de douane. Je recommande à 100% !",
+          "quote": "Grâce à shipit, j'ai pu commander des articles exclusifs des USA que je ne trouvais pas au Maroc. Le regroupement a vraiment réduit les frais, et la livraison a été rapide sans aucun souci de douane. Je recommande à 100% !",
           "author": "Fatima Z.",
           "role": "Cliente satisfaite, Casablanca"
         },
