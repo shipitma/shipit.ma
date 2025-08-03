@@ -1,15 +1,17 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { getCurrentUserId } from "@/lib/database"
 import { neon } from "@neondatabase/serverless"
 import { DeleteObjectCommand } from "@aws-sdk/client-s3"
-import { s3Client, MINIO_BUCKET_NAME } from "@/lib/minio"
-
+import { r2Client, R2_BUCKET_NAME } from "@/lib/r2"
 
 const sql = neon(process.env.DATABASE_URL!)
 
-export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
-    const { id } = await params
+    // Get session ID from authorization header
     const sessionId = request.headers.get("authorization")?.replace("Bearer ", "")
 
     if (!sessionId) {
@@ -21,51 +23,54 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
       return NextResponse.json({ error: "Invalid session" }, { status: 401 })
     }
 
-    const attachmentId = id
+    const attachmentId = params.id
 
-    // Get attachment record and verify ownership
+    // Get attachment details
     const [attachment] = await sql`
       SELECT * FROM attachments 
       WHERE id = ${attachmentId} AND user_id = ${userId}
     `
 
     if (!attachment) {
-      return NextResponse.json({ error: "Attachment not found or access denied" }, { status: 404 })
+      return NextResponse.json({ error: "Attachment not found" }, { status: 404 })
     }
 
-    // Delete from MinIO
+    // Delete from R2 - extract the key from file_url
     try {
-      const url = new URL(attachment.file_url)
-      const key = url.pathname.substring(1).split("/").slice(1).join("/")
-
+      const fileUrl = attachment.file_url
+      // Extract the key from the URL: https://account.r2.cloudflarestorage.com/bucket/userId/timestamp-randomString.ext
+      const urlParts = fileUrl.split('/')
+      const key = urlParts.slice(-2).join('/') // Get userId/filename part
       if (key) {
-        await s3Client.send(
+        await r2Client.send(
           new DeleteObjectCommand({
-            Bucket: MINIO_BUCKET_NAME,
+            Bucket: R2_BUCKET_NAME,
             Key: key,
-          }),
+          })
         )
-      } else {
-        console.warn(`Could not determine MinIO key from URL: ${attachment.file_url}`)
       }
-    } catch (minioError) {
-      console.error("Error deleting from MinIO:", minioError)
-      // Continue with database deletion even if blob deletion fails
+    } catch (error) {
+      // Continue with database deletion even if R2 deletion fails
     }
 
     // Delete from database
-    await sql`DELETE FROM attachments WHERE id = ${attachmentId}`
+    await sql`
+      DELETE FROM attachments 
+      WHERE id = ${attachmentId} AND user_id = ${userId}
+    `
 
-    return NextResponse.json({ message: "Attachment deleted successfully" })
+    return NextResponse.json({ success: true })
   } catch (error) {
-    console.error("Delete error:", error)
-    return NextResponse.json({ error: "Failed to delete attachment" }, { status: 500 })
+    return NextResponse.json({ error: "Delete failed" }, { status: 500 })
   }
 }
 
-export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
-    const { id } = await params
+    // Get session ID from authorization header
     const sessionId = request.headers.get("authorization")?.replace("Bearer ", "")
 
     if (!sessionId) {
@@ -77,25 +82,27 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
       return NextResponse.json({ error: "Invalid session" }, { status: 401 })
     }
 
-    const attachmentId = id
+    const attachmentId = params.id
     const body = await request.json()
     const { relatedType, relatedId } = body
 
-    // Update attachment with related entity info
+    // Update attachment
     const [updatedAttachment] = await sql`
       UPDATE attachments 
-      SET related_type = ${relatedType}, related_id = ${relatedId}, updated_at = CURRENT_TIMESTAMP
+      SET related_type = ${relatedType}, related_id = ${relatedId}
       WHERE id = ${attachmentId} AND user_id = ${userId}
       RETURNING *
     `
 
     if (!updatedAttachment) {
-      return NextResponse.json({ error: "Attachment not found or access denied" }, { status: 404 })
+      return NextResponse.json({ error: "Attachment not found" }, { status: 404 })
     }
 
-    return NextResponse.json(updatedAttachment)
+    return NextResponse.json({
+      success: true,
+      attachment: updatedAttachment,
+    })
   } catch (error) {
-    console.error("Update error:", error)
-    return NextResponse.json({ error: "Failed to update attachment" }, { status: 500 })
+    return NextResponse.json({ error: "Update failed" }, { status: 500 })
   }
 }

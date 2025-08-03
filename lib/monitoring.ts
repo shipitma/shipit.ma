@@ -64,8 +64,8 @@ export async function healthCheck() {
   }
 
   try {
-    // Storage check
-    if (process.env.BLOB_READ_WRITE_TOKEN) {
+    // Storage check (R2)
+    if (process.env.R2_ACCESS_KEY_ID && process.env.R2_SECRET_ACCESS_KEY) {
       checks.storage = true
     }
   } catch (error) {

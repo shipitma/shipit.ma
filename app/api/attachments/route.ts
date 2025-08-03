@@ -50,7 +50,6 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(attachments)
   } catch (error) {
-    console.error("Error fetching attachments:", error)
     return NextResponse.json({ error: "Failed to fetch attachments" }, { status: 500 })
   }
 }

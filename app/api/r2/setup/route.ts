@@ -1,17 +1,17 @@
 import { NextResponse } from "next/server"
-import { setBucketPublicReadPolicy, MINIO_BUCKET_NAME } from "@/lib/minio"
+import { setBucketPublicReadPolicy, R2_BUCKET_NAME } from "@/lib/r2"
 
 export async function POST() {
   try {
-    await setBucketPublicReadPolicy(MINIO_BUCKET_NAME)
-    
+    await setBucketPublicReadPolicy(R2_BUCKET_NAME)
+
     return NextResponse.json({
       success: true,
-      message: `Bucket "${MINIO_BUCKET_NAME}" configured for public read access`,
-      bucketName: MINIO_BUCKET_NAME,
+      message: `Bucket "${R2_BUCKET_NAME}" configured for public read access`,
+      bucketName: R2_BUCKET_NAME,
     })
   } catch (error) {
-    console.error("Error setting up MinIO bucket:", error)
+    console.error("Error setting up R2 bucket:", error)
     return NextResponse.json(
       {
         success: false,

@@ -77,7 +77,6 @@ export const formatDateTimeWithLanguage = (date: Date | string | null | undefine
 // Authentication utilities
 export const getCurrentUserId = async (sessionId?: string): Promise<string | null> => {
   if (!sessionId) {
-    console.error("No session ID provided to getCurrentUserId")
     return null
   }
 
@@ -98,7 +97,7 @@ export const getCurrentUserId = async (sessionId?: string): Promise<string | nul
       }
     }
   } catch (error) {
-    console.error("Error getting current user ID:", error)
+    // Silent fail
   }
 
   return null

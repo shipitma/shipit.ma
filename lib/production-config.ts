@@ -39,7 +39,7 @@ export const productionConfig = {
 
 // Validate required environment variables
 export function validateProductionConfig() {
-  const required = ["DATABASE_URL", "WHATSAPP_API_TOKEN", "BLOB_READ_WRITE_TOKEN", "NEXTAUTH_SECRET"]
+  const required = ["DATABASE_URL", "WHATSAPP_API_TOKEN", "NEXTAUTH_SECRET"]
 
   const missing = required.filter((key) => !process.env[key])
 

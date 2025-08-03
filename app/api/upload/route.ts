@@ -1,97 +1,95 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { getCurrentUserId } from "@/lib/database"
 import { neon } from "@neondatabase/serverless"
 import { PutObjectCommand } from "@aws-sdk/client-s3"
-import { s3Client, MINIO_BUCKET_NAME, ensureBucketExists } from "@/lib/minio"
+import { r2Client, R2_BUCKET_NAME, R2_CUSTOM_DOMAIN, ensureBucketExists } from "@/lib/r2"
 
 const sql = neon(process.env.DATABASE_URL!)
 
 export async function POST(request: NextRequest) {
   try {
+    // Get session ID from authorization header
     const sessionId = request.headers.get("authorization")?.replace("Bearer ", "")
 
     if (!sessionId) {
       return NextResponse.json({ error: "Authentication required" }, { status: 401 })
     }
 
+    // Get user ID from session
     const userId = await getCurrentUserId(sessionId)
     if (!userId) {
       return NextResponse.json({ error: "Invalid session" }, { status: 401 })
     }
 
+    // Parse form data
     const formData = await request.formData()
     const file = formData.get("file") as File
-    const attachmentType = formData.get("type") as string // 'photo' or 'receipt'
-    const relatedType = formData.get("relatedType") as string // 'purchase_request_item' or 'package'
-    const relatedId = formData.get("relatedId") as string // Optional - can be set later
+    const type = formData.get("type") as string
 
     if (!file) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 })
     }
 
-    if (!attachmentType) {
-      return NextResponse.json({ error: "Attachment type is required" }, { status: 400 })
-    }
-
-    // Check file size (20MB for all file types)
-    const maxSize = 20 * 1024 * 1024 // 20MB
+    // Validate file size (10MB limit)
+    const maxSize = 10 * 1024 * 1024 // 10MB
     if (file.size > maxSize) {
-      return NextResponse.json(
-        {
-          error: `File too large. Maximum size is ${maxSize / (1024 * 1024)}MB`,
-        },
-        { status: 400 },
-      )
+      return NextResponse.json({ error: "File too large. Maximum size is 10MB." }, { status: 400 })
     }
 
-    // Generate unique filename with user ID and timestamp
-    const timestamp = Date.now()
-    const randomSuffix = Math.random().toString(36).substring(2, 8)
-    const fileExtension = file.name.split(".").pop()
-    const cleanFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_")
-    const filename = `user-${userId}/${attachmentType}s/${timestamp}-${randomSuffix}-${cleanFileName}`
+    // Validate file type
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "application/pdf"]
+    if (!allowedTypes.includes(file.type)) {
+      return NextResponse.json({ error: "Invalid file type. Only JPEG, PNG, GIF, and PDF are allowed." }, { status: 400 })
+    }
 
-    await ensureBucketExists(MINIO_BUCKET_NAME)
+    // Generate unique filename
+    const timestamp = Date.now()
+    const randomString = Math.random().toString(36).substring(2, 15)
+    const fileExtension = file.name.split('.').pop()
+    const filename = `${userId}/${timestamp}-${randomString}.${fileExtension}`
+
+    // Convert file to buffer
     const fileBuffer = await file.arrayBuffer()
-    await s3Client.send(
+
+    // Skip bucket creation - assume bucket exists
+
+    // Upload to R2
+    await r2Client.send(
       new PutObjectCommand({
-        Bucket: MINIO_BUCKET_NAME,
+        Bucket: R2_BUCKET_NAME,
         Key: filename,
         Body: Buffer.from(fileBuffer),
         ContentType: file.type,
         ACL: "public-read", // Make object publicly readable
       }),
     )
-    const fileUrl = `${process.env.MINIO_SERVER_URL}/${MINIO_BUCKET_NAME}/${filename}`
-    const [attachment] = await sql`
-      INSERT INTO attachments (
-        user_id, file_url, file_name, file_size, file_type, 
-        attachment_type, related_type, related_id
-      ) VALUES (
-        ${userId}, ${fileUrl}, ${file.name}, ${file.size}, ${file.type},
-        ${attachmentType}, ${relatedType || null}, ${relatedId || null}
-      ) RETURNING *
+
+    // Get the public URL using custom domain
+    const publicUrl = `https://${R2_CUSTOM_DOMAIN}/${filename}`
+
+    // Save to database
+    const result = await sql`
+      INSERT INTO attachments (user_id, file_url, file_name, file_size, file_type, attachment_type)
+      VALUES (${userId}, ${publicUrl}, ${file.name}, ${file.size}, ${file.type}, ${type})
+      RETURNING id, file_url
     `
 
+    if (result.length === 0) {
+      return NextResponse.json({ error: "Failed to save file metadata" }, { status: 500 })
+    }
+
+    const attachment = result[0]
+
     return NextResponse.json({
+      success: true,
       id: attachment.id,
-      url: fileUrl,
-      filename: file.name,
-      size: file.size,
-      type: file.type,
-      pathname: filename,
-      attachmentType,
-      relatedType,
-      relatedId,
+      url: attachment.file_url,
+      filename: attachment.file_name,
+      originalName: file.name,
+      fileSize: file.size,
+      fileType: file.type,
     })
   } catch (error) {
-    console.error("Upload error:", error)
-    return NextResponse.json(
-      {
-        error: "Upload failed",
-        details: error instanceof Error ? error.message : "Unknown error",
-      },
-      { status: 500 },
-    )
+    return NextResponse.json({ error: "Upload failed" }, { status: 500 })
   }
 }
