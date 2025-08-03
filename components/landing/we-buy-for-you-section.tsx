@@ -49,7 +49,7 @@ export function WeBuyForYouSection() {
 
               <div className="flex justify-center lg:justify-start">
                 <Image
-                  src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/673d87d857d4ad57fe67d472_Group%202087329188.svg"
+                  src="/673d87d857d4ad57fe67d472_Group 2087329188.png"
                   alt="Step 1"
                   width={300}
                   height={200}
@@ -75,7 +75,7 @@ export function WeBuyForYouSection() {
               {/* Desktop Image */}
               <div className="hidden md:block">
                 <Image
-                  src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/673590e03470f7b3ed7bf1ee_2.svg"
+                  src="/673590e03470f7b3ed7bf1ee_2.png"
                   alt="Step 2 Desktop"
                   width={400}
                   height={300}
@@ -86,7 +86,7 @@ export function WeBuyForYouSection() {
               {/* Mobile Image */}
               <div className="md:hidden">
                 <Image
-                  src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/673d8a89835f079c653a6dcc_ai_mob.svg"
+                  src="/673590e03470f7b3ed7bf1ee_2.png"
                   alt="Step 2 Mobile"
                   width={300}
                   height={200}
@@ -97,9 +97,10 @@ export function WeBuyForYouSection() {
 
             {/* Column 3 */}
             <div className="text-center lg:text-right">
-              <div className="flex justify-center lg:justify-end mb-6">
+              {/* Desktop Image */}
+              <div className="hidden lg:block flex justify-center lg:justify-end mb-6">
                 <Image
-                  src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/673590e0455667ddc7fee1c7_3.svg"
+                  src="/673590e0455667ddc7fee1c7_3.png"
                   alt="Step 3"
                   width={400}
                   height={300}
@@ -107,32 +108,35 @@ export function WeBuyForYouSection() {
                 />
               </div>
 
-              {/* Step 3 */}
-              <div className="flex items-start justify-center lg:justify-end space-x-4">
+              {/* Mobile Step 3 */}
+              <div className="lg:hidden mb-6">
+                <div className="flex items-start justify-center space-x-4 mb-4">
+                  <div className="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-semibold text-lg flex-shrink-0">
+                    3
+                  </div>
+                  <p className="text-gray-600 text-left rtl:text-right flex-1 rtl:pr-4">{t('landing.ourServices.whyChooseUs.weBuyForYou.step3', 'Une fois reçus, nous vous les expédions.')}</p>
+                </div>
+              </div>
+
+              {/* Mobile Image */}
+              <div className="lg:hidden flex justify-center mb-6">
+                <Image
+                  src="/673590e0455667ddc7fee1c7_3.png"
+                  alt="Step 3"
+                  width={400}
+                  height={300}
+                  className="max-w-full h-auto"
+                />
+              </div>
+
+              {/* Desktop Step 3 */}
+              <div className="hidden lg:flex items-start justify-center lg:justify-end space-x-4">
                 <div className="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-semibold text-lg flex-shrink-0">
                   3
                 </div>
                 <p className="text-gray-600 text-left rtl:text-right flex-1 rtl:pr-4">{t('landing.ourServices.whyChooseUs.weBuyForYou.step3', 'Une fois reçus, nous vous les expédions.')}</p>
               </div>
             </div>
-          </div>
-
-          {/* Arrows */}
-          <div className="hidden lg:block">
-            <Image
-              src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/673593135e4b5b7c08d41e4e_arrow_ai.svg"
-              alt="Arrow 1"
-              width={80}
-              height={40}
-              className="absolute top-1/2 left-1/4 transform -translate-y-1/2 -translate-x-1/2"
-            />
-            <Image
-              src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/673593135e4b5b7c08d41e4e_arrow_ai.svg"
-              alt="Arrow 2"
-              width={80}
-              height={40}
-              className="absolute top-1/2 right-1/4 transform -translate-y-1/2 translate-x-1/2"
-            />
           </div>
 
           {/* Mobile Button */}
