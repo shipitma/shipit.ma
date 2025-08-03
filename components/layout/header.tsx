@@ -21,8 +21,8 @@ export function Header() {
         <div className="hidden lg:flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="text-2xl font-bold text-orange-600 hover:text-orange-700 transition-colors">
-              shipit
+            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+              <img src="/logo.svg" alt="Shipit Logo" className="w-16 h-16" />
             </Link>
           </div>
 
@@ -72,8 +72,8 @@ export function Header() {
         {/* Mobile Header */}
         <div className="lg:hidden flex items-center justify-between">
           {/* Mobile Logo */}
-          <Link href="/" className="text-xl font-bold text-orange-600">
-            shipit
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <img src="/logo.svg" alt="Shipit Logo" className="w-12 h-12" />
           </Link>
 
           {/* Mobile Right Side */}

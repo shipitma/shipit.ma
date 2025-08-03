@@ -82,7 +82,7 @@ export default function LoginPage() {
       <Card className="w-full max-w-md border-gray-200">
         <CardHeader className="text-center pb-4">
           <div className="mx-auto mb-3">
-            <img src="https://placehold.co/48x48/f97316/ffffff?text=shipit.ma" alt="Logo" className="w-12 h-12" />
+            <img src="/logo.svg" alt="Shipit Logo" className="w-16 h-16" />
           </div>
           <CardTitle className="text-lg font-semibold">{t('login.title', 'Bienvenue sur shipit.ma')}</CardTitle>
           <CardDescription className="text-sm text-gray-600">

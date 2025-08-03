@@ -1,7 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { getCurrentUserId } from "@/lib/database"
 import { neon } from "@neondatabase/serverless"
-import { del } from "@vercel/blob"
+import { DeleteObjectCommand } from "@aws-sdk/client-s3"
+import { s3Client, MINIO_BUCKET_NAME } from "@/lib/minio"
+
 
 const sql = neon(process.env.DATABASE_URL!)
 
@@ -31,18 +33,23 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
       return NextResponse.json({ error: "Attachment not found or access denied" }, { status: 404 })
     }
 
-    // Delete from Vercel Blob
+    // Delete from MinIO
     try {
       const url = new URL(attachment.file_url)
-      const pathname = url.pathname.substring(1) // Remove leading slash
-      
-      if (pathname) {
-        await del(pathname)
+      const key = url.pathname.substring(1).split("/").slice(1).join("/")
+
+      if (key) {
+        await s3Client.send(
+          new DeleteObjectCommand({
+            Bucket: MINIO_BUCKET_NAME,
+            Key: key,
+          }),
+        )
       } else {
-        console.warn(`Could not determine blob pathname from URL: ${attachment.file_url}`)
+        console.warn(`Could not determine MinIO key from URL: ${attachment.file_url}`)
       }
-    } catch (blobError) {
-      console.error("Error deleting from Vercel Blob:", blobError)
+    } catch (minioError) {
+      console.error("Error deleting from MinIO:", minioError)
       // Continue with database deletion even if blob deletion fails
     }
 

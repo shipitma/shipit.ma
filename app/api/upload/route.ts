@@ -1,7 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { getCurrentUserId } from "@/lib/database"
 import { neon } from "@neondatabase/serverless"
-import { put } from "@vercel/blob"
+import { PutObjectCommand } from "@aws-sdk/client-s3"
+import { s3Client, MINIO_BUCKET_NAME, ensureBucketExists } from "@/lib/minio"
 
 const sql = neon(process.env.DATABASE_URL!)
 
@@ -50,26 +51,31 @@ export async function POST(request: NextRequest) {
     const cleanFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_")
     const filename = `user-${userId}/${attachmentType}s/${timestamp}-${randomSuffix}-${cleanFileName}`
 
-    // Upload to Vercel Blob
+    await ensureBucketExists(MINIO_BUCKET_NAME)
     const fileBuffer = await file.arrayBuffer()
-    const { url } = await put(filename, Buffer.from(fileBuffer), {
-      access: 'public',
-      contentType: file.type,
-    })
-
+    await s3Client.send(
+      new PutObjectCommand({
+        Bucket: MINIO_BUCKET_NAME,
+        Key: filename,
+        Body: Buffer.from(fileBuffer),
+        ContentType: file.type,
+        ACL: "public-read", // Make object publicly readable
+      }),
+    )
+    const fileUrl = `${process.env.MINIO_SERVER_URL}/${MINIO_BUCKET_NAME}/${filename}`
     const [attachment] = await sql`
       INSERT INTO attachments (
         user_id, file_url, file_name, file_size, file_type, 
         attachment_type, related_type, related_id
       ) VALUES (
-        ${userId}, ${url}, ${file.name}, ${file.size}, ${file.type},
+        ${userId}, ${fileUrl}, ${file.name}, ${file.size}, ${file.type},
         ${attachmentType}, ${relatedType || null}, ${relatedId || null}
       ) RETURNING *
     `
 
     return NextResponse.json({
       id: attachment.id,
-      url: url,
+      url: fileUrl,
       filename: file.name,
       size: file.size,
       type: file.type,
