@@ -3,7 +3,8 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useAuth } from '@/lib/auth-context'
-import { posthog } from '@/lib/posthog'
+import posthog from 'posthog-js'
+import { PostHogProvider as PHProvider } from 'posthog-js/react'
 
 interface PostHogProviderProps {
   children: React.ReactNode
@@ -11,6 +12,16 @@ interface PostHogProviderProps {
 
 export function PostHogProvider({ children }: PostHogProviderProps) {
   const { user } = useAuth()
+
+  useEffect(() => {
+    posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
+      api_host: "/ingest",
+      ui_host: "https://eu.posthog.com",
+      defaults: '2025-05-24',
+      capture_exceptions: true, // This enables capturing exceptions using Error Tracking, set to false if you don't want this
+      debug: process.env.NODE_ENV === "development",
+    })
+  }, [])
 
   useEffect(() => {
     // Suppress PostHog web vitals warnings
@@ -44,5 +55,9 @@ export function PostHogProvider({ children }: PostHogProviderProps) {
     }
   }, [user])
 
-  return <>{children}</>
-} 
+  return (
+    <PHProvider client={posthog}>
+      {children}
+    </PHProvider>
+  )
+}

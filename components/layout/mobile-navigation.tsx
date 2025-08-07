@@ -1,7 +1,7 @@
 "use client"
 
 import { FC } from "react"
-import { Package, ShoppingCart, User } from "lucide-react"
+import { Package, ShoppingCart, User, Home } from "lucide-react"
 import { useTranslations } from "@/lib/hooks/use-translations"
 
 interface MobileNavigationProps {
@@ -12,7 +12,7 @@ export const MobileNavigation: FC<MobileNavigationProps> = ({ isActive }) => {
   const { t } = useTranslations()
   
   const navigation = [
-    { name: t('mainLayout.navigation.home', 'Accueil'), href: "/dashboard", icon: ShoppingCart },
+    { name: t('mainLayout.navigation.home', 'Accueil'), href: "/dashboard", icon: Home },
     { name: t('mainLayout.navigation.purchases', 'Achats'), href: "/purchases", icon: ShoppingCart },
     { name: t('mainLayout.navigation.packages', 'Colis'), href: "/packages", icon: Package },
   ]

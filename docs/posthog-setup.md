@@ -7,8 +7,8 @@ This project uses PostHog for analytics tracking. Here's how it's configured:
 Add these to your `.env.local` or `.env.development` file:
 
 ```bash
-NEXT_PUBLIC_POSTHOG_KEY=phc_HQT8RD8KjQo9DvYake4f9xXBQCWIJFvoPxJmP1y8Rz6
-NEXT_PUBLIC_POSTHOG_HOST=https://eu.i.posthog.com
+NEXT_PUBLIC_POSTHOG_KEY=your_posthog_project_api_key_here
+NEXT_PUBLIC_POSTHOG_HOST=your_posthog_host_url_here
 ```
 
 ## Features
