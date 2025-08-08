@@ -11,7 +11,7 @@ export function Footer() {
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="text-center">
           <p className="text-sm text-gray-600">
-            © {currentYear} shipit.ma. {t('footer.copyright', 'All rights reserved.')}
+            © {currentYear} shipit.ma. {t('footer.copyright', 'Tous droits réservés.')}
           </p>
         </div>
       </div>

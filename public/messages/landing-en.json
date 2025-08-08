@@ -1,0 +1,182 @@
+{
+  "hero": {
+    "title": "Shop from Turkey, Delivered to Morocco — Fast, Simple, No Surprises",
+    "description": "Your complete Turkey-to-Morocco shipping solution — buy from Turkish stores, consolidate packages to save up to 80%, and get fast home delivery with customs handled.",
+    "startButton": "Start Now",
+    "discoverButton": "Discover Our Services",
+    "testimonial": "Thanks to Shipit, I ordered authentic Turkish products at great prices. Consolidation saved me a lot, and delivery was quick with no customs issues. Highly recommend!",
+    "testimonialAuthor": "Fatima Z., Casablanca",
+    "testimonialRole": "Happy Customer",
+    "carouselTestimonial1": {
+      "quote": "Shipit made shopping from Turkey easier than I imagined. Fast shipping and excellent support.",
+      "author": "Ahmed M.",
+      "role": "Loyal Customer, Rabat"
+    },
+    "carouselTestimonial2": {
+      "quote": "My Turkish orders arrived faster than expected. Professional team and great service.",
+      "author": "Sara K.",
+      "role": "Regular Customer, Marrakech"
+    },
+    "carouselTestimonial3": {
+      "quote": "Consolidation cut my shipping cost almost in half. Great experience.",
+      "author": "Youssef B.",
+      "role": "Frequent Shopper, Fes"
+    },
+    "carouselTestimonial4": {
+      "quote": "Customer support guided me through every step until my package from Turkey arrived.",
+      "author": "Layla R.",
+      "role": "First-time Customer, Agadir"
+    },
+    "carouselTestimonial5": {
+      "quote": "I trust Shipit for all my Turkish shopping. Reliable and fast.",
+      "author": "Karim T.",
+      "role": "Long-term Customer, Tangier"
+    },
+    "testimonialsSection": {
+      "title": "What Our Customers Say",
+      "subtitle": "Over",
+      "subtitle2": "in Morocco trust us for shipping from Turkey",
+      "clients": "customers"
+    }
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "Shop from any Turkish store and receive your package in Morocco easily",
+    "step1": "1. Sign up and get your free Turkish shipping address.",
+    "step2": "2. Shop from your favorite Turkish stores and send orders to your address.",
+    "step3": "3. Consolidate packages to save up to 80% on shipping costs.",
+    "startButton": "Get Started"
+  },
+  "landing": {
+    "ourServices": {
+      "title": "You Buy from Turkey, We Deliver to Morocco",
+      "subtitle": "A shipping process from Turkey to Morocco that is simple, transparent, and efficient.",
+      "step1": {
+        "title": "Create Your Account & Get a Free Turkish Address",
+        "description": "Join Shipit and instantly get your own shipping address in Turkey to buy any product.",
+        "imageAlt": "Create Shipit account and get delivery address"
+      },
+      "step2": {
+        "title": "Shop from Turkey, Leave the Rest to Us",
+        "description": "Order from stores like Trendyol, Hepsiburada, and others, and we'll receive your packages for you.",
+        "imageAlt": "Shop online and ship to Shipit address"
+      },
+      "step3": {
+        "title": "Customize Your Shipment",
+        "description": "Choose to consolidate packages or add extra protection before final shipping.",
+        "feature1": "Clear product photos",
+        "feature2": "Smart consolidation to save costs",
+        "feature3": "Secure, reinforced packaging",
+        "imageAlt": "Customize shipment and choose options"
+      },
+      "step4": {
+        "title": "Fast Delivery to Morocco",
+        "description": "We ensure your package arrives quickly and safely from Turkey to your home in Morocco.",
+        "feature1": "Customs paperwork handled",
+        "feature2": "Home delivery",
+        "feature3": "Real-time tracking",
+        "feature4": "Continuous customer support",
+        "imageAlt": "Home delivery to Morocco"
+      },
+      "step5": {
+        "title": "Enjoy Your Turkish Purchases",
+        "description": "Your package has arrived — time to enjoy it!",
+        "imageAlt": "Enjoy delivered purchases"
+      },
+      "whyChooseUs": {
+        "title": "Why Choose Shipit for Shipping from Turkey?",
+        "subtitle": "A complete service with customer satisfaction guaranteed.",
+        "traditionalSolutions": {
+          "title": "Other Methods: Complicated and Slow",
+          "issue1": {
+            "title": "Lengthy procedures",
+            "description": "Multiple intermediaries and extra fees"
+          },
+          "issue2": {
+            "title": "Requires an international card",
+            "description": "Hard to buy from Turkey without one"
+          },
+          "issue3": {
+            "title": "Hidden charges",
+            "description": "Appear at delivery"
+          },
+          "issue4": {
+            "title": "Delivery delays",
+            "description": "No guaranteed timing"
+          },
+          "issue5": {
+            "title": "Limited support",
+            "description": "Only in major issues"
+          }
+        },
+        "ourPlatform": {
+          "title": "Complete Turkey-to-Morocco Service",
+          "benefit1": {
+            "title": "All services in one place",
+            "description": "Shopping, consolidation, and shipping"
+          },
+          "benefit2": {
+            "title": "Full transparency",
+            "description": "We display costs upfront"
+          },
+          "benefit3": {
+            "title": "Live tracking",
+            "description": "Follow your shipment every step"
+          },
+          "benefit4": {
+            "title": "Personalized support",
+            "description": "From purchase to delivery"
+          },
+          "benefit5": {
+            "title": "Satisfaction guarantee",
+            "description": "Refund if not satisfied"
+          }
+        },
+        "weBuyForYou": {
+          "title": "We Buy for You from Turkey",
+          "subtitle": "Even without an international card",
+          "description": "Send us your shopping list and we’ll buy it for you and ship it.",
+          "column1": {
+            "title": "No Card, No Stress",
+            "subtitle": "No hidden fees"
+          },
+          "button": "Send My Shopping List",
+          "step1": "Tell us what you want",
+          "step2": "We purchase after confirming availability",
+          "step3": "We ship as soon as we receive it"
+        }
+      },
+      "partnerBrands": {
+        "title": "Shop from Your Favorite Turkish Stores",
+        "subtitle": "Like Trendyol and Hepsiburada — we handle the rest"
+      },
+      "footerCTA": {
+        "title": "Access the Best Turkish Brands",
+        "subtitle": "Access the best Turkish brands with secure, direct shipping from Istanbul to your doorstep in Morocco. We handle everything from purchase to delivery.",
+        "button": "Start Now"
+      },
+      "testimonials": {
+        "title": "Customer Feedback",
+        "subtitle": "Real experiences of shipping from Turkey to Morocco",
+        "testimonial1": {
+          "quote": "Best service for Turkish products delivery to Morocco.",
+          "author": "Fatima Z.",
+          "role": "Happy Customer, Casablanca"
+        },
+        "testimonial2": {
+          "quote": "Fast shipping and smooth customs process.",
+          "author": "Ahmed M.",
+          "role": "Loyal Customer, Rabat"
+        },
+        "testimonial3": {
+          "quote": "Saved a lot with package consolidation.",
+          "author": "Sara K.",
+          "role": "Regular Customer, Marrakech"
+        }
+      }
+    }
+  },
+  "footer": {
+    "copyright": "All rights reserved"
+  }
+}

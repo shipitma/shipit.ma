@@ -1,60 +1,48 @@
-# Multilingual Translation Guide - OneService Morocco
+# 🌐 Multilingual Translation Guide
 
-This document explains the comprehensive **React-based internationalization (i18n) system** implemented in the OneService Morocco project.
+This guide explains how to implement and use the multilingual translation system in the Shipit application.
 
-## 🏗️ Architecture Overview
+## 📁 Translation File Structure
 
-The system is built around these core principles:
-- **JSON-based translation files** stored in `/public/messages/`
-- **React Context** for language state management
-- **Custom hooks** for easy translation access
-- **Automatic RTL support** for Arabic
-- **Font switching** based on language
-- **Browser language detection** with localStorage persistence
+### Main Translation Files
+- `public/messages/en.json` - English translations for main app
+- `public/messages/fr.json` - French translations for main app  
+- `public/messages/ar.json` - Arabic translations for main app
 
-## 📁 File Structure
+### Landing Page Translation Files
+- `public/messages/landing-en.json` - English translations for landing page
+- `public/messages/landing-fr.json` - French translations for landing page
+- `public/messages/landing-ar.json` - Arabic translations for landing page
 
-```
-public/messages/
-├── en.json    # English translations
-├── fr.json    # French translations  
-├── ar.json    # Arabic translations
-
-lib/
-├── context/language-context.tsx    # Language state management
-├── hooks/use-translations.ts       # Translation hook
-
-components/ui/
-└── LanguageSelector.tsx            # Language switcher UI
-
-components/examples/
-└── TranslationExample.tsx          # Usage example
-```
+### Translation Loading Strategy
+The system automatically loads and merges both main and landing page translations:
+1. **Main translations** are loaded first (core app functionality)
+2. **Landing page translations** are loaded second and merged
+3. **Landing translations override** main translations if there are conflicts
+4. **Fallback to English** if current language fails
 
 ## 🔧 Core Components
 
 ### 1. Language Context (`lib/context/language-context.tsx`)
 
-**Purpose**: Manages global language state and RTL support
+**Purpose**: Global state management for language and RTL support
 
-**Key Features**:
-- **Automatic language detection** from browser settings
-- **localStorage persistence** of user preference
-- **RTL support** for Arabic (`isRTL` state)
-- **Document direction updates** (`dir` and `lang` attributes)
+**Features**:
+- **Language switching** with persistence
+- **RTL support** for Arabic
+- **Context provider** for app-wide access
+- **Local storage** for language preference
 
 **Usage**:
 ```typescript
 import { useLanguage } from '@/lib/context/language-context'
 
 export function MyComponent() {
-  const { language, setLanguage, isRTL } = useLanguage()
+  const { language, isRTL, setLanguage } = useLanguage()
   
   return (
     <div dir={isRTL ? 'rtl' : 'ltr'}>
-      <button onClick={() => setLanguage('fr')}>
-        Switch to French
-      </button>
+      <button onClick={() => setLanguage('fr')}>Français</button>
     </div>
   )
 }
@@ -62,10 +50,11 @@ export function MyComponent() {
 
 ### 2. Translation Hook (`lib/hooks/use-translations.ts`)
 
-**Purpose**: Provides translation function with dynamic loading
+**Purpose**: Client-side translation loading and management
 
-**Key Features**:
-- **Dynamic loading** of translation files via fetch
+**Features**:
+- **Dynamic loading** of both main and landing translation files
+- **Automatic merging** of main and landing translations
 - **Fallback to English** if translation fails
 - **Nested key resolution** (e.g., `t('home.welcomeBack')`)
 - **Loading states** with fallback text
@@ -111,7 +100,7 @@ export function Header() {
 
 ## 🌐 Translation Files Structure
 
-### JSON Structure
+### Main App JSON Structure
 ```json
 {
   "common": {
@@ -132,11 +121,32 @@ export function Header() {
 }
 ```
 
+### Landing Page JSON Structure
+```json
+{
+  "hero": {
+    "title": "Your Global Purchases in Morocco",
+    "subtitle": "Access the best brands from USA, Turkey, Spain and France",
+    "startButton": "Get Started!"
+  },
+  "landing": {
+    "ourServices": {
+      "title": "You Buy, We Deliver",
+      "step1": {
+        "title": "Create Your Account",
+        "description": "Join Shipit in a few clicks!"
+      }
+    }
+  }
+}
+```
+
 ### Key Naming Conventions
 - **Use nested keys** for organization: `dashboard.stats.totalPackages`
 - **Keep keys descriptive**: `auth.signIn` not `si`
 - **Group related translations**: All auth-related keys under `auth`
 - **Use consistent naming**: `title`, `subtitle`, `description`
+- **Landing page keys** are prefixed with `landing.` or `hero.`
 
 ## 🎯 Usage Examples
 
@@ -154,120 +164,85 @@ const { t } = useTranslations()
 <span>{t('user.name', 'User Name')}</span>
 ```
 
+### Landing Page Translation
+```typescript
+const { t } = useTranslations()
+
+// Hero section
+<h1>{t('hero.title', 'Your Global Purchases in Morocco')}</h1>
+<p>{t('hero.subtitle', 'Access the best brands')}</p>
+
+// Landing services
+<h2>{t('landing.ourServices.title', 'You Buy, We Deliver')}</h2>
+<p>{t('landing.ourServices.step1.title', 'Create Your Account')}</p>
+```
+
 ### RTL Support
 ```typescript
 const { isRTL } = useLanguage()
 
 return (
   <div dir={isRTL ? 'rtl' : 'ltr'}>
-    <p>{t('welcome.message', 'Welcome')}</p>
+    <h1 className={isRTL ? 'text-right' : 'text-left'}>
+      {t('hero.title', 'Title')}
+    </h1>
   </div>
 )
 ```
 
-### Language Switching
+## 🔄 Translation Loading Process
+
+### Client-Side (useTranslations hook)
+1. **Load main translations** from `/messages/{language}.json`
+2. **Load landing translations** from `/messages/landing-{language}.json`
+3. **Merge translations** with landing overriding main if conflicts
+4. **Fallback to English** if current language fails
+5. **Cache merged translations** for performance
+
+### Server-Side (server-translations.ts)
+1. **Load main translations** from file system
+2. **Load landing translations** from file system
+3. **Merge translations** with same override logic
+4. **Cache merged translations** for performance
+5. **Provide utility functions** for server-side rendering
+
+## 🚀 Best Practices
+
+### 1. Key Organization
 ```typescript
-const { language, setLanguage } = useLanguage()
+// ✅ Good - Organized by feature
+t('dashboard.stats.totalPackages')
+t('auth.signIn.title')
+t('landing.hero.title')
 
-const handleLanguageChange = (newLang: Language) => {
-  setLanguage(newLang)
-}
-
-return (
-  <select onChange={(e) => setLanguage(e.target.value as Language)}>
-    <option value="en">English</option>
-    <option value="fr">Français</option>
-    <option value="ar">العربية</option>
-  </select>
-)
+// ❌ Bad - Flat structure
+t('totalPackages')
+t('signInTitle')
+t('heroTitle')
 ```
 
-## 🚀 Setup Instructions
-
-### 1. Add Language Provider to Root Layout
+### 2. Fallback Values
 ```typescript
-// app/layout.tsx
-import { LanguageProvider } from '@/lib/context/language-context'
+// ✅ Good - Always provide fallback
+t('dashboard.welcomeBack', 'Welcome back')
 
-export default function RootLayout({ children }) {
-  return (
-    <html>
-      <body>
-        <LanguageProvider>
-          {children}
-        </LanguageProvider>
-      </body>
-    </html>
-  )
-}
+// ❌ Bad - No fallback
+t('dashboard.welcomeBack')
 ```
 
-### 2. Create Translation Files
-Create JSON files in `/public/messages/`:
-- `en.json` - English translations
-- `fr.json` - French translations
-- `ar.json` - Arabic translations
-
-### 3. Use in Components
+### 3. RTL Support
 ```typescript
-import { useTranslations } from '@/lib/hooks/use-translations'
-import { useLanguage } from '@/lib/context/language-context'
-
-export function MyComponent() {
-  const { t } = useTranslations()
-  const { isRTL } = useLanguage()
-  
-  return (
-    <div dir={isRTL ? 'rtl' : 'ltr'}>
-      <h1>{t('title', 'Default Title')}</h1>
-    </div>
-  )
-}
+// ✅ Good - Always consider RTL
+<div dir={isRTL ? 'rtl' : 'ltr'}>
+  <p className={isRTL ? 'text-right' : 'text-left'}>
+    {t('content.text')}
+  </p>
+</div>
 ```
 
-## 🌐 RTL & Font Support
-
-### Automatic RTL Detection
+### 4. Loading States
 ```typescript
-// In language-context.tsx
-const rtlLanguages: Language[] = ['ar']
-
-useEffect(() => {
-  const newIsRTL = rtlLanguages.includes(language)
-  setIsRTL(newIsRTL)
-  
-  // Update document direction
-  const newDir = newIsRTL ? 'rtl' : 'ltr'
-  document.documentElement.dir = newDir
-  document.documentElement.lang = language
-}, [language])
-```
-
-### Font Switching
-```css
-/* Automatic font selection based on language */
-[lang="ar"], [dir="rtl"] {
-  font-family: 'IBMPlexSansArabic', sans-serif;
-}
-
-/* Default font for LTR languages */
-font-family: 'Satoshi', sans-serif;
-```
-
-## ✨ Key Benefits
-
-1. **Type Safety** - TypeScript support with proper typing
-2. **Performance** - Dynamic loading with fallbacks
-3. **Accessibility** - Proper RTL support and screen reader compatibility
-4. **User Experience** - Smooth language switching with persistence
-5. **Maintainability** - Clean separation of concerns
-6. **Scalability** - Easy to add new languages
-7. **SEO Friendly** - Proper `lang` attributes for search engines
-
-## 🔧 Advanced Features
-
-### Loading States
-```typescript
+// ✅ Good - Handle loading state
 const { t, loading } = useTranslations()
 
 if (loading) {
@@ -275,57 +250,62 @@ if (loading) {
 }
 ```
 
-### Error Handling
-```typescript
-const { t, error } = useTranslations()
+## 🛠️ Adding New Translations
 
-if (error) {
-  console.error('Translation error:', error)
-  // Fallback to default language
+### 1. Main App Translations
+Add to the appropriate language file in `public/messages/`:
+```json
+{
+  "newFeature": {
+    "title": "New Feature",
+    "description": "Description of the new feature"
+  }
 }
 ```
 
-### Dynamic Language Detection
-```typescript
-// Automatically detects browser language
-const browserLang = navigator.language.split('-')[0]
-if (browserLang === 'ar') {
-  setLanguage('ar')
-} else if (browserLang === 'en') {
-  setLanguage('en')
-} else {
-  setLanguage('fr') // Default
+### 2. Landing Page Translations
+Add to the appropriate landing file in `public/messages/`:
+```json
+{
+  "hero": {
+    "newSection": {
+      "title": "New Hero Section",
+      "subtitle": "New hero subtitle"
+    }
+  }
 }
 ```
 
-## 📝 Best Practices
-
-1. **Always provide fallbacks** for translation keys
-2. **Use nested keys** for better organization
-3. **Keep translations consistent** across languages
-4. **Test RTL layouts** thoroughly
-5. **Use semantic HTML** with proper `lang` attributes
-6. **Consider cultural differences** in translations
-7. **Maintain translation files** regularly
-
-## 🚀 Migration Guide
-
-### From Hardcoded Text
+### 3. Usage in Components
 ```typescript
-// Before
-<h1>Welcome Back</h1>
+const { t } = useTranslations()
 
-// After
-<h1>{t('dashboard.welcomeBack', 'Welcome Back')}</h1>
+return (
+  <div>
+    <h1>{t('newFeature.title', 'New Feature')}</h1>
+    <p>{t('newFeature.description', 'Description')}</p>
+  </div>
+)
 ```
 
-### From Simple Language Switcher
-```typescript
-// Before
-<a href="/fr/">FR</a>
+## 🔍 Debugging
 
-// After
-<LanguageSelector />
+### Check Translation Loading
+```typescript
+const { t, loading, error } = useTranslations()
+
+console.log('Loading:', loading)
+console.log('Error:', error)
+console.log('Translation:', t('test.key', 'Fallback'))
 ```
 
-This comprehensive internationalization system provides a robust, scalable, and user-friendly solution for multilingual applications! 
+### Verify File Structure
+Ensure both main and landing translation files exist:
+- `public/messages/en.json` ✅
+- `public/messages/landing-en.json` ✅
+- `public/messages/fr.json` ✅
+- `public/messages/landing-fr.json` ✅
+- `public/messages/ar.json` ✅
+- `public/messages/landing-ar.json` ✅
+
+This system provides a robust, scalable multilingual solution that separates concerns between main app functionality and landing page content while maintaining a unified translation interface. 

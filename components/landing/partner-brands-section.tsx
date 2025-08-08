@@ -10,10 +10,10 @@ export function PartnerBrandsSection() {
           {/* Text Content */}
           <div className="lg:w-1/2 text-center lg:text-left rtl:text-right">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-6 leading-tight text-left rtl:text-right">
-              {t('landing.ourServices.partnerBrands.title', 'Commandez sur vos sites préférés')}
+              {t('landing.ourServices.partnerBrands.title', 'Faites vos achats dans vos boutiques turques préférées')}
             </h2>
             <p className="text-lg lg:text-xl text-gray-600 leading-relaxed text-left rtl:text-right">
-              {t('landing.ourServices.partnerBrands.subtitle', 'Ne vous limitez plus ! Faites votre shopping sur Trendyol, Amazon, Vente-Privée, eBay ou tout autre site en Turquie, en Europe ou aux États-Unis — nous nous occupons du reste.')}
+              {t('landing.ourServices.partnerBrands.subtitle', 'Comme Trendyol et Hepsiburada — nous gérons le reste')}
             </p>
           </div>
 

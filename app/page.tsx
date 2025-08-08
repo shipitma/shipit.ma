@@ -33,9 +33,9 @@ const WhyChooseUsSection = dynamic(() =>
   ),
 )
 
-const PricingSection = dynamic(() =>
-  import("@/components/landing/pricing-section").then(
-    mod => mod.PricingSection,
+const FooterCTASection = dynamic(() =>
+  import("@/components/landing/footer-cta-section").then(
+    mod => mod.FooterCTASection,
   ),
 )
 const ReviewCardSection = dynamic(() =>
@@ -87,8 +87,8 @@ export default function Component() {
         <WeBuyForYouSection />
         <WhyChooseUsSection />
         <ReviewCardSection />
-        <div id="pricing">
-          <PricingSection />
+        <div id="footer-cta">
+          <FooterCTASection />
         </div>
         <Footer />
       </div>

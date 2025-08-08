@@ -84,13 +84,13 @@ export default function MainLayout({
     if (pathSegments.length === 0) return null
 
     const breadcrumbNameMap: { [key: string]: string } = {
-      "/dashboard": t('mainLayout.breadcrumbs.dashboard', 'Dashboard'),
-      "/packages": t('mainLayout.breadcrumbs.packages', 'Packages'),
-      "/purchases": t('mainLayout.breadcrumbs.purchases', 'Purchases'),
-      "/profile": t('mainLayout.breadcrumbs.profile', 'Profile'),
-      "/create": t('mainLayout.breadcrumbs.create', 'Create'),
-      "/purchases/create": t('mainLayout.actions.newPurchaseRequest', 'New Purchase Request'),
-      "/packages/create": t('mainLayout.actions.addPackage', 'Add Package'),
+          "/dashboard": t('mainLayout.breadcrumbs.dashboard', 'Tableau de Bord'),
+    "/packages": t('mainLayout.breadcrumbs.packages', 'Colis'),
+    "/purchases": t('mainLayout.breadcrumbs.purchases', 'Achats'),
+    "/profile": t('mainLayout.breadcrumbs.profile', 'Profil'),
+    "/create": t('mainLayout.breadcrumbs.create', 'Créer'),
+    "/purchases/create": t('mainLayout.actions.newPurchaseRequest', 'Nouvelle Demande d\'Achat'),
+    "/packages/create": t('mainLayout.actions.addPackage', 'Ajouter un Colis'),
     }
 
     let currentPath = ""
@@ -106,8 +106,8 @@ export default function MainLayout({
             currentPath += `/${segment}`
             const isLast = index === pathSegments.length - 1
             const name = breadcrumbNameMap[currentPath] || 
-              (segment === 'create' ? t('mainLayout.breadcrumbs.create', 'Create') :
-               segment === 'id' ? t('mainLayout.breadcrumbs.details', 'Details') :
+                      (segment === 'create' ? t('mainLayout.breadcrumbs.create', 'Créer') :
+        segment === 'id' ? t('mainLayout.breadcrumbs.details', 'Détails') :
                segment.charAt(0).toUpperCase() + segment.slice(1))
             // Check if currentPath is a valid link, otherwise don't make it a link.
             const isLink = Object.keys(breadcrumbNameMap).includes(currentPath) || /\[id\]/.test(currentPath) === false

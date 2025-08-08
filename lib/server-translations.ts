@@ -18,23 +18,55 @@ async function loadTranslations(language: string): Promise<TranslationData> {
   }
 
   try {
+    // Load main translations
     const messagesPath = path.join(process.cwd(), 'public', 'messages', `${language}.json`)
     const fileContent = fs.readFileSync(messagesPath, 'utf-8')
-    const translations = JSON.parse(fileContent)
+    const mainTranslations = JSON.parse(fileContent)
     
-    // Cache the translations
-    translationCache[language] = translations
+    // Load landing page translations
+    let landingTranslations = {}
+    try {
+      const landingPath = path.join(process.cwd(), 'public', 'messages', `landing-${language}.json`)
+      const landingContent = fs.readFileSync(landingPath, 'utf-8')
+      landingTranslations = JSON.parse(landingContent)
+    } catch (landingErr) {
+      console.warn(`Landing translations not found for ${language}, using main translations only`)
+    }
     
-    return translations
+    // Merge translations (landing translations will override main translations if there are conflicts)
+    const mergedTranslations = {
+      ...mainTranslations,
+      ...landingTranslations
+    }
+    
+    // Cache the merged translations
+    translationCache[language] = mergedTranslations
+    
+    return mergedTranslations
   } catch (error) {
     console.error(`Failed to load ${language} translations:`, error)
     
     // Fallback to English if current language fails
     if (language !== 'en') {
       try {
+        // Load English main translations
         const fallbackPath = path.join(process.cwd(), 'public', 'messages', 'en.json')
         const fallbackContent = fs.readFileSync(fallbackPath, 'utf-8')
-        const fallbackTranslations = JSON.parse(fallbackContent)
+        let fallbackTranslations = JSON.parse(fallbackContent)
+        
+        // Load English landing translations
+        try {
+          const fallbackLandingPath = path.join(process.cwd(), 'public', 'messages', 'landing-en.json')
+          const fallbackLandingContent = fs.readFileSync(fallbackLandingPath, 'utf-8')
+          const fallbackLandingTranslations = JSON.parse(fallbackLandingContent)
+          
+          fallbackTranslations = {
+            ...fallbackTranslations,
+            ...fallbackLandingTranslations
+          }
+        } catch (fallbackLandingErr) {
+          console.warn('English landing translations not found')
+        }
         
         translationCache[language] = fallbackTranslations
         return fallbackTranslations
@@ -46,6 +78,31 @@ async function loadTranslations(language: string): Promise<TranslationData> {
     
     return {}
   }
+}
+
+/**
+ * Get translations for a specific language
+ */
+export async function getTranslations(language: string): Promise<TranslationData> {
+  return await loadTranslations(language)
+}
+
+/**
+ * Get translation value by key
+ */
+export function getTranslationValue(translations: TranslationData, key: string, fallback?: string): string {
+  const keys = key.split('.')
+  let value: any = translations
+
+  for (const k of keys) {
+    if (value && typeof value === 'object' && k in value) {
+      value = value[k]
+    } else {
+      return fallback || key
+    }
+  }
+
+  return typeof value === 'string' ? value : fallback || key
 }
 
 /**

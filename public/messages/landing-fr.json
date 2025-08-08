@@ -1,0 +1,182 @@
+{
+  "hero": {
+    "title": "Achetez en Turquie, livré au Maroc — Rapide, Simple, Sans Surprises",
+    "description": "Solution complète pour vos achats en Turquie avec expédition vers le Maroc — achetez en ligne, regroupez vos colis pour économiser jusqu'à 80%, et recevez-les rapidement à domicile avec dédouanement inclus.",
+    "startButton": "Commencer maintenant",
+    "discoverButton": "Découvrir nos services",
+    "testimonial": "Grâce à Shipit, j’ai pu acheter des produits turcs authentiques à des prix avantageux. Le regroupement m’a fait économiser beaucoup et la livraison a été rapide, sans problème de douane. Je recommande vivement !",
+    "testimonialAuthor": "Fatima Z., Casablanca",
+    "testimonialRole": "Cliente satisfaite",
+    "carouselTestimonial1": {
+      "quote": "Shipit a rendu mes achats en Turquie beaucoup plus simples. Livraison rapide et excellent support.",
+      "author": "Ahmed M.",
+      "role": "Client fidèle, Rabat"
+    },
+    "carouselTestimonial2": {
+      "quote": "Mes commandes turques sont arrivées plus vite que prévu. Équipe professionnelle et service impeccable.",
+      "author": "Sara K.",
+      "role": "Cliente régulière, Marrakech"
+    },
+    "carouselTestimonial3": {
+      "quote": "Le regroupement a réduit mes frais d’expédition de moitié. Expérience au top.",
+      "author": "Youssef B.",
+      "role": "Passionné de shopping, Fès"
+    },
+    "carouselTestimonial4": {
+      "quote": "Le support client m’a accompagnée jusqu’à la réception de mon colis depuis la Turquie.",
+      "author": "Layla R.",
+      "role": "Première cliente, Agadir"
+    },
+    "carouselTestimonial5": {
+      "quote": "Je fais confiance à Shipit pour tous mes achats turcs. Service fiable et rapide.",
+      "author": "Karim T.",
+      "role": "Client de longue date, Tanger"
+    },
+    "testimonialsSection": {
+      "title": "Avis clients",
+      "subtitle": "Plus de",
+      "subtitle2": "au Maroc nous font confiance pour leurs envois depuis la Turquie",
+              "clients": "clients"
+      }
+    },
+  "howItWorks": {
+    "title": "Comment ça marche",
+    "subtitle": "Achetez dans n’importe quelle boutique turque et recevez vos colis au Maroc facilement",
+    "step1": "1. Inscrivez-vous et obtenez votre adresse turque gratuite.",
+    "step2": "2. Achetez dans vos boutiques turques préférées et envoyez vos commandes à votre adresse.",
+    "step3": "3. Regroupez vos colis pour économiser jusqu’à 80% sur les frais de port.",
+    "startButton": "Commencez maintenant"
+  },
+  "landing": {
+    "ourServices": {
+      "title": "Vous achetez en Turquie, nous livrons au Maroc",
+      "subtitle": "Un service d’expédition Turquie–Maroc simple, transparent et efficace.",
+      "step1": {
+        "title": "Créez votre compte et obtenez une adresse turque gratuite",
+        "description": "Rejoignez Shipit et recevez immédiatement votre adresse en Turquie pour acheter tous les produits que vous souhaitez.",
+        "imageAlt": "Créer un compte Shipit et obtenir une adresse de livraison"
+      },
+      "step2": {
+        "title": "Achetez en Turquie, on s'occupe du reste",
+        "description": "Commandez sur Trendyol, Hepsiburada et bien d'autres, nous réceptionnons vos colis pour vous.",
+        "imageAlt": "Acheter en ligne et faire livrer à l'adresse Shipit"
+      },
+      "step3": {
+        "title": "Personnalisez votre expédition",
+        "description": "Regroupez vos colis ou ajoutez une protection renforcée avant l'expédition finale.",
+        "feature1": "Photos claires des produits",
+        "feature2": "Regroupement intelligent pour réduire les coûts",
+        "feature3": "Emballage sécurisé et renforcé",
+        "imageAlt": "Personnaliser l'expédition et choisir les options"
+      },
+      "step4": {
+        "title": "Livraison rapide au Maroc",
+        "description": "Nous assurons une livraison rapide et sécurisée de la Turquie à votre domicile au Maroc.",
+        "feature1": "Dédouanement pris en charge",
+        "feature2": "Livraison à domicile",
+        "feature3": "Suivi en temps réel",
+        "feature4": "Support client continu",
+        "imageAlt": "Livraison à domicile au Maroc"
+      },
+      "step5": {
+        "title": "Profitez de vos achats turcs",
+        "description": "Votre colis est arrivé ? Profitez-en pleinement !",
+        "imageAlt": "Profiter des achats livrés"
+      },
+      "whyChooseUs": {
+        "title": "Pourquoi choisir Shipit pour vos envois depuis la Turquie ?",
+        "subtitle": "Un service complet avec garantie de satisfaction.",
+        "traditionalSolutions": {
+          "title": "Autres solutions : compliquées et lentes",
+          "issue1": {
+            "title": "Procédures longues",
+            "description": "Multiples intermédiaires et frais supplémentaires"
+          },
+          "issue2": {
+            "title": "Carte internationale requise",
+            "description": "Achat difficile en Turquie sans carte"
+          },
+          "issue3": {
+            "title": "Frais cachés",
+            "description": "Découverts à la livraison"
+          },
+          "issue4": {
+            "title": "Retards de livraison",
+            "description": "Aucun délai garanti"
+          },
+          "issue5": {
+            "title": "Support limité",
+            "description": "Seulement pour problèmes majeurs"
+          }
+        },
+        "ourPlatform": {
+          "title": "Service complet Turquie–Maroc",
+          "benefit1": {
+            "title": "Tous les services en un seul endroit",
+            "description": "Achat, regroupement et expédition"
+          },
+          "benefit2": {
+            "title": "Transparence totale",
+            "description": "Prix affichés dès le départ"
+          },
+          "benefit3": {
+            "title": "Suivi en direct",
+            "description": "Surveillez votre colis à chaque étape"
+          },
+          "benefit4": {
+            "title": "Support personnalisé",
+            "description": "De l’achat à la livraison"
+          },
+          "benefit5": {
+            "title": "Garantie de satisfaction",
+            "description": "Remboursement si non satisfait"
+          }
+        },
+        "weBuyForYou": {
+          "title": "Nous achetons pour vous en Turquie",
+          "subtitle": "Même sans carte internationale",
+          "description": "Envoyez-nous votre liste d’achats et nous les achetons puis expédions pour vous.",
+          "column1": {
+            "title": "Pas de carte, pas de stress",
+            "subtitle": "Aucun frais caché"
+          },
+          "button": "Envoyer ma liste d’achats",
+          "step1": "Dites-nous ce que vous voulez",
+          "step2": "Nous achetons après confirmation de disponibilité",
+          "step3": "Nous expédions dès réception"
+        }
+      },
+      "partnerBrands": {
+        "title": "Faites vos achats dans vos boutiques turques préférées",
+        "subtitle": "Comme Trendyol et Hepsiburada — nous gérons le reste"
+      },
+      "footerCTA": {
+        "title": "Profitez des meilleures marques turques",
+        "subtitle": "Profitez des meilleures marques turques avec un service d'expédition sécurisé et direct d'Istanbul jusqu'à votre porte au Maroc. Nous gérons tout, de l'achat à la livraison.",
+        "button": "Commencer maintenant"
+      },
+      "testimonials": {
+        "title": "Avis clients",
+        "subtitle": "Expériences réelles d’expédition depuis la Turquie vers le Maroc",
+        "testimonial1": {
+          "quote": "Meilleur service pour recevoir des produits turcs au Maroc.",
+          "author": "Fatima Z.",
+          "role": "Cliente satisfaite, Casablanca"
+        },
+        "testimonial2": {
+          "quote": "Livraison rapide et dédouanement facile.",
+          "author": "Ahmed M.",
+          "role": "Client fidèle, Rabat"
+        },
+        "testimonial3": {
+          "quote": "J’ai économisé beaucoup grâce au regroupement.",
+          "author": "Sara K.",
+          "role": "Cliente régulière, Marrakech"
+        }
+      }
+    }
+  },
+  "footer": {
+    "copyright": "Tous droits réservés"
+  }
+}

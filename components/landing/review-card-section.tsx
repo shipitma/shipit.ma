@@ -14,31 +14,31 @@ export function ReviewCardSection() {
   // Get testimonials from translations - using new carousel testimonial keys
   const testimonials = [
     {
-      quote: t('hero.carouselTestimonial1.quote', 'Shipit a complètement transformé mon expérience de shopping en ligne. Plus besoin de se soucier des frais de douane ou des délais de livraison. Le service est exceptionnel et l\'équipe est incroyablement réactive !'),
+      quote: t('hero.carouselTestimonial1.quote', 'Shipit a rendu mes achats en Turquie beaucoup plus simples. Livraison rapide et excellent support.'),
       author: t('hero.carouselTestimonial1.author', 'Ahmed M.'),
       position: t('hero.carouselTestimonial1.role', 'Client fidèle, Rabat'),
       avatar: t('hero.carouselTestimonial1.author', 'A').charAt(0)
     },
     {
-      quote: t('hero.carouselTestimonial2.quote', 'Service excellent ! J\'ai reçu mes commandes plus rapidement que prévu. L\'équipe est très professionnelle et réactive. Je recommande vivement pour quiconque fait du shopping international.'),
+      quote: t('hero.carouselTestimonial2.quote', 'Mes commandes turques sont arrivées plus vite que prévu. Équipe professionnelle et service impeccable.'),
       author: t('hero.carouselTestimonial2.author', 'Sara K.'),
       position: t('hero.carouselTestimonial2.role', 'Cliente régulière, Marrakech'),
       avatar: t('hero.carouselTestimonial2.author', 'S').charAt(0)
     },
     {
-      quote: t('hero.carouselTestimonial3.quote', 'La fonctionnalité de consolidation m\'a fait économiser tellement d\'argent sur l\'expédition. Je peux maintenant acheter dans plusieurs magasins et expédier tout ensemble. C\'est exactement ce dont j\'avais besoin !'),
+      quote: t('hero.carouselTestimonial3.quote', 'Le regroupement a réduit mes frais d\'expédition de moitié. Expérience au top.'),
       author: t('hero.carouselTestimonial3.author', 'Youssef B.'),
       position: t('hero.carouselTestimonial3.role', 'Passionné de tech, Fès'),
       avatar: t('hero.carouselTestimonial3.author', 'Y').charAt(0)
     },
     {
-      quote: t('hero.carouselTestimonial4.quote', 'Support client incroyable ! Ils m\'ont aidé à chaque étape de mon premier achat international. Le processus était fluide et transparent du début à la fin.'),
+      quote: t('hero.carouselTestimonial4.quote', 'Le support client m\'a accompagnée jusqu\'à la réception de mon colis depuis la Turquie.'),
       author: t('hero.carouselTestimonial4.author', 'Layla R.'),
       position: t('hero.carouselTestimonial4.role', 'Cliente première fois, Agadir'),
       avatar: t('hero.carouselTestimonial4.author', 'L').charAt(0)
     },
     {
-      quote: t('hero.carouselTestimonial5.quote', 'J\'utilise Shipit depuis plus d\'un an maintenant. Leur fiabilité et leur attention aux détails en font mon choix pour tous mes achats internationaux.'),
+      quote: t('hero.carouselTestimonial5.quote', 'Je fais confiance à Shipit pour tous mes achats turcs. Service fiable et rapide.'),
       author: t('hero.carouselTestimonial5.author', 'Karim T.'),
       position: t('hero.carouselTestimonial5.role', 'Client de longue date, Tanger'),
       avatar: t('hero.carouselTestimonial5.author', 'K').charAt(0)
@@ -63,10 +63,10 @@ export function ReviewCardSection() {
         {/* Title Section */}
         <div className="text-center mb-16" dir={isRTL ? 'rtl' : 'ltr'}>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-            {t('hero.testimonialsSection.title', 'Ce que disent nos clients')}
+            {t('hero.testimonialsSection.title', 'Avis clients')}
           </h2>
           <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto">
-            {t('hero.testimonialsSection.subtitle', 'Plus de')} <span className="text-orange-500 font-bold">15,000 {t('hero.testimonialsSection.clients', 'clients')}</span> {t('hero.testimonialsSection.subtitle2', 'au Maroc nous font confiance pour leurs achats internationaux')}
+            {t('hero.testimonialsSection.subtitle', 'Plus de')} <span className="text-orange-500 font-bold">150 {t('hero.testimonialsSection.clients', 'clients')}</span> {t('hero.testimonialsSection.subtitle2', 'au Maroc nous font confiance pour leurs envois depuis la Turquie')}
           </p>
         </div>
 

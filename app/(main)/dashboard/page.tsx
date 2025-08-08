@@ -306,7 +306,9 @@ function WarehouseCard({ warehouse, getFullName, getCountryName, isRTL }: { ware
         <div className="border-t border-gray-200 pt-2 space-y-1">
           <p className={`text-sm font-medium text-gray-900 ${isRTL ? 'text-right' : ''}`}>shipit.ma {warehouse.name}</p>
           <p className={`text-sm text-gray-600 ${isRTL ? 'text-right' : ''}`}>{warehouse.address_line}</p>
-          <p className={`text-sm text-gray-600 ${isRTL ? 'text-right' : ''}`}>{warehouse.city}{warehouse.state ? `, ${warehouse.state}` : ""} {warehouse.zip}</p>
+          <p className={`text-sm text-gray-600 ${isRTL ? 'text-right' : ''}`}>
+            {warehouse.city}{warehouse.state ? (isRTL ? ` ${warehouse.state}،` : `, ${warehouse.state}`) : ""} {warehouse.zip}
+          </p>
           <p className={`text-sm text-gray-600 ${isRTL ? 'text-right' : ''}`}>{getCountryName(warehouse.country)}</p>
         </div>
         <div className={`border-t border-gray-200 pt-2 flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
@@ -315,7 +317,7 @@ function WarehouseCard({ warehouse, getFullName, getCountryName, isRTL }: { ware
         </div>
       </div>
       <div className="bg-yellow-50 border border-yellow-200 rounded-md p-3 mt-2">
-        <p className={`text-sm text-yellow-800 ${isRTL ? 'text-right' : ''}`}>
+        <p className={`text-sm text-yellow-800 ${isRTL ? 'text-right' : ''}`} dir={isRTL ? 'rtl' : 'ltr'}>
           <strong>{t('dashboard.warehouseAddresses.important', 'Important:')}</strong> {t('dashboard.warehouseAddresses.includeFullName', 'Assurez-vous toujours d\'inclure votre nom complet comme destinataire.')}
         </p>
       </div>

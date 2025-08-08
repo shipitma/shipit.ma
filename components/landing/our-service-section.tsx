@@ -31,8 +31,8 @@ export function OurServiceSection() {
             </div>
             <div className="lg:w-1/2 relative h-64 lg:h-auto">
               <Image
-                src="https://img.freepik.com/free-photo/waist-up-portrait-young-attractive-hipster-girl-orange-hoodie-using-mobile-phone-look-smartphone-display-with-serious-face-writing-message-texting-friend-edit-photo-post-online_176420-37357.jpg?t=st=1754108823~exp=1754112423~hmac=6bd700066a42f84d17889144de1ce67a1f3a7e14395eeace060166ebdb1c5bd2&w=1380"
-                alt="Create start page"
+                src="/charismatic-smiling-young-caucasian-girl-holding-mobile-phone-showing-smartphone-application-display.jpg"
+                alt={t('landing.ourServices.step1.imageAlt', 'Créer un compte Shipit et obtenir une adresse de livraison')}
                 fill
                 className="object-cover"
               />
@@ -52,8 +52,8 @@ export function OurServiceSection() {
             </div>
             <div className="lg:w-1/2 relative h-64 lg:h-auto">
               <Image
-                src="https://img.freepik.com/free-photo/woman-using-her-credit-card-new-purchase_23-2148675007.jpg?t=st=1754108300~exp=1754111900~hmac=64dac34290513786a6bf9364563f9502c485f4b50189961cf0febbe57ad6d801&w=1380"
-                alt="Set up quiz questions"
+                src="/positive-curly-haired-european-woman-smiles-happily-uses-modern-smartphone-credit-card-purchases-something-makes-shopping-online-dressed-casual-jumper-isolated-vivid-yellow-background.jpg"
+                alt={t('landing.ourServices.step2.imageAlt', 'Acheter en ligne et faire livrer à l\'adresse Shipit')}
                 fill
                 className="object-cover"
               />
@@ -105,8 +105,8 @@ export function OurServiceSection() {
             </div>
             <div className="lg:w-1/2 relative h-64 lg:h-auto">
               <Image
-                src="https://img.freepik.com/free-photo/woman-safety-equipment-work_23-2148976343.jpg?t=st=1754107063~exp=1754110663~hmac=c1cb95902d8467181e3335418ee2dca2f2d6fec91640f678277aa2bf4f361131&w=1380"
-                alt="Customize results"
+                src="/woman-safety-equipment-work.jpg"
+                alt={t('landing.ourServices.step3.imageAlt', 'Personnaliser l\'expédition et choisir les options')}
                 fill
                 className="object-cover"
               />
@@ -167,8 +167,8 @@ export function OurServiceSection() {
             </div>
             <div className="lg:w-1/2 relative h-64 lg:h-auto">
               <Image
-                src="https://img.freepik.com/free-photo/smiling-female-customer-standing-near-open-door-receiving-order-from-grocery-store-caucasian-courier-delivering-order-holding-tablet-with-address-food-delivery-service-shopping-concept_74855-12012.jpg?t=st=1754107205~exp=1754110805~hmac=c70c1d6ed166d66f773cd83c598f6893b9ad626fef2d0c464f4111799f5fc518&w=1380"
-                alt="Capture and convert"
+                src="/happy-courier-showing-order-sheet-client-holding-clipboard-professional-deliveryman-carrying-paper-bag-woman-receiving-order-home-food-delivery-service-online-shopping-concept.jpg"
+                alt={t('landing.ourServices.step4.imageAlt', 'Livraison à domicile au Maroc')}
                 fill
                 className="object-cover"
               />
@@ -188,8 +188,8 @@ export function OurServiceSection() {
             </div>
             <div className="lg:w-1/2 relative h-64 lg:h-auto">
               <Image
-                src="https://img.freepik.com/free-photo/young-beautiful-girl-wearing-orange-t-shirt-holding-paper-package-credit-card-smiling-cheerfully-standing-isolated-orange-background_141793-24560.jpg?t=st=1754107282~exp=1754110882~hmac=387220a9c4fe9fa873d8d457a6e088958327096514551c49af6ee0613648399f&w=1380"
-                alt="Share your quiz"
+                src="/young-beautiful-girl-wearing-orange-t-shirt-holding-paper-package-credit-card-smiling-cheerfully-standing-isolated-orange-background.jpg"
+                alt={t('landing.ourServices.step5.imageAlt', 'Profiter des achats livrés')}
                 fill
                 className="object-cover"
               />

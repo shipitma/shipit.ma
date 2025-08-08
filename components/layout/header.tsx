@@ -25,10 +25,9 @@ export function Header() {
   }
 
   const navigationItems = [
-    { href: "#home", label: t('header.home', 'Accueil') },
+    { href: "/", label: t('header.home', 'Accueil') },
     { href: "#how-it-works", label: t('header.howItWorks', 'Comment ça marche') },
     { href: "#services", label: t('header.services', 'Nos Services') },
-    { href: "#pricing", label: t('header.pricing', 'Tarifs') },
     { href: "/contact", label: t('header.contact', 'Contact') },
   ]
 

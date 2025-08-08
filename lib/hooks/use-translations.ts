@@ -13,20 +13,39 @@ export function useTranslations() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  // Load translation file
+  // Load translation files
   useEffect(() => {
     const loadTranslations = async () => {
       setLoading(true)
       setError(null)
       
       try {
-        const response = await fetch(`/messages/${language}.json`)
-        if (!response.ok) {
-          throw new Error(`Failed to load ${language} translations`)
+        // Load main translations
+        const mainResponse = await fetch(`/messages/${language}.json`)
+        if (!mainResponse.ok) {
+          throw new Error(`Failed to load ${language} main translations`)
         }
         
-        const data = await response.json()
-        setTranslations(data)
+        const mainData = await mainResponse.json()
+        
+        // Load landing page translations
+        let landingData = {}
+        try {
+          const landingResponse = await fetch(`/messages/landing-${language}.json`)
+          if (landingResponse.ok) {
+            landingData = await landingResponse.json()
+          }
+        } catch (landingErr) {
+          console.warn(`Landing translations not found for ${language}, using main translations only`)
+        }
+        
+        // Merge translations (landing translations will override main translations if there are conflicts)
+        const mergedTranslations = {
+          ...mainData,
+          ...landingData
+        }
+        
+        setTranslations(mergedTranslations)
       } catch (err) {
         console.error(`Error loading ${language} translations:`, err)
         setError(err instanceof Error ? err.message : 'Translation loading failed')
@@ -34,11 +53,29 @@ export function useTranslations() {
         // Fallback to English if current language fails
         if (language !== 'en') {
           try {
-            const fallbackResponse = await fetch('/messages/en.json')
-            if (fallbackResponse.ok) {
-              const fallbackData = await fallbackResponse.json()
-              setTranslations(fallbackData)
+            // Load English main translations
+            const fallbackMainResponse = await fetch('/messages/en.json')
+            let fallbackData = {}
+            
+            if (fallbackMainResponse.ok) {
+              fallbackData = await fallbackMainResponse.json()
             }
+            
+            // Load English landing translations
+            try {
+              const fallbackLandingResponse = await fetch('/messages/landing-en.json')
+              if (fallbackLandingResponse.ok) {
+                const fallbackLandingData = await fallbackLandingResponse.json()
+                fallbackData = {
+                  ...fallbackData,
+                  ...fallbackLandingData
+                }
+              }
+            } catch (fallbackLandingErr) {
+              console.warn('English landing translations not found')
+            }
+            
+            setTranslations(fallbackData)
           } catch (fallbackErr) {
             console.error('Fallback translation loading failed:', fallbackErr)
           }

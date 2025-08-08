@@ -219,6 +219,7 @@
   },
   "profile": {
     "title": "Paramètres du Profil",
+    "subtitle": "Gérez vos informations personnelles et votre adresse de livraison",
     "personalInfo": {
       "title": "Informations Personnelles",
       "subtitle": "Gérez vos informations de base",
@@ -241,65 +242,14 @@
     "home": "Accueil",
     "howItWorks": "Comment ça marche",
     "services": "Nos Services",
-    "pricing": "Tarifs",
+    "footerCTA": "Commencer maintenant",
     "contact": "Contact",
     "myAccount": "Mon Compte",
     "register": "S'inscrire",
     "login": "Se Connecter",
     "openMenu": "Ouvrir le menu"
   },
-  "hero": {
-    "title": "Vos Achats Internationaux au Maroc : Simplifiés, Rapides, Sans Surprises.",
-    "subtitle": "Accédez aux meilleures marques des USA, Turquie, Espagne et France. Nous gérons tout, de l'achat à la livraison directe à votre porte au Maroc. Vivez l'expérience d'achat sans frontières !",
-    "description": "Nous gérons tout, de l'achat à la livraison directe à votre porte au Maroc. Vivez l'expérience d'achat sans frontières !",
-    "startButton": "Commencer !",
-    "discoverButton": "Découvrir Nos Services",
-    "testimonial": "Grâce à shipit, j'ai pu commander des articles exclusifs des USA que je ne trouvais pas au Maroc. Le regroupement a vraiment réduit les frais, et la livraison a été rapide sans aucun souci de douane. Je recommande à 100% !",
-    "testimonialAuthor": "Fatima Z., Casablanca",
-    "testimonialRole": "Cliente satisfaite",
-    "carouselTestimonial1": {
-      "quote": "Shipit a complètement transformé mon expérience d'achat en ligne. Plus besoin de se soucier des frais de douane ou des délais de livraison. Le service est exceptionnel et l'équipe est incroyablement réactive !",
-      "author": "Ahmed M.",
-      "role": "Client fidèle, Rabat"
-    },
-    "carouselTestimonial2": {
-      "quote": "Service excellent ! J'ai reçu mes commandes plus rapidement que prévu. L'équipe est très professionnelle et réactive. Je recommande vivement pour quiconque fait des achats internationaux.",
-      "author": "Sara K.",
-      "role": "Cliente régulière, Marrakech"
-    },
-    "carouselTestimonial3": {
-      "quote": "La fonctionnalité de consolidation m'a fait économiser énormément d'argent sur l'expédition. Je peux maintenant acheter dans plusieurs magasins et tout expédier ensemble. C'est exactement ce dont j'avais besoin !",
-      "author": "Youssef B.",
-      "role": "Passionné de tech, Fès"
-    },
-    "carouselTestimonial4": {
-      "quote": "Support client incroyable ! Ils m'ont aidé à chaque étape de mon premier achat international. Le processus était fluide et transparent du début à la fin.",
-      "author": "Layla R.",
-      "role": "Cliente première fois, Agadir"
-    },
-    "carouselTestimonial5": {
-      "quote": "J'utilise Shipit depuis plus d'un an maintenant. Leur fiabilité et leur attention aux détails en font mon choix pour tous mes achats internationaux.",
-      "author": "Karim T.",
-      "role": "Client de longue date, Tanger"
-    },
-    "testimonialsSection": {
-      "title": "Ce que disent nos clients",
-      "subtitle": "Plus de",
-      "subtitle2": "clients au Maroc nous font confiance pour leurs achats internationaux",
-      "clients": "clients"
-    }
-  },
-  "howItWorks": {
-    "title": "Comment Ça Marche ?",
-    "subtitle": "Transformez vos envies d'achats en réalité grâce à un processus simple et interactif",
-    "step1": "1. Inscrivez-vous et obtenez une adresse de livraison grâce à Shipit.",
-    "step2": "2. Achetez dans les boutiques de votre choix et expédiez vos articles à votre nouvelle adresse.",
-    "step3": "3. Regroupez vos colis pour payer moins cher",
-    "startButton": "Commencez Votre Aventure Shopping !"
-  },
-  "footer": {
-    "copyright": "Tous droits réservés."
-  },
+
   "mainLayout": {
     "loading": "Chargement...",
     "quickActions": "Actions Rapides",
@@ -449,132 +399,7 @@
       }
     }
   },
-  "landing": {
-    "ourServices": {
-      "title": "Vous Achetez, Nous Livrons.",
-      "subtitle": "Notre processus est conçu pour être simple et transparent, vous garantissant une expérience sans tracas du début à la fin.",
-      "step1": {
-        "title": "Créez Votre Compte et Obtenez Votre Adresse GRATUITE",
-        "description": "Rejoignez Shipit en quelques clics ! Recevez instantanément votre adresse de réexpédition personnalisée en Turquie, en Europe ou aux États-Unis."
-      },
-      "step2": {
-        "title": "Magasinez en Ligne, Nous Nous Chargeons de la Réception",
-        "description": "Faites vos achats sur vos sites préférés en Turquie, en Europe ou aux États-Unis et faites-les livrer à votre nouvelle adresse Shipit. Nous prenons le relais dès l'arrivée de votre colis."
-      },
-      "step3": {
-        "title": "Personnalisez Votre Expédition : Vos Choix, Vos Économies",
-        "description": "Dès que votre colis arrive chez nous, vous êtes notifié ! C'est le moment de personnaliser votre envoi pour qu'il arrive exactement comme vous le souhaitez.",
-        "feature1": "Photos détaillées du contenu : assurez-vous de l'état de vos articles.",
-        "feature2": "Regroupement intelligent : combinez plusieurs colis et économisez jusqu'à 80% sur les frais d'expédition.",
-        "feature3": "Protection renforcée : ajoutez de l'adhésif ou du papier bulle supplémentaire pour une sécurité optimale."
-      },
-      "step4": {
-        "title": "Recevez Votre Colis Directement au Maroc",
-        "description": "Une fois votre expédition configurée, détendez-vous ! Nous nous occupons de tout pour que votre colis arrive à votre porte au Maroc.",
-        "feature1": "Déclarations douanières prises en charge",
-        "feature2": "Livraison rapide à domicile",
-        "feature3": "Livraison à domicile",
-        "feature4": "Support client dédié"
-      },
-      "step5": {
-        "title": "Profitez de Vos Achats !",
-        "description": "Votre colis est arrivé ? Félicitations ! Il ne vous reste plus qu'à profiter de vos nouveaux articles. N'attendez plus pour vos prochaines sessions shopping, nous sommes là pour vous !"
-      },
-      "whyChooseUs": {
-        "title": "Pourquoi Choisir Notre Plateforme Plutôt que les Solutions Traditionnelles ?",
-        "subtitle": "Contrairement aux solutions traditionnelles ou aux faveurs familiales à l'étranger, nous sommes la première plateforme marocaine offrant un service complet d'achat international et de réexpédition avec garantie de satisfaction.",
-        "traditionalSolutions": {
-          "title": "Les autres solutions : Complexes et limitées !",
-          "issue1": {
-            "title": "Démarches complexes :",
-            "description": "Multiples intermédiaires et formalités."
-          },
-          "issue2": {
-            "title": "Carte bancaire internationale requise :",
-            "description": "Impossible d'acheter sans carte internationale."
-          },
-          "issue3": {
-            "title": "Coûts cachés :",
-            "description": "Frais supplémentaires découverts à la livraison."
-          },
-          "issue4": {
-            "title": "Délais imprévisibles :",
-            "description": "Aucune garantie sur les temps de transit."
-          },
-          "issue5": {
-            "title": "Support limité :",
-            "description": "Assistance uniquement en cas de problème majeur."
-          }
-        },
-        "ourPlatform": {
-          "title": "Notre plateforme : Service tout-en-un, pensé pour vous !",
-          "benefit1": {
-            "title": "Plateforme tout-en-un :",
-            "description": "Réexpédition ET achat assisté sur une seule interface."
-          },
-          "benefit2": {
-            "title": "Transparence totale :",
-            "description": "Tous les frais affichés dès le départ, sans surprise."
-          },
-          "benefit3": {
-            "title": "Suivi en temps réel :",
-            "description": "Visibilité complète de votre commande à chaque étape."
-          },
-          "benefit4": {
-            "title": "Accompagnement personnalisé :",
-            "description": "Support dédié de l'achat à la livraison."
-          },
-          "benefit5": {
-            "title": "Garantie de satisfaction :",
-            "description": "Service garanti avec remboursement si vous n'êtes pas satisfait."
-          }
-        },
-        "weBuyForYou": {
-          "title": "Nous achetons pour vous !",
-          "subtitle": "Pas de carte bancaire internationale ou des difficultés à acheter en ligne ?",
-          "description": "Donnez-nous votre liste d'articles souhaités. Nous les achetons pour vous et les ajoutons à votre envoi.",
-          "column1": {
-            "title": "Sans Carte, Sans Stress",
-            "subtitle": "Nous achetons pour vous, sans frais cachés."
-          },
-          "button": "Envoyer ma liste d'achats",
-          "step1": "Dites-nous ce que vous voulez",
-          "step2": "Nous vérifions la disponibilité et procédons à l'achat des produits",
-          "step3": "Une fois reçus, nous vous les expédions."
-        }
-      },
-      "partnerBrands": {
-        "title": "Commandez sur vos sites préférés",
-        "subtitle": "Ne vous limitez plus ! Faites votre shopping sur Trendyol, Amazon, Vente-Privée, eBay ou tout autre site en Turquie, en Europe ou aux États-Unis — nous nous occupons du reste."
-      },
-      "pricing": {
-        "title": "Commencez à Économiser Aujourd'hui !",
-        "subtitle": "Obtenez une adresse gratuite aux États-Unis, en Turquie, en Espagne ou en France. Nous gérons tout, de l'achat à la livraison directe à votre porte au Maroc.",
-        "price": "À partir de 19 MAD",
-        "priceUnit": "par envoi",
-        "button": "Voir les Tarifs"
-      },
-      "testimonials": {
-        "title": "Ce que disent nos clients",
-        "subtitle": "Découvrez les témoignages de nos clients satisfaits qui nous font confiance pour leurs achats internationaux",
-        "testimonial1": {
-          "quote": "Grâce à shipit, j'ai pu commander des articles exclusifs des USA que je ne trouvais pas au Maroc. Le regroupement a vraiment réduit les frais, et la livraison a été rapide sans aucun souci de douane. Je recommande à 100% !",
-          "author": "Fatima Z.",
-          "role": "Cliente satisfaite, Casablanca"
-        },
-        "testimonial2": {
-          "quote": "Shipit a transformé ma façon de faire du shopping en ligne. Plus besoin de me soucier des frais de douane ou des délais de livraison. Le service est exceptionnel !",
-          "author": "Ahmed M.",
-          "role": "Client fidèle, Rabat"
-        },
-        "testimonial3": {
-          "quote": "Excellent service ! J'ai reçu mes commandes plus rapidement que prévu. L'équipe est très professionnelle et réactive.",
-          "author": "Sara K.",
-          "role": "Cliente régulière, Marrakech"
-        }
-      }
-    }
-  },
+
   "contact": {
     "title": "Comment nous contacter",
     "description": "Shipit vous permet de recevoir vos colis des États-Unis, d'Europe et de Turquie directement au Maroc. Pour toute question, le moyen le plus rapide de nous joindre est via notre chat de support.",

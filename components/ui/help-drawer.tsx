@@ -43,7 +43,7 @@ export const HelpDrawer: FC<HelpDrawerProps> = ({ className = "" }) => {
             </div>
             <div className="flex-1">
               <div className="font-medium text-gray-900">
-                {t('mainLayout.help.callUs', 'J\'appelle au')}
+                {t('mainLayout.help.callUs', 'Appelez au')}
               </div>
               <div className="text-sm text-gray-500 font-semibold">
                 0522 300 900
@@ -68,7 +68,7 @@ export const HelpDrawer: FC<HelpDrawerProps> = ({ className = "" }) => {
             </div>
             <div className="flex-1">
               <div className="font-medium text-gray-900">
-                {t('mainLayout.help.contactWhatsapp', 'Je prends contact sur Whatsapp')}
+                {t('mainLayout.help.contactWhatsapp', 'Contactez sur WhatsApp')}
               </div>
               <div className="text-sm text-gray-500">
                 {t('mainLayout.help.whatsappDescription', 'Chat en direct avec notre équipe')}
@@ -87,7 +87,7 @@ export const HelpDrawer: FC<HelpDrawerProps> = ({ className = "" }) => {
             </div>
             <div className="flex-1">
               <div className="font-medium text-gray-900">
-                {t('mainLayout.help.consultHelpPage', 'Je consulte la page d\'aide')}
+                {t('mainLayout.help.consultHelpPage', 'Consultez la page d\'aide')}
               </div>
               <div className="text-sm text-gray-500">
                 {t('mainLayout.help.helpPageDescription', 'FAQ et guides d\'utilisation')}

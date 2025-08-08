@@ -13,7 +13,7 @@ export default function ProfilePage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-lg font-semibold">{t('profile.title', 'Paramètres du Profil')}</h1>
-        <p className="text-sm text-gray-600">Gérez vos informations personnelles et votre adresse de livraison</p>
+        <p className="text-sm text-gray-600">{t('profile.subtitle', 'Gérez vos informations personnelles et votre adresse de livraison')}</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
