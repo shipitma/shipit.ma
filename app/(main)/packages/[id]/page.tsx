@@ -49,31 +49,24 @@ const getStatusColor = (status: string) => {
   }
 }
 
-const getStatusLabel = (status: string) => {
+const getStatusLabel = (status: string, t: (key: string, fallback?: string) => string) => {
   switch (status) {
     case "expected":
-      return "Attendu"
+      return t('packages.statusLabels.expected', 'Attendu')
     case "processing":
-      return "En Traitement"
+      return t('packages.statusLabels.processing', 'En Traitement')
     case "arrived":
-      return "Arrivé"
+      return t('packages.statusLabels.arrived', 'Arrivé')
     case "in_transit":
-      return "En Transit"
+      return t('packages.statusLabels.in_transit', 'En Transit')
     case "delivered":
-      return "Livré"
+      return t('packages.statusLabels.delivered', 'Livré')
     default:
       return status.replace("_", " ")
   }
 }
 
-const formatDate = (dateString: string): string => {
-  const date = new Date(dateString)
-  const day = String(date.getDate()).padStart(2, "0")
-  const month = String(date.getMonth() + 1).padStart(2, "0") // Month is 0-indexed
-  const year = date.getFullYear()
 
-  return `${day}/${month}/${year}`
-}
 
 const getTimelineIcon = (icon: string) => {
   switch (icon) {
@@ -96,7 +89,7 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
   const router = useRouter()
   const { toast } = useToast()
   const { t } = useTranslations()
-  const { isRTL } = useLanguage()
+  const { language, isRTL } = useLanguage()
   const [packageData, setPackageData] = useState<PackageWithAttachments | null>(null)
   const [loading, setLoading] = useState(true)
   const { id } = React.use(params)
@@ -154,7 +147,7 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
         <div className="flex items-center gap-2">
             <h1 className="text-lg font-semibold">{packageData.id}</h1>
             <Badge className={getStatusColor(packageData.status) + ' text-xs'} variant="secondary">
-              {getStatusLabel(packageData.status)}
+              {getStatusLabel(packageData.status, t)}
             </Badge>
         </div>
 
@@ -180,19 +173,19 @@ export default function PackageDetailPage({ params }: { params: Promise<{ id: st
               <div className="flex justify-between">
                 <span className="text-sm text-gray-500">{t('packageDetail.summary.value', 'Valeur')} :</span>
                 <span className="text-sm font-medium">
-                  {packageData.estimated_value ? formatCurrency(packageData.estimated_value) : "N/A"}
+                  {packageData.estimated_value ? formatCurrency(packageData.estimated_value, language) : "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-gray-500">{t('packageDetail.summary.shipping', 'Expédition')} :</span>
                 <span className="text-sm font-medium">
-                  {packageData.shipping_cost ? formatCurrency(packageData.shipping_cost) : "N/A"}
+                  {packageData.shipping_cost ? formatCurrency(packageData.shipping_cost, language) : "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-gray-500">{t('packageDetail.summary.insurance', 'Assurance')} :</span>
                 <span className="text-sm font-medium">
-                  {packageData.insurance ? formatCurrency(packageData.insurance) : "N/A"}
+                  {packageData.insurance ? formatCurrency(packageData.insurance, language) : "N/A"}
                 </span>
               </div>
               {packageData.carrier && (

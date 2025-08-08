@@ -263,7 +263,7 @@ async function main() {
         service: 'Express Worldwide',
         transit_time: '3-5 jours ouvrables',
         tracking_url: 'https://www.dhl.com/track?AWB=DHL123456789',
-        insurance_details: 'Inclus jusqu\'à 3000€'
+        insurance_details: 'Inclus jusqu\'à 3000 MAD'
       },
       {
         id: 'PKG-2025-002',
@@ -286,7 +286,7 @@ async function main() {
         service: 'UPS Standard',
         transit_time: '5-7 jours ouvrables',
         tracking_url: 'https://www.ups.com/track?loc=en_US&tracknum=UPS987654321',
-        insurance_details: 'Inclus jusqu\'à 2000€'
+        insurance_details: 'Inclus jusqu\'à 2000 MAD'
       },
       {
         id: 'PKG-2025-003',
@@ -309,7 +309,7 @@ async function main() {
         service: 'FedEx Express',
         transit_time: '3-5 jours ouvrables',
         tracking_url: 'https://www.fedex.com/fedextrack/?trknbr=FED456789123',
-        insurance_details: 'Inclus jusqu\'à 1600€'
+        insurance_details: 'Inclus jusqu\'à 1600 MAD'
       },
       {
         id: 'PKG-2025-004',
@@ -332,7 +332,7 @@ async function main() {
         service: 'Express Worldwide',
         transit_time: '3-5 jours ouvrables',
         tracking_url: 'https://www.dhl.com/track?AWB=DHL789123456',
-        insurance_details: 'Inclus jusqu\'à 1000€'
+        insurance_details: 'Inclus jusqu\'à 1000 MAD'
       },
       {
         id: 'PKG-2025-005',
@@ -355,7 +355,7 @@ async function main() {
         service: 'UPS Standard',
         transit_time: '5-7 jours ouvrables',
         tracking_url: 'https://www.ups.com/track?loc=en_US&tracknum=UPS321654987',
-        insurance_details: 'Inclus jusqu\'à 1500€'
+        insurance_details: 'Inclus jusqu\'à 1500 MAD'
       },
       {
         id: 'PKG-2025-006',
@@ -378,7 +378,7 @@ async function main() {
         service: 'FedEx Express',
         transit_time: '3-5 jours ouvrables',
         tracking_url: 'https://www.fedex.com/fedextrack/?trknbr=FED654321987',
-        insurance_details: 'Inclus jusqu\'à 700€'
+        insurance_details: 'Inclus jusqu\'à 700 MAD'
       }
     ]
   });

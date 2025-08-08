@@ -47,7 +47,7 @@ export default function PackagesPage() {
   const { toast } = useToast()
   const { trackPackage, trackError } = useAnalytics()
   const { t } = useTranslations()
-  const { language } = useLanguage()
+  const { language, isRTL } = useLanguage()
 
   const getStatusLabel = (status: string) => {
     switch (status) {
@@ -366,13 +366,13 @@ export default function PackagesPage() {
                   <div className="flex justify-between py-0.5">
                     <span className="text-gray-500">{t('packages.shippingCost', 'Shipping Cost')}:</span>
                     <span className={pkg.shipping_cost ? "font-semibold" : "text-orange-600 font-medium"}>
-                      {pkg.shipping_cost ? formatCurrency(pkg.shipping_cost) : t('packages.pending', 'Pending')}
+                      {pkg.shipping_cost ? formatCurrency(pkg.shipping_cost, language) : t('packages.pending', 'Pending')}
                     </span>
                   </div>
                   {pkg.insurance && (
                     <div className="flex justify-between py-0.5">
                       <span className="text-gray-500">{t('packages.insurance', 'Assurance')}:</span>
-                      <span className="font-medium">{formatCurrency(pkg.insurance)}</span>
+                      <span className="font-medium">{formatCurrency(pkg.insurance, language)}</span>
                     </div>
                   )}
                 </div>
@@ -414,12 +414,31 @@ export default function PackagesPage() {
                 {/* Last Update */}
                 {pkg.updated_at && (
                   <div className="text-sm text-gray-400 pt-1 border-t border-gray-100">
-                    {t('packages.lastUpdated', 'Last Updated')}: {new Date(pkg.updated_at).toLocaleDateString(language === 'fr' ? 'fr-FR' : 'en-US', { 
-                      day: '2-digit', 
-                      month: '2-digit',
-                      hour: '2-digit',
-                      minute: '2-digit'
-                    })}
+                    {t('packages.lastUpdated', 'Last Updated')}: {isRTL ? (
+                      <>
+                        {new Date(pkg.updated_at).toLocaleTimeString('en-GB', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: false
+                        })} {new Date(pkg.updated_at).toLocaleDateString('en-GB', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric'
+                        })}
+                      </>
+                    ) : (
+                      <>
+                        {new Date(pkg.updated_at).toLocaleDateString('en-GB', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric'
+                        })} {new Date(pkg.updated_at).toLocaleTimeString('en-GB', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: false
+                        })}
+                      </>
+                    )}
                   </div>
                 )}
 

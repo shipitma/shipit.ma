@@ -124,6 +124,14 @@
       "title": "المرفقات",
       "view": "عرض",
       "fileSize": "كيلوبايت"
+    },
+    "adminNotes": {
+      "title": "ملاحظات المدير"
+    },
+    "info": {
+      "title": "المعلومات",
+      "creationDate": "تاريخ الإنشاء",
+      "lastUpdate": "آخر تحديث"
     }
   },
   "login": {
@@ -322,7 +330,9 @@
       "needHelp": "تحتاج مساعدة؟",
       "callUs": "اتصل على",
       "contactWhatsapp": "تواصل عبر الواتساب",
-      "consultHelpPage": "راجع صفحة المساعدة"
+      "consultHelpPage": "راجع صفحة المساعدة",
+      "whatsappDescription": "دردشة مباشرة مع فريقنا",
+      "helpPageDescription": "الأسئلة الشائعة وأدلة الاستخدام"
     },
     "user": {
       "profile": "الملف الشخصي",

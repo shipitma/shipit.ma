@@ -19,13 +19,40 @@ export type {
 } from '@prisma/client'
 
 // Utility functions
-export const formatCurrency = (amount: number | null | undefined | any): string => {
-  if (amount === null || amount === undefined) return '0,00 €'
+export const formatCurrency = (amount: number | null | undefined | any, language: string = 'en'): string => {
+  if (amount === null || amount === undefined) {
+    switch (language) {
+      case 'ar':
+        return '0,00 درهم'
+      case 'fr':
+        return '0,00 MAD'
+      default:
+        return '0.00 MAD'
+    }
+  }
+  
   const numAmount = typeof amount === 'object' && amount !== null ? Number(amount) : Number(amount)
-  return new Intl.NumberFormat('fr-FR', {
-    style: 'currency',
-    currency: 'EUR',
-  }).format(numAmount)
+  
+  switch (language) {
+    case 'ar':
+      // Arabic formatting with درهم symbol
+      return new Intl.NumberFormat('ar-MA', {
+        style: 'currency',
+        currency: 'MAD',
+      }).format(numAmount)
+    case 'fr':
+      // French formatting with MAD
+      return new Intl.NumberFormat('fr-MA', {
+        style: 'currency',
+        currency: 'MAD',
+      }).format(numAmount)
+    default:
+      // English formatting with MAD
+      return new Intl.NumberFormat('en-MA', {
+        style: 'currency',
+        currency: 'MAD',
+      }).format(numAmount)
+  }
 }
 
 export const formatDate = (date: Date | string | null | undefined): string => {

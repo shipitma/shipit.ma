@@ -124,6 +124,14 @@
       "title": "Pièces jointes",
       "view": "Voir",
       "fileSize": "Ko"
+    },
+    "adminNotes": {
+      "title": "Notes de l'Administrateur"
+    },
+    "info": {
+      "title": "Informations",
+      "creationDate": "Date de création",
+      "lastUpdate": "Dernière mise à jour"
     }
   },
   "login": {
@@ -322,7 +330,9 @@
       "needHelp": "Besoin d'aide ?",
       "callUs": "Appelez au",
       "contactWhatsapp": "Contactez sur WhatsApp",
-      "consultHelpPage": "Consultez la page d'aide"
+      "consultHelpPage": "Consultez la page d'aide",
+      "whatsappDescription": "Chat en direct avec notre équipe",
+      "helpPageDescription": "FAQ et guides d'utilisation"
     },
     "user": {
       "profile": "Profil",

@@ -22,7 +22,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Upload } from "lucide-react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { type PurchaseRequest, formatCurrency, formatDateWithLanguage } from "@/lib/database"
+import { type PurchaseRequest, formatCurrency } from "@/lib/database"
 import { useAuth } from "@/lib/auth-context"
 import { useTranslations } from "@/lib/hooks/use-translations"
 import { useLanguage } from "@/lib/context/language-context"
@@ -63,7 +63,7 @@ export default function PurchasesPage() {
   const { trackPurchase, trackError } = useAnalytics()
   const { user } = useAuth()
   const { t } = useTranslations()
-  const { language } = useLanguage()
+  const { language, isRTL } = useLanguage()
 
   const getStatusLabel = (status: string) => {
     switch (status) {
@@ -348,7 +348,7 @@ export default function PurchasesPage() {
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">{t('purchases.total', 'Total')}:</span>
-                    <span className="font-medium">{formatCurrency(request.total_amount ? Number(request.total_amount) : null)}</span>
+                    <span className="font-medium">{formatCurrency(request.total_amount ? Number(request.total_amount) : null, language)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">{t('purchases.items', 'Items')}:</span>
@@ -356,7 +356,31 @@ export default function PurchasesPage() {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">{t('purchases.created', 'Created')}:</span>
-                    <span className="font-medium">{formatDateWithLanguage(request.created_at, language)}</span>
+                    <span className="font-medium">{isRTL ? (
+                      <>
+                        {new Date(request.created_at).toLocaleTimeString('en-GB', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: false
+                        })} {new Date(request.created_at).toLocaleDateString('en-GB', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric'
+                        })}
+                      </>
+                    ) : (
+                      <>
+                        {new Date(request.created_at).toLocaleDateString('en-GB', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric'
+                        })} {new Date(request.created_at).toLocaleTimeString('en-GB', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: false
+                        })}
+                      </>
+                    )}</span>
                   </div>
                 </div>
 

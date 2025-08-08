@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 
 import { ArrowLeft, ArrowRight, Check, Upload, ExternalLink, Package, FileText, ImageIcon, Receipt, Clock, CheckCircle, AlertCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import { type PurchaseRequest, type Attachment, formatCurrency, formatDate } from "@/lib/database"
+import { type PurchaseRequest, type Attachment, formatCurrency } from "@/lib/database"
 
 // Custom type for purchase request with attachments
 type PurchaseRequestWithAttachments = PurchaseRequest & {
@@ -80,7 +80,7 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
   const router = useRouter()
   const { toast } = useToast()
   const { t } = useTranslations()
-  const { isRTL } = useLanguage()
+  const { language, isRTL } = useLanguage()
   const [purchaseRequest, setPurchaseRequest] = useState<PurchaseRequestWithAttachments | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -154,38 +154,38 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
               <div className="flex justify-between">
                 <span className="text-sm text-gray-500">{t('purchaseDetail.summary.itemsCost', 'Coût des Articles')} :</span>
                 <span className="text-sm font-medium">
-                  {purchaseRequest.items_cost ? formatCurrency(purchaseRequest.items_cost) : "N/A"}
+                  {purchaseRequest.items_cost ? formatCurrency(purchaseRequest.items_cost, language) : "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-gray-500">{t('purchaseDetail.summary.shippingFee', 'Frais d\'Expédition')} :</span>
                 <span className="text-sm font-medium">
-                  {purchaseRequest.shipping_fee ? formatCurrency(purchaseRequest.shipping_fee) : "N/A"}
+                  {purchaseRequest.shipping_fee ? formatCurrency(purchaseRequest.shipping_fee, language) : "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-gray-500">{t('purchaseDetail.summary.serviceFee', 'Frais de Service')} :</span>
                 <span className="text-sm font-medium">
-                  {purchaseRequest.service_fee ? formatCurrency(purchaseRequest.service_fee) : "N/A"}
+                  {purchaseRequest.service_fee ? formatCurrency(purchaseRequest.service_fee, language) : "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-gray-500">{t('purchaseDetail.summary.processingFee', 'Frais de Traitement')} :</span>
                 <span className="text-sm font-medium">
-                  {purchaseRequest.processing_fee ? formatCurrency(purchaseRequest.processing_fee) : "N/A"}
+                  {purchaseRequest.processing_fee ? formatCurrency(purchaseRequest.processing_fee, language) : "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-gray-500">{t('purchaseDetail.summary.taxes', 'Taxes')} :</span>
                 <span className="text-sm font-medium">
-                  {purchaseRequest.taxes ? formatCurrency(purchaseRequest.taxes) : "N/A"}
+                  {purchaseRequest.taxes ? formatCurrency(purchaseRequest.taxes, language) : "N/A"}
                 </span>
               </div>
               <div className="border-t border-gray-200 pt-2">
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium">{t('purchaseDetail.summary.totalAmount', 'Montant Total')} :</span>
                   <span className="text-lg font-bold text-orange-600">
-                    {formatCurrency(purchaseRequest.payment_due || purchaseRequest.total_amount)}
+                    {formatCurrency(purchaseRequest.total_amount, language)}
                   </span>
                 </div>
               </div>
@@ -200,7 +200,7 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
               {purchaseRequest.admin_notes && (
                 <Card className="border-gray-200">
                   <CardHeader className="pb-3">
-                    <CardTitle className="text-base font-semibold">Notes de l'Administrateur</CardTitle>
+                    <CardTitle className="text-base font-semibold">{t('purchaseDetail.adminNotes.title', 'Notes de l\'Administrateur')}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="p-3 bg-orange-50 rounded-md border border-orange-200">
@@ -258,15 +258,63 @@ export default function PurchaseRequestDetailPage({ params }: { params: Promise<
           <Card className="border-gray-200">
             <CardContent className="p-3">
               <div className="space-y-2">
-                <h4 className="text-sm font-medium text-gray-900">Informations</h4>
+                <h4 className="text-sm font-medium text-gray-900">{t('purchaseDetail.info.title', 'Informations')}</h4>
                 <div className="space-y-1">
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-500">Date de création :</span>
-                    <span className="text-sm font-medium">{formatDate(purchaseRequest.date)}</span>
+                    <span className="text-sm text-gray-500">{t('purchaseDetail.info.creationDate', 'Date de création')} :</span>
+                    <span className="text-sm font-medium">{purchaseRequest.date ? (isRTL ? (
+                      <>
+                        {new Date(purchaseRequest.date).toLocaleTimeString('en-GB', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: false
+                        })} {new Date(purchaseRequest.date).toLocaleDateString('en-GB', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric'
+                        })}
+                      </>
+                    ) : (
+                      <>
+                        {new Date(purchaseRequest.date).toLocaleDateString('en-GB', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric'
+                        })} {new Date(purchaseRequest.date).toLocaleTimeString('en-GB', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: false
+                        })}
+                      </>
+                    )) : 'N/A'}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-500">Dernière mise à jour :</span>
-                    <span className="text-sm font-medium">{formatDate(purchaseRequest.updated_at)}</span>
+                    <span className="text-sm text-gray-500">{t('purchaseDetail.info.lastUpdate', 'Dernière mise à jour')} :</span>
+                    <span className="text-sm font-medium">{purchaseRequest.updated_at ? (isRTL ? (
+                      <>
+                        {new Date(purchaseRequest.updated_at).toLocaleTimeString('en-GB', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: false
+                        })} {new Date(purchaseRequest.updated_at).toLocaleDateString('en-GB', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric'
+                        })}
+                      </>
+                    ) : (
+                      <>
+                        {new Date(purchaseRequest.updated_at).toLocaleDateString('en-GB', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric'
+                        })} {new Date(purchaseRequest.updated_at).toLocaleTimeString('en-GB', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: false
+                        })}
+                      </>
+                    )) : 'N/A'}</span>
                   </div>
                 </div>
               </div>

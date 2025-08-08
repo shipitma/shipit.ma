@@ -124,6 +124,14 @@
       "title": "Attachments",
       "view": "View",
       "fileSize": "KB"
+    },
+    "adminNotes": {
+      "title": "Administrator Notes"
+    },
+    "info": {
+      "title": "Information",
+      "creationDate": "Creation Date",
+      "lastUpdate": "Last Update"
     }
   },
   "login": {
@@ -322,7 +330,9 @@
       "needHelp": "Need Help?",
       "callUs": "Call us at",
       "contactWhatsapp": "Contact on WhatsApp",
-      "consultHelpPage": "Check the help page"
+      "consultHelpPage": "Check the help page",
+      "whatsappDescription": "Direct chat with our team",
+      "helpPageDescription": "FAQ and usage guides"
     },
     "user": {
       "profile": "Profile",
