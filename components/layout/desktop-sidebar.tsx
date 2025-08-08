@@ -15,7 +15,6 @@ import { Package, ShoppingCart, User, LogOut, Home, Plus, HelpCircle, Phone } fr
 import { useAuth } from "@/lib/auth-context"
 import { useTranslations } from "@/lib/hooks/use-translations"
 import { useLanguage } from '@/lib/context/language-context'
-import { LanguageSelector } from '@/components/ui/LanguageSelector'
 import { useRouter } from "next/navigation"
 
 interface DesktopSidebarProps {
@@ -106,16 +105,10 @@ export const DesktopSidebar: FC<DesktopSidebarProps> = ({
               </ul>
             </li>
 
-            {/* Language Selector */}
-            <li className="mt-auto">
-              <div className="text-sm font-medium leading-5 text-gray-400 mb-2">{t('mainLayout.language', 'Langue')}</div>
-              <div className="px-2">
-                <LanguageSelector />
-              </div>
-            </li>
+
 
             {/* Support Links */}
-            <li>
+            <li className="mt-auto">
               <ul role="list" className="-mx-2 mt-2 space-y-1">
                 {supportLinks.map((item) => (
                   <li key={item.name}>

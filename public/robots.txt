@@ -1,0 +1,25 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://shipit.ma/sitemap.xml
+
+# Disallow admin and API routes
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /static/
+
+# Allow important pages
+Allow: /
+Allow: /contact
+Allow: /login
+Allow: /register
+
+# Arabic SEO specific
+# Allow Arabic content
+Allow: /messages/ar.json
+Allow: /messages/landing-ar.json
+
+# Crawl delay for Arabic search engines
+Crawl-delay: 1 

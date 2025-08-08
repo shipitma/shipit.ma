@@ -1,126 +1,112 @@
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "@/lib/hooks/use-translations"
+import { useLanguage } from "@/lib/context/language-context"
+import { useEffect, useRef } from "react"
 
 export function HowItWorksSection() {
   const { t } = useTranslations()
+  const { isRTL } = useLanguage()
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([])
   
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.5,
+      rootMargin: '0px 0px -100px 0px'
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('step-highlight')
+        } else {
+          entry.target.classList.remove('step-highlight')
+        }
+      })
+    }, observerOptions)
+
+    stepRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref)
+    })
+
+    return () => observer.disconnect()
+  }, [])
+
+  const steps = [
+    {
+      title: t('howItWorks.step1.title', 'Créez votre compte'),
+      description: t('howItWorks.step1.description', 'Rejoignez Shipit en quelques clics et recevez immédiatement votre adresse de livraison personnalisée en Turquie. Aucun frais caché, inscription 100% gratuite.')
+    },
+    {
+      title: t('howItWorks.step2.title', 'Achetez en Turquie'),
+      description: t('howItWorks.step2.description', 'Commandez sur Trendyol, Hepsiburada et tous vos sites turcs préférés. Nous réceptionnons vos colis et les stockons en toute sécurité en attendant l\'expédition.')
+    },
+    {
+      title: t('howItWorks.step3.title', 'Recevez au Maroc'),
+      description: t('howItWorks.step3.description', 'Nous regroupons vos colis pour économiser jusqu\'à 80% sur les frais d\'expédition. Livraison rapide à votre porte avec dédouanement inclus.')
+    }
+  ]
+
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6 leading-tight">
-            {t('howItWorks.title', 'Comment Ça Marche ?')}
+            {t('howItWorks.title', 'Comment ça marche')}
           </h2>
-          <p className="text-lg md:text-xl text-gray-600">
-            {t('howItWorks.subtitle', 'Transformez vos désirs d\'achats en réalité grâce à un processus simple et interactif')}
+          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+            {t('howItWorks.subtitle', 'Achetez dans n\'importe quelle boutique turque et recevez vos colis au Maroc facilement')}
           </p>
         </div>
 
-        {/* Generation Box */}
-        <div className="generation_box relative">
-                     {/* Desktop Arrow - hidden on mobile */}
-           <div
-             className="hidden md:block absolute inset-0 pointer-events-none rtl:scale-x-[-1]"
-             style={{
-               backgroundImage:
-                 "url(https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/673443538de5bc7d2a86578c_arrow.svg)",
-               backgroundRepeat: "no-repeat",
-               backgroundPosition: "center",
-               backgroundSize: "contain",
-             }}
-           />
-
-                     {/* Mobile Arrow - visible only on mobile */}
-           <div
-             className="md:hidden absolute inset-0 pointer-events-none rtl:scale-x-[-1]"
-             style={{
-               backgroundImage:
-                 "url(https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/673d88919a5cd6110dd31da7_arrow_img.svg)",
-               backgroundRepeat: "no-repeat",
-               backgroundPosition: "center",
-               backgroundSize: "contain",
-             }}
-           />
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 items-center relative z-10">
-            {/* Traffic */}
-            <div className="generation_box_item item1 text-center group">
-              <div className="generation_box_label bg-gray-100 text-gray-700 group-hover:bg-orange-500 group-hover:text-white transition-colors duration-300 px-6 py-3 rounded-full text-sm font-medium mb-6 inline-block">
-                {t('howItWorks.step1', '1. Inscrivez-vous et obtenez une adresse de livraison grâce à Shipit.')}
-              </div>
-              <div className="generation_box_imgs relative">
-                <Image
-                  src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/67343fa2bc2e4df973eb7082_gen1.png"
-                  alt="Traffic analytics"
-                  width={235}
-                  height={200}
-                  className="generation_box_img mx-auto transition-opacity duration-300 group-hover:opacity-0"
-                />
-                <Image
-                  src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/6734414c8de5bc7d2a8459f8_gen1_h.png"
-                  alt="Traffic analytics hover"
-                  width={235}
-                  height={200}
-                  className="generation_box_img-hover mx-auto absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                />
+        {/* Steps Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          {steps.map((step, index) => (
+            <div
+              key={index}
+              ref={(el) => {
+                stepRefs.current[index] = el
+              }}
+              className="step-card group bg-white border border-gray-200 rounded-2xl p-8 transition-all duration-300 cursor-pointer"
+              dir={isRTL ? 'rtl' : 'ltr'}
+            >
+              {/* Step Content */}
+              <div className="step-content">
+                <h3 className="text-2xl font-bold text-gray-800 mb-6 group-hover:text-orange-600 transition-colors duration-300">
+                  {step.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {step.description}
+                </p>
               </div>
             </div>
-
-            {/* Quiz */}
-            <div className="generation_box_item item2 text-center group">
-              <div className="generation_box_label bg-gray-100 text-gray-700 group-hover:bg-orange-500 group-hover:text-white transition-colors duration-300 px-6 py-3 rounded-full text-sm font-medium mb-6 inline-block">
-                {t('howItWorks.step2', '2. Achetez dans les boutiques de votre choix et expédiez vos articles à votre nouvelle adresse.')}
-              </div>
-              <div className="generation_box_imgs relative">
-                <Image
-                  src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/67343fa23dd426d1ecea98f1_gen2.png"
-                  alt="Quiz interface"
-                  width={530}
-                  height={400}
-                  className="generation_box_img mx-auto transition-opacity duration-300 group-hover:opacity-0 w-full max-w-[530px]"
-                />
-                <Image
-                  src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/6734414c3581ddb720018278_gen2_h.png"
-                  alt="Quiz interface hover"
-                  width={530}
-                  height={400}
-                  className="generation_box_img-hover mx-auto absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 w-full max-w-[530px]"
-                />
-              </div>
-            </div>
-
-            {/* Warm Leads */}
-            <div className="generation_box_item item1 text-center group">
-              <div className="generation_box_label bg-gray-100 text-gray-700 group-hover:bg-orange-500 group-hover:text-white transition-colors duration-300 px-6 py-3 rounded-full text-sm font-medium mb-6 inline-block">
-                {t('howItWorks.step3', '3. Regroupez vos colis pour payer moins cher')}
-              </div>
-              <div className="generation_box_imgs relative">
-                <Image
-                  src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/67343fa2c1833aee4027e334_gen3.png"
-                  alt="Leads dashboard"
-                  width={235}
-                  height={200}
-                  className="generation_box_img mx-auto transition-opacity duration-300 group-hover:opacity-0"
-                />
-                <Image
-                  src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/6734414c8adf4fc1f530d548_gen3_h.png"
-                  alt="Leads dashboard hover"
-                  width={235}
-                  height={200}
-                  className="generation_box_img-hover mx-auto absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                />
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
 
         <div className="text-center">
           <Button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 text-base font-medium">
-            {t('howItWorks.startButton', 'Commencez Votre Aventure Shopping !')}
+            {t('howItWorks.startButton', 'Commencez maintenant')}
           </Button>
         </div>
       </div>
+
+      <style jsx>{`
+        .step-card {
+          position: relative;
+          overflow: hidden;
+          border-color: #e5e7eb;
+        }
+        
+        .step-card:hover,
+        .step-card.step-highlight {
+          border-color: #f97316;
+        }
+        
+        @media (max-width: 768px) {
+          .step-card {
+            margin-bottom: 1rem;
+          }
+        }
+      `}</style>
     </section>
   )
 } 

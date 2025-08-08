@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { Button } from "@/components/ui/button"
 import { useTranslations } from "@/lib/hooks/use-translations"
 
 export function OurServiceSection() {
@@ -195,6 +196,13 @@ export function OurServiceSection() {
               />
             </div>
           </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="text-center mt-16">
+          <Button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 text-base font-medium">
+            {t('landing.ourServices.cta', 'Commencer maintenant')}
+          </Button>
         </div>
       </div>
     </section>

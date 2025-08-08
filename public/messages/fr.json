@@ -401,11 +401,17 @@
   },
 
   "contact": {
-    "title": "Comment nous contacter",
-    "description": "Shipit vous permet de recevoir vos colis des États-Unis, d'Europe et de Turquie directement au Maroc. Pour toute question, le moyen le plus rapide de nous joindre est via notre chat de support.",
-    "chatInstruction": "Cliquez simplement sur l'icône de la main qui salue en bas à droite de l'écran",
-    "responseTime": "En semaine, nous répondons généralement en moins de 2 à 3 minutes.",
-    "emailDescription": "Vous pouvez également nous contacter par e-mail. Nous lisons tous les messages, mais le délai de réponse peut être plus long.",
-    "socialDescription": "Suivez-nous sur les réseaux sociaux, notre équipe est toujours disponible en message privé !"
+    "title": "Contactez-nous",
+    "description": "Envoyez-nous un message et nous vous répondrons dans les plus brefs délais.",
+    "name": "Nom complet",
+    "namePlaceholder": "Votre nom complet",
+    "email": "Email",
+    "emailPlaceholder": "votre@email.com",
+    "subject": "Sujet",
+    "subjectPlaceholder": "Sujet de votre message",
+    "message": "Message",
+    "messagePlaceholder": "Votre message...",
+    "send": "Envoyer le message",
+    "alternative": "Ou contactez-nous directement par email :"
   }
 }

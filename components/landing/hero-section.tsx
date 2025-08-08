@@ -10,39 +10,22 @@ export function HeroSection() {
   return (
     <section className="relative text-white py-20 overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
-        {/* Two Column Layout */}
-        <div className="flex flex-col lg:flex-row items-center gap-12 mb-16" dir={isRTL ? 'rtl' : 'ltr'}>
-          {/* Left Column - Content */}
-          <div className="lg:w-1/2 text-center lg:text-left rtl:text-right">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-left rtl:text-right">
-              {t('hero.title', 'Achetez en Turquie, livré au Maroc — Rapide, Simple, Sans Surprises')}
-            </h1>
-            <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed opacity-90 text-left rtl:text-right">
-              {t('hero.description', 'Solution complète pour vos achats en Turquie avec expédition vers le Maroc — achetez en ligne, regroupez vos colis pour économiser jusqu\'à 80%, et recevez-les rapidement à domicile avec dédouanement inclus.')}
-            </p>
+        {/* Centered Content */}
+        <div className="text-center max-w-4xl mx-auto mb-16" dir={isRTL ? 'rtl' : 'ltr'}>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            {t('hero.title', 'Achetez en Turquie, livré au Maroc — Rapide, Simple, Sans Surprises')}
+          </h1>
+          <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto leading-relaxed opacity-90">
+            {t('hero.description', 'Solution complète pour vos achats en Turquie avec expédition vers le Maroc — achetez en ligne, regroupez vos colis pour économiser jusqu\'à 80%, et recevez-les rapidement à domicile avec dédouanement inclus.')}
+          </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 text-left rtl:text-right">
-              <Button className="bg-white text-orange-600 hover:bg-gray-100 px-8 py-4 text-base font-medium h-12">
-                {t('hero.startButton', 'Commencer maintenant')}
-              </Button>
-              <Button className="bg-orange-600 border-2 border-white text-white hover:bg-white hover:text-orange-600 px-8 py-4 text-base font-medium h-12">
-                {t('hero.discoverButton', 'Découvrir nos services')}
-              </Button>
-            </div>
-          </div>
-
-          {/* Right Column - Phone Image */}
-          <div className="lg:w-1/2 flex justify-center lg:justify-end rtl:justify-start">
-            <div className="relative">
-              <Image
-                src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/678f39cd54859699af3a144b_b1.png"
-                alt="Smartphone with shipping app"
-                width={385}
-                height={600}
-                className="w-auto h-auto max-w-sm lg:max-w-md"
-                priority
-              />
-            </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button className="bg-white text-orange-600 hover:bg-gray-100 px-8 py-4 text-base font-medium h-12">
+              {t('hero.startButton', 'Commencer maintenant')}
+            </Button>
+            <Button className="bg-orange-600 border-2 border-white text-white hover:bg-white hover:text-orange-600 px-8 py-4 text-base font-medium h-12">
+              {t('hero.discoverButton', 'Découvrir nos services')}
+            </Button>
           </div>
         </div>
 
@@ -54,8 +37,8 @@ export function HeroSection() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <div className="flex items-center space-x-4 rtl:space-x-reverse">
               <Image
-                src="https://cdn.prod.website-files.com/5de164d383c9d7a518dd269b/66dff36ec5f549ec1f252d5f_rob.jpg"
-                alt="Robbie F."
+                src="https://randomuser.me/api/portraits/women/33.jpg"
+                alt="Fatima Z."
                 width={60}
                 height={60}
                 className="rounded-full"

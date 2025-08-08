@@ -36,15 +36,24 @@
       "title": "Avis clients",
       "subtitle": "Plus de",
       "subtitle2": "au Maroc nous font confiance pour leurs envois depuis la Turquie",
-              "clients": "clients"
-      }
-    },
+      "clients": "clients"
+    }
+  },
   "howItWorks": {
     "title": "Comment ça marche",
-    "subtitle": "Achetez dans n’importe quelle boutique turque et recevez vos colis au Maroc facilement",
-    "step1": "1. Inscrivez-vous et obtenez votre adresse turque gratuite.",
-    "step2": "2. Achetez dans vos boutiques turques préférées et envoyez vos commandes à votre adresse.",
-    "step3": "3. Regroupez vos colis pour économiser jusqu’à 80% sur les frais de port.",
+    "subtitle": "Achetez dans n'importe quelle boutique turque et recevez vos colis au Maroc facilement",
+    "step1": {
+      "title": "Créez votre compte",
+      "description": "Rejoignez Shipit en quelques clics et recevez immédiatement votre adresse de livraison personnalisée en Turquie. Aucun frais caché, inscription 100% gratuite."
+    },
+    "step2": {
+      "title": "Achetez en Turquie",
+      "description": "Commandez sur Trendyol, Hepsiburada et tous vos sites turcs préférés. Nous réceptionnons vos colis et les stockons en toute sécurité en attendant l'expédition."
+    },
+    "step3": {
+      "title": "Recevez au Maroc",
+      "description": "Nous regroupons vos colis pour économiser jusqu'à 80% sur les frais d'expédition. Livraison rapide à votre porte avec dédouanement inclus."
+    },
     "startButton": "Commencez maintenant"
   },
   "landing": {
@@ -83,6 +92,7 @@
         "description": "Votre colis est arrivé ? Profitez-en pleinement !",
         "imageAlt": "Profiter des achats livrés"
       },
+      "cta": "Commencer maintenant",
       "whyChooseUs": {
         "title": "Pourquoi choisir Shipit pour vos envois depuis la Turquie ?",
         "subtitle": "Un service complet avec garantie de satisfaction.",
@@ -132,6 +142,7 @@
             "description": "Remboursement si non satisfait"
           }
         },
+        "cta": "Commencer maintenant",
         "weBuyForYou": {
           "title": "Nous achetons pour vous en Turquie",
           "subtitle": "Même sans carte internationale",

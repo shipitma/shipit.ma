@@ -42,9 +42,18 @@
   "howItWorks": {
     "title": "How It Works",
     "subtitle": "Shop from any Turkish store and receive your package in Morocco easily",
-    "step1": "1. Sign up and get your free Turkish shipping address.",
-    "step2": "2. Shop from your favorite Turkish stores and send orders to your address.",
-    "step3": "3. Consolidate packages to save up to 80% on shipping costs.",
+    "step1": {
+      "title": "Create Your Account",
+      "description": "Join Shipit in just a few clicks and instantly receive your personalized shipping address in Turkey. No hidden fees, 100% free registration."
+    },
+    "step2": {
+      "title": "Shop from Turkey",
+      "description": "Order from Trendyol, Hepsiburada and all your favorite Turkish sites. We receive your packages and store them securely until shipping."
+    },
+    "step3": {
+      "title": "Receive in Morocco",
+      "description": "We consolidate your packages to save up to 80% on shipping costs. Fast delivery to your door with customs clearance included."
+    },
     "startButton": "Get Started"
   },
   "landing": {
@@ -83,6 +92,7 @@
         "description": "Your package has arrived — time to enjoy it!",
         "imageAlt": "Enjoy delivered purchases"
       },
+      "cta": "Start Now",
       "whyChooseUs": {
         "title": "Why Choose Shipit for Shipping from Turkey?",
         "subtitle": "A complete service with customer satisfaction guaranteed.",
@@ -132,6 +142,7 @@
             "description": "Refund if not satisfied"
           }
         },
+        "cta": "Start Now",
         "weBuyForYou": {
           "title": "We Buy for You from Turkey",
           "subtitle": "Even without an international card",

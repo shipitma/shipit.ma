@@ -17,31 +17,31 @@ export function ReviewCardSection() {
       quote: t('hero.carouselTestimonial1.quote', 'Shipit a rendu mes achats en Turquie beaucoup plus simples. Livraison rapide et excellent support.'),
       author: t('hero.carouselTestimonial1.author', 'Ahmed M.'),
       position: t('hero.carouselTestimonial1.role', 'Client fidèle, Rabat'),
-      avatar: t('hero.carouselTestimonial1.author', 'A').charAt(0)
+      avatar: 'https://randomuser.me/api/portraits/men/32.jpg'
     },
     {
       quote: t('hero.carouselTestimonial2.quote', 'Mes commandes turques sont arrivées plus vite que prévu. Équipe professionnelle et service impeccable.'),
       author: t('hero.carouselTestimonial2.author', 'Sara K.'),
       position: t('hero.carouselTestimonial2.role', 'Cliente régulière, Marrakech'),
-      avatar: t('hero.carouselTestimonial2.author', 'S').charAt(0)
+      avatar: 'https://randomuser.me/api/portraits/women/0.jpg'
     },
     {
       quote: t('hero.carouselTestimonial3.quote', 'Le regroupement a réduit mes frais d\'expédition de moitié. Expérience au top.'),
       author: t('hero.carouselTestimonial3.author', 'Youssef B.'),
       position: t('hero.carouselTestimonial3.role', 'Passionné de tech, Fès'),
-      avatar: t('hero.carouselTestimonial3.author', 'Y').charAt(0)
+      avatar: 'https://randomuser.me/api/portraits/men/84.jpg'
     },
     {
       quote: t('hero.carouselTestimonial4.quote', 'Le support client m\'a accompagnée jusqu\'à la réception de mon colis depuis la Turquie.'),
       author: t('hero.carouselTestimonial4.author', 'Layla R.'),
       position: t('hero.carouselTestimonial4.role', 'Cliente première fois, Agadir'),
-      avatar: t('hero.carouselTestimonial4.author', 'L').charAt(0)
+      avatar: 'https://randomuser.me/api/portraits/women/44.jpg'
     },
     {
       quote: t('hero.carouselTestimonial5.quote', 'Je fais confiance à Shipit pour tous mes achats turcs. Service fiable et rapide.'),
       author: t('hero.carouselTestimonial5.author', 'Karim T.'),
       position: t('hero.carouselTestimonial5.role', 'Client de longue date, Tanger'),
-      avatar: t('hero.carouselTestimonial5.author', 'K').charAt(0)
+      avatar: 'https://randomuser.me/api/portraits/men/45.jpg'
     }
   ]
 
@@ -83,9 +83,14 @@ export function ReviewCardSection() {
               
               {/* Author Info */}
               <div className="flex items-center justify-center space-x-4 rtl:space-x-reverse">
-                <Avatar className="h-12 w-12 bg-blue-600">
-                  <AvatarFallback className="text-white font-semibold text-base">
-                    {testimonials[currentIndex].avatar}
+                <Avatar className="h-12 w-12">
+                  <img 
+                    src={testimonials[currentIndex].avatar} 
+                    alt={testimonials[currentIndex].author}
+                    className="h-full w-full object-cover"
+                  />
+                  <AvatarFallback className="text-white font-semibold text-base bg-blue-600">
+                    {testimonials[currentIndex].author.charAt(0)}
                   </AvatarFallback>
                 </Avatar>
                 <div className="text-left rtl:text-right">
