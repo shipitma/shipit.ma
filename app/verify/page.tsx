@@ -146,7 +146,19 @@ export default function VerifyPage() {
           await login(data.sessionId, data.accessToken, data.refreshToken)
           sessionStorage.removeItem("phoneNumber")
           sessionStorage.removeItem("registrationSessionId")
-          router.push("/dashboard")
+          // Force navigation to dashboard with fallback
+          try {
+            router.replace("/dashboard")
+            // Fallback navigation if router doesn't work
+            setTimeout(() => {
+              if (window.location.pathname !== "/dashboard") {
+                window.location.href = "/dashboard"
+              }
+            }, 1000)
+          } catch (error) {
+            console.error("Navigation error:", error)
+            window.location.href = "/dashboard"
+          }
         }
         toast({
           title: t('common.success', 'Succès'),

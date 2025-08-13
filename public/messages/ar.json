@@ -6,6 +6,17 @@
     "user": "المستخدم",
     "view": "عرض"
   },
+  "auth": {
+    "phoneNumber": "رقم الهاتف",
+    "whatsappOtpMessage": "{otp}"
+  },
+  "errors": {
+    "configurationError": "إعدادات API الواتساب مفقودة",
+    "whatsappSendFailed": "فشل في إرسال رمز OTP عبر الواتساب"
+  },
+  "success": {
+    "otpSent": "تم إرسال رمز OTP بنجاح"
+  },
   "navigation": {
     "help": "المساعدة"
   },

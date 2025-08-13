@@ -100,7 +100,7 @@ export default function CreatePurchaseRequestPage() {
   }
 
   return (
-    <div className="container mx-auto p-4 max-w-4xl">
+    <div className="container mx-auto max-w-4xl">
       <div className="space-y-4">
         {/* Header */}
         <div className="flex items-center gap-3 mb-4">
@@ -123,7 +123,7 @@ export default function CreatePurchaseRequestPage() {
               {t('createPurchase.cardTitle', 'Détails de la Demande d\'Achat')}
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="px-3 pb-6 pt-0 space-y-3">
             {/* Items */}
             <div className="space-y-3">
               <Label className="text-sm font-medium">{t('createPurchase.itemsLabel', 'Articles à Acheter')}</Label>
@@ -139,7 +139,7 @@ export default function CreatePurchaseRequestPage() {
                       )}
                     </div>
                   </CardHeader>
-                  <CardContent className="space-y-3">
+                  <CardContent className="px-3 pb-6 pt-0 space-y-3">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <div className="space-y-1">
                         <Label className="text-sm">{t('createPurchase.itemName', 'Nom de l\'Article *')}</Label>

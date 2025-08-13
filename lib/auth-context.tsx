@@ -208,25 +208,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const login = async (newSessionId: string, newAccessToken?: string, refreshToken?: string) => {
-    setLoading(true)
-    setToken("authToken", newSessionId)
-    setSessionId(newSessionId)
+    try {
+      setLoading(true)
+      setToken("authToken", newSessionId)
+      setSessionId(newSessionId)
 
-    if (newAccessToken) {
-      setToken("accessToken", newAccessToken)
-      setAccessToken(newAccessToken)
-      await fetchUser(newAccessToken)
-    } else {
-      await fetchUser(newSessionId)
+      if (newAccessToken) {
+        setToken("accessToken", newAccessToken)
+        setAccessToken(newAccessToken)
+        await fetchUser(newAccessToken)
+      } else {
+        await fetchUser(newSessionId)
+      }
+
+      if (refreshToken) {
+        setToken("refreshToken", refreshToken)
+      }
+
+      // Prefetch dashboard data immediately after login
+      await prefetchDashboardData()
+    } catch (error) {
+      console.error("Error during login:", error)
+      // Clear tokens on error
+      removeToken("authToken")
+      removeToken("accessToken")
+      removeToken("refreshToken")
+      setUser(null)
+      setSessionId(null)
+      setAccessToken(null)
+      throw error
+    } finally {
+      setLoading(false)
     }
-
-    if (refreshToken) {
-      setToken("refreshToken", refreshToken)
-    }
-
-    // Prefetch dashboard data immediately after login
-    await prefetchDashboardData()
-    setLoading(false)
   }
 
   const logout = async () => {

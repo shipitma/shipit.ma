@@ -25,10 +25,10 @@ const otpResponse = await fetch("https://otpsender.ship-it.me/api/sendText", {
 **After (WasenderAPI):**
 ```javascript
 // New implementation using WasenderAPI
-const otpResponse = await fetch("https://wasenderapi.com/api/send-message", {
+const otpResponse = await fetch(process.env.WHATSAPP_API_URL, {
   method: "POST",
   headers: {
-    "Authorization": "Bearer 05dacfccde5e02a41517764948a82825ab896e3f9a7c878142309eb1346b003c",
+    "Authorization": `Bearer ${process.env.WHATSAPP_API_TOKEN}`,
     "Content-Type": "application/json",
   },
   body: JSON.stringify({
@@ -44,7 +44,7 @@ Make sure your `.env.local` file contains:
 
 ```env
 # WhatsApp API (WasenderAPI)
-WHATSAPP_API_TOKEN=05dacfccde5e02a41517764948a82825ab896e3f9a7c878142309eb1346b003c
+WHATSAPP_API_TOKEN=your_whatsapp_api_token_here
 WHATSAPP_API_URL=https://wasenderapi.com/api/send-message
 ```
 
@@ -88,8 +88,8 @@ node scripts/test-whatsapp-api.js
 ### 6. Curl Test Command
 
 ```bash
-curl -X POST "https://wasenderapi.com/api/send-message" \
-  -H "Authorization: Bearer 05dacfccde5e02a41517764948a82825ab896e3f9a7c878142309eb1346b003c" \
+curl -X POST "$WHATSAPP_API_URL" \
+  -H "Authorization: Bearer $WHATSAPP_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"to": "+212612345678", "text": "Test message from API!"}'
 ```

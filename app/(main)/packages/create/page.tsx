@@ -29,7 +29,7 @@ export default function CreatePackagePage() {
     dimensions: "",
     items: [""],
     notes: "",
-    receipts: [],
+    receipts: [] as Array<{ file: File; url: string; name: string; attachmentId: string }>,
     attachmentType: "receipt", // Add this line
   })
 
@@ -202,7 +202,7 @@ export default function CreatePackagePage() {
   }
 
   return (
-    <div className="container mx-auto p-4 max-w-4xl">
+    <div className="container mx-auto max-w-4xl">
       <div className="space-y-4">
         {/* Header */}
         <div className="flex items-center gap-3 mb-4">
@@ -223,7 +223,7 @@ export default function CreatePackagePage() {
               {t('createPackage.cardTitle', 'Informations du Colis')}
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="px-3 pb-6 pt-0 space-y-3">
             {/* Basic Info */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1">

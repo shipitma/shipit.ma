@@ -21,15 +21,20 @@ export async function POST(request: NextRequest) {
     // Create OTP code
     const otp = await createOTPCode(phoneNumber, purpose)
 
-    // Get translated OTP message
+    // Get translated OTP message - just the code
     const text = await serverTranslate('auth.whatsappOtpMessage', language, 
-      `Your shipit.ma verification code is: ${otp}\n\nThis code will expire in 10 minutes. Do not share this code with anyone.`,
+      otp,
       { otp }
     )
 
     // Send OTP via WasenderAPI
-    const whatsappApiUrl = process.env.WHATSAPP_API_URL || "https://wasenderapi.com/api/send-message"
-    const whatsappApiToken = process.env.WHATSAPP_API_TOKEN || "05dacfccde5e02a41517764948a82825ab896e3f9a7c878142309eb1346b003c"
+    const whatsappApiUrl = process.env.WHATSAPP_API_URL
+    const whatsappApiToken = process.env.WHATSAPP_API_TOKEN
+    
+    if (!whatsappApiUrl || !whatsappApiToken) {
+      const errorMessage = await serverTranslate('errors.configurationError', language, 'WhatsApp API configuration is missing')
+      return NextResponse.json({ error: errorMessage }, { status: 500 })
+    }
     
     const otpResponse = await fetch(whatsappApiUrl, {
       method: "POST",

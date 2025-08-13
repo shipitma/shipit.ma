@@ -6,6 +6,17 @@
     "user": "User",
     "view": "View"
   },
+  "auth": {
+    "phoneNumber": "Phone Number",
+    "whatsappOtpMessage": "{otp}"
+  },
+  "errors": {
+    "configurationError": "WhatsApp API configuration is missing",
+    "whatsappSendFailed": "Failed to send OTP via WhatsApp"
+  },
+  "success": {
+    "otpSent": "OTP code sent successfully"
+  },
   "navigation": {
     "help": "Help"
   },
