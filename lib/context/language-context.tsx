@@ -61,7 +61,6 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
     document.body.classList.remove('font-ltr', 'font-rtl')
     const fontClass = newIsRTL ? 'font-rtl' : 'font-ltr'
     document.body.classList.add(fontClass)
-    console.log(`Language: ${language}, RTL: ${newIsRTL}, Font class: ${fontClass}`)
 
     // Save to localStorage
     localStorage.setItem('language', language)

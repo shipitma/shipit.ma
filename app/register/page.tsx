@@ -70,13 +70,38 @@ export default function RegisterPage() {
         }
       }
 
+      // Create user immediately with phone_verified = false
+      const createUserResponse = await fetch("/api/register", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "X-Language": language
+        },
+        body: JSON.stringify({
+          phoneNumber: fullPhoneNumber,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          phoneVerified: false
+        }),
+      })
+
+      if (!createUserResponse.ok) {
+        throw new Error(t('register.errors.createFailed', 'Failed to create account'))
+      }
+
+      const userData = await createUserResponse.json()
+
+      // Send OTP for verification
       const response = await fetch("/api/send-otp", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
-          "X-Language": language // Send current language preference
+          "X-Language": language
         },
-        body: JSON.stringify({ phoneNumber: fullPhoneNumber }),
+        body: JSON.stringify({ 
+          phoneNumber: fullPhoneNumber,
+          purpose: "register"
+        }),
       })
 
       if (response.ok) {
@@ -119,7 +144,7 @@ export default function RegisterPage() {
         <CardHeader className="text-center pb-4">
           <CardTitle className="text-lg font-semibold">{t('register.title', 'Créer un Compte')}</CardTitle>
           <CardDescription className="text-sm text-gray-600">
-            {t('register.subtitle', 'Étape 1/2 : Commencez par nous donner quelques informations de base.')}
+            {t('register.subtitle', 'Créez votre compte pour commencer à utiliser nos services.')}
           </CardDescription>
         </CardHeader>
         <CardContent>

@@ -15,9 +15,7 @@ async function testWasenderAPI() {
   }
   
   try {
-    console.log('🧪 Testing WasenderAPI...');
-    console.log(`📱 Sending to: ${phoneNumber}`);
-    console.log(`💬 Message: ${message}`);
+    
     
     const response = await fetch(whatsappApiUrl, {
       method: "POST",
@@ -32,14 +30,7 @@ async function testWasenderAPI() {
     });
 
     const responseText = await response.text();
-    console.log(`📊 Status: ${response.status}`);
-    console.log(`📄 Response: ${responseText}`);
     
-    if (response.ok) {
-      console.log('✅ WasenderAPI test successful!');
-    } else {
-      console.log('❌ WasenderAPI test failed!');
-    }
   } catch (error) {
     console.error('💥 Error testing WasenderAPI:', error.message);
   }

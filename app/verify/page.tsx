@@ -127,9 +127,13 @@ export default function VerifyPage() {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
-          "X-Language": language // Send current language preference
+          "X-Language": language
         },
-        body: JSON.stringify({ phoneNumber, otp: code }),
+        body: JSON.stringify({ 
+          phoneNumber, 
+          otp: code,
+          purpose: "register"
+        }),
       })
 
       const data = await response.json()
@@ -138,14 +142,29 @@ export default function VerifyPage() {
         if (data.isNewUser) {
           trackAuth('OTP_VERIFICATION_SUCCESS_NEW_USER', { phoneNumber })
           setIsNewUser(true)
-          setSessionId(data.sessionId)
-          sessionStorage.setItem("registrationSessionId", data.sessionId)
-          router.push("/register/complete")
+          // Login the new user with the provided session data
+          await login(data.sessionId, data.accessToken, data.refreshToken)
+          // Store user info for profile completion
+          const storedFirstName = sessionStorage.getItem("firstName")
+          const storedLastName = sessionStorage.getItem("lastName")
+          if (storedFirstName && storedLastName) {
+            sessionStorage.setItem("userFirstName", storedFirstName)
+            sessionStorage.setItem("userLastName", storedLastName)
+          }
+          // Clean up registration data
+          sessionStorage.removeItem("phoneNumber")
+          sessionStorage.removeItem("firstName")
+          sessionStorage.removeItem("lastName")
+          router.push("/dashboard")
         } else {
           trackAuth('OTP_VERIFICATION_SUCCESS_EXISTING_USER', { phoneNumber })
           await login(data.sessionId, data.accessToken, data.refreshToken)
           sessionStorage.removeItem("phoneNumber")
           sessionStorage.removeItem("registrationSessionId")
+          sessionStorage.removeItem("firstName")
+          sessionStorage.removeItem("lastName")
+          sessionStorage.removeItem("userFirstName")
+          sessionStorage.removeItem("userLastName")
           // Force navigation to dashboard with fallback
           try {
             router.replace("/dashboard")

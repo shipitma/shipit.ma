@@ -25,6 +25,11 @@
     "statsDescription": "Vous avez {shipped} colis en transit et {expected} colis en attente de réception.",
     "newRequestButton": "Nouvelle Demande",
     "addPackageButton": "Ajouter un Colis",
+    "completeProfile": {
+      "title": "Complétez Votre Inscription",
+      "description": "Ajoutez votre email et adresse pour un meilleur service",
+      "button": "Compléter le Profil"
+    },
     "stats": {
       "expectedPackages": "Colis Attendus",
       "inWarehouse": "En Entrepôt",
@@ -231,13 +236,23 @@
   "profile": {
     "title": "Paramètres du Profil",
     "subtitle": "Gérez vos informations personnelles et votre adresse de livraison",
+    "actions": {
+      "edit": "Modifier",
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "saving": "Enregistrement..."
+    },
     "personalInfo": {
       "title": "Informations Personnelles",
       "subtitle": "Gérez vos informations de base",
       "firstName": "Prénom",
       "lastName": "Nom de famille",
       "email": "Email",
-      "phone": "Téléphone"
+      "phone": "Numéro de Téléphone",
+      "firstNamePlaceholder": "Entrez votre prénom",
+      "lastNamePlaceholder": "Entrez votre nom de famille",
+      "emailPlaceholder": "Entrez votre adresse email",
+      "phoneNote": "Le numéro de téléphone ne peut pas être modifié"
     },
     "shippingAddress": {
       "title": "Adresse de Livraison",
@@ -246,7 +261,21 @@
       "city": "Ville",
       "state": "Région/État",
       "zip": "Code Postal",
-      "country": "Pays"
+      "country": "Pays",
+      "addressLinePlaceholder": "Entrez votre adresse",
+      "cityPlaceholder": "Ville",
+      "statePlaceholder": "Région ou État",
+      "zipPlaceholder": "Code postal"
+    },
+    "success": {
+      "title": "Profil Mis à Jour",
+      "description": "Votre profil a été mis à jour avec succès",
+      "personalInfo": "Vos informations personnelles ont été mises à jour avec succès",
+      "shippingAddress": "Votre adresse de livraison a été mise à jour avec succès"
+    },
+    "errors": {
+      "userNotFound": "Utilisateur non trouvé",
+      "updateFailed": "Échec de la mise à jour du profil. Veuillez réessayer."
     }
   },
   "header": {

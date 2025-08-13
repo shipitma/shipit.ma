@@ -49,7 +49,6 @@ export function useDashboardStats() {
 
       // Check if token is about to expire and refresh if needed
       if (accessToken && await isTokenExpired(accessToken)) {
-        console.log("Token is about to expire, refreshing...")
         // This will trigger a refresh in the auth context
         // For now, we'll continue with the current token and let the API handle the 401
       }
@@ -61,7 +60,6 @@ export function useDashboardStats() {
       if (!response.ok) {
         if (response.status === 401) {
           // Authentication error - this will be handled by the auth context
-          console.log("Dashboard stats API returned 401, authentication may need refresh")
           throw new Error("Authentication required")
         }
         const errorText = await response.text()

@@ -25,6 +25,11 @@
     "statsDescription": "لديك {shipped} طرد في الطريق و {expected} طرد متوقع وصوله.",
     "newRequestButton": "طلب جديد",
     "addPackageButton": "إضافة طرد",
+    "completeProfile": {
+      "title": "أكمل تسجيلك",
+      "description": "أضف بريدك الإلكتروني وعنوانك للحصول على خدمة أفضل",
+      "button": "أكمل الملف الشخصي"
+    },
     "stats": {
       "expectedPackages": "الطرود المتوقعة",
       "inWarehouse": "في المستودع",
@@ -231,13 +236,23 @@
   "profile": {
     "title": "إعدادات الملف الشخصي",
     "subtitle": "إدارة معلوماتك الشخصية وعنوان التوصيل الخاص بك",
+    "actions": {
+      "edit": "تعديل",
+      "save": "حفظ",
+      "cancel": "إلغاء",
+      "saving": "جاري الحفظ..."
+    },
     "personalInfo": {
       "title": "المعلومات الشخصية",
       "subtitle": "إدارة معلوماتك الأساسية",
       "firstName": "الاسم الأول",
       "lastName": "اسم العائلة",
       "email": "البريد الإلكتروني",
-      "phone": "الهاتف"
+      "phone": "رقم الهاتف",
+      "firstNamePlaceholder": "أدخل اسمك الأول",
+      "lastNamePlaceholder": "أدخل اسم العائلة",
+      "emailPlaceholder": "أدخل عنوان بريدك الإلكتروني",
+      "phoneNote": "لا يمكن تغيير رقم الهاتف"
     },
     "shippingAddress": {
       "title": "عنوان التوصيل",
@@ -246,7 +261,21 @@
       "city": "المدينة",
       "state": "المنطقة/الإقليم",
       "zip": "الرمز البريدي",
-      "country": "البلد"
+      "country": "البلد",
+      "addressLinePlaceholder": "أدخل عنوان الشارع",
+      "cityPlaceholder": "المدينة",
+      "statePlaceholder": "المنطقة أو الإقليم",
+      "zipPlaceholder": "الرمز البريدي"
+    },
+    "success": {
+      "title": "تم تحديث الملف الشخصي",
+      "description": "تم تحديث ملفك الشخصي بنجاح",
+      "personalInfo": "تم تحديث معلوماتك الشخصية بنجاح",
+      "shippingAddress": "تم تحديث عنوان التوصيل الخاص بك بنجاح"
+    },
+    "errors": {
+      "userNotFound": "لم يتم العثور على المستخدم",
+      "updateFailed": "فشل في تحديث الملف الشخصي. يرجى المحاولة مرة أخرى."
     }
   },
   "header": {

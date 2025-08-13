@@ -391,6 +391,37 @@ export async function updateUserLastLogin(userId: string): Promise<void> {
   `
 }
 
+export async function updateNeonUser(userId: string, userData: {
+  firstName: string
+  lastName: string
+  email?: string | null
+  addressLine?: string | null
+  city?: string | null
+  state?: string | null
+  zip?: string | null
+  country?: string | null
+}): Promise<User | null> {
+  const sql = getDatabase()
+
+  const [updatedUser] = await sql`
+    UPDATE users 
+    SET 
+      first_name = ${userData.firstName},
+      last_name = ${userData.lastName},
+      email = ${userData.email},
+      address_line = ${userData.addressLine},
+      city = ${userData.city},
+      state = ${userData.state},
+      zip = ${userData.zip},
+      country = ${userData.country || "Morocco"},
+      updated_at = NOW()
+    WHERE id = ${userId}
+    RETURNING *
+  `
+
+  return (updatedUser as User) || null
+}
+
 // Cleanup function for expired data
 export async function cleanupExpiredNeonAuthData(): Promise<void> {
   const sql = getDatabase()

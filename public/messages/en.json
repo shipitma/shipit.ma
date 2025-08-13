@@ -25,6 +25,11 @@
     "statsDescription": "You have {shipped} packages in transit and {expected} expected packages awaiting arrival.",
     "newRequestButton": "New Request",
     "addPackageButton": "Add Package",
+    "completeProfile": {
+      "title": "Complete Your Registration",
+      "description": "Add your email and address for better service",
+      "button": "Complete Profile"
+    },
     "stats": {
       "expectedPackages": "Expected Packages",
       "inWarehouse": "In Warehouse",
@@ -231,22 +236,46 @@
   "profile": {
     "title": "Profile Settings",
     "subtitle": "Manage your personal information and your delivery address",
+    "actions": {
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel",
+      "saving": "Saving..."
+    },
     "personalInfo": {
       "title": "Personal Information",
       "subtitle": "Manage your basic information",
       "firstName": "First Name",
       "lastName": "Last Name",
       "email": "Email",
-      "phone": "Phone"
+      "phone": "Phone Number",
+      "firstNamePlaceholder": "Enter your first name",
+      "lastNamePlaceholder": "Enter your last name",
+      "emailPlaceholder": "Enter your email address",
+      "phoneNote": "Phone number cannot be changed"
     },
     "shippingAddress": {
       "title": "Shipping Address",
       "subtitle": "Your delivery address in Morocco",
       "addressLine": "Address",
       "city": "City",
-      "state": "State/Region",
-      "zip": "ZIP Code",
-      "country": "Country"
+      "state": "Region/State",
+      "zip": "Postal Code",
+      "country": "Country",
+      "addressLinePlaceholder": "Enter your street address",
+      "cityPlaceholder": "City",
+      "statePlaceholder": "Region or State",
+      "zipPlaceholder": "Postal code"
+    },
+    "success": {
+      "title": "Profile Updated",
+      "description": "Your profile has been updated successfully",
+      "personalInfo": "Your personal information has been updated successfully",
+      "shippingAddress": "Your shipping address has been updated successfully"
+    },
+    "errors": {
+      "userNotFound": "User not found",
+      "updateFailed": "Failed to update profile. Please try again."
     }
   },
   "header": {

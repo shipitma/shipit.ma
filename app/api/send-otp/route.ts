@@ -4,7 +4,7 @@ import { serverTranslate, getLanguageFromRequest } from "@/lib/server-translatio
 
 export async function POST(request: NextRequest) {
   try {
-    const { phoneNumber } = await request.json()
+    const { phoneNumber, purpose: requestedPurpose } = await request.json()
     
     // Get user's preferred language from request headers
     const language = getLanguageFromRequest(request)
@@ -14,9 +14,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: errorMessage }, { status: 400 })
     }
 
-    // Check if user exists to determine purpose
-    const isExistingUser = await userExists(phoneNumber)
-    const purpose = isExistingUser ? "login" : "register"
+    // Use requested purpose or determine from user existence
+    const purpose = requestedPurpose || (await userExists(phoneNumber) ? "login" : "register")
 
     // Create OTP code
     const otp = await createOTPCode(phoneNumber, purpose)

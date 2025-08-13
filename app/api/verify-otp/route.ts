@@ -1,10 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { verifyOTPCode, createNeonSession, userExists, getNeonUserByPhone, updateUserLastLogin, cleanupPendingRegistrationSessions } from "@/lib/auth"
+import { verifyOTPCode, createNeonSession, userExists, getNeonUserByPhone, updateUserLastLogin, cleanupPendingRegistrationSessions, createNeonUser, updateNeonUser } from "@/lib/auth"
 import { serverTranslate, getLanguageFromRequest } from "@/lib/server-translations"
 
 export async function POST(request: NextRequest) {
   try {
-    const { phoneNumber, otp } = await request.json()
+    const { phoneNumber, otp, purpose: requestedPurpose } = await request.json()
     
     // Get user's preferred language from request headers
     const language = getLanguageFromRequest(request)
@@ -19,9 +19,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: errorMessage }, { status: 400 })
     }
 
-    // Check if user exists to determine purpose
-    const isExistingUser = await userExists(phoneNumber)
-    const purpose = isExistingUser ? "login" : "register"
+    // Use requested purpose or determine from user existence
+    const purpose = requestedPurpose || (await userExists(phoneNumber) ? "login" : "register")
 
     // Verify OTP code
     const verificationResult = await verifyOTPCode(phoneNumber, otp, purpose)
@@ -35,6 +34,8 @@ export async function POST(request: NextRequest) {
     const userAgent = request.headers.get("user-agent") || undefined
     const ipAddress = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || undefined
 
+    const isExistingUser = await userExists(phoneNumber)
+    
     if (isExistingUser) {
       // User exists - create authenticated session with Neon Auth
       const user = await getNeonUserByPhone(phoneNumber)
@@ -74,19 +75,52 @@ export async function POST(request: NextRequest) {
         },
       })
     } else {
-      // New user - create pending registration session
-      const { sessionId } = await createNeonSession(
+      // Get existing user and update phone_verified status
+      const user = await getNeonUserByPhone(phoneNumber)
+      if (!user) {
+        const errorMessage = await serverTranslate('errors.userNotFound', language, 'User not found')
+        return NextResponse.json({ error: errorMessage }, { status: 404 })
+      }
+
+      // Update phone_verified status by updating the user
+      await updateNeonUser(user.id, {
+        firstName: user.first_name || "User",
+        lastName: user.last_name || "User",
+        email: user.email,
+        addressLine: user.address_line || "",
+        city: user.city || "",
+        state: user.state,
+        zip: user.zip,
+        country: user.country || "Morocco",
+      })
+
+      // Create authenticated session
+      const { sessionId, accessToken, refreshToken } = await createNeonSession(
         phoneNumber,
-        "pending_registration",
-        undefined,
+        "authenticated",
+        user.id,
         userAgent,
         ipAddress,
       )
+
+      // Update last login
+      await updateUserLastLogin(user.id)
 
       return NextResponse.json({
         success: true,
         isNewUser: true,
         sessionId,
+        accessToken,
+        refreshToken,
+        user: {
+          id: user.id,
+          phoneNumber: user.phone_number,
+          firstName: user.first_name,
+          lastName: user.last_name,
+          email: user.email,
+          phoneVerified: true,
+          emailVerified: user.email_verified,
+        },
       })
     }
   } catch (error) {
