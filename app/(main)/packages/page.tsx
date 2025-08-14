@@ -156,7 +156,7 @@ export default function PackagesPage() {
         </div>
         <div>
           <h1 className="text-lg font-semibold">{t('packages.title', 'Colis')}</h1>
-          <p className="text-sm text-gray-600">{t('packages.subtitle', 'Suivez vos colis du Maroc vers la Turquie')}</p>
+          <p className="text-sm text-gray-600">{t('packages.subtitle', 'Suivez vos colis de la Turquie vers le Maroc')}</p>
         </div>
       </div>
 
@@ -164,7 +164,7 @@ export default function PackagesPage() {
       <div className="hidden lg:flex items-center justify-between">
         <div>
           <h1 className="text-lg font-semibold">{t('packages.title', 'Colis')}</h1>
-          <p className="text-sm text-gray-600">{t('packages.subtitle', 'Suivez vos colis du Maroc vers la Turquie')}</p>
+          <p className="text-sm text-gray-600">{t('packages.subtitle', 'Suivez vos colis de la Turquie vers le Maroc')}</p>
         </div>
         <Button size="sm" asChild className="h-7 text-sm">
           <a href="/packages/create">

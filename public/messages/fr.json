@@ -46,7 +46,7 @@
   },
   "packages": {
     "title": "Colis",
-    "subtitle": "Suivez vos colis du Maroc vers la Turquie",
+    "subtitle": "Suivez vos colis de la Turquie vers le Maroc",
     "addPackageButton": "Ajouter un Colis",
     "searchPlaceholder": "Rechercher des colis...",
     "statusFilter": "Statut",

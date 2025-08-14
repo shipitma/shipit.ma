@@ -46,7 +46,7 @@
   },
   "packages": {
     "title": "الطرود",
-    "subtitle": "تتبع طرودك من المغرب إلى تركيا",
+    "subtitle": "تتبع طرودك من تركيا إلى المغرب",
     "addPackageButton": "إضافة طرد",
     "searchPlaceholder": "البحث في الطرود...",
     "statusFilter": "الحالة",
@@ -78,8 +78,8 @@
     "shippingCost": "تكلفة الشحن",
     "insurance": "التأمين",
     "progress": "التقدم",
-    "items": "العناصر",
-    "additionalItems": "عناصر إضافية",
+    "items": "المنتجات",
+    "additionalItems": "منتجات إضافية",
     "lastUpdated": "آخر تحديث",
     "viewDetails": "عرض التفاصيل",
     "payShipping": "دفع تكلفة الشحن",
@@ -116,7 +116,7 @@
       "createFirstRequest": "إنشاء طلبك الأول"
     },
     "total": "المجموع",
-    "items": "العناصر",
+    "items": "المنتجات",
     "created": "تاريخ الإنشاء",
     "errors": {
       "sessionExpired": "انتهت صلاحية الجلسة، يرجى تسجيل الدخول مرة أخرى",

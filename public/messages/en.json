@@ -46,7 +46,7 @@
   },
   "packages": {
     "title": "Packages",
-    "subtitle": "Track your packages from Morocco to Turkey",
+    "subtitle": "Track your packages from Turkey to Morocco",
     "addPackageButton": "Add Package",
     "searchPlaceholder": "Search packages...",
     "statusFilter": "Status",
