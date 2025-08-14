@@ -13,17 +13,17 @@ export function ProfileCompletionBanner({ className }: ProfileCompletionBannerPr
   const { t } = useTranslations()
 
   return (
-    <Card className={`border-orange-200 bg-orange-50 ${className || ''}`}>
+    <Card className={`border-red-200 bg-red-50 ${className || ''}`}>
       <CardContent className="p-4">
         {/* Desktop layout: flex row with button on right */}
         <div className="hidden md:flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <User className="w-5 h-5 text-orange-600" />
+            <User className="w-5 h-5 text-red-600" />
             <div>
-              <h3 className="text-sm font-medium text-orange-800">
+              <h3 className="text-sm font-medium text-red-800">
                 {t('dashboard.completeProfile.title', 'Complete Your Registration')}
               </h3>
-              <p className="text-xs text-orange-700">
+              <p className="text-xs text-red-700">
                 {t('dashboard.completeProfile.description', 'Add your email and address for better service')}
               </p>
             </div>
@@ -31,7 +31,7 @@ export function ProfileCompletionBanner({ className }: ProfileCompletionBannerPr
           <Button 
             variant="outline" 
             size="sm" 
-            className="h-7 text-sm border-orange-300 text-orange-700 hover:bg-orange-100"
+            className="h-7 text-sm border-red-300 text-red-700 hover:bg-red-100"
             asChild
           >
             <a href="/profile">
@@ -43,12 +43,12 @@ export function ProfileCompletionBanner({ className }: ProfileCompletionBannerPr
         {/* Mobile layout: flex column with button under text */}
         <div className="md:hidden space-y-3">
           <div className="flex items-center gap-3">
-            <User className="w-5 h-5 text-orange-600" />
+            <User className="w-5 h-5 text-red-600" />
             <div>
-              <h3 className="text-sm font-medium text-orange-800">
+              <h3 className="text-sm font-medium text-red-800">
                 {t('dashboard.completeProfile.title', 'Complete Your Registration')}
               </h3>
-              <p className="text-xs text-orange-700">
+              <p className="text-xs text-red-700">
                 {t('dashboard.completeProfile.description', 'Add your email and address for better service')}
               </p>
             </div>
@@ -56,7 +56,7 @@ export function ProfileCompletionBanner({ className }: ProfileCompletionBannerPr
           <Button 
             variant="outline" 
             size="sm" 
-            className="w-full h-8 text-sm border-orange-300 text-orange-700 hover:bg-orange-100"
+            className="w-full h-8 text-sm border-red-300 text-red-700 hover:bg-red-100"
             asChild
           >
             <a href="/profile">

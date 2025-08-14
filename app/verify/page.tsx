@@ -131,8 +131,7 @@ export default function VerifyPage() {
         },
         body: JSON.stringify({ 
           phoneNumber, 
-          otp: code,
-          purpose: "register"
+          otp: code
         }),
       })
 
