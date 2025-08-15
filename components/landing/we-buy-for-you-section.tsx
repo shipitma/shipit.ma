@@ -1,3 +1,4 @@
+import Link from "next/link"
 import Image from "next/image"
 import { useTranslations } from "@/lib/hooks/use-translations"
 
@@ -32,9 +33,11 @@ export function WeBuyForYouSection() {
 
               {/* Desktop Button */}
               <div className="hidden lg:block mb-8 text-left rtl:text-right">
-                <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-medium transition-colors">
-                  {t('landing.ourServices.whyChooseUs.weBuyForYou.button', 'Envoyer ma liste d\'achats')}
-                </button>
+                <Link href="/register">
+                  <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-medium transition-colors">
+                    {t('landing.ourServices.whyChooseUs.weBuyForYou.button', 'Envoyer ma liste d\'achats')}
+                  </button>
+                </Link>
               </div>
 
               {/* Step 1 */}
@@ -141,9 +144,11 @@ export function WeBuyForYouSection() {
 
           {/* Mobile Button */}
           <div className="lg:hidden text-center mt-8">
-            <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-medium transition-colors">
-              {t('landing.ourServices.whyChooseUs.weBuyForYou.button', 'Envoyer ma liste d\'achats')}
-            </button>
+            <Link href="/register">
+              <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-medium transition-colors">
+                {t('landing.ourServices.whyChooseUs.weBuyForYou.button', 'Envoyer ma liste d\'achats')}
+              </button>
+            </Link>
           </div>
         </div>
       </div>

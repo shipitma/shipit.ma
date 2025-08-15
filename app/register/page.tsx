@@ -184,8 +184,8 @@ export default function RegisterPage() {
               <Label htmlFor="phone" className="text-sm">
                 {t('register.whatsappPhone', 'Téléphone WhatsApp')} *
               </Label>
-              <div className={`flex ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-                <div className="flex items-center px-3 border border-r-0 rounded-l-md bg-gray-50 text-gray-600 text-sm" dir="ltr">
+              <div className={`flex ${isRTL ? 'flex-row-reverse' : 'flex-row'} group`}>
+                <div className="flex items-center px-3 border border-r-0 rounded-l-md bg-gray-50 text-gray-600 text-sm group-focus-within:border-orange-500" dir="ltr">
                   +212
                 </div>
                 <Input

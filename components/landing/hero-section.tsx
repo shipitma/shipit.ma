@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "@/lib/hooks/use-translations"
 import { useLanguage } from "@/lib/context/language-context"
@@ -20,11 +21,15 @@ export function HeroSection() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button className="bg-white text-orange-600 hover:bg-gray-100 px-8 py-4 text-base font-medium h-12">
-              {t('hero.startButton', 'Commencer maintenant')}
+            <Button asChild className="bg-white text-orange-600 hover:bg-gray-100 px-8 py-4 text-base font-medium h-12">
+              <Link href="/register">
+                {t('hero.startButton', 'Commencer maintenant')}
+              </Link>
             </Button>
-            <Button className="bg-orange-600 border-2 border-white text-white hover:bg-white hover:text-orange-600 px-8 py-4 text-base font-medium h-12">
-              {t('hero.discoverButton', 'Découvrir nos services')}
+            <Button asChild className="bg-orange-600 border-2 border-white text-white hover:bg-white hover:text-orange-600 px-8 py-4 text-base font-medium h-12">
+              <Link href="/register">
+                {t('hero.discoverButton', 'Découvrir nos services')}
+              </Link>
             </Button>
           </div>
         </div>

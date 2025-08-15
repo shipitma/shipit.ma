@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "@/lib/hooks/use-translations"
 import { useLanguage } from "@/lib/context/language-context"
@@ -83,8 +84,10 @@ export function HowItWorksSection() {
         </div>
 
         <div className="text-center">
-          <Button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 text-base font-medium">
-            {t('howItWorks.startButton', 'Commencez maintenant')}
+          <Button asChild className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 text-base font-medium">
+            <Link href="/register">
+              {t('howItWorks.startButton', 'Commencez maintenant')}
+            </Link>
           </Button>
         </div>
       </div>

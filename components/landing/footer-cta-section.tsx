@@ -1,3 +1,4 @@
+import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "@/lib/hooks/use-translations"
@@ -16,8 +17,10 @@ export function FooterCTASection() {
                <p className="text-base lg:text-lg leading-relaxed opacity-90 text-white mb-8">
                  {t('landing.ourServices.footerCTA.subtitle', 'Profitez des meilleures marques turques avec un service d\'expédition sécurisé et direct d\'Istanbul jusqu\'à votre porte au Maroc. Nous gérons tout, de l\'achat à la livraison.')}
                </p>
-               <Button className="bg-white text-orange-600 hover:bg-gray-100 px-8 py-3 font-medium">
-                 {t('landing.ourServices.footerCTA.button', 'Commencer maintenant')}
+               <Button asChild className="bg-white text-orange-600 hover:bg-gray-100 px-8 py-3 font-medium">
+                 <Link href="/register">
+                   {t('landing.ourServices.footerCTA.button', 'Commencer maintenant')}
+                 </Link>
                </Button>
             </div>
 
